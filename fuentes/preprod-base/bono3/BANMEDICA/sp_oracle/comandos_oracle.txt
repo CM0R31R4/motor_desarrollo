@@ -1,0 +1,34 @@
+
+Coneccion x SQLPLUS
+/home/isys/instantclient_11_2/sqlplus imed/rxb532@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.9)(PORT=1521))(CONNECT_DATA=(SID=DSUCU)))"
+
+/home/isys/instantclient_11_2/sqlplus imed/nel5628@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.82)(PORT=1521))(CONNECT_DATA=(SID=QSUCU)))"
+---------
+Query para ver los objetos
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('PACKAGE');
+
+desc BANVALORVARI_PKG
+select text from all_source where name = 'BANVALORVARI_PKG' and type in('PACKAGE','SYNONYM') order by line asc;
+
+Descipción de estructura
+desc BANBENCERTIF_PKG
+
+** Conexion con el conector de Python
+/*Prod*/	
+./oracle_gateway.py localhost 8071 'imed/rxb532@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.9)(PORT=1521))(CONNECT_DATA=(SID=SUCU.BANMEDICA.CL)))'
+
+./oracle_gateway.py localhost 8071 'imed/rxb532@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.9)(PORT=1521))(CONNECT_DATA=(SID=DSUCU)))'
+
+./oracle_gateway.py localhost 8071 'imed/nel5628@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.82)(PORT=1521))(CONNECT_DATA=(SID=QSUCU)))'
+
+SQL> show pagesize lines
+pagesize 14
+linesize 80
+SET PAGESIZE 999 LINESIZE 300
+
+define_editor = vi;
+
+
+
+
+

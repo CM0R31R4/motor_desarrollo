@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope  
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  
+	xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+	xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/">   
+<soapenv:Body>     
+    <ns1:validacat>      
+	<extCodFinanciador>67</extCodFinanciador>
+	<extRutConvenio>76016305-8</extRutConvenio>
+	<extRutTratante>0004784367-7</extRutTratante>
+	<extRutSolicitante>0004784367-7</extRutSolicitante>
+	<extRutBeneficiario>0004784367-7</extRutBeneficiario>
+	<extRutCotizante>0004784367-7</extRutCotizante>
+	<extCodigoHomologo>999</extCodigoHomologo>
+	<extItem>JC</extItem>
+	<extCodigoDiagnostico>888888</extCodigoDiagnostico>
+	<extCodModalidad>01</extCodModalidad>
+	<extCodTipAtencion>01</extCodTipAtencion>
+	<extFechaNacimiento>1980-06-03</extFechaNacimiento>
+	<extCodSexo>M</extCodSexo>
+	<extFechaInicio>2013-05-22</extFechaInicio>
+	<extFechaTermino>2013-05-30</extFechaTermino>
+	<extFrecPrestDia>77</extFrecPrestDia>
+	<extListaPrestacA>lista1</extListaPrestacA>
+	<extListaPrestacB>lista2</extListaPrestacB>
+	<extListaPrestacC>lista3</extListaPrestacC>
+	<extListaPrestacD>lista4</extListaPrestacD>
+	<ExtListaPrestacE>lista5</ExtListaPrestacE>
+	<extListaPrestacF>lista6</extListaPrestacF>
+	<extIndVideo>0</extIndVideo>
+	<extIndBilateral>0</extIndBilateral>
+	<extRecargoFueraHora>N</extRecargoFueraHora>
+	<extIndReembolso>N</extIndReembolso>
+	<extIndPrograma>N</extIndPrograma>
+	<extCodAplicacion>01</extCodAplicacion>
+	<extCodRegion>RM</extCodRegion>
+	<extCodSucur>222222</extCodSucur>
+	<extTipoPrestador>1</extTipoPrestador>
+	<extCodEspecialidades>TRAUMA</extCodEspecialidades>
+	<extCodProfesiones>TRM001</extCodProfesiones>
+	<extAnosAntiguedad>8</extAnosAntiguedad>	
+   </ns1:validacat>     
+</soapenv:Body>  
+</soapenv:Envelope>

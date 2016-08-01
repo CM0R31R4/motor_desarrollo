@@ -1,0 +1,104 @@
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://tempuri.org/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+<types>
+<s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+<s:element name="wmImed_SrvConfirmacion">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="wmImed_SrvConfirmacionResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvConfirmacionResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="string" nillable="true" type="s:string"/>
+</s:schema>
+</types>
+<message name="wmImed_SrvConfirmacionSoapIn">
+<part name="parameters" element="s0:wmImed_SrvConfirmacion"/>
+</message>
+<message name="wmImed_SrvConfirmacionSoapOut">
+<part name="parameters" element="s0:wmImed_SrvConfirmacionResponse"/>
+</message>
+<message name="wmImed_SrvConfirmacionHttpGetIn">
+<part name="XML_INPUT" type="s:string"/>
+</message>
+<message name="wmImed_SrvConfirmacionHttpGetOut">
+<part name="Body" element="s0:string"/>
+</message>
+<message name="wmImed_SrvConfirmacionHttpPostIn">
+<part name="XML_INPUT" type="s:string"/>
+</message>
+<message name="wmImed_SrvConfirmacionHttpPostOut">
+<part name="Body" element="s0:string"/>
+</message>
+<portType name="WsConfirmacionSoap">
+<operation name="wmImed_SrvConfirmacion">
+<input message="s0:wmImed_SrvConfirmacionSoapIn"/>
+<output message="s0:wmImed_SrvConfirmacionSoapOut"/>
+</operation>
+</portType>
+<portType name="WsConfirmacionHttpGet">
+<operation name="wmImed_SrvConfirmacion">
+<input message="s0:wmImed_SrvConfirmacionHttpGetIn"/>
+<output message="s0:wmImed_SrvConfirmacionHttpGetOut"/>
+</operation>
+</portType>
+<portType name="WsConfirmacionHttpPost">
+<operation name="wmImed_SrvConfirmacion">
+<input message="s0:wmImed_SrvConfirmacionHttpPostIn"/>
+<output message="s0:wmImed_SrvConfirmacionHttpPostOut"/>
+</operation>
+</portType>
+<binding name="WsConfirmacionSoap" type="s0:WsConfirmacionSoap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="wmImed_SrvConfirmacion">
+<soap:operation soapAction="http://tempuri.org/wmImed_SrvConfirmacion" style="document"/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<binding name="WsConfirmacionHttpGet" type="s0:WsConfirmacionHttpGet">
+<http:binding verb="GET"/>
+<operation name="wmImed_SrvConfirmacion">
+<http:operation location="/wmImed_SrvConfirmacion"/>
+<input>
+<http:urlEncoded/>
+</input>
+<output>
+<mime:mimeXml part="Body"/>
+</output>
+</operation>
+</binding>
+<binding name="WsConfirmacionHttpPost" type="s0:WsConfirmacionHttpPost">
+<http:binding verb="POST"/>
+<operation name="wmImed_SrvConfirmacion">
+<http:operation location="/wmImed_SrvConfirmacion"/>
+<input>
+<mime:content type="application/x-www-form-urlencoded"/>
+</input>
+<output>
+<mime:mimeXml part="Body"/>
+</output>
+</operation>
+</binding>
+<service name="WsConfirmacion">
+<port name="WsConfirmacionSoap" binding="s0:WsConfirmacionSoap">
+<soap:address location="http://10.100.32.153/liquidador/pruebas/WsConfirmacion/service"/>
+</port>
+<port name="WsConfirmacionHttpGet" binding="s0:WsConfirmacionHttpGet">
+<http:address location="http://10.100.32.153/liquidador/pruebas/WsConfirmacion/service"/>
+</port>
+<port name="WsConfirmacionHttpPost" binding="s0:WsConfirmacionHttpPost">
+<http:address location="http://10.100.32.153/liquidador/pruebas/WsConfirmacion/service"/>
+</port>
+</service>
+</definitions>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FASTService" targetNamespace="http://ws.imed.bono3.motor.com/">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCajaVerderFast/services/FASTPort?xsd=fast_schema1.xsd" />
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="Fast">
+      <wsdl:part element="tns:Fast" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="FastResponse">
+      <wsdl:part element="tns:FastResponse" name="parameters" />
+   </wsdl:message>
+   <wsdl:portType name="FASTSEI">
+      <wsdl:operation name="Fast">
+         <wsdl:input message="tns:Fast" name="Fast" />
+         <wsdl:output message="tns:FastResponse" name="FastResponse" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="FASTServiceSoapBinding" type="tns:FASTSEI">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="Fast">
+         <soap:operation soapAction="" style="document" />
+         <wsdl:input name="Fast">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="FastResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="WsMultiCajaVerderFast">
+      <wsdl:port binding="tns:FASTServiceSoapBinding" name="FASTPort">
+         <soap:address location="http://$$LOCATION$$/WsMultiCajaVerderFast/services/FASTPort" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

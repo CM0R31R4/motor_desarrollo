@@ -1,0 +1,58 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_api reload COLMENA
+# $1 = comando          start | stop | reload
+# #2 = financiador      FONASA | MASVIDA | BANMEDICA | CONSALUD
+
+A=`/usr/bin/psql dmotor -At -F';' -c "SELECT fin_modulo_api,fin_puerto_local_api,fin_hilos_api,fin_prefijo_api,fin_base_datos,fin_ip_conexion_bd,fin_usuario_bd,fin_clave_bd from parametros_procesos where nom_fin='$2'"`
+DATA=($A)
+I=0;
+STR=${DATA[$I]}
+MODULO=$(echo $STR | cut -f 1 -d';')
+PORTDB=$(echo $STR | cut -f 2 -d';')
+HILOS=$(echo $STR | cut -f 3 -d';')
+PREFIJO_LOG=$(echo $STR | cut -f 4 -d';')
+BASEDATOS=$(echo $STR | cut -f 5 -d';')
+IP_CONEXION_BD=$(echo $STR | cut -f 6 -d';')
+USUARIO_BD=$(echo $STR | cut -f 7 -d';')
+CLAVE_BD=$(echo $STR | cut -f 8 -d';')
+PATH1="."
+
+#echo $1,$2 - $MODULO,$PORTDB,$HILOS,$PREFIJO_LOG,$BASEDATOS,$IP_CONEXION_BD,$USUARIO_BD,$CLAVE_BD
+#pwd
+
+case "$1" in 
+start)
+	if [ -x $PATH1/API_FIN_SYB ]; then
+	#export PGCLIENTENCODING=LATIN1
+        #export ENCODING=LATIN1
+
+	./API_FIN_SYB proceso=$MODULO portdb=$PORTDB log=1 hilos=$HILOS prefijo_log=$PREFIJO_LOG basedatos=$BASEDATOS ip_conexion_bd=$IP_CONEXION_BD usuario_bd=$USUARIO_BD clave_bd=$CLAVE_BD >/dev/null&
+	
+	echo "gdb API_FIN_SYB run proceso=API_COLMENA_BNO portdb=8267 log=1 hilos=2 prefijo_log=API basedatos=isapre ip_conexion_bd=4.0.11.1:10000 usuario_bd=orden clave_bd=externo"
+	echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo "Detiene Proceso $MODULO"
+	pkill $MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop $2
+	$0 start $2
+	echo "Proceso $MODULO Reiniciado"
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

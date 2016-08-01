@@ -1,0 +1,21 @@
+consalud.py 127.0.0.1 8380 isa_imed/isa_imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.21.3.55)(PORT=1521))(CONNECT_DATA=(SID=dsqm)))" ./cruzdelnorte 2 5 CRUZDELNORTE.py
+consalud.py 127.0.0.1 8381 isa_imed/isa_imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.21.3.55)(PORT=1521))(CONNECT_DATA=(SID=dsqm)))" ./cruzdelnorte 2 5 CRUZDELNORTE.py
+Inicializa CRUZDELNORTE.py
+Traceback (most recent call last):
+  File "./ORACLE.py", line 205, in <module>
+    server = ReusingTCPServer((HOST, int(PORT)), DBRequestHandler)
+  File "/usr/lib64/python2.6/SocketServer.py", line 402, in __init__
+    self.server_bind()
+  File "./ORACLE.py", line 116, in server_bind
+    self.socket.bind(self.server_address)
+  File "<string>", line 1, in bind
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "./ORACLE.py", line 205, in <module>
+    server = ReusingTCPServer((HOST, int(PORT)), DBRequestHandler)
+  File "/usr/lib64/python2.6/SocketServer.py", line 402, in __init__
+    self.server_bind()
+  File "./ORACLE.py", line 116, in server_bind
+    self.socket.bind(self.server_address)
+  File "<string>", line 1, in bind
+socket.error: [Errno 98] Address already in use

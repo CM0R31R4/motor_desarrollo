@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="WsMultiCaja" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCaja/VERDERPort?xsd=multicaja_schema1.xsd" />
+         <import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCaja/FASTPort?xsd=multicaja_schema1.xsd" />
+         <import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCaja/VENTAPort?xsd=multicaja_schema1.xsd" />
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="Verder">
+      <wsdl:part element="tns:Verder" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="VerderResponse">
+      <wsdl:part element="tns:VerderResponse" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="Fast">
+      <wsdl:part element="tns:Fast" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="FastResponse">
+      <wsdl:part element="tns:FastResponse" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="Venta">
+      <wsdl:part element="tns:Venta" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="VentaResponse">
+      <wsdl:part element="tns:VentaResponse" name="parameters" />
+   </wsdl:message>
+   <wsdl:portType name="VERDERSEI">
+      <wsdl:operation name="Verder">
+         <wsdl:input message="tns:Verder" name="Verder" />
+         <wsdl:output message="tns:VerderResponse" name="VerderResponse" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="FASTSEI">
+      <wsdl:operation name="Fast">
+         <wsdl:input message="tns:Fast" name="Fast" />
+         <wsdl:output message="tns:FastResponse" name="FastResponse" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="VENTASEI">
+      <wsdl:operation name="Venta">
+         <wsdl:input message="tns:Venta" name="Venta" />
+         <wsdl:output message="tns:VentaResponse" name="VentaResponse" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="VERDERServiceSoapBinding" type="tns:VERDERSEI">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="Verder">
+         <soap:operation soapAction="" style="document" />
+         <wsdl:input name="Verder">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="VerderResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:binding name="FASTServiceSoapBinding" type="tns:FASTSEI">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="Fast">
+         <soap:operation soapAction="" style="document" />
+         <wsdl:input name="Fast">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="FastResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:binding name="VENTAServiceSoapBinding" type="tns:VENTASEI">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="Venta">
+         <soap:operation soapAction="" style="document" />
+         <wsdl:input name="Venta">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="VentaResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="WsMultiCaja">
+      <wsdl:port binding="tns:VERDERServiceSoapBinding" name="VERDERPort">
+         <soap:address location="http://$$LOCATION$$/WsMultiCaja/VERDERPort" />
+      </wsdl:port>
+      <wsdl:port binding="tns:FASTServiceSoapBinding" name="FASTPort">
+         <soap:address location="http://$$LOCATION$$/WsMultiCaja/FASTPort" />
+      </wsdl:port>
+      <wsdl:port binding="tns:VENTAServiceSoapBinding" name="VENTAPort">
+         <soap:address location="http://$$LOCATION$$/WsMultiCaja/VENTAPort" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

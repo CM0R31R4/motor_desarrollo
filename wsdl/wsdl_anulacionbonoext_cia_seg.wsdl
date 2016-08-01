@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="wmImed_SrvAnulacion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmImed_SrvAnulacionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvAnulacionResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="wmImed_SrvAnulacionSoapIn">
+    <wsdl:part name="parameters" element="tns:wmImed_SrvAnulacion" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvAnulacionSoapOut">
+    <wsdl:part name="parameters" element="tns:wmImed_SrvAnulacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvAnulacionHttpGetIn">
+    <wsdl:part name="XML_INPUT" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvAnulacionHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvAnulacionHttpPostIn">
+    <wsdl:part name="XML_INPUT" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvAnulacionHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:portType name="wsAnulacionSoap">
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Anulacion Bono Externo</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvAnulacionSoapIn" />
+      <wsdl:output message="tns:wmImed_SrvAnulacionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsAnulacionHttpGet">
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Anulacion Bono Externo</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvAnulacionHttpGetIn" />
+      <wsdl:output message="tns:wmImed_SrvAnulacionHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsAnulacionHttpPost">
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Anulacion Bono Externo</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvAnulacionHttpPostIn" />
+      <wsdl:output message="tns:wmImed_SrvAnulacionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsAnulacionSoap" type="tns:wsAnulacionSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <soap:operation soapAction="http://tempuri.org/wmImed_SrvAnulacion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsAnulacionSoap12" type="tns:wsAnulacionSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <soap12:operation soapAction="http://tempuri.org/wmImed_SrvAnulacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsAnulacionHttpGet" type="tns:wsAnulacionHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <http:operation location="/wmImed_SrvAnulacion" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsAnulacionHttpPost" type="tns:wsAnulacionHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="wmImed_SrvAnulacion">
+      <http:operation location="/wmImed_SrvAnulacion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsAnulacion">
+    <wsdl:port name="wsAnulacionSoap" binding="tns:wsAnulacionSoap">
+      <soap:address location="http://10.100.32.177/AnulacionBonoExt/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsAnulacionSoap12" binding="tns:wsAnulacionSoap12">
+      <soap12:address location="http://10.100.32.177/AnulacionBonoExt/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsAnulacionHttpGet" binding="tns:wsAnulacionHttpGet">
+      <http:address location="http://10.100.32.177/AnulacionBonoExt/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsAnulacionHttpPost" binding="tns:wsAnulacionHttpPost">
+      <http:address location="http://10.100.32.177/AnulacionBonoExt/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

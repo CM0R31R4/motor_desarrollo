@@ -1,0 +1,25 @@
+
+Conección al SQLPLUS
+/home/motor/instantclient_11_2/sqlplus isa_imed/isa_imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=160.70.51.25)(PORT=1521))(CONNECT_DATA=(SID=SQM)))"
+
+Query para ver los objetos
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('PACKAGE');
+
+Descipción de estructura
+desc VIDVALTRANS_PKG
+
+** Conexion con el conector de Python	
+./oracle_gateway.py localhost 8094
+'isa_imed/isa_imed@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.21.3.55)(PORT=1521))(CONNECT_DATA=(SID=dsqm)))'
+
+SQL> show pagesize lines
+pagesize 14
+linesize 80
+SET PAGESIZE 999 LINESIZE 300
+
+define_editor = vi;
+
+
+
+
+

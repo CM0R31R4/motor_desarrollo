@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+ xmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="http://Seguros.CruzBlanca.cl/WsIntegracionLGM/">
+ <SOAP-ENV:Body>
+   <ns1:Anulacion>
+    <ns1:extCodSeguro>0</ns1:extCodSeguro>
+    <ns1:extRutBeneficiario></ns1:extRutBeneficiario>
+    <ns1:extFolioAuto>0</ns1:extFolioAuto>
+   </ns1:Anulacion>
+
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

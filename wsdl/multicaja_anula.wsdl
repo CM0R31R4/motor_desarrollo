@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="WsMultiCaja" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCaja/ImedAnula?xsd=multicaja_anula_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="imedanula">
+    <wsdl:part element="tns:imedanula" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="imedanulaResponse">
+    <wsdl:part element="tns:imedanulaResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IMEDANULASEI">
+    <wsdl:operation name="imedanula">
+      <wsdl:input message="tns:imedanula" name="imedanula">
+    </wsdl:input>
+      <wsdl:output message="tns:imedanulaResponse" name="imedanulaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IMEDANULAServiceSoapBinding" type="tns:IMEDANULASEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="imedanula">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="imedanula">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="imedanulaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IMEDANULAService">
+    <wsdl:port binding="tns:IMEDANULAServiceSoapBinding" name="IMEDANULA">
+      <soap:address location="http://$$LOCATION$$/WsMultiCaja/ImedAnula"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

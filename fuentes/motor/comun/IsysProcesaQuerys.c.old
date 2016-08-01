@@ -1,0 +1,726 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<sys/types.h>
+#include<dirent.h>
+#include <xml.h>
+extern pthread_mutex_t mut_proc;
+
+
+Tipo_XML *AplicaServicioTipo11(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+{
+	Tipo_Formatos *pForIn;
+	Tipo_XML *xml1=NULL;
+	Tipo_XML *xml2=NULL;
+	char szAux[100];
+	char szFile[1024];
+	char szError[1024];
+	char szComando[512];
+	char szSql[1024];
+	char szLinea[MAX_BUFFER];
+	Tipo_Data *pFile=NULL;
+	int nLen;
+	FILE *f;
+	time_t t1,t2;
+	int nTimeout;
+	
+	//Solo por si viene como parametros
+	*nProxSec=pQuerys->nSecError;
+	ReemplazaTagsStr(xml,pQuerys->szQuery,szSql);
+	xml2=ProcesaInputXML1(xml2,szSql);
+	pForIn=LeeFormato(id,pQuerys->nForSalida);
+	if (!pForIn)
+	{
+		sprintf(szError,"No existe formato %i para leer archivos tipo %s",pQuerys->nForSalida,szFile);
+		printf("%s\n\r",szError);
+		WriteLog(id,szError);
+		return NULL;
+	}
+	GetStrXML(xml2,"FILE",szFile,sizeof(szFile));
+	GetStrXML(xml2,"COMANDO",szComando,sizeof(szComando));
+	GetIntXML(xml2,"TIMEOUT",&nTimeout);
+	xml2=CierraXML(xml2);
+	if (memcmp(szComando,"DELETE",6)==0)
+	{
+		remove(szFile);
+		sprintf(szError,"Borra File %s",szFile);
+		WriteLog(id,szError);
+		return NULL;
+	}
+	else
+	{
+	   time(&t1);
+	   //Espera a que este abierto el archivo
+	   do
+	   {
+		f=fopen(szFile,"r");
+		if (f!=NULL) 
+		{
+			fclose(f);
+			break;
+		}
+		time(&t2);
+		usleep(100);
+	   }while(t2-t1<nTimeout);
+
+	   pFile=LeeArchivo(szFile);
+	   if (!pFile)
+	   {
+		sprintf(szError,"El Archivo %s no puede ser leido",szFile);
+		WriteLog(id,szError);
+		printf("%s\n\r",szError);
+		return NULL;
+	   }
+	   nLen=pFile->nLenData;
+	   memset(szLinea,0,sizeof(szLinea));
+	   if (sizeof(szLinea)>pFile->nLenData) 
+	   {
+		memcpy(szLinea,pFile->data,pFile->nLenData);
+		szLinea[pFile->nLenData]=0;
+	   }
+	   else
+	   {
+		memcpy(szLinea,pFile->data,sizeof(szLinea));
+		szLinea[sizeof(szLinea)]=0;
+	   }
+	   //WriteLog(id,szLinea);
+	   xml1=AplicaFormatoEntrada(id,szLinea,pForIn,strlen(szLinea));	
+	   LiberaData(pFile);
+	   *nProxSec=pQuerys->nSecOk;
+	}
+	return xml1;
+}
+
+//Hace un system contra el sistema..
+Tipo_XML *AplicaServicioTipo10(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+{
+		Tipo_XML *xml1;
+		char szSystem[1024];
+		ReemplazaTagsStr(xml,pQuerys->szQuery,szSystem);
+		WriteLog(id,"SYSTEM COMMAND");
+		WriteLog(id,szSystem);
+		system(szSystem);
+		xml1=InsertaDataXML(xml1,"SYSTEM",szSystem);
+		*nProxSec=pQuerys->nSecOk;
+		return xml1;
+}
+
+//Asigna threads y espera su ejecucion de manera simultanea.
+Tipo_XML *AplicaServicioTipo9(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+	{
+		int bContesta=0;
+		char szAux[200];
+		Tipo_XML *xml1=NULL;
+		Tipo_XML *xml2=NULL;
+		int nServicio,i,j,nCont;
+		time_t t1,t2;
+		char szSql[1024];
+		char szCampo[512];
+		int nTimeout;
+		int PROCESOS[100];
+		int nProcesoAux;
+		int n,n1;
+		*nProxSec=pQuerys->nSecOk;
+		nServicio=pQuerys->nServicio;
+		n=0;
+
+		for(j=0;j<100;j++) PROCESOS[j]=-1;
+
+		//Solo por si viene como parametros
+		ReemplazaTagsStr(xml,pQuerys->szQuery,szSql);
+		xml2=ProcesaInputXML1(xml2,szSql);
+		//ImprimeXML(xml2);
+
+		WriteLog(id,"Asigna Procesos MultiProposito");
+		n1=0;
+		//Ejecuta los procesos..
+		while(1)
+		{
+			nServicio=0;
+			//Obtengo el dato del servicio a ejecutar
+			sprintf(szCampo,"EJECUTA%i",n1++);
+			GetIntXML(xml2,szCampo,&nServicio);
+			if (nServicio>0) 
+			{
+				int i;
+				char szAux[50];
+				//Busca una conexion libre
+				sprintf(szAux,"Espera Libre Total Proc=%i",global.nProcesos);
+				WriteLog(id,szAux);
+				i=EsperaConexionLibre(id,global.nProcesos);
+				sprintf(szAux,"Libre =%i",i);
+				WriteLog(id,szAux);
+				Conexion[i].nTipoProceso = PROC_XML;
+				//WriteLog(id,"CloseXML");
+				Conexion[i].xml=CierraXML(Conexion[i].xml);
+				//WriteLog(id,"StrCpy");
+				Conexion[i].xml=StrcpyXML(xml,Conexion[i].xml);	
+
+				//WriteLog(id,"Inerta");
+				//Asigno parametro de entrada
+				Conexion[i].xml=InsertaDataIntXML(Conexion[i].xml,"SERVICIO",nServicio);
+				//Asigna el proceso
+				PROCESOS[n++]=i;
+				sprintf(szAux,"Hace Senal SIGUSR2 Multi a %i",i);
+				WriteLog(id,szAux);
+				DespiertaProceso(i);
+			}
+			else break;
+		}
+		nTimeout=10;
+		GetIntXML(xml2,"TIMEOUT",&nTimeout);
+		sprintf(szAux,"Timeout Procesos %i",nTimeout);
+		WriteLog(id,szAux);
+
+		//Setea Hora de inicio de timeout
+		time(&t1);
+		
+		//Ejecuta los querys
+		n1=0;
+		do
+		{
+			char szQuery[1024];
+			time(&t2);
+			if (t2-t1>nTimeout) 
+			{
+				WriteLog(id,"Timeout Querys multiProceso");
+				break;
+			}
+			//Obtengo el query ejecutar
+			sprintf(szCampo,"QUERY%i",n1++);
+			if (GetStrXML(xml2,szCampo,szQuery,sizeof(szQuery)))
+			{
+				Tipo_Data *pData;
+				Tipo_XML *xmlq=NULL;
+				pData=ReemplazaTagsStr1(xml,szQuery);
+				if (pData==NULL)
+				{
+				      WriteLog(0,"ERROR no hay query");
+				      break;
+				}
+				xmlq=GetRecord(id,pData->data);
+				LiberaData(pData);
+				if (xmlq!=NULL) 
+				{
+					xml1=UpdateXML(xml1,xmlq);	
+					xmlq=CierraXML(xmlq);
+				}
+			}
+			else break;
+		} while(1);
+
+		xml2=CierraXML(xml2);
+		//Espera que terminen 
+		do
+		{
+			nCont=0;
+			for(j=0;j<n;j++) 
+			{
+				if (PROCESOS[j]==-1) nCont++;
+				//Revisa si ha parado los procesos
+				else if (Conexion[PROCESOS[j]].nEstado==C_ESPERA) 
+				{
+					nProcesoAux=PROCESOS[j];
+					nCont++;
+					if (Conexion[nProcesoAux].xml!=NULL)
+					{
+						sprintf(szAux,"Update Proceso %i %i",j,PROCESOS[j]);
+						WriteLog(id,szAux);
+						xml1=UpdateXML(xml1,Conexion[nProcesoAux].xml);	
+						Conexion[nProcesoAux].xml=CierraXML(Conexion[nProcesoAux].xml);
+					}
+					PROCESOS[j]=-1;
+					//pthread_mutex_lock(&mut_proc);
+					Conexion[nProcesoAux].nEstado=C_LIBRE;
+					//pthread_mutex_unlock(&mut_proc);
+				}
+			}
+			if (nCont==n) break;
+			time(&t2);
+			if (t2-t1>nTimeout) 
+			{
+				WriteLog(id,"Timeout MultiProceso");
+				break;
+			}
+			usleep(100);
+		}while(1);
+
+		//Concatenamos las respuesta positivas..
+		for(j=0;j<n;j++)
+		{
+			//Si el proceso no termino...
+			if (PROCESOS[j]!=-1) 
+			{
+				sprintf(szAux,"Proceso muertoi %i",PROCESOS[j]);
+				WriteLog(id,szAux);
+				Conexion[PROCESOS[j]].nTipoProceso=PROC_MUERTO;
+			}
+		}
+		
+		sprintf(szAux,"Fin Proceso Multi %i",n);
+		WriteLog(id,szAux);
+		if (xml1!=NULL) *nProxSec=pQuerys->nSecOk;
+		else *nProxSec=pQuerys->nSecError;
+		return xml1;
+	fin:
+		*nProxSec=pQuerys->nSecError;
+		xml2=CierraXML(xml2);
+		return xml1;
+
+	}
+
+	//Realiza una recusion llama a otro servicio de querys
+	Tipo_XML *AplicaServicioTipo8(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+	{
+		int bContesta=0;
+		char szAux[200];
+		Tipo_XML *xml1=NULL;
+		int nServicio;
+		*nProxSec=pQuerys->nSecOk;
+		nServicio=pQuerys->nServicio;
+		//si el servicio es 0, verificamos si viene de manera dinamica...
+		if (nServicio==0)
+		{
+			char szSql[1024];
+			Tipo_XML *xml2=NULL;
+			//Solo por si viene como parametros
+			ReemplazaTagsStr(xml,pQuerys->szQuery,szSql);
+			xml2=ProcesaInputXML1(xml2,szSql);
+
+			//Obtengo el dato del servicio a ejecutar
+			GetIntXML(xml2,"EJECUTA",&nServicio);
+			xml2=CierraXML(xml2);
+		}
+		
+		xml1=AplicaQuerysServicio(id,xml,nServicio,&bContesta);
+		if (xml1==NULL) 
+		{
+			sprintf(szAux,"Falla llamada a servicio %i",pQuerys->nServicio);
+			WriteLog(id,szAux);
+			return NULL;
+		}
+		sprintf(szAux,"Fin Ejecucio servicio %i",pQuerys->nServicio);
+		WriteLog(id,szAux);
+		
+		*nProxSec=pQuerys->nSecOk;
+		return xml1;
+
+
+
+	}
+
+	//Lee un archivo 
+	Tipo_XML *AplicaServicioTipo7(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+	{
+		Tipo_Formatos *pForIn;
+		Tipo_XML *xml1=NULL;
+		char szAux[100];
+		char szFile[1024];
+		char szError[1024];
+		char szLinea[MAX_BUFFER];
+		Tipo_Data *pFile=NULL;
+		int nLen;
+		FILE *f;
+		
+		ReemplazaTagsStr(xml,pQuerys->szQuery,szFile);
+		*nProxSec=pQuerys->nSecError;
+		pForIn=LeeFormato(id,pQuerys->nForSalida);
+		if (!pForIn)
+		{
+			sprintf(szError,"No existe formato %i para leer archivos tipo %s",pQuerys->nForSalida,szFile);
+			printf("%s\n\r",szError);
+			WriteLog(id,szError);
+			return NULL;
+		}
+
+		pFile=LeeArchivo(szFile);
+		if (!pFile)
+		{
+			sprintf(szError,"El Archivo %s no puede ser leido",szFile);
+			WriteLog(id,szError);
+			printf("%s\n\r",szError);
+			return NULL;
+		}
+
+		nLen=pFile->nLenData;
+		memset(szLinea,0,sizeof(szLinea));
+		if (sizeof(szLinea)>pFile->nLenData) 
+		{
+			memcpy(szLinea,pFile->data,pFile->nLenData);
+			szLinea[pFile->nLenData]=0;
+		}
+		else
+		{
+			memcpy(szLinea,pFile->data,sizeof(szLinea));
+			szLinea[sizeof(szLinea)]=0;
+		}
+		xml1=AplicaFormatoEntrada(id,szLinea,pForIn,strlen(szLinea));	
+		LiberaData(pFile);
+		*nProxSec=pQuerys->nSecOk;
+		return xml1;
+	}
+
+
+	//Escribe un archivo 
+	Tipo_XML *AplicaServicioTipo4(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts,char szOpenFile[])
+	{
+		Tipo_Formatos *pForIn;
+		Tipo_XML *xml1=NULL;
+		char szAux[100];
+		char szFile[1024];
+		char szError[1024];
+		char szLinea[MAX_BUFFER];
+		int nLen;
+		FILE *f;
+		
+		ReemplazaTagsStr(xml,pQuerys->szQuery,szFile);
+		*nProxSec=pQuerys->nSecError;
+		pForIn=LeeFormato(id,pQuerys->nForSalida);
+		if (!pForIn)
+		{
+			sprintf(szError,"No existe formato %i para archivos tipo %s",pQuerys->nForSalida,szFile);
+			printf("%s\n\r",szError);
+			WriteLog(id,szError);
+			return NULL;
+		}
+
+		//Crea Archivo o AbreArchivo
+		f= fopen(szFile,szOpenFile);
+	if (!f)
+        {
+		sprintf(szError,"El Archivo %s no puede ser creado",szFile);
+		WriteLog(id,szError);
+		printf("%s\n\r",szError);
+                return NULL;
+	}
+
+	memset(szLinea,0,sizeof(szLinea));
+	AplicaFormatoSalida(id,szLinea,xml,pForIn,&nLen);
+	if (nLen>0)
+	{
+		fwrite(szLinea,sizeof(char),nLen,f);
+	}
+	fclose(f);
+	*sts=2;
+	xml1=InsertaDataXML(xml1,"FILE",szFile);
+	*nProxSec=pQuerys->nSecOk;
+	return xml1;
+}
+
+//Autoriza Servicio
+Tipo_XML *AplicaServicioTipo3(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+{
+	Tipo_Servicio stServ;
+	Tipo_Formatos *pForIn;
+	Tipo_Formatos *pForOut;
+	Tipo_XML *xml1=NULL;
+	char szAux[100];
+	
+	stServ.nTx=pQuerys->nServicio;
+
+	if (!BuscaServicio(id,&stServ,BUSCA_TX))
+	{
+		sprintf(szAux,"No existe servicioi %i",pQuerys->nServicio);
+		WriteLog(id,szAux);
+		return NULL;
+	}
+
+	*sts=1;
+	xml1=AutorizaServicio1(id,xml,&stServ);
+	if (xml1==NULL) *nProxSec=pQuerys->nSecError;
+	else *nProxSec=pQuerys->nSecOk;
+	return xml1;
+}
+
+//Autoriza Servicio con 
+Tipo_XML *AplicaServicioTipo2(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+{
+	Tipo_Servicio stServ;
+	Tipo_Formatos *pForIn;
+	Tipo_Formatos *pForOut;
+	Tipo_XML *xml1=NULL;
+	char szAux[100];
+	
+	stServ.nTx=pQuerys->nServicio;
+
+	if (!BuscaServicio(id,&stServ,BUSCA_TX))
+	{
+		sprintf(szAux,"No existe servicioi %i",pQuerys->nServicio);
+		WriteLog(id,szAux);
+		return NULL;
+	}
+
+	pForIn=LeeFormato(id,pQuerys->nForSalida);
+	pForOut=LeeFormato(id,pQuerys->nForAck);
+
+	*sts=1;
+	xml1=AutorizaServicioXML(id,xml,pForIn,pForOut,&stServ);
+	//ImprimeXML(xml1);
+	if (xml1==NULL) *nProxSec=pQuerys->nSecError;
+	else *nProxSec=pQuerys->nSecOk;
+	return xml1;
+}
+
+
+//Ejecuta una Query
+Tipo_XML *AplicaQueryTipo1(int id,Tipo_XML *xml,Tipo_Querys *pQuerys,int *nProxSec,int *sts)
+{
+	Tipo_XML *xmlq=NULL;
+	int nBaseTmp;
+	Tipo_Data *pData;
+	int nSecOk;
+	char szTmp[100];
+
+	pData=ReemplazaTagsStr1(xml,pQuerys->szQuery);
+	if (pData==NULL)
+	{
+		WriteLog(0,"ERROR en ReemplazaTagsStr");
+		return NULL;
+	}
+   	nBaseTmp=GET_DATABASE(id);
+	SET_GLOBAL_DATABASE(id,pQuerys->nBaseQuery);
+	*nProxSec=pQuerys->nSecError;
+	nSecOk=pQuerys->nSecOk;
+	sprintf(szTmp,"Sec = %i",*nProxSec);
+	WriteLog(id,szTmp);
+	if (pQuerys->nEsperaOutput==1)
+	{
+		WriteLog(id,"Paso1");
+   		xmlq=GetRecord(id,pData->data);
+		WriteLog(id,"Paso2");
+		LiberaData(pData);
+		if (pQuerys->nValidaOutput)
+		{
+		WriteLog(id,"Paso3");
+		   if (xmlq==NULL) goto fin;
+		WriteLog(id,"Paso4");
+		   
+		   //Si contiene un tag especial de retorno exitoso
+		   //sigue a este TAG siempre que retorno exitoso sea menos uno
+		   if (pQuerys->nSecOk==(-1))
+		   {
+			   GetIntXML(xmlq,"__SECUENCIAOK__",&nSecOk);
+		   }
+		}
+	}
+	else if (pQuerys->nEsperaOutput==2)
+	{
+		int nTotal;
+   		xmlq=GetRecords(id,pData->data,&nTotal);
+		LiberaData(pData);
+		if (pQuerys->nValidaOutput)
+		{
+		   if (xmlq==NULL) goto fin;
+		   else if (nTotal==0)
+		   {
+			   xmlq=CierraXML(xmlq);
+			   goto fin;
+		   }
+		}
+	}
+	else if (pQuerys->nEsperaOutput==3)
+	{
+		int nTotal;
+   		xmlq=GetRecords1(id,pData->data,&nTotal);
+		LiberaData(pData);
+		if (pQuerys->nValidaOutput)
+		{
+		   if (xmlq==NULL) goto fin;
+		   else if (nTotal==0)
+		   {
+			   xmlq=CierraXML(xmlq);
+			   goto fin;
+		   }
+		}
+	}
+	else 
+	{
+		int sts1;
+		sts1=SendDatabase(id,pData->data);
+		LiberaData(pData);
+		if (pQuerys->nValidaOutput)
+		{
+			if (!sts1) goto fin;
+			*sts=1;
+		}
+	}
+	SET_GLOBAL_DATABASE(id,nBaseTmp);
+	*nProxSec=nSecOk;
+	return xmlq;
+fin:
+	SET_GLOBAL_DATABASE(id,nBaseTmp);
+	sprintf(szTmp,"Sec = %i",*nProxSec);
+	WriteLog(id,szTmp);
+	return NULL;
+}
+
+
+Tipo_XML *AplicaQuerys(int id,int nSocket,Tipo_XML *xml,Tipo_Querys *pQueryOrg,int *sts,int *bContesta)
+{
+	int nProxSec=0;
+	int nVerifica=0;
+	Tipo_Querys *pQuerys=pQueryOrg;
+	char szAux[100];
+	Tipo_XML *xml1=NULL;
+	Tipo_XML *xmlq=NULL;
+	int bExisteQuery=0;
+	int nMaxRecursion=20000;
+	int bContestaAux=0;
+	WriteLog(id,"AplicaQuerys");
+	xml1=StrcpyXML(xml,xml1);
+	*bContesta=0;
+	memset(global.szError,0,sizeof(global.szError));
+	do
+	{
+		if (pQuerys==NULL) 
+		{
+			if (!nVerifica) break;
+			WriteLog(id,"Recursion en Querys");
+			if (!bExisteQuery) 
+			{
+				sprintf(szAux,"No existe Query Sec %i",nProxSec);
+				WriteLog(id,szAux);
+				break;
+			}
+			if (nMaxRecursion--<0)
+			{
+				WriteLog(id,"Alcanza maximo de recursion 20000");
+				break;
+			}
+			pQuerys=pQueryOrg;
+			continue;
+		}
+		//La primera vez no verifica la seuencia
+		if (nVerifica)
+		{
+			//sprintf(szAux,"Proximo Query Sec=%i Actual=%i",nProxSec,pQuerys->nSecuencia);
+			//WriteLog(id,szAux);
+			if (pQuerys->nSecuencia!=nProxSec) goto fin;
+		}
+		printf("Aplica Querys Secuencia %i\n\r",nProxSec);
+		sprintf(szAux,"Secuencia %i:%s",nProxSec,pQuerys->szLlave);
+		WriteLog(id,szAux);
+		bExisteQuery=1;
+		//Es solo un query
+		if (pQuerys->nTipo==1) 
+		{
+			xmlq=AplicaQueryTipo1(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//un servicio con formatos
+		else if (pQuerys->nTipo==2) 
+		{
+			xmlq=AplicaServicioTipo2(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Aplica el servicio con data XML nativo
+		else if (pQuerys->nTipo==3)
+		{
+			xmlq=AplicaServicioTipo3(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Genera un archivo
+		else if (pQuerys->nTipo==4)
+		{
+			xmlq=AplicaServicioTipo4(id,xml1,pQuerys,&nProxSec,sts,"w+");
+		}
+		//Append en un archivo
+		else if (pQuerys->nTipo==5)
+		{
+			xmlq=AplicaServicioTipo4(id,xml1,pQuerys,&nProxSec,sts,"a+");
+		}
+		//Aplica un query, contesta y luego sigue...
+		else if (pQuerys->nTipo==6)
+		{
+			xmlq=AplicaQueryTipo1(id,xml1,pQuerys,&nProxSec,sts);
+			bContestaAux=1;
+			*bContesta=1;
+		}
+		//Lee desde un archivo...
+		else if (pQuerys->nTipo==7)
+		{
+			xmlq=AplicaServicioTipo7(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Realiza una llamada a otro servicio
+		//hace una recursion
+		else if (pQuerys->nTipo==8)
+		{
+			xmlq=AplicaServicioTipo8(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Crea procesos para antender de manera simultanea 
+		//los servicio de entrada
+		else if (pQuerys->nTipo==9)
+		{
+			xmlq=AplicaServicioTipo9(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Realiza un system contra el sistema
+		else if (pQuerys->nTipo==10)
+		{
+			xmlq=AplicaServicioTipo10(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Espera y lee un archivo
+		//si no existe lo espera.....
+		else if (pQuerys->nTipo==11)
+		{
+			xmlq=AplicaServicioTipo11(id,xml1,pQuerys,&nProxSec,sts);
+		}
+		//Si hay errror insertamos a xml1 un tag de error.
+		if (global.nError)
+		{
+			xml1=InsertaDataXML(xml1,"ERROR",global.szError);
+			global.nError=0;
+		}
+
+		//sprintf(szAux,"Proximo Query Sec %i",nProxSec);
+		//WriteLog(id,szAux);
+		xml1=UpdateXML(xml1,xmlq);
+		xmlq=CierraXML(xmlq);
+		if (bContestaAux)
+		{
+			WriteLog(id,"Responde Servicio");
+			SendSocketXML1(id,nSocket,xml1);
+			bContestaAux=0;
+		}
+fin:
+		if (nProxSec==0) break;	
+		pQuerys=pQuerys->pNext;
+		nVerifica=1;
+	}while(1);
+
+	CloseDatabase(id);
+	return xml1;
+}
+
+Tipo_XML *AplicaQuerysServicio(int id,Tipo_XML *xml,int nTx,int *bContesta)
+{
+	Tipo_Querys *pQuerys;
+	Tipo_Servicio stServ;
+	Tipo_XML *xml1=NULL;
+	int nSocket=Conexion[id].nSocket;
+	int sts;
+	char szTmp[200];
+	int nLlave=0;
+	int nTimeoutTemp;
+
+	stServ.nTx=nTx;
+	//Identifica cual es la llave de query de ese servicio
+	if (BuscaServicio(id,&stServ,BUSCA_TX)) nLlave=stServ.nLlaveQuery;
+	if (nLlave==0) nLlave=nTx;
+	
+	nTimeoutTemp=global.nTimeoutBaseDatos;
+	//si el timeout del servicio es mayor al timeout de la base 
+	//seteamos el timeout de la base con el timeout del servicio
+	if (global.nTimeoutBaseDatos<stServ.nTimeout)
+	{
+		nTimeoutTemp=global.nTimeoutBaseDatos;
+		global.nTimeoutBaseDatos=stServ.nTimeout;
+	}
+
+	pQuerys=LeeQuery(id,nLlave);
+	if (pQuerys==NULL)
+	{
+		sprintf(szTmp,"No existen querys para el servicio [%i] en isys_querys_tx",nTx);
+		printf("%s\n\r",szTmp);
+		WriteLog(id,szTmp);
+		return NULL;
+	}
+	xml1=AplicaQuerys(id,nSocket,xml,pQuerys,&sts,bContesta);
+	global.nTimeoutBaseDatos=nTimeoutTemp;
+	return xml1;
+}

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="leerutcotiz" type="tns:leerutcotiz"/>
+<xs:element name="leerutcotizResponse" type="tns:leerutcotizResponse"/>
+<xs:complexType name="leerutcotiz">
+    <xs:sequence>
+      <xs:element name="extCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="extRutCotizante" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="leerutcotizResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:leerutcotizResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="leerutcotizResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extNomCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extMensajeError" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtCorrBenef" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutBeneficiario" type="xs:string"/>
+      <xs:element minOccurs="0" name="extApellidoPat" type="xs:string"/>
+      <xs:element minOccurs="0" name="extApellidoMat" type="xs:string"/>
+      <xs:element minOccurs="0" name="extNombres" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodEstBen" type="xs:string"/>
+      <xs:element minOccurs="0" name="extDescEstado" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Verder" type="tns:Verder"/>
+	<xs:element name="VerderResponse" type="tns:VerderResponse"/>
+	<xs:complexType name="Verder">
+       		<xs:sequence>
+             		<xs:element name="PC_KEY" type="xs:string"/>
+             		<xs:element name="COD_LUGAR" type="xs:string"/>
+            		<xs:element name="RUT_TITULAR" type="xs:string"/>
+             		<xs:element name="RUT_CAJERO" type="xs:string"/>
+             		<xs:element name="CODIGO_AUDITORIA" type="xs:string"/>
+             		<xs:element name="MONTO" type="xs:int"/>
+       		</xs:sequence>
+   	</xs:complexType>
+   	<xs:complexType name="VerderResponse">
+      		<xs:sequence>
+            		<xs:element minOccurs="0" name="return" type="tns:VerderResp"/>
+      		</xs:sequence>
+   	</xs:complexType>
+   	<xs:complexType name="VerderResp">
+      		<xs:sequence>
+            		<xs:element minOccurs="0" name="CODIGO_RESPUESTA" type="xs:string"/>
+            		<xs:element minOccurs="0" name="MENSAJE_RESPUESTA" type="xs:string"/>
+            		<xs:element minOccurs="0" name="LISTA_EMISORES" type="xs:string"/>
+            		<xs:element minOccurs="0" name="TOTAL_EMISORES" type="xs:string"/>
+      		</xs:sequence>
+   	</xs:complexType>
+ 	
+	<xs:element name="Fast" type="tns:Fast"/>
+ 	<xs:element name="FastResponse" type="tns:FastResponse"/>
+  	<xs:complexType name="Fast">
+      		<xs:sequence>
+       		<xs:element name="PC_KEY" type="xs:string"/>
+              	<xs:element name="COD_LUGAR" type="xs:string"/>
+                <xs:element name="RUT_TITULAR" type="xs:string"/>
+                <xs:element name="RUT_CAJERO" type="xs:string"/>
+                <xs:element name="CODIGO_AUDITORIA" type="xs:string"/>
+                <xs:element name="MONTO" type="xs:int"/>
+          </xs:sequence>
+  	</xs:complexType>
+    	<xs:complexType name="FastResponse">
+        	<xs:sequence>
+               	<xs:element minOccurs="0" name="return" type="tns:FastResp"/>
+          </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FastResp">
+        	<xs:sequence>
+               	<xs:element minOccurs="0" name="CODIGO_RESPUESTA" type="xs:string"/>
+               	<xs:element minOccurs="0" name="MENSAJE_RESPUESTA" type="xs:string"/>
+          </xs:sequence>
+    </xs:complexType>
+
+  <xs:element name="Venta" type="tns:Venta"/>
+  <xs:element name="VentaResponse" type="tns:VentaResponse"/>
+    <xs:complexType name="Venta">
+          <xs:sequence>
+                <xs:element name="NUM_SOLICITUD" type="xs:string"/>
+                <xs:element name="PC_KEY" type="xs:string"/>
+                <xs:element name="COD_LUGAR" type="xs:string"/>
+                <xs:element name="RUT_PRESTADOR" type="xs:string"/>
+                <xs:element name="RUT_BENEFICIARIO" type="xs:string"/>
+                <xs:element name="RUT_TITULAR" type="xs:string"/>
+                <xs:element name="CODIGO_AUDITORIA" type="xs:string"/>
+                <xs:element name="HUELLA" type="xs:string"/>
+                <xs:element name="TIPO_VENTA_IN" type="xs:string"/>
+                <xs:element name="FECHA_OPERACION" type="xs:string"/>
+                <xs:element name="TIPO_PRODUCTO" type="xs:string"/>
+                <xs:element name="MONTO" type="xs:int"/>
+                <xs:element name="CUOTAS" type="xs:string"/>
+                <xs:element name="FECHA_PC" type="xs:string"/>
+                <xs:element name="RUT_CAJERO" type="xs:string"/>
+                <xs:element name="TRACK2" type="xs:string"/>
+                <xs:element name="TRACK1" type="xs:string"/>
+                <xs:element name="EMISOR" type="xs:string"/>
+                <xs:element name="PIN" type="xs:string"/>
+                <xs:element name="TPO_VOUCHER" type="xs:string"/>
+          </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="VentaResponse">
+          <xs:sequence>
+                <xs:element minOccurs="0" name="return" type="tns:VentaResp"/>
+          </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="VentaResp">
+          <xs:sequence>
+                <xs:element minOccurs="0" name="CODIGO_RESPUESTA" type="xs:string"/>
+                <xs:element minOccurs="0" name="MENSAJE_RESPUESTA" type="xs:string"/>
+                <xs:element minOccurs="0" name="EMISOR" type="xs:string"/>
+                <xs:element minOccurs="0" name="CODIGO_ISWITCH" type="xs:string"/>
+                <xs:element minOccurs="0" name="VOUCHER" type="xs:string"/>
+                <xs:element minOccurs="0" name="CODIGO_DEC" type="xs:string"/>
+          </xs:sequence>
+    </xs:complexType> 
+</xs:schema>

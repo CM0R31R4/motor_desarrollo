@@ -1,0 +1,128 @@
+tsql -H 150.10.10.31 -p 1433 -U IMED -P 20050331
+
+sp_help dbo.MASAnulaBonoU
+
+#######################################################################################################################################
+DECLARE @extCodFinanciador numeric (5);
+DECLARE @extRutBeneficiario char (12);
+DECLARE @extFechaActual datetime;
+DECLARE @extApellidoPat char (30);
+DECLARE @extApellidoMat char (30);
+DECLARE @extNombres char (40);
+DECLARE @extSexo char (1);
+DECLARE @extFechaNacimi char (8);
+DECLARE @extCodEstBen char (1);
+--DECLARE @extDescEstado char (15);
+DECLARE @extDescEstado char (30);
+DECLARE @extRutCotizante char (12);
+DECLARE @extNomCotizante char (40);
+DECLARE @extDirPaciente char (40);
+DECLARE @extGlosaComuna char (30);
+DECLARE @extGlosaCiudad char (30);
+DECLARE @extPrevision char (1);
+DECLARE @extGlosa char (40);
+DECLARE @extPlan char (15);
+DECLARE @extDescuentoxPlanilla char (1);
+DECLARE @extMontoExcedente numeric (10);
+
+DECLARE @extRutAcompanante char (12);
+DECLARE @extNombreAcompanante char (40); 
+EXEC dbo.MASBenCertif 88,"0003484259-0" ,"20140805", @extApellidoPat OUTPUT,@extApellidoMat OUTPUT,@extNombres OUTPUT, @extSexo OUTPUT,@extFechaNacimi OUTPUT,@extCodEstBen OUTPUT,@extDescEstado OUTPUT,@extRutCotizante OUTPUT, @extNomCotizante OUTPUT,@extDirPaciente OUTPUT,@extGlosaComuna OUTPUT,@extGlosaCiudad OUTPUT, @extPrevision OUTPUT,@extGlosa OUTPUT,@extPlan OUTPUT,@extDescuentoxPlanilla OUTPUT,@extMontoExcedente OUTPUT; 
+SELECT @extApellidoPat as extApellidoPat, @extApellidoMat as extApellidoMat ,@extNombres as extNombres , @extSexo as extSexo ,@extFechaNacimi as extFechaNacimi ,@extCodEstBen as extCodEstBen , @extDescEstado as extDescEstado,@extRutCotizante as extRutCotizante, @extNomCotizante as extNomCotizante,@extDirPaciente as extDirPaciente , @extGlosaComuna as extGlosaComuna ,@extGlosaCiudad as extGlosaCiudad , @extPrevision as extPrevision ,@extGlosa as extGlosa,@extPlan as extPlan, @extDescuentoxPlanilla as extDescuentoxPlanilla ,@extMontoExcedente as extMontoExcedente, @extRutAcompanante as extRutAcompanante, @extNombreAcompanante as extNombreAcompanante; 
+182001966 <01> Respuesta Err Fail, Error en largo de Columna
+182001966 <01> Respuesta Err Fail, Error en largo de Columna
+182001967 <01> Send Version2
+182001967 <01> 1349;
+182001967 <01> <STATUS>OK</STATUS><API_CODRESPUESTA>1</API_CODRESPUESTA><API_TIPO>SQL</API_TIPO><extRutAcompanante_1>0005047827-0</extRutAcompanante_1><extNombreAcompanante_1>RAMIREZ GUBELI, JIMENA DEL C.</extNombreAcompanante_1><extRutAcompanante_2>0017704636-1</extRutAcompanante_2><extNombreAcompanante_2>CORNEJO RAMIREZ, MARIA C.</extNombreAcompanante_2><extApellidoPat_3>CORNEJO                       </extApellidoPat_3><extApellidoMat_3>SANGUESA                      </extApellidoMat_3><extNombres_3>JORGE ROBESPIERRE                       </extNombres_3><extSexo_3>M</extSexo_3><extFechaNacimi_3>19400107</extFechaNacimi_3><extCodEstBen_3>C</extCodEstBen_3><extDescEstado_3>Certificado                   </extDescEstado_3><extRutCotizante_3>0003484259-0</extRutCotizante_3><extNomCotizante_3>JORGE ROBESPIERRE CORNEJO SANGUESA      </extNomCotizante_3><extDirPaciente_3>EL CAMPANIL 1056                        </extDirPaciente_3><extGlosaComuna_3>LAS CONDES                    </extGlosaComuna_3><extGlosaCiudad_3>LAS CONDES                    </extGlosaCiudad_3><extPrevision_3>P</extPrevision_3><extGlosa_3></extGlosa_3><extPlan_3>MAS2012        </extPlan_3><extDescuentoxPlanilla_3>N</extDescuentoxPlanilla_3><extMontoExcedente_3>0</extMontoExcedente_3><extRutAcompanante_3>NULL</extRutAcompanante_3><extNombreAcompanante_3>NULL</extNombreAcompanante_3>
+
+#######################################################################################################################################
+<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/"><SOAP-ENV:Body><ns1:bencertif><extCodFinanciador>88</extCodFinanciador><extRutBeneficiario>0007817560-5</extRutBeneficiario><extFechaActual>2014-06-03</extFechaActual></ns1:bencertif></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+145658597 <05> <STATUS>FALLA_FIN_REINTENTOS</STATUS><DESCRIPCION>ERROR:  secuencia de byt
+es no vÃ¡lida para codificaciÃ³n Ã«UTF8Ã»: 0xd1 0x45
+</DESCRIPCION>
+145658597 <05> ERROR:  secuencia de bytes no vÃ¡lida para codificaciÃ³n Ã«UTF8Ã»: 0xd450x
+
+145658597 <00> CierraSocket
+145658597 <05> Error en la base :
+145658597 <05> ERROR:  secuencia de bytes no vÃ¡lida para codificaciÃ³n Ã«UTF8Ã»: 0xd450x
+
+#######################################################################################################################################
+DECLARE @extCodFinanciador numeric (5);
+DECLARE @extRutBeneficiario char (12);
+DECLARE @extFechaActual datetime;
+DECLARE @extApellidoPat char (30);
+DECLARE @extApellidoMat char (30);
+DECLARE @extNombres char (40);
+MED -P 20050331
+locale is "en_US.UTF-8"
+locale charset is "UTF-8"
+using default charset "UTF-8"
+1> DECLARE @extCodFinanciador numeric (5);
+2> DECLARE @extRutBeneficiario char (12);
+3> DECLARE @extFechaActual datetime;
+4> DECLARE @extApellidoPat char (30);
+5> DECLARE @extApellidoMat char (30);
+6> DECLARE @extNombres char (40);
+7> DECLARE @extSexo char (1);
+8> DECLARE @extFechaNacimi char (8);
+9> DECLARE @extCodEstBen char (1);
+10> --DECLARE @extDescEstado char (15);
+11> DECLARE @extDescEstado char (30);
+12> DECLARE @extRutCotizante char (12);
+13> DECLARE @extNomCotizante char (40);
+14> DECLARE @extDirPaciente char (40);
+15> DECLARE @extGlosaComuna char (30);
+16> DECLARE @extGlosaCiudad char (30);
+17> DECLARE @extPrevision char (1);
+18> DECLARE @extGlosa char (40);
+19> DECLARE @extPlan char (15);
+20> DECLARE @extDescuentoxPlanilla char (1);
+21> DECLARE @extMontoExcedente numeric (10);
+22>
+23> DECLARE @extRutAcompanante char (12);
+24> DECLARE @extNombreAcompanante char (40);
+25>
+26> EXEC dbo.MASBenCertif 88,"0017665721-9" ,"20140804", @extApellidoPat OUTPUT,@extApellidoMat
+27> OUTPUT,@extNombres OUTPUT, @extSexo OUTPUT,@extFechaNacimi OUTPUT,@extCodEstBen OUTPUT,@extDescEstado OUTPUT,@extRutCotizante OUTPUT, @extNomCotizante OUTPUT,@extDirPaciente OUTPUT,@extGlosaComuna OUTPUT,@extGlosaCiudad OUTPUT, @extPrevision OUTPUT,@extGlosa OUTPUT,@extPlan OUTPUT,@extDescuentoxPlanilla OUTPUT,@extMontoExcedente OUTPUT;
+28>
+29> SELECT @extApellidoPat as extApellidoPat, @extApellidoMat as extApellidoMat ,@extNombres as extNombres , @extSexo as extSexo ,@extFechaNacimi as extFechaNacimi ,@extCodEstBen as extCodEstBen , @extDescEstado as extDescEstado,@extRutCotizante as extRutCotizante, @extNomCotizante as extNomCotizante,@extDirPaciente as extDirPaciente , @extGlosaComuna as extGlosaComuna ,@extGlosaCiudad as extGlosaCiudad , @extPrevision as extPrevision ,@extGlosa as extGlosa,@extPlan as extPlan, @extDescuentoxPlanilla as extDescuentoxPlanilla ,@extMontoExcedente as extMontoExcedente, @extRutAcompanante as extRutAcompanante, @extNombreAcompanante as extNombreAcompanante;
+30> go
+extRutAcompanante       extNombreAcompanante
+0000000000-0
+(1 row affected)
+(return status = 0)
+extApellidoPat  extApellidoMat  extNombres      extSexo extFechaNacimi  extCodEstBen    extDescEstado   extRutCotizante extNomCotizante extDirPaciente       extGlosaComuna  extGlosaCiudad  extPrevision    extGlosa        extPlan extDescuentoxPlanilla   extMontoExcedente       extRutAcompanante   extNombreAcompanante
+                                                                                                                        00000000        R       No registrado                        0000000000-0                                                                                                                                                                                 Rut. NO es Beneficiario                                                 0   NULL     NULL
+(1 row affected)DECLARE @extSexo char (1);
+DECLARE @extFechaNacimi char (8);
+DECLARE @extCodEstBen char (1);
+--DECLARE @extDescEstado char (15);
+DECLARE @extDescEstado char (30);
+DECLARE @extRutCotizante char (12);
+DECLARE @extNomCotizante char (40);
+DECLARE @extDirPaciente char (40);
+DECLARE @extGlosaComuna char (30);
+DECLARE @extGlosaCiudad char (30);
+DECLARE @extPrevision char (1);
+DECLARE @extGlosa char (40);
+DECLARE @extPlan char (15);
+DECLARE @extDescuentoxPlanilla char (1);
+DECLARE @extMontoExcedente numeric (10);
+
+DECLARE @extRutAcompanante char (12);
+DECLARE @extNombreAcompanante char (40); 
+
+EXEC dbo.MASBenCertif 88,"0007817560-5" ,"20140603", @extApellidoPat OUTPUT,@extApellidoMat OUTPUT,@extNombres OUTPUT, @extSexo OUTPUT,@extFechaNacimi OUTPUT,@extCodEstBen OUTPUT,@extDescEstado OUTPUT,@extRutCotizante OUTPUT, @extNomCotizante OUTPUT,@extDirPaciente OUTPUT,@extGlosaComuna OUTPUT,@extGlosaCiudad OUTPUT, @extPrevision OUTPUT,@extGlosa OUTPUT,@extPlan OUTPUT,@extDescuentoxPlanilla OUTPUT,@extMontoExcedente OUTPUT; 
+
+SELECT @extApellidoPat as extApellidoPat, @extApellidoMat as extApellidoMat ,@extNombres as extNombres , @extSexo as extSexo ,@extFechaNacimi as extFechaNacimi ,@extCodEstBen as extCodEstBen , @extDescEstado as extDescEstado,@extRutCotizante as extRutCotizante, @extNomCotizante as extNomCotizante,@extDirPaciente as extDirPaciente , @extGlosaComuna as extGlosaComuna ,@extGlosaCiudad as extGlosaCiudad , @extPrevision as extPrevision ,@extGlosa as extGlosa,@extPlan as extPlan, @extDescuentoxPlanilla as extDescuentoxPlanilla ,@extMontoExcedente as extMontoExcedente, @extRutAcompanante as extRutAcompanante, @extNombreAcompanante as extNombreAcompanante;
+GO
+
+extRutAcompanante       extNombreAcompanante
+0006974376-5    GUIÑZ FERRER, JAIME ULISES
+0015737328-5    GUIÑZ FERNANDEZ, MARISOL ANDREA
+(2 rows affected)
+(return status = 0)
+extApellidoPat  extApellidoMat  extNombres      extSexo extFechaNacimi  extCodEstBen    extDescEstado   extRutCotizante extNomCotizante extDirPaciente  extGlosaComuna  extGlosaCiudad  extPrevision    extGlosa  extPlan  extDescuentoxPlanilla   extMontoExcedente       extRutAcompanante       extNombreAcompanante
+FERNANDEZ                       PEÑ                            PATRICIA SUSANA                                 F       19580119        C       Certificado                     0006974376-5    JAIME ULISES GUIÑZ FERRER                 LOS JARDINES 614-B                              ÑÑA                           ÑÑA                           D                                                       LAVE100         N 0NULL    NULL
+

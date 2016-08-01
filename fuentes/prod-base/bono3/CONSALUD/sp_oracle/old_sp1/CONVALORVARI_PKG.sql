@@ -1,0 +1,5691 @@
+
+SQL*Plus: Release 11.2.0.3.0 Production on Wed Mar 5 19:00:02 2014
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.5.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> SQL> PROCEDURE CONVALORVARI
+ Argument Name			Type			In/Out Default?
+ ------------------------------ ----------------------- ------ --------
+ SRV_MESSAGE			VARCHAR2		IN/OUT
+ IN_NEXTCODFINANCIADOR		NUMBER			IN
+ IN_VEXTHOMNUMEROCONVENIO	VARCHAR2		IN
+ IN_VEXTHOMLUGARCONVENIO	VARCHAR2		IN
+ IN_VEXTSUCVENTA		VARCHAR2		IN
+ IN_VEXTRUTCONVENIO		VARCHAR2		IN
+ IN_VEXTRUTTRATANTE		VARCHAR2		IN
+ IN_VEXTESPECIALIDAD		VARCHAR2		IN
+ IN_VEXTRUTSOLICITANTE		VARCHAR2		IN
+ IN_VEXTRUTBENEFICIARIO 	VARCHAR2		IN
+ IN_VEXTTRATAMIENTO		VARCHAR2		IN
+ IN_VEXTCODIGODIAGNOSTICO	VARCHAR2		IN
+ IN_NEXTNIVELCONVENIO		NUMBER			IN
+ IN_VEXTURGENCIA		VARCHAR2		IN
+ IN_VEXTLISTA1			VARCHAR2		IN
+ IN_VEXTLISTA2			VARCHAR2		IN
+ IN_VEXTLISTA3			VARCHAR2		IN
+ IN_VEXTLISTA4			VARCHAR2		IN
+ IN_VEXTLISTA5			VARCHAR2		IN
+ IN_VEXTLISTA6			VARCHAR2		IN
+ IN_VEXTLISTA7			VARCHAR2		IN
+ IN_NEXTNUMPRESTACIONES 	NUMBER			IN
+ OUT_VEXTCODERROR		VARCHAR2		OUT
+ OUT_VEXTMENSAJEERROR		VARCHAR2		OUT
+ OUT_VEXTPLAN			VARCHAR2		OUT
+ OUT_VEXTGLOSA1 		VARCHAR2		OUT
+ OUT_VEXTGLOSA2 		VARCHAR2		OUT
+ OUT_VEXTGLOSA3 		VARCHAR2		OUT
+ OUT_VEXTGLOSA4 		VARCHAR2		OUT
+ OUT_VEXTGLOSA5 		VARCHAR2		OUT
+ COL_NEXTVALORPRESTACION	TABLE OF NUMBER(12)	OUT
+ COL_NEXTAPORTEFINANCIADOR	TABLE OF NUMBER(12)	OUT
+ COL_NEXTCOPAGO 		TABLE OF NUMBER(12)	OUT
+ COL_VEXTINTERNOLSA		TABLE OF VARCHAR2(15)	OUT
+ COL_NEXTTIPOBONIF1		TABLE OF NUMBER(2)	OUT
+ COL_NEXTCOPAGO1		TABLE OF NUMBER(12)	OUT
+ COL_NEXTTIPOBONIF2		TABLE OF NUMBER(2)	OUT
+ COL_NEXTCOPAGO2		TABLE OF NUMBER(12)	OUT
+ COL_NEXTTIPOBONIF3		TABLE OF NUMBER(2)	OUT
+ COL_NEXTCOPAGO3		TABLE OF NUMBER(12)	OUT
+ COL_NEXTTIPOBONIF4		TABLE OF NUMBER(2)	OUT
+ COL_NEXTCOPAGO4		TABLE OF NUMBER(12)	OUT
+ COL_NEXTTIPOBONIF5		TABLE OF NUMBER(2)	OUT
+ COL_NEXTCOPAGO5		TABLE OF NUMBER(12)	OUT
+FUNCTION EMBE_REDONDEO RETURNS NUMBER
+ Argument Name			Type			In/Out Default?
+ ------------------------------ ----------------------- ------ --------
+ N_VALOR_I			NUMBER			IN
+PROCEDURE P_ELIMINA_REPOSITORIO
+ Argument Name			Type			In/Out Default?
+ ------------------------------ ----------------------- ------ --------
+ PI_VUSUARIO			VARCHAR2		IN
+ PS_NERROR			NUMBER			IN/OUT
+ PS_VDESC_ERROR 		VARCHAR2		IN/OUT
+PROCEDURE P_RESPALDA_REPOSITORIO
+ Argument Name			Type			In/Out Default?
+ ------------------------------ ----------------------- ------ --------
+ PI_NCORRELATIVO_AUDITORIA	VARCHAR2		IN
+ PS_NERROR			NUMBER			IN/OUT
+ PS_VDESC_ERROR 		VARCHAR2		IN/OUT
+
+SQL> 
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PACKAGE 	Convalorvari_Pkg
+AS
+  TYPE cCURSOR	IS REF CURSOR;
+  vn_NUMERO_ERROR NUMBER;--ctc
+
+  --EACE 28-06-2005 GES
+  TYPE CurnExtCodigo_Prestacion_arr IS TABLE OF    NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurvExtES_GES_arr IS TABLE OF	VARCHAR2(1)
+    INDEX BY BINARY_INTEGER;
+  --EACE 28-06-2005 GES
+
+
+  TYPE CurnExtValorPrestacion_arr IS TABLE OF	 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtAporteFinanciador_arr IS TABLE OF  NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtCopago_arr IS TABLE OF   		 	 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurvExtInternolsa_arr IS TABLE OF  		 VARCHAR2(15)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtTipoBonif1_arr IS TABLE OF  		 NUMBER(2)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtCopago1_arr IS TABLE OF  			 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtTipoBonif2_arr IS TABLE OF  		 NUMBER(2)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtCopago2_arr IS TABLE OF  			 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtTipoBonif3_arr IS TABLE OF  		 NUMBER(2)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtCopago3_arr IS TABLE OF  			 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtTipoBonif4_arr IS TABLE OF  		 NUMBER(2)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtCopago4_arr IS TABLE OF  			 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtTipoBonif5_arr IS TABLE OF  		 NUMBER(2)
+    INDEX BY BINARY_INTEGER;
+
+  TYPE CurnExtCopago5_arr IS TABLE OF  			 NUMBER(12)
+    INDEX BY BINARY_INTEGER;
+
+   PROCEDURE CONValorVari
+   			 (
+   			   SRV_Message 		  			 	  IN OUT VARCHAR2 --(1)
+			 , In_nExtCodFinanciador	  		  IN 	 NUMBER	  --(2)
+   			 , In_vExtHomNumeroConvenio			  IN 	 VARCHAR2 --(3)
+			 , In_vExtHomLugarConvenio			  IN 	 VARCHAR2 --(4)
+			 , In_vExtSucVenta 					  IN 	 VARCHAR2 --(5)
+			 , In_vExtRutConvenio 				  IN 	 VARCHAR2 --(6)
+			 , In_vExtRutTratante 				  IN 	 VARCHAR2 --(7)
+			 , In_vExtEspecialidad 				  IN 	 VARCHAR2 --(8)
+			 , In_vExtRutSolicitante  			  IN 	 VARCHAR2 --(9)
+			 , In_vExtRutBeneficiario 			  IN 	 VARCHAR2 --(10)
+			 , In_vExtTratamiento				  IN 	 VARCHAR2 --(11)
+			 , In_vExtCodigoDiagnostico			  IN 	 VARCHAR2 --(12)
+			 , In_nExtNivelConvenio				  IN 	 NUMBER	  --(13)
+			 , In_vExtUrgencia					  IN 	 VARCHAR2 --(14)
+			 , In_vExtLista1					  IN 	 VARCHAR2 --(15)
+			 , In_vExtLista2					  IN 	 VARCHAR2 --(16)
+			 , In_vExtLista3					  IN 	 VARCHAR2 --(17)
+			 , In_vExtLista4					  IN 	 VARCHAR2 --(18)
+			 , In_vExtLista5					  IN 	 VARCHAR2 --(19)
+			 , In_vExtLista6					  IN 	 VARCHAR2 --(20)
+			 , In_vExtLista7					  IN 	 VARCHAR2 --(21)   --- Patricio Alarcon 24/10/2005
+			 , In_nExtNumPrestaciones			  IN 	 NUMBER   --(21)
+	     , Out_vExtCodError					  OUT 	 VARCHAR2 --(22)
+	     , Out_vExtMensajeError				  OUT 	 VARCHAR2 --(23)
+	     , Out_vExtPlan						  OUT 	 VARCHAR2 --(24)
+	     , Out_vExtGlosa1					  OUT 	 VARCHAR2 --(25)
+	     , Out_vExtGlosa2					  OUT 	 VARCHAR2 --(26)
+	     , Out_vExtGlosa3					  OUT 	 VARCHAR2 --(27)
+	     , Out_vExtGlosa4					  OUT 	 VARCHAR2 --(28)
+	     , Out_vExtGlosa5					  OUT 	 VARCHAR2 --(29)
+	     , Col_nExtValorPrestacion			  OUT 	 CurnExtValorPrestacion_arr   --(30)
+	     , Col_nExtAporteFinanciador		  OUT 	 CurnExtAporteFinanciador_arr	  --(31)
+	     , Col_nExtCopago					  OUT 	 CurnExtCopago_arr	  --(32)
+	     , Col_vExtInternolsa				  OUT 	 CurvExtInternolsa_arr --(33)
+	     , Col_nExtTipoBonif1				  OUT 	 CurnExtTipoBonif1_arr	 --(34)
+	     , Col_nExtCopago1					  OUT 	 CurnExtCopago1_arr   --(35)
+	     , Col_nExtTipoBonif2				  OUT 	 CurnExtTipoBonif2_arr	 --(36)
+	     , Col_nExtCopago2					  OUT 	 CurnExtCopago2_arr	  --(37)
+	     , Col_nExtTipoBonif3				  OUT 	 CurnExtTipoBonif3_arr	 --(38)
+	     , Col_nExtCopago3					  OUT 	 CurnExtCopago3_arr   --(39)
+	     , Col_nExtTipoBonif4				  OUT 	 CurnExtTipoBonif4_arr	 --(40)
+	     , Col_nExtCopago4					  OUT 	 CurnExtCopago4_arr   --(41)
+	     , Col_nExtTipoBonif5				  OUT 	 CurnExtTipoBonif5_arr	 --(42)
+	     , Col_nExtCopago5					  OUT 	 CurnExtCopago5_arr   --(43)
+	     );
+
+			 FUNCTION embe_redondeo(n_valor_i IN NUMBER) RETURN NUMBER;
+--
+--
+
+PROCEDURE P_ELIMINA_REPOSITORIO(pi_vUSUARIO		   IN VARCHAR2,
+						 		ps_nERROR			   IN OUT NUMBER,
+						 		ps_vDESC_ERROR	   	   IN OUT VARCHAR2);
+
+--
+--PROCESO QUE REALIZA RESPALDO DE REPOSITORIO CON DETALLE DE PRESTACIONES VALORIZADAS
+PROCEDURE P_RESPALDA_REPOSITORIO(pi_nCORRELATIVO_AUDITORIA	IN VARCHAR2,
+						 		 ps_nERROR				IN OUT NUMBER,
+						 		 ps_vDESC_ERROR	   		IN OUT VARCHAR2);
+
+END Convalorvari_Pkg;
+
+119 rows selected.
+
+SQL> 
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PACKAGE BODY	     "CONVALORVARI_PKG" AS
+/*************************************************************************************************************************
+ *************************************************************************************************************************
+ NAME: IMEDSOF.CONVALORVARI_PKG
+ PURPOSE: Proceso de Busqueda de precios convenios y bonificacion de prestaciones
+
+ REVISIONS:
+ Ver	Date	    Author	    Description
+ ------ ---------- --------------- -----------------------------------------
+ 1.0	22/05/2006 Beneficios 1.    Created this package.
+ --
+ 2.0	20/04/2012 B.Castillo	    (BNF-000828) - bloquear el ingreso de los codigos de prestaciones de urgencia
+				    Integral y Tradicional
+ --
+ 2.1	29/06/2012 B.Castillo	    (BNF-000924) - Correccion Proceso Emision Bonos IMED.
+ --
+ 2.2	20/08/2012 B.Castillo	    (BNF-INC- 000101) - Identificacion de ERROR 517 en proceso de calculo,
+				    se registran y retornan las variables de error del proceso.
+
+ 2.3	17/12/2012 B.Castillo	    (BNF-000955) - Cuenta Dental Controlada BC99 Rut Ficticio 88.888.889-6,
+						se comporta similar a BC33.
+ --
+ 2.4	02/01/2014 B.Castillo	    (BNF-INC- 000355) - BC DENTAL IMED (pasado a REQUERIMIENTO)
+				    94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+				    106-108	    tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+ --
+ 2.5	01/02/2014 bch		    BNF-000988 Centralizacion de IMED a Servidor ISCTOS
+ --
+**************************************************************************************************************************
+**************************************************************************************************************************/
+
+ PROCEDURE CONValorVari
+ (
+ SRV_Message IN OUT VARCHAR2 --(1)
+ , In_nExtCodFinanciador IN NUMBER --(2)
+ , In_vExtHomNumeroConvenio IN VARCHAR2 --(3)
+ , In_vExtHomLugarConvenio IN VARCHAR2 --(4)
+ , In_vExtSucVenta IN VARCHAR2 --(5)
+ , In_vExtRutConvenio IN VARCHAR2 --(6)
+ , In_vExtRutTratante IN VARCHAR2 --(7)
+ , In_vExtEspecialidad IN VARCHAR2 --(8)
+ , In_vExtRutSolicitante IN VARCHAR2 --(9)
+ , In_vExtRutBeneficiario IN VARCHAR2 --(10)
+ , In_vExtTratamiento IN VARCHAR2 --(11)
+ , In_vExtCodigoDiagnostico IN VARCHAR2 --(12)
+ , In_nExtNivelConvenio IN NUMBER --(13)
+ , In_vExtUrgencia IN VARCHAR2 --(14)
+ , In_vExtLista1 IN VARCHAR2 --(15)
+ , In_vExtLista2 IN VARCHAR2 --(16)
+ , In_vExtLista3 IN VARCHAR2 --(17)
+ , In_vExtLista4 IN VARCHAR2 --(18)
+ , In_vExtLista5 IN VARCHAR2 --(19)
+ , In_vExtLista6 IN VARCHAR2 --(20)
+ , In_vExtLista7 IN VARCHAR2 --(21) --- Patricio Alarcon 24/10/2005
+ , In_nExtNumPrestaciones IN NUMBER --(22)
+ , Out_vExtCodError OUT VARCHAR2 --(23)
+ , Out_vExtMensajeError OUT VARCHAR2 --(24)
+ , Out_vExtPlan OUT VARCHAR2 --(25)
+ , Out_vExtGlosa1 OUT VARCHAR2 --(26)
+ , Out_vExtGlosa2 OUT VARCHAR2 --(27)
+ , Out_vExtGlosa3 OUT VARCHAR2 --(28)
+ , Out_vExtGlosa4 OUT VARCHAR2 --(29)
+ , Out_vExtGlosa5 OUT VARCHAR2 --(30)
+ , Col_nExtValorPrestacion OUT CurnExtValorPrestacion_arr --(31)
+ , Col_nExtAporteFinanciador OUT CurnExtAporteFinanciador_arr --(32)
+ , Col_nExtCopago OUT CurnExtCopago_arr --(33)
+ , Col_vExtInternolsa OUT CurvExtInternolsa_arr --(34)
+ , Col_nExtTipoBonif1 OUT CurnExtTipoBonif1_arr --(35)
+ , Col_nExtCopago1 OUT CurnExtCopago1_arr --(36)
+ , Col_nExtTipoBonif2 OUT CurnExtTipoBonif2_arr --(37)
+ , Col_nExtCopago2 OUT CurnExtCopago2_arr --(38)
+ , Col_nExtTipoBonif3 OUT CurnExtTipoBonif3_arr --(39)
+ , Col_nExtCopago3 OUT CurnExtCopago3_arr --(40)
+ , Col_nExtTipoBonif4 OUT CurnExtTipoBonif4_arr --(41)
+ , Col_nExtCopago4 OUT CurnExtCopago4_arr --(42)
+ , Col_nExtTipoBonif5 OUT CurnExtTipoBonif5_arr --(43)
+ , Col_nExtCopago5 OUT CurnExtCopago5_arr --(44)
+ )
+
+IS
+
+vv_NOMBRE_TRANSACCION VARCHAR2(50):= UPPER('IMEDSOF.Convalorvari_Pkg');
+vv_SEPARADOR VARCHAR2(1):=';';
+vv_PARAMETROS_ENTRADA VARCHAR2(4000);
+vv_PARAMETROS_SALIDA VARCHAR2(4000);
+vv_CORRELATIVO_AUDITORIA VARCHAR2(15);
+vn_CORRELATIVO_AUDITORIA NUMBER(15);
+vv_OUTPUT_STATUS_SERVICIO VARCHAR2(1);
+vv_OUTOPUT_CODIGO_MENSAJE VARCHAR2(5);
+vv_OUTPUT_MENSAJE VARCHAR2(243);
+vn_SRV_FETCH_STATUS NUMBER(1) :='0'; --Inicia -- error el cursor no obtubo filas
+vn_SRV_TOTAL_ROWS NUMBER(8);
+vn_SRV_ROW_COUNT NUMBER(8);
+vv_INICIO_TEXTO_MENSAJE VARCHAR2(1):='X'; -- Para diferenciar vv_OUTPUT_MENSAJE de Out_vExtMensajeError
+
+-- Variables para Definir Tipos de Bonificacion
+
+vn_TIPO_BONIFICACION_BCC NUMBER(1):= 1;
+vn_TIPO_BONIFICACION_SIGNA NUMBER(1):= 2;
+vv_MENSAJE_GLOSA VARCHAR2(50):= 'BONIFICACION INCLUYE BENEFICIO COMPLEMENTARIO';
+vd_FECHA_DESAHUCIO DATE;
+vv_BENEFICIARIO VARCHAR2(1);
+e_NO_BENEFICIARIO EXCEPTION;
+e_NO_VIGENTE EXCEPTION;
+
+/* VALIDACION SALUD ADMINISTRADA */
+
+vv_SALUD_ADMINISTRADA VARCHAR2(01):=NULL;
+--cmd 15/06/2005
+vv_CODIGO_COMERCIAL VARCHAR2(14):=NULL;
+--cmd 15/06/2005
+vn_RUT_MEDICO_CABECERA NUMBER(10):=0;
+e_SALUD_ADMINISTRADA EXCEPTION;
+e_SALUD_ADMINISTRADA2 EXCEPTION;
+e_SALUD_ADMINISTRADA3 EXCEPTION;
+e_SALUD_ADMINISTRADA4 EXCEPTION;
+e_MEDICO_CABECERA EXCEPTION;
+e_MEDICO_CABECERA_TRATANTE EXCEPTION;
+e_MEDICO_CABECERA_DERIVADOR EXCEPTION;
+e_PRESTADOR_BLOQUEADO EXCEPTION;
+e_PRESTADOR_NO_REG_CONVENIOS EXCEPTION;
+e_PRESTADOR_ACCESO EXCEPTION;
+e_FAMILIA_HOMOLOGADA EXCEPTION;
+e_MEDICO_TRATANTE_SIN_CONVENIO EXCEPTION;
+e_MULTIPLES_PRESTACIONES EXCEPTION;
+e_EJECUTA_PCK_BONIFICACION EXCEPTION;
+e_PRESTACION_RESTRINGIDA EXCEPTION;
+e_EXISTE_MAS_DE_UN_PRECIO EXCEPTION;
+e_NO_EXISTE_PRECIO EXCEPTION;
+
+
+--Para Validar que isapre de entrada corresponda
+e_ISAPRE_NO_CORRESPONDE EXCEPTION;
+e_ESPECIALIDAD_NO_VALIDA EXCEPTION;
+
+--Para validar que numero de variables de cursor no superen lo pedido por entrada
+e_SUPERA_TOTAL_FILAS EXCEPTION;
+
+
+--POR ROTERY PGP 06/07/2006
+vn_CODIGO_COMERCIAL_ARANCEL			     NUMBER(15);
+
+-- variables de excedente
+vv_RENUNCIA_EXCEDENTE			VARCHAR2(1);
+vn_MONTO_EXCEDENTE			 NUMBER(10):=0;
+
+vv_GLOSA_EXCEDENTE				  VARCHAR2(50);
+vn_CODIGO_MENSAJE_EXCEDENTE		     NUMBER(1);
+
+-- variables de entrada al procedimiento
+
+vn_RESULTADO_INSERT_AUDITORIA		       NUMBER(1):=0;
+vn_RES_INSERT_DETALLE_AUDI	    NUMBER(1):=0;
+
+
+-- variables del encabezado
+
+
+vn_COAF_FOLIO_SUSCRIPCION			NUMBER(10):=0;
+vn_CORRELATIVO					 NUMBER(10):=0;
+vn_NUMERO_TRANSACCION			       NUMBER(18);	      --identificacion de la tranasccion
+vn_NUMERO_SECUENCIA			      NUMBER(8);	    -- numero de secuencia
+vv_FECHA_ENROLAMIENTO			      VARCHAR2(26);	   -- vv_FECHA_ENROLAMIENTO enrolamiento
+vn_CODIGO_ISAPRE			       NUMBER(4);	    -- codigo de la isapre
+vn_NUMERO_BONO_ATESA			       NUMBER(18);	 -- numero bono asignado por ATESA --- cg no se ocupa
+vn_RUT_PRESTADOR_TRATANTE		       NUMBER(10);	 -- rut del prestador que presta la atencion
+vn_RUT_PRESTADOR_FACTURADOR		     NUMBER(10);       -- rut del prestador que factura la atencion
+vv_CODIGO_ESPECILIDAD_HOMOLOG		       VARCHAR2(5);	  -- especialidad homologada
+vv_CODIGO_ESPECIALIDAD				 VARCHAR2(5);	    -- codigo especialidad
+vn_LUGAR_DE_PRESTACION				 NUMBER(10);	   -- lugar de la prestacion
+vn_RUT_PRESTADOR_SOLICITANTE		      NUMBER(10);	-- rut del prestador que solicita la atencion
+vn_RUT_COTIZANTE			       NUMBER(10);	 -- rut del cotizante
+vn_CODIGO_CARGA 			      NUMBER(4):=0;	  -- carga
+vn_RUT_BENEFICIARIO			      NUMBER(10);	-- rut del vv_BENEFICIARIO
+vn_MONTO_COPAGO_EXCEDENTE			NUMBER(14,2);	    -- copago excedente
+vn_MONTO_CIGNA					  NUMBER(14,2) :=0;	  -- copago cta corriente
+vv_TERMINAL				      VARCHAR2(20);
+vn_TOTAL_PRESTACIONES				NUMBER(6):=0;
+
+/* variables del detalle del bono*/
+
+vn_CONTADOR_LINEAS		       NUMBER(4);	-- numero de linea
+
+
+vn_CODIGO_PRESTACION_HOMOLOG	      NUMBER(8);       -- codigo de la prestacion homologada
+vn_CODIGO_PREST_HOMOLOG_INGRE	      NUMBER(8);       -- codigo de la prestacion homologada INGRESADO EACE 02/08/2006
+vn_NUMERO_PRESTACIONES			NUMBER(4):=0; -- numero de prestaciones
+vn_MONTO_PRESTACION		     NUMBER(14,2); --tarifa por linea
+vn_PORCENTAJE_INCREMENTO		NUMBER(5):=0;
+vn_FACTOR				  NUMBER(4,1):=0;
+vn_MONTO				 NUMBER(12):=0;
+vn_TARIFA_NIVEL 			    NUMBER(10):=0;
+vn_CODIGO_ERROR 			    NUMBER(2):=0;
+vn_PORCENTAJE_BONIF_AMBU	       NUMBER(6,2);
+vn_PORCENTAJE_BONIF_DENT	       NUMBER(6,2);
+vn_PORCENTAJE_BONIF_MED 		NUMBER(6,2);
+vn_PORCENTAJE_BONIF_HOSP	     NUMBER(6,2);
+vv_PLA_CODIGO				 VARCHAR2(15);
+vn_UNOR_CORRELATIVO		      NUMBER(10);
+vn_PRECIO_UNITARIO			 NUMBER(10,2);
+
+
+/* variables de salida*/
+
+
+vn_TIPO_DOCUMENTO			NUMBER(1):=1;
+vv_TIPO_EMISION 		      VARCHAR2(1);
+vn_CENTRO_COSTO 			 NUMBER(1):=2;
+vv_FECHA_VALORIZACION		       VARCHAR2(8);
+vv_BENEFICIOS_COMP			 VARCHAR2(1);  -- si tiene beneficios complementarios
+vn_CENTRO_ATENCION			 NUMBER(10):=0;
+vn_CODIGO_SUCURSAL_ISAPRE		NUMBER(3);
+vn_CODIGO_OFICINA_ISAPRE	       NUMBER(3);
+vn_MONTO_BCC			       NUMBER(14):=0;
+
+vn_CODIGO_PRESTADOR			NUMBER(10);
+vv_PROFESIONAL_BLOQUEADO	      VARCHAR2(1);
+vv_TIPO_ATENCION		       VARCHAR2(1);
+vn_PLAN_CORRELATIVO		      NUMBER(10);
+vv_TIPO_PLAN			       VARCHAR2(4);
+vv_CODIGO_COMERCIAL_PLAN	      VARCHAR2(14);
+-- no es error
+
+vn_DOBE_CORRELATIVO			NUMBER(16);	   -- numero del documento asignado por la isapre numbono
+vn_VALOR_TOTAL_PRESTACION	       NUMBER(14,2):=0;        -- valor total de la prestacion
+vn_VALOR_TOTAL_BONIFICACION	     NUMBER(14,2):=0;	     -- valor total de la bonificiacion
+vn_VALOR_TOTAL_COPAGO		       NUMBER(14,2):=0;        -- valor total del copago
+
+vn_VALOR_COPAGO_EXCEDENTE	       NUMBER(14,2):=0;        -- valor copago excedente
+vn_VALOR_TOTAL_BCC			NUMBER(14,2):=0;	-- valor copago cta cte
+vv_LINEA_A_GUARDAR			 VARCHAR2(2000);
+vn_TIPO_ATENCION		       NUMBER(1):=2;
+vn_DIAS_CAMA				NUMBER(10):=0;
+vn_VALOR_BONIFICADO_ISAPRE		NUMBER(14):=0;
+vn_VALOR_BONIF_ISAPRExBC15		NUMBER(14):=0;
+vn_PORCEN_BONIF_ISAPRExBC15		NUMBER:=0;
+vn_VALOR_BONIF_ISAPRExPLANoBC		NUMBER(14):=0;
+vn_PORCEN_BONIF_ISAPRExPLANoBC	       NUMBER:=0;
+vn_SALDO_LINEA				 NUMBER(13,3);
+vn_ITEM_CODIGO				 NUMBER(10);
+vv_TICOB_CODIGO 		      VARCHAR2(10);
+vv_CREA_CUENTA				 VARCHAR2(1);
+vv_TIPO_MENSAJE 		      VARCHAR2(5);
+vv_MENSAJE				 VARCHAR2(60);
+vn_CODIGO_SQL				NUMBER(6);
+vv_SQL_MENSAJE_ERROR		      VARCHAR2(30);
+vn_VALOR_COPAGO_LINEA			NUMBER(14):=0;
+vv_SALIDA_LINEA_UNO		      VARCHAR2(2000);
+
+-- variables de insercion
+
+
+vv_TIPO_ADMINISTRACION		    VARCHAR2(4);
+vn_NUMERO_LINEAS			 NUMBER(4):=0;
+vd_FECHA_LLEGADA		    DATE:=NULL;
+vd_FECHA_SALIDA 		       DATE:=NULL;
+vn_USO_BCC			      NUMBER (1):=0;
+vn_CON_EXCEDENTE		    NUMBER (1):=0;
+vn_USO_TOPE			       NUMBER (1):=0;
+vn_USO_CIGNA			    NUMBER (1):=0;
+
+
+/* VALIDACION RUT SOLICITANTE PARA CUANDO HAY PRESTACIONES DERIVABLES */
+
+vn_PRESTACION_HOMOLOGADA		NUMBER(08):=0;
+vn_MONTO_TOTAL			      NUMBER;
+vn_CANTIDAD_PRESTADORES 	       NUMBER(04):=0;
+vn_DERIVABLE			    VARCHAR2(01):=NULL;
+vn_CANTIDAD_PREST_DERIVABLES	       NUMBER(04):=0;
+
+
+
+e_NO_SOLICITANTE_1	      EXCEPTION;
+e_NO_SOLICITANTE_2	      EXCEPTION;
+e_NO_SOLICITANTE_3	      EXCEPTION;
+
+
+/* VALIDACION OBTENCION DE TARIFAS PARAMETRIZADAS */
+vn_ERROR_TARIFA 		 NUMBER(2):=0;
+e_TARIFA_PROPIA 	       EXCEPTION;
+e_TARIFA_01		   EXCEPTION;
+e_TARIFA_02		   EXCEPTION;
+e_TARIFA_03		   EXCEPTION;
+e_TARIFA_04		   EXCEPTION;
+e_TARIFA_05		   EXCEPTION;
+e_TARIFA_06		   EXCEPTION;
+e_TARIFA_07		   EXCEPTION;
+e_TARIFA_08		   EXCEPTION;
+e_TARIFA_09		   EXCEPTION;
+e_TARIFA_10		   EXCEPTION;
+e_TARIFA_11		   EXCEPTION;
+e_TARIFA_12		   EXCEPTION;
+e_TARIFA_13		   EXCEPTION;
+e_TARIFA_14		   EXCEPTION;
+e_TARIFA_15		   EXCEPTION;
+e_TARIFA_16		   EXCEPTION;
+e_TARIFA_17		   EXCEPTION;
+e_TARIFA_18		   EXCEPTION;
+e_TARIFA_19		   EXCEPTION;
+e_TARIFA_20		   EXCEPTION;
+e_TARIFA_21		   EXCEPTION;
+e_TARIFA_22		   EXCEPTION;
+e_TARIFA_23		   EXCEPTION;
+e_TARIFA_24		   EXCEPTION;
+e_TARIFA_25		   EXCEPTION;
+e_TARIFA_26		   EXCEPTION;
+e_TARIFA_27		   EXCEPTION;
+e_TARIFA_28		   EXCEPTION;
+e_TARIFA_29		   EXCEPTION;
+e_TARIFA_30		   EXCEPTION;
+e_TARIFA_31		   EXCEPTION;
+e_TARIFA_32		   EXCEPTION;
+e_TARIFA_33		   EXCEPTION;
+e_TARIFA_99		   EXCEPTION;
+e_MENSAJE_RESPUESTA		 EXCEPTION;--ctc
+e_MENSAJE_ERROR_BENEFICIARIO	 EXCEPTION;--ctc
+
+/* APLICACION SEGURO CIGNA */
+vn_ASEG_CORRELATIVO		NUMBER(10);
+vn_COAF_ORGA_CODIGO_ISAPRE	  NUMBER(04):=0;
+vv_RELACION		       VARCHAR(01):=' ';
+vn_MONTO_SEGURO_TERCERO        NUMBER:=0;
+vn_MONTO_COPAGO_REAL		   NUMBER(12):=0;
+
+--23012002 declara variables
+------------------------------------------------------
+-- C?digo de la Isapre para validar entrada
+vn_CODIGO_ISAPRE_CONSALUD	   NUMBER  :=71;
+vv_SEPARADOR_BARRA		  VARCHAR2(1) := '|';
+vn_MAX_LISTAS			     NUMBER(3) := 7; --- Patricio Alarcon, valor anterior  6
+vn_MAX_LINEAS_LISTAS		 NUMBER(3) := 5; --- Patricio Alarcon, valor anterior  7
+vv_COD_ESPECIALIDAD		   VARCHAR2(10);
+
+
+-- Variables para rescatar entrada
+
+vn_ENTR_CODIGO_FINANCIADOR		  NUMBER(3);
+vv_ENTR_HOM_NUMERO_CONVENIO		 VARCHAR2(15);
+vv_ENTR_HOM_LUGAR_CONVENIO		VARCHAR2(10);
+vv_ENTR_HOM_SUCURSAL_VENTA		 VARCHAR2(10);
+vn_ENTR_RUT_CONVENIO		       NUMBER(10);
+vn_ENTR_RUT_TRATANTE		       NUMBER(10);
+vv_ENTR_CODIGO_ESPECIALIDAD	      VARCHAR2(10);
+vn_ENTR_RUT_SOLICITANTE 	       NUMBER(10);
+vn_ENTR_RUT_BENEFICIARIO	       NUMBER(10);
+vv_ENTR_TRATAMIENTO			   VARCHAR2(1);
+
+
+vv_ENTR_CODIGO_DIAGNOSTICO		VARCHAR2(10);
+vv_ENTR_NIVEL_CONVENIO			NUMBER(1);
+vv_ENTR_URGENCIA		      VARCHAR2(1);
+vv_ENTR_LISTA1			    VARCHAR2(500);
+vv_ENTR_LISTA2			    VARCHAR2(255);
+vv_ENTR_LISTA3			    VARCHAR2(255);
+vv_ENTR_LISTA4			    VARCHAR2(255);
+vv_ENTR_LISTA5			    VARCHAR2(255);
+vv_ENTR_LISTA6			    VARCHAR2(255);
+vv_ENTR_LISTA7			    VARCHAR2(255); -- Patricio Alarcon
+vn_ENTR_NUMERO_PRESTACIONES	     NUMBER;
+
+--Output
+
+vn_LISTA_INDEX			    NUMBER;
+vn_SALE_LISTA_INDEX		     NUMBER;
+vn_SALE_LINEAS_INDEX		  NUMBER;
+vn_INICIA_BLOQUE		  NUMBER;
+vv_PARM_NO_USADOS		   VARCHAR2(200); --CTC PARAMETROS OUT NO USADOS
+vn_RESPUESTA_IMED_BENEF_COTIZA	  NUMBER;
+vn_COD_ERROR			    NUMBER;
+vv_GLOSA_ERROR			  VARCHAR2(200); --CETC
+vn_VDBC_CORRELATIVO		  NUMBER(10):=0;
+vn_CODIGO_INTERNO_TRATANTE	    NUMBER(10):=0; --EACE 28-06-2005 GES
+vn_CODIGO_INTERNO_CONV		      NUMBER(10):=0;
+vv_CODIGO_SUB_GRUPO		     VARCHAR2(200); --EACE 28-06-2005 GES
+vn_COD_GARANTIA 		  NUMBER(10):=0; --EACE 28-06-2005 GES
+vn_GRUPO_SEQ			   NUMBER(10):=0; --EACE 28-06-2005 GES
+vn_SUB_GRUPO_SEQ		   NUMBER(10):=0; --EACE 28-06-2005 GES
+vn_TOTAL_PRESTACIONES_GES	   NUMBER(10):=0; --EACE 28-06-2005 GES
+vv_PRISA_ES_GES 		     VARCHAR2(1); --EACE 28-06-2005 GES
+vv_PRISA_ES_GES_RES		     VARCHAR2(1); --EACE 28-06-2005 GES
+
+
+VCOL_NEXTCODIGO_PRESTACION	    CURNEXTCODIGO_PRESTACION_ARR; --EACE 28-06-2005 GES
+VCOL_VEXTES_GES 		     CURVEXTES_GES_ARR; --EACE 28-06-2005 GES
+VV_ERRORCODE			  VARCHAR2(256); --EACE 28-06-2005 GES
+E_VALORIZACION_GES		    EXCEPTION; --EACE 28-06-2005  GES
+VV_MENS_GLOSA2			    VARCHAR2(50):= 'BONIFICACION INCLUYE G.E.S.'; --EACE 28-06-2005 GES
+VV_MENS_GLOSA3			    VARCHAR2(50):= 'BONIFICACION INCLUYE DENTAL OK'; --PGP 29/12/2005 BC15
+VN_TOTAL_BONIF_GES		    NUMBER:=0; --EACE 28-06-2005 GES
+VN_RUT_TRATANTE 		     NUMBER:=0; -- EACE  13/07/2005 POR SALUD ADMINISTRADA
+VV_SIN_GRANTIA			    VARCHAR2(1000):=''; --EACE 02-08-2005 GES
+VV_SIN_GRUPO			    VARCHAR2(1000):=''; --EACE 02-08-2005 GES
+VV_TEXTO			   VARCHAR2(1000);   -- 06-09-2005 PATRICIO ALARCON
+VN_RUT_AFILIADO 		     NUMBER:=0;-- 06-09-2005 PATRICIO ALARCON
+VV_NOM_COBRADOR 		     VARCHAR2(50);-- 14-09-2005 PATRICIO ALARCON
+VV_FONO_COBRADOR		  VARCHAR2(20);-- 14-09-2005 PATRICIO ALARCON
+VV_POSEE_BENEFICIO_BC15 	     VARCHAR2(5);--29/12/2005 PABLO GONZALEZ
+VV_POSEE_BENEFICIO_BC24 	     VARCHAR2(5);--27/06/2006 PABLO GONZALEZ
+VV_POSEE_BENEFICIO_BC33 	     VARCHAR2(5);--27/06/2006 PABLO GONZALEZ
+VV_POSEE_BENEFICIO_BC99 	     VARCHAR2(5);--27/06/2006 PABLO GONZALEZ
+VN_TOTAL_PRESTACIONES_BC15	    NUMBER(10):=0; --PGP 29/12/2005 BC15
+VN_TOTAL_PRESTACIONES_BC24	    NUMBER(10):=0; --PGP 27/06/2006 BC24
+VN_TOTAL_PRESTACIONES_BC33	    NUMBER(10):=0; --PGP 27/06/2006 BC24
+VN_TOTAL_PRESTACIONES_BC99	    NUMBER(10):=0; --
+VN_TOTAL_BONIF_BC15		     NUMBER(10):=0; --PGP 29/12/2005 BC15
+VN_TOTAL_BONIF_BC24		     NUMBER(10):=0; --PGP 29/12/2005 BC24
+VN_TOTAL_BONIF_BC33		     NUMBER(10):=0; --PGP 29/12/2005 BC24
+VN_TOTAL_BONIF_BC99		     NUMBER(10):=0; --PGP 29/12/2005 BC24
+VV_MEDICO_CABECERA		    VARCHAR(1):='N';--29/01/2006 EDO
+vv_POSEE_BENEFICIO_BC17 	     VARCHAR2(5):=NULL;--PABLO GONZALEZ PE?A 25/05/2006
+vn_CONT_BC17			  NUMBER:=0;--PABLO GONZALEZ PE?A 25/05/2006
+
+vv_BENEF_COMP_APLICADO		    VARCHAR2(10):='';
+
+vv_MSJE_BC17			VARCHAR2(200):='';--PABLO GONZALEZ PE?A 25/05/2006
+vv_MSJE_BC15			VARCHAR2(200):='';--PABLO GONZALEZ PE?A 25/05/2006
+vv_MSJE_BC24			VARCHAR2(200):='';--PABLO GONZALEZ PE?A 27/06/2006
+vv_MSJE_BC33			VARCHAR2(200):='';--PABLO GONZALEZ PE?A 27/06/2006
+vv_MSJE_BC99			VARCHAR2(200):='';--PABLO GONZALEZ PE?A 27/06/2006
+vv_MSJE_GES			    VARCHAR2(200):='';--PABLO GONZALEZ PE?A 25/05/2006
+vv_MSJE_CREDITO 		VARCHAR2(200):='';--PABLO GONZALEZ PE?A 29/04/2009
+
+--***********************************************************************
+--INICIO - BNF-INC- 000355
+--94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+--106-108	  tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+--***********************************************************************
+VV_POSEE_BENEFICIO_BC94 	     VARCHAR2(5);
+VV_POSEE_BENEFICIO_BC105	     VARCHAR2(5);
+VV_POSEE_BENEFICIO_BC107	     VARCHAR2(5);
+VV_POSEE_BENEFICIO_BC109	     VARCHAR2(5);
+VV_POSEE_BENEFICIO_BC106	     VARCHAR2(5);
+VV_POSEE_BENEFICIO_BC108	     VARCHAR2(5);
+--
+VN_TOTAL_PRESTACIONES_BC94	     NUMBER(10):=0;
+VN_TOTAL_PRESTACIONES_BC105	     NUMBER(10):=0;
+VN_TOTAL_PRESTACIONES_BC107	     NUMBER(10):=0;
+VN_TOTAL_PRESTACIONES_BC109	     NUMBER(10):=0;
+VN_TOTAL_PRESTACIONES_BC106	     NUMBER(10):=0;
+VN_TOTAL_PRESTACIONES_BC108	     NUMBER(10):=0;
+--
+VN_TOTAL_BONIF_BC94		     NUMBER(10):=0;
+VN_TOTAL_BONIF_BC105		     NUMBER(10):=0;
+VN_TOTAL_BONIF_BC107		     NUMBER(10):=0;
+VN_TOTAL_BONIF_BC109		     NUMBER(10):=0;
+VN_TOTAL_BONIF_BC106		     NUMBER(10):=0;
+VN_TOTAL_BONIF_BC108		     NUMBER(10):=0;
+--
+vv_MSJE_BC94			     VARCHAR2(200):='';
+vv_MSJE_BC105			     VARCHAR2(200):='';
+vv_MSJE_BC107			     VARCHAR2(200):='';
+vv_MSJE_BC109			     VARCHAR2(200):='';
+vv_MSJE_BC106			     VARCHAR2(200):='';
+vv_MSJE_BC108			     VARCHAR2(200):='';
+--
+E_POSEE_BENEFICIO_BC94		    EXCEPTION;
+E_POSEE_BENEFICIO_BC105 	    EXCEPTION;
+E_POSEE_BENEFICIO_BC107 	    EXCEPTION;
+E_POSEE_BENEFICIO_BC109 	    EXCEPTION;
+E_POSEE_BENEFICIO_BC106 	    EXCEPTION;
+E_POSEE_BENEFICIO_BC108 	    EXCEPTION;
+--
+--e_NO_POSEE_BENEF_BC94 	    EXCEPTION;
+--e_NO_POSEE_BENEF_BC105	    EXCEPTION;
+--e_NO_POSEE_BENEF_BC107	    EXCEPTION;
+--e_NO_POSEE_BENEF_BC109	    EXCEPTION;
+--e_NO_POSEE_BENEF_BC106	    EXCEPTION;
+--e_NO_POSEE_BENEF_BC108	    EXCEPTION;
+--
+e_TARIFA_94		   EXCEPTION;
+e_TARIFA_105		   EXCEPTION;
+e_TARIFA_107		   EXCEPTION;
+e_TARIFA_109		   EXCEPTION;
+e_TARIFA_106		   EXCEPTION;
+e_TARIFA_108		   EXCEPTION;
+--***********************************************************************
+--***********************************************************************
+
+-- DESCUENTO ESPECIAL POR TEMPORADA EN BONOS DE CIERTO PRESTADOR ----
+vn_Precio_N2F			 NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vn_Bonif_Precio_N3F		   NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vv_Mensaje_Descto_Especial_aux	  VARCHAR2(50):='';--ALVARO CALDERON 07/06/2006
+vv_Mensaje_Descto_Especial	  VARCHAR2(50):='';--ALVARO CALDERON 07/06/2006
+vv_Aplicar_Descuento		VARCHAR2(2):='N';--ALVARO CALDERON 07/06/2006
+vn_Monto_Precio_Rebajado	NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vn_Monto_Descto_Especial	NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vn_Monto_bonif_Precio_Rebajado	  NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vv_Tiene_Copago_Fijo		VARCHAR2(1):='N';--ALVARO CALDERON 07/06/2006
+vn_Valor_Copago_N2F		   NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vn_Valor_Copago_N3F		   NUMBER(4):=0;--ALVARO CALDERON 07/06/2006
+vn_TIPO_BONIF_DESCTO_ESPECIAL	NUMBER(1):=3;--ALVARO CALDERON 07/06/2006
+vv_Aplicar_Msg_Descuento	VARCHAR2(1):='N';--ALVARO CALDERON 07/06/2006
+vn_Precio_N3F			 NUMBER(10):=0;--ALVARO CALDERON 07/06/2006
+vn_URGENCIA_PLAN		NUMBER(2):=0;--ALVARO CALDERON 07/06/2006
+vn_URGENCIA_PREST		 NUMBER(2):=0;--ALVARO CALDERON 07/06/2006
+-- FIN ALVARO CALDERON
+vn_CODIGO_INTERNO_MED_CAB	 NUMBER(10):=0; --EACE 08-09-2005 MEDICO CABECERA
+vn_USAR_TARIFADOR_VIEJO 	   VARCHAR2(1):='S'; -- PGP 31/07/2007 CONVENIOS NUEVOS
+vn_CORRELATIVO_CONVENIO 	   NUMBER:=0;	       -- PGP 31/07/2007 CONVENIOS NUEVOS
+vn_CORR_LA_CONV_NUEVO		 NUMBER:=0;	     -- PGP 31/07/2007 CONVENIOS NUEVOS CORRELATIVO LUGAR ATENCION EN CONVENIOS NUEVOS
+vn_CORR_LA_CONV_NUEVO_VER2	  NUMBER:=0;	      -- PGP 09/08/2007 CONVENIOS NUEVOS CORRELATIVO LUGAR ATENCION VERSION 2 EN CONVENIOS NUEVOS
+vn_COD_ERROR_LA 		   NUMBER:=0;	       -- PGP 31/07/2007 CONVENIOS NUEVOS CODIGO ERROR EN BUSQUEDA DE LUGAR DE ATENCION
+vv_DESCRIPCION_ERROR_LA 	   VARCHAR2(100):='';-- PGP 31/07/2007 CONVENIOS NUEVOS DESCRIPCION ERROR EN BUSQUEDA DE LUGAR DE ATENCION
+vv_RESPUESTA_ESPECIALIDAD	 VARCHAR2(100):='';-- PGP 01/08/2007 CONVENIOS NUEVOS DESCRIPCION QUE RETORNA EL SERVICIO QUE VALIDA ESPECIALIDAD
+vn_ERROR_ESPECIALIDAD		 NUMBER:=0;	     -- PGP 01/08/2007 CONVENIOS NUEVOS CODIGO QUE RETORNA EL SERVICIO QUE VALIDA ESPECIALIDAD
+vv_ERROR_CONSU_ESPE		   VARCHAR2(100):='';-- PGP 01/08/2007 CONVENIOS NUEVOS ERROR QUE RETORNA EL SERVICIO QUE HOMOLOGA PRESTACION CONSULTA MEDICA
+vn_CODIGO_PREST_NUEVO		 NUMBER:=0;	     -- PGP 01/08/2007 CONVENIOS NUEVOS CODIGO DE PRESTACION HOMOLOGADO PARA CONSULTAS MEDICAS
+vn_VALOR_FACTURAR		  NUMBER:=0;	      -- PGP 01/08/2007 CONVENIOS NUEVOS VALOR A FACTURAR QUE RETORNA EL NUEVO TARIFICADOR DE CONVENIOS
+vn_VALOR_BONIFICAR		   NUMBER:=0;	       -- PGP 01/08/2007 CONVENIOS NUEVOS VALOR A BONIFICAR QUE RETORNA EL NUEVO TARIFICADOR DE CONVENIOS
+vv_OBS_TARIFA_CON_NUEVO 	VARCHAR2(100):='';-- PGP 01/08/2007 CONVENIOS NUEVOS OBSERVACION QUE RETORNA EL NUEVO TARIFICADO DE CONVENIOS
+vv_RESP_PRO_BLOQ		VARCHAR2(10):=''; -- PGP 01/08/2007 CONVENIOS NUEVOS POR PROFESIONAL BLOQUEADO LINEA 1233
+vv_RESP_PRO_SOLI		VARCHAR2(10):=''; -- PGP 01/08/2007 CONVENIOS NUEVOS POR PROFESIONAL BLOQUEADO LINEA 1233
+vv_ES_STAFF			   VARCHAR2(1):='';  -- PGP 02/08/2007 CONVENIOS NUEVOS POR VALIDACION DE MEDICO TRATANTE (SEA PARTE DEL STAFF) LINEA 1305
+vn_CORR_LA_CONV_TRAT		NUMBER:=0;
+vn_COD_ERR_LA_TRAT		  NUMBER:=0;
+vv_DES_ERROR_LA_TRAT		VARCHAR2(100):='';
+
+
+vv_CODIGO_ADICIONAL		   VARCHAR2(15):='';-- EACE 15/12/2006 POR MULTICODIGO
+vn_CODIGO_ADICIONAL		   NUMBER:=0; -- PGP 10/10/2007 POR MULTICODIGO
+vv_INHABIL			  VARCHAR2(1):=''; -- PGP 19/10/2007 HORARIO INHABIL
+
+vn_CODIGO_PREST_ADICIONAL	 NUMBER:=0; -- MULTICODIGO 24/10/2007 PGP
+
+vn_CORR_CONVENIO		NUMBER:=0;
+vn_EXCLUYE_CONV 		   NUMBER:=0;
+
+vn_PSA_CORRELATIVO		  NUMBER:=0; -- POR MEDICOS DE CABECERA NUEVA BASE CONVENIOS 14/11/2007 PGP
+vn_CODIGO_ERROR_MED_CAB 	   NUMBER:=0; -- POR MEDICOS DE CABECERA NUEVA BASE CONVENIOS 14/11/2007 PGP
+vv_EXISTE_LUAT			  VARCHAR2(10):='';
+vv_AUX_ASTERISCO		VARCHAR2(1):='';
+
+
+--JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+vv_0101601			  VARCHAR2(1):='N';
+vv_0101602			  VARCHAR2(1):='N';
+vv_0101603			  VARCHAR2(1):='N';
+vn_Cant_Grupos_No_01		NUMBER:=0;
+vv_Grupo_01			   VARCHAR2(1):='N';
+--JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+vv_PREST_CONSULTA_VALIDA	 VARCHAR2(1):='N';
+
+-- PGP 14/04/2008 BENEFICIOS NUEVOS
+vn_BENEF_ERROR			    NUMBER:=0;
+vv_BENEF_ERROR_DESCRIP		  VARCHAR2(100):='';
+vn_BENEF_CORRELATIVO		NUMBER:=0;
+
+-- VARIABLES INSERTA REPOSITORIO
+vn_BENEF_ERROR_INSERT			   NUMBER:=0;
+vv_BENEF_ERROR_DESCRIP_INSERT		 VARCHAR2(100):='';
+
+
+
+
+-- VARIABLES CALCULO BONIF REPOSITORIO
+
+vn_BENEF_ERROR_CALC		     NUMBER:=0;
+vv_BENEF_ERROR_DESCRIP_CALC	   VARCHAR2(500):='';
+
+-- VARIABLES RETORNA PREST. REPOSITORIO
+cur_COBER_PRESTACIONES		   cCURSOR;
+vn_BENEF_ERROR_RETORNA		    NUMBER:=0;
+vv_BENEF_ERROR_DESCRIP_RETORNA	  VARCHAR2(100):='';
+
+-- RESCATA COBERTURAS DEL CURSOR
+
+vn_CORRELATIVO_REP_BONOS	   NUMBER:=0;
+vn_NUMERO_DETALLE_COBER_REP	    NUMBER:=0;
+vv_MONTO_COBERTURA		   VARCHAR2(240):='';
+vv_MONTO_COBERTURA_FORZADA	   VARCHAR2(240):='';
+vv_MONTO_COBERTURA_APLICADA	    VARCHAR2(240):='';
+vv_TIBE_CODIGO			   VARCHAR2(10):='';
+vv_TIBE_DESCRIPCION		    VARCHAR2(60):='';
+vv_CODIGO_CALCULO		  VARCHAR2(100):='';
+
+vn_TOTAL_MONTO_COBER_APLI	  NUMBER:=0;
+
+
+vn_SECO_CORRELATIVO		    NUMBER:=0;
+vn_SEAL_CORRELATIVO		    NUMBER:=0;
+vn_DNP_CORRELATIVO		   NUMBER:=0;
+
+vn_REB_CORRELATIVO		   NUMBER:=0;
+vv_TIPO_ACCESO			   VARCHAR2(10):='IMED';
+--GCG 16.08.2011
+vv_TIPO_ACCESO_1		     VARCHAR2(10):='IMED';
+--GCG 16.08.2011
+vn_CODIGO_PRESTACION_PPAL	  NUMBER:=0;
+e_CONSULTA			   EXCEPTION;
+vn_EXISTE_CONSULTA		   NUMBER:=0;
+vn_MONTO_PRESTACION_UNIT	 NUMBER:=0;
+VV_REQUIERE_OD			   VARCHAR2(1):='';
+vv_TIENE_OD			    VARCHAR2(1):='';
+vv_MARCA_NUEVO			   VARCHAR2(1):='';
+cur_ORDENES_DERIV		  cCURSOR;
+vv_ORDEN_DERIVACION		    VARCHAR2(20):='';
+vv_TIPO_RES_OD			   VARCHAR2(1):='';
+vn_PREST_CODIGO_INTERNO_PREF	 NUMBER:=0;
+vv_SERVICIO_FULL		 VARCHAR2(1):='';
+
+vn_GaraCodigo			  NUMBER:=NULL;
+vn_GrupSecuencia		 NUMBER:=NULL;
+vv_ES_GES			  VARCHAR2(1):='';
+vv_MENSAJE_ERROR		 VARCHAR2(500):=''; ---AGREGADO PARA PAQUETES AMBULATORIOS 27-01-2009
+vv_TARIFA_PAQUETE		  VARCHAR2(1):='N'; ---AGREGADO PARA PAQUETES AMBULATORIOS 27-01-2009
+vn_CANTIDAD_GES 		    NUMBER:=0;
+vn_CANTIDAD_NOGES		  NUMBER:=0;
+vv_Mensaje_ERROR_GES		 VARCHAR2(500):='';
+E_SOLO_PRESTACIONES_GES 	    EXCEPTION;
+
+vn_CODIGO_ITEM			   NUMBER:=0;
+E_POSEE_BENEFICIO_BC15		   EXCEPTION;
+E_POSEE_BENEFICIO_BC24		   EXCEPTION;
+E_POSEE_BENEFICIO_BC33		   EXCEPTION;
+E_POSEE_BENEFICIO_BC99		   EXCEPTION;
+E_POSEE_BENEFICIO_NORMAL	 EXCEPTION;
+e_NO_POSEE_BENEF_BC15		 EXCEPTION;
+e_NO_POSEE_BENEF_BC24		 EXCEPTION;
+e_NO_POSEE_BENEF_BC33		 EXCEPTION;
+e_NO_POSEE_BENEF_BC99		 EXCEPTION;
+vn_CONVENIO_DENTAL_VIP		 NUMBER:=0;
+po_cPlan			 cCURSOR;
+vn_PLAN_CORRELATIVO_SIETE	 NUMBER:=0;
+vv_BENEFICIARIO_CON_CREDITO	 VARCHAR2(5):='';
+vn_MONTO_CREDITO_OTORGADO	 NUMBER(15,4):=0;
+vv_MONTO_CREDITO_OTORGADO	 VARCHAR2(100):='';
+vv_MENSAJE_CREDITO_OTORGADO	 VARCHAR2(50):='';
+vn_ERROR_CREDITO		 NUMBER:=0;
+vv_DESC_ERROR_CREDITO		 VARCHAR2(50):='';
+e_EJECUTA_P_BONIFICA_CREDITO	 EXCEPTION;
+vn_MONTO_CREDITO		 NUMBER:=0;
+vn_ERROR_P_ELIM_DII		 NUMBER:=0;
+vv_ERROR_P_ELIM_DII		 VARCHAR2(100):='';
+e_P_ELIM_DII			 EXCEPTION;
+vn_ERROR_INSERT_PRESTA		 NUMBER:=0;
+vv_ERROR_INSERT_PRESTA		 VARCHAR2(100):='';
+e_P_INSERT_PRESTA		 EXCEPTION;
+vn_ERROR_F_CONS_DII		 NUMBER:=0;
+vv_ERROR_F_CONS_DII		 VARCHAR2(100):='';
+e_F_CONS_DII			 EXCEPTION;
+vn_NUMERO_INTERVENCION		 NUMBER:=0;
+vn_PRESTACION_PRINCIPAL 	 NUMBER:=0;
+vv_ITEM_ANTERIOR		 VARCHAR2(1):='';
+e_FALTA_PABELLON		 EXCEPTION;
+e_COMPONENTE_NO_VALIDO		 EXCEPTION;
+e_PABELLON			 EXCEPTION;
+vn_ERROR_ASIGNA_INTER		 NUMBER:=0;
+vv_ERROR_ASIGNA_INTER		 VARCHAR2(100):='';
+e_ASIGNA_NUMERO_INTER		 EXCEPTION;
+vn_COMPONENTE			 NUMBER:=0;
+vv_TIENE_NUMERO_INTER		 VARCHAR2(1):='N';
+vv_REQUIERE_PABELLON		 VARCHAR2(1):='N';
+vn_AGRUP_HMQ_PAB		 NUMBER(10):=0;
+vn_AGRUP_HMQ			NUMBER(10):=0;
+vn_AGRUP_PAB			NUMBER(10):=0;
+e_UN_SOLO_PABELLON		EXCEPTION;
+vn_CASOS_ESPECIALES		NUMBER:=0;
+vn_CONTADOR_PRESTACIONES	NUMBER:=0;
+vn_PRESTADOR_UN_PABELLON	NUMBER:=0;
+
+vn_NUMERO_ORDEN_DERIVACION	NUMBER:=0;
+vv_MENSAJE_GES			VARCHAR2(100):='';
+vv_CARTILLA			VARCHAR2(100):='';
+vv_TIPO_TARIFA			VARCHAR2(100):='OTRO';
+vv_PATOLOGIA			VARCHAR2(20):='';
+vn_PRESTACION_HOMOLOGADA_GES	NUMBER:=0;
+vv_ATENCION  VARCHAR2(20);
+
+e_VAL_URGENCIA_INTEGRAL 	EXCEPTION;
+
+
+v_nERROR_RESP			NUMBER(10):=0;
+v_vDESC_ERROR_RESP		VARCHAR2(100):='';
+e_RESPALDO_REPOSITORIO		EXCEPTION;
+
+CURSOR C_COBERTURA (piv_TIPO_ACCESO IN VARCHAR2,
+		    piv_USUARIO_EMISION IN VARCHAR2,
+		    pin_FOLIO_SUSCRIPCION IN NUMBER) IS
+-- GCG 30/08/2011
+			SELECT *
+			FROM   BENEFICIOS.BEN_REPOSITORIO_EMISION_BONOS
+			WHERE  USUARIO_EMISION = piv_USUARIO_EMISION
+			AND    FOLIO_SUSCRIPCION = pin_FOLIO_SUSCRIPCION
+			AND	  TRUNC(FECHA_CREACION) = TRUNC(SYSDATE)
+			ORDER BY 1;
+
+--			  SELECT *
+--			  FROM	 BENEFICIOS.BEN_REPOSITORIO_EMISION_BONOS
+--			  WHERE  TIPO_ACCESO = piv_TIPO_ACCESO
+--			  AND	 USUARIO_EMISION = piv_USUARIO_EMISION
+--			  AND	 FOLIO_SUSCRIPCION = pin_FOLIO_SUSCRIPCION
+--			  AND	    TRUNC(FECHA_CREACION) = TRUNC(SYSDATE)
+--			  ORDER BY 1;
+
+
+-- GCG 30/08/2011
+CURSOR C_LEE_REPOSITORIO (pic_vUsuario_emsion IN VARCHAR2 ,
+			  pic_vFecha	      IN VARCHAR2,
+			  pic_nFolio	      IN NUMBER
+			  ) IS
+      SELECT TIPO_ACCESO
+	FROM BENEFICIOS.BEN_REPOSITORIO_EMISION_BONOS REB
+       WHERE REB.USUARIO_EMISION	= pic_vUsuario_emsion
+	 AND TRUNC(REB.FECHA_CREACION)	= TO_DATE(pic_vFecha,'DD/MM/RRRR')
+	 AND REB.FOLIO_SUSCRIPCION	= pic_nFolio
+    GROUP BY TIPO_ACCESO
+    ORDER BY TIPO_ACCESO
+    ;
+
+-- 01/02/2014 BNF-000988 Centralizacion de IMED a Servidor ISCTOS
+--
+E_TOPES 		EXCEPTION;
+--CURSOR CON TOPES
+CURSOR C_TOPES (pic_vUsuario_emsion IN VARCHAR2 ,
+		      pic_vFecha	  IN VARCHAR2,
+		      pic_nFolio	  IN NUMBER
+		      ) IS
+
+      SELECT DISTINCT TOPE_CORRELATIVO,TOPE_CORRELATIVO_BC,PRISA_CODIGO
+	FROM BENEFICIOS.BEN_REPOSITORIO_EMISION_BONOS REB
+       WHERE
+	    (TOPE_CORRELATIVO > 0 OR TOPE_CORRELATIVO_BC >0)
+	 AND REB.USUARIO_EMISION	= pic_vUsuario_emsion
+	 AND TRUNC(REB.FECHA_CREACION)	= TO_DATE(pic_vFecha,'DD/MM/RRRR')
+	 AND REB.FOLIO_SUSCRIPCION	= pic_nFolio
+    ORDER BY 1,2
+    ;
+
+----------------------------------------------------------------------------------------------------------------
+--				  INICIO  G. E. S. 28-06-2005
+--					  PROCESO DE VALIORIZACION
+----------------------------------------------------------------------------------------------------------------
+PROCEDURE P_VALORIZA_GES (piv_USUARIO			     IN VARCHAR2,
+			   pin_UNOR_CORRELATIVO 		IN NUMBER,
+			  pid_FECHA_EMISION		       IN DATE,
+			  pin_COAF_FOLIO_SUSCRIPCION	    IN NUMBER,
+			  pin_COAF_ORGA_CODIGO_ISAPRE	     IN NUMBER,
+			  pin_CODIGO_CARGA		      IN NUMBER,
+			  pov_MSG_ERROR 		       OUT VARCHAR2) IS
+
+vn_ValorCopago_GES	    NUMBER:=0;
+vn_Bonificacion_Isapre	    NUMBER:=0;
+vn_Valorizar		  NUMBER:=0;
+E_SALIR 		     EXCEPTION;
+i			   NUMBER:=0;
+
+BEGIN
+    pov_MSG_ERROR:=NULL;
+
+    FOR i IN 1 ..vCOL_vExtES_GES.COUNT LOOP
+	IF vCOL_vExtES_GES(i) ='S' AND vn_Valorizar = 0 THEN
+	   PCK_GESARA_100_BONIFICACIONES.p_Asigna_Copago_Ges(piv_USUARIO,
+								pin_UNOR_CORRELATIVO,
+							     TO_CHAR(pid_FECHA_EMISION,'dd/mm/rrrr'),
+							     pin_COAF_FOLIO_SUSCRIPCION,
+							     pin_COAF_ORGA_CODIGO_ISAPRE,
+							     pin_CODIGO_CARGA,
+							     pov_MSG_ERROR);
+	    vn_Valorizar := 1;
+	END IF;
+
+	IF pov_MSG_ERROR IS NOT NULL THEN
+	    pov_MSG_ERROR:='ERROR AL VALORIZAR GES ('||pov_MSG_ERROR||')';
+	    RAISE E_SALIR;
+	END IF;
+
+	IF vCOL_vExtES_GES(i) ='S' THEN
+
+	    PCK_GESARA_100_BONIFICACIONES.p_Obtiene_Copago_Ges (piv_USUARIO,
+								pin_UNOR_CORRELATIVO,
+								TO_CHAR(pid_FECHA_EMISION,'dd/mm/rrrr'),
+								vCOL_nExtCodigo_Prestacion(i),
+								vn_ValorCopago_GES,
+								pov_MSG_ERROR);
+
+	    IF pov_MSG_ERROR IS NOT NULL THEN
+		pov_MSG_ERROR:='ERROR AL VALORIZAR PRESTACION GES ';
+		RAISE E_SALIR;
+	    END IF;
+
+	    vn_Bonificacion_Isapre	      := Col_nExtValorPrestacion(i) -  vn_ValorCopago_GES;
+	    Col_nExtAporteFinanciador(I)  := NVL(vn_Bonificacion_Isapre,0);
+	    vn_TOTAL_BONIF_GES		    := vn_TOTAL_BONIF_GES +  NVL(vn_Bonificacion_Isapre,0);
+	    Col_nExtCopago(I)		    := NVL(vn_ValorCopago_GES,0);
+	    vn_VALOR_TOTAL_BONIFICACION      := NVL(vn_VALOR_TOTAL_BONIFICACION,0)+vn_Bonificacion_Isapre;
+	    vn_VALOR_TOTAL_COPAGO	   := NVL(vn_VALOR_TOTAL_COPAGO,0)+vn_ValorCopago_GES;
+
+	END IF;
+    END LOOP;
+EXCEPTION
+    WHEN E_SALIR THEN
+	 NULL;
+    WHEN OTHERS THEN
+	 pov_MSG_ERROR:= SUBSTR(SQLERRM,1,200);
+END P_VALORIZA_GES;
+----------------------------------------------------------------------------------------------------------------
+--				  FIN	G. E. S. 28-06-2005
+--				       PROCESO DE VALIORIZACION
+----------------------------------------------------------------------------------------------------------------
+
+
+PROCEDURE LIMPIA
+AS
+BEGIN
+  OUT_VEXTPLAN			      := '		 ';
+  OUT_VEXTGLOSA1		      := '						    ';
+  OUT_VEXTGLOSA2		      := '						    ';
+  OUT_VEXTGLOSA3		      := '						    ';
+  OUT_VEXTGLOSA4		      := '						    ';
+  OUT_VEXTGLOSA5		      := '						    ';
+
+  vCOL_nExtCodigo_Prestacion.DELETE; --EACE 28-06-2005 GES
+  vCOL_vExtES_GES.DELETE;	       --EACE 28-06-2005 GES
+  COL_NEXTVALORPRESTACION.DELETE;
+  COL_NEXTAPORTEFINANCIADOR.DELETE;
+  COL_NEXTCOPAGO.DELETE;
+  COL_VEXTINTERNOLSA.DELETE;
+  COL_NEXTTIPOBONIF1.DELETE;
+  COL_NEXTCOPAGO1.DELETE;
+  COL_NEXTTIPOBONIF2.DELETE;
+  COL_NEXTCOPAGO2.DELETE;
+  COL_NEXTTIPOBONIF3.DELETE;
+  COL_NEXTCOPAGO3.DELETE;
+  COL_NEXTTIPOBONIF4.DELETE;
+  COL_NEXTCOPAGO4.DELETE;
+  COL_NEXTTIPOBONIF5.DELETE;
+  COL_NEXTCOPAGO5.DELETE;
+
+  vCOL_nExtCodigo_Prestacion(1) 	 :=0; --EACE 28-06-2005 GES
+  vCOL_vExtES_GES(1)		      :='N';  --EACE 28-06-2005 GES
+  COL_NEXTVALORPRESTACION(1)	      :=0;
+  COL_NEXTAPORTEFINANCIADOR(1)		:=0;
+  COL_NEXTCOPAGO(1)			 :=0;
+  COL_VEXTINTERNOLSA(1) 		 :='		   ';
+  COL_NEXTTIPOBONIF1(1) 		 :=0;
+  COL_NEXTCOPAGO1(1)		      :=0;
+  COL_NEXTTIPOBONIF2(1) 		 :=0;
+  COL_NEXTCOPAGO2(1)		      :=0;
+  COL_NEXTTIPOBONIF3(1) 		 :=0;
+  COL_NEXTCOPAGO3(1)		      :=0;
+  COL_NEXTTIPOBONIF4(1) 		 :=0;
+  COL_NEXTCOPAGO4(1)		      :=0;
+  COL_NEXTTIPOBONIF5(1) 		 :=0;
+  COL_NEXTCOPAGO5(1)		      :=0;
+END;
+
+
+
+PROCEDURE SETEA_VALOR_DEFECTO_COLUMN
+AS
+BEGIN
+  vCOL_nExtCodigo_Prestacion(1) 	 :=0; --EACE 28-06-2005 GES
+  vCOL_vExtES_GES(1)		      :='N'; --EACE 28-06-2005 GES
+  COL_NEXTVALORPRESTACION(1)	      :=0;
+  COL_NEXTAPORTEFINANCIADOR(1)		:=0;
+  COL_NEXTCOPAGO(1)			 :=0;
+  COL_VEXTINTERNOLSA(1) 		 :=' ';
+  COL_NEXTTIPOBONIF1(1) 		 :=0;
+  COL_NEXTCOPAGO1(1)		      :=0;
+  COL_NEXTTIPOBONIF2(1) 		 :=0;
+  COL_NEXTCOPAGO2(1)		      :=0;
+  COL_NEXTTIPOBONIF3(1) 		 :=0;
+  COL_NEXTCOPAGO3(1)		      :=0;
+  COL_NEXTTIPOBONIF4(1) 		 :=0;
+  COL_NEXTCOPAGO4(1)		      :=0;
+  COL_NEXTTIPOBONIF5(1) 		 :=0;
+  COL_NEXTCOPAGO5(1)		      :=0;
+END;
+
+
+
+FUNCTION OBTIENE_LISTA(p_indice IN NUMBER)
+RETURN VARCHAR2
+IS
+vv_LINEA_A_GUARDAR		  VARCHAR2(2000);
+BEGIN
+  IF	p_indice = 1 THEN
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA1;
+  ELSIF p_indice = 2 THEN
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA2;
+  ELSIF p_indice = 3 THEN
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA3;
+  ELSIF p_indice = 4 THEN
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA4;
+  ELSIF p_indice = 5 THEN
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA5;
+  ELSIF p_indice = 6 THEN
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA6;
+  ELSIF p_indice = 7 THEN			    -- Patricio Alarcon
+    vv_LINEA_A_GUARDAR := vv_ENTR_LISTA7;	  -- Patricio Alarcon
+  END IF;
+RETURN vv_LINEA_A_GUARDAR;
+END;
+
+
+
+FUNCTION SETEA_ENTRADA RETURN VARCHAR2 IS
+
+vv_ENTRADA		 VARCHAR2(4000);
+
+BEGIN
+    vv_ENTRADA:=  SUBSTR(SRV_Message||vv_SEPARADOR||
+			 In_nExtCodFinanciador||vv_SEPARADOR||
+			      In_vExtHomNumeroConvenio||vv_SEPARADOR||
+			   In_vExtHomLugarConvenio||vv_SEPARADOR||
+			   In_vExtSucVenta||vv_SEPARADOR||
+			   In_vExtRutConvenio||vv_SEPARADOR||
+			   In_vExtRutTratante||vv_SEPARADOR||
+			   In_vExtEspecialidad||vv_SEPARADOR||
+			   In_vExtRutSolicitante||vv_SEPARADOR||
+			   In_vExtRutBeneficiario||vv_SEPARADOR||
+			   In_vExtTratamiento||vv_SEPARADOR||
+			   In_vExtCodigoDiagnostico||vv_SEPARADOR||
+			   In_nExtNivelConvenio||vv_SEPARADOR||
+			   In_vExtUrgencia||vv_SEPARADOR||
+			   In_vExtLista1||vv_SEPARADOR||
+			   In_vExtLista2||vv_SEPARADOR||
+			   In_vExtLista3||vv_SEPARADOR||
+			   In_vExtLista4||vv_SEPARADOR||
+			   In_vExtLista5||vv_SEPARADOR||
+			   In_vExtLista6||vv_SEPARADOR||
+			 In_vExtLista7||vv_SEPARADOR||	 --- Patricio Alarcon
+			   In_nExtNumPrestaciones||vv_SEPARADOR, 1, 4000);
+    RETURN vv_ENTRADA;
+END SETEA_ENTRADA;
+
+FUNCTION SETEA_SALIDA RETURN VARCHAR2 IS
+vv_SALIDA	     LONG;
+vv_SALIDA_Aux	    VARCHAR2(4000);
+BEGIN
+    vv_SALIDA := (SRV_Message||vv_SEPARADOR||Out_vExtCodError||vv_SEPARADOR||Out_vExtMensajeError||vv_SEPARADOR||Out_vExtPlan||vv_SEPARADOR||Out_vExtGlosa1||vv_SEPARADOR||Out_vExtGlosa2||vv_SEPARADOR||Out_vExtGlosa3||vv_SEPARADOR||Out_vExtGlosa4||vv_SEPARADOR||Out_vExtGlosa5||vv_SEPARADOR);
+
+    FOR i IN 1 ..Col_nExtValorPrestacion.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtValorPrestacion(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtAporteFinanciador.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtAporteFinanciador(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtCopago.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtCopago(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_vExtInternolsa.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_vExtInternolsa(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtTipoBonif1.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtTipoBonif1(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtCopago1.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtCopago1(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtTipoBonif2.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtTipoBonif2(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtCopago2.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtCopago2(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtTipoBonif3.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtTipoBonif3(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtCopago3.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtCopago3(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtTipoBonif4.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtTipoBonif4(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtCopago4.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtCopago4(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtTipoBonif5.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtTipoBonif5(i)||vv_SEPARADOR);
+    END LOOP;
+
+    FOR i IN 1 ..Col_nExtCopago5.COUNT LOOP
+	vv_SALIDA := (vv_SALIDA ||Col_nExtCopago5(i)||vv_SEPARADOR);
+    END LOOP;
+
+    vv_SALIDA_Aux:= RTRIM(RPAD(vv_SALIDA ,4000));
+    RETURN vv_SALIDA_Aux;
+END SETEA_SALIDA;
+--
+---
+BEGIN
+
+    BEGIN
+
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	vn_NUMERO_ERROR:=1;
+
+	vd_FECHA_LLEGADA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+
+	-- POR CONTROL DE RELACION ENTRE VALORIZACION Y BONIFICACION PGP 03/07/2006
+	SELECT IMED_AUDITA_SEQ.NEXTVAL
+	INTO   vn_CORRELATIVO_AUDITORIA
+	FROM   DUAL;
+	vv_CORRELATIVO_AUDITORIA:=TO_CHAR(vn_CORRELATIVO_AUDITORIA);
+	-- FIN
+
+	vv_PARAMETROS_ENTRADA := SETEA_ENTRADA;
+	vn_NUMERO_ERROR:=2;
+
+
+	vv_OUTPUT_STATUS_SERVICIO  := '1';
+	vn_SRV_TOTAL_ROWS      := TO_NUMBER(RTRIM(SRV_Message));
+	vn_SRV_ROW_COUNT      := 0;
+	vn_SRV_FETCH_STATUS	 := 0;
+
+	vn_NUMERO_ERROR:=3;
+
+	vn_ENTR_CODIGO_FINANCIADOR	:= In_nExtCodFinanciador;
+
+	vn_NUMERO_ERROR:=4;
+
+       -- Si el codigo no corresponde a Consalud
+	IF ( vn_ENTR_CODIGO_FINANCIADOR != vn_CODIGO_ISAPRE_CONSALUD )THEN
+	    RAISE e_ISAPRE_NO_CORRESPONDE;
+	END IF;
+
+	vn_NUMERO_ERROR:=5;
+
+	vv_ENTR_HOM_NUMERO_CONVENIO	 := In_vExtHomNumeroConvenio;
+	vv_ENTR_HOM_LUGAR_CONVENIO	 := In_vExtHomLugarConvenio;
+	vv_ENTR_HOM_SUCURSAL_VENTA	 := In_vExtSucVenta;
+	vn_ENTR_RUT_CONVENIO	       := TO_NUMBER(SUBSTR(In_vExtRutConvenio,1,10));
+	vn_ENTR_RUT_TRATANTE	       := TO_NUMBER(SUBSTR(In_vExtRutTratante,1,10));
+	vv_ENTR_CODIGO_ESPECIALIDAD   := In_vExtEspecialidad;
+
+	vn_ENTR_RUT_SOLICITANTE       := TO_NUMBER(SUBSTR(In_vExtRutSolicitante,1,10));
+	vn_ENTR_RUT_BENEFICIARIO       := TO_NUMBER(SUBSTR(In_vExtRutBeneficiario,1,10));
+	vv_ENTR_TRATAMIENTO	      := In_vExtTratamiento;
+	vv_ENTR_CODIGO_DIAGNOSTICO    := In_vExtCodigoDiagnostico;
+	vv_ENTR_NIVEL_CONVENIO		   := In_nExtNivelConvenio;
+	vv_ENTR_URGENCIA	       := In_vExtUrgencia;
+	vn_ENTR_NUMERO_PRESTACIONES   := In_nExtNumPrestaciones;
+	vv_ENTR_LISTA1			  := In_vExtLista1;
+	vv_ENTR_LISTA2			  := In_vExtLista2;
+	vv_ENTR_LISTA3			  := In_vExtLista3;
+	vv_ENTR_LISTA4			  := In_vExtLista4;
+	vv_ENTR_LISTA5			  := In_vExtLista5;
+	vv_ENTR_LISTA6			  := In_vExtLista6;
+	vv_ENTR_LISTA7			  := In_vExtLista7;  --- Patricio Alarcon
+	vn_NUMERO_ERROR 		 :=6;
+
+	dbms_output.put_line('rescato bien las variables');
+
+	-- TRASPASA VARIABLES
+	vn_NUMERO_TRANSACCION	       := NULL; 					  --identificacion de la tranasccion ' no
+	vn_NUMERO_ERROR 		 :=6.1;
+	vn_NUMERO_SECUENCIA		 := NULL;					    -- numero de secuencia		  ' no
+	vn_NUMERO_ERROR 		 :=6.2;
+	vv_FECHA_ENROLAMIENTO		 := TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'); -- auditoria sistema yyyy/mm/dd hh24:mi:ss crear seq
+	vn_NUMERO_ERROR 		 :=6.3;
+	vn_CODIGO_ISAPRE	       := vn_ENTR_CODIGO_FINANCIADOR;			       -- C?digo de isapre
+	vn_NUMERO_ERROR 		 :=6.4;
+	vn_NUMERO_BONO_ATESA	       := NULL; 				       ---! no se usa solo auditoria, -- numero bono asignado por ATESA
+	vn_NUMERO_ERROR 		 :=6.5;
+	vn_RUT_PRESTADOR_TRATANTE	:= vn_ENTR_RUT_TRATANTE;			---rut tratante, prestador, atiende
+	vn_NUMERO_ERROR 		 :=6.6;
+	vn_RUT_PRESTADOR_FACTURADOR   := vn_ENTR_RUT_CONVENIO;			      --- rut convenio facturador
+	vn_NUMERO_ERROR 		 :=6.7;
+	vv_CODIGO_ESPECILIDAD_HOMOLOG := LTRIM(RTRIM(RPAD(vv_ENTR_CODIGO_ESPECIALIDAD,5)));			   -- codigo especialidad HOMOLOGADA
+	vn_NUMERO_ERROR 		 :=6.8;
+	vv_CODIGO_ESPECIALIDAD		 := NULL;					 -- codigo especialidad ATESA --- no se ocupa
+	vn_NUMERO_ERROR 		 :=7;
+	DBMS_OUTPUT.PUT_LINE ( 'vv_ENTR_URGENCIA= ' || vv_ENTR_URGENCIA );
+	DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO= ' || vn_ENTR_RUT_CONVENIO );
+	--     vn_LUGAR_DE_PRESTACION := TO_NUMBER(vv_ENTR_HOM_LUGAR_CONVENIO);
+	vn_LUGAR_DE_PRESTACION		:= TO_NUMBER(vv_ENTR_HOM_NUMERO_CONVENIO);
+	--- 20030224 CAGF
+	vn_RUT_PRESTADOR_SOLICITANTE := vn_ENTR_RUT_SOLICITANTE;		    --- rut solicitante
+	vn_RUT_BENEFICIARIO	     := vn_ENTR_RUT_BENEFICIARIO;		     --- rut del vv_BENEFICIARIO
+	vv_TERMINAL		     := NULL;					  ---inserta en ATESA_AUXILIAR y auditoria
+	vn_NUMERO_ERROR 		:=8;
+	vn_CORRELATIVO_CONVENIO 	:=TO_NUMBER(vv_ENTR_HOM_NUMERO_CONVENIO);
+	DBMS_OUTPUT.PUT_LINE ( 'vn_CORRELATIVO_CONVENIO= ' || vn_CORRELATIVO_CONVENIO );
+
+	DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO= ' || vn_ENTR_RUT_CONVENIO );
+	DBMS_OUTPUT.PUT_LINE ( 'vv_ENTR_HOM_LUGAR_CONVENIO= ' || vv_ENTR_HOM_LUGAR_CONVENIO );
+
+	vv_EXISTE_LUAT:=Pck_Cm_Imed_Nuevo3.f_prestadorExisteLUAT(vn_ENTR_RUT_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO);
+
+	DBMS_OUTPUT.PUT_LINE ( 'vv_EXISTE_LUAT= ' || vv_EXISTE_LUAT );
+	IF vv_EXISTE_LUAT = 'N' THEN
+
+	-- VALIDA SI USAR TARIFICADOR NUEVOS CONVENIOS O ANTIGO PGP 31/07/2007
+	--Pck_Cm_Imed_Nuevo3.P_LUGAR_ATENCIONES 	 ( vn_ENTR_RUT_CONVENIO, vn_CORRELATIVO_CONVENIO, vn_CORR_LA_CONV_NUEVO, vn_COD_ERROR_LA, vv_DESCRIPCION_ERROR_LA );
+--	  Pck_Cm_Imed_Nuevo3.P_LUGAR_ATENCIONES_VERSION2 ( vn_ENTR_RUT_CONVENIO, vn_CORRELATIVO_CONVENIO, vn_CORR_LA_CONV_NUEVO, vn_COD_ERROR_LA, vv_DESCRIPCION_ERROR_LA );
+		Pck_Cm_Imed_Nuevo3.P_LUGAR_ATENCIONES_VERSION2 ( vn_ENTR_RUT_CONVENIO,
+								  vn_CORRELATIVO_CONVENIO,
+								  vn_CORR_LA_CONV_NUEVO,
+							 --	    vn_CORR_CONVENIO,
+							 --	    vn_EXCLUYE_CONV,
+								  vn_COD_ERROR_LA,
+								  vv_DESCRIPCION_ERROR_LA );
+		vn_CORR_CONVENIO:=    1;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO= ' || vn_CORR_CONVENIO );
+		vv_AUX_ASTERISCO := '';
+	ELSE
+	    DBMS_OUTPUT.PUT_LINE ( ' PROCESO NUEVO ' );
+	    vn_CORR_LA_CONV_NUEVO:= TO_NUMBER(vv_ENTR_HOM_LUGAR_CONVENIO);
+	    vn_CORR_CONVENIO:=	  vn_CORRELATIVO_CONVENIO;
+	    vv_AUX_ASTERISCO := '*';
+	END IF;
+
+
+	DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_LA_CONV_NUEVO= ' || vn_CORR_LA_CONV_NUEVO );
+	DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_LA_CONV_NUEVO_VER2= ' || vn_CORR_LA_CONV_NUEVO_VER2 );
+
+	DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_LA_CONV_NUEVO= ' || vn_CORR_LA_CONV_NUEVO );
+	  IF NVL(vn_CORR_LA_CONV_NUEVO,0) = 0 THEN
+	   vn_USAR_TARIFADOR_VIEJO:='S';
+	ELSE
+	   vn_USAR_TARIFADOR_VIEJO:='N';
+	   vv_NOMBRE_TRANSACCION:=vv_NOMBRE_TRANSACCION||'*'||vv_AUX_ASTERISCO;
+	END IF;
+	DBMS_OUTPUT.PUT_LINE ( 'vn_USAR_TARIFADOR_VIEJO= ' || vn_USAR_TARIFADOR_VIEJO );
+	DBMS_OUTPUT.PUT_LINE ( ' vv_NOMBRE_TRANSACCION= ' ||  vv_NOMBRE_TRANSACCION );
+	-- VALIDA SI USAR TARIFICADOR NUEVOS CONVENIOS O ANTIGO PGP 31/07/2007
+	-- VALIDAR ERRORES DEL P_LUGAR_ATENCION
+	-- VALIDA ESPECIALIDAD CONVENIOS NUEVOS 01/08/2007 PGP
+	DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_ESPECILIDAD_HOMOLOG= ' || vv_CODIGO_ESPECILIDAD_HOMOLOG );
+
+	IF vn_USAR_TARIFADOR_VIEJO ='S' THEN
+	BEGIN
+	    SELECT ESPE.CODIGO
+	    INTO   vv_COD_ESPECIALIDAD
+	    FROM   CON_ESPECIALIDADES ESPE
+	    WHERE  ESPE.CODIGO	  = vv_CODIGO_ESPECILIDAD_HOMOLOG;
+	EXCEPTION
+	    WHEN NO_DATA_FOUND THEN
+		RAISE e_ESPECIALIDAD_NO_VALIDA;
+	END;
+	ELSE
+	    IF Pck_Cm_Imed_Nuevo3.f_existeEspecialidad(vv_CODIGO_ESPECILIDAD_HOMOLOG) = 'S' THEN
+	       vv_COD_ESPECIALIDAD:=vv_CODIGO_ESPECILIDAD_HOMOLOG;
+	    ELSE
+		RAISE e_ESPECIALIDAD_NO_VALIDA;
+	    END IF;
+	END IF;
+	-- VALIDA ESPECIALIDAD CONVENIOS NUEVOS 01/08/2007 PGP
+
+	-- New Rut Cotizante 'CTC'
+	DBMS_OUTPUT.PUT_LINE ('___________________________________________________');
+
+	BEGIN
+	    vn_RESPUESTA_IMED_BENEF_COTIZA := Imed_Beneficiario_Cotizante (vn_ENTR_RUT_BENEFICIARIO,
+						    vv_PARM_NO_USADOS,
+						    vn_RUT_COTIZANTE,
+						    vv_PARM_NO_USADOS,
+						    vn_CODIGO_CARGA,
+						    vn_COD_ERROR,
+						    vv_GLOSA_ERROR);
+
+	EXCEPTION
+	    WHEN OTHERS THEN
+		RAISE e_MENSAJE_ERROR_BENEFICIARIO;
+	END;
+
+	IF  vn_RESPUESTA_IMED_BENEF_COTIZA = 1 THEN
+	    RAISE e_MENSAJE_RESPUESTA;
+	END IF;
+
+	DBMS_OUTPUT.PUT_LINE ('CTC Rut Cotizante :'||vn_RUT_COTIZANTE);
+	DBMS_OUTPUT.PUT_LINE ('___________________________________________________');
+	--------------------------------------------------------------------------CTC
+	DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_CARGA= ' || vn_CODIGO_CARGA );
+	DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_COTIZANTE= ' || vn_RUT_COTIZANTE );
+	vn_NUMERO_ERROR:=9;
+	-- saco variables del afiliado
+	DBMS_OUTPUT.PUT_LINE ( 'paso 1111111111111111111111111111111 ' );
+
+
+
+
+
+	BEGIN
+	    SELECT BEN2.COAF_FOLIO_SUSCRIPCION,
+		   BEN2.COAF_ORGA_CODIGO_ISAPRE,
+		   BEN2.BENCOMCOL,
+		   COAF.PLAN_CORRELATIVO,
+		   PLAN.PLAN_TYPE,
+		   COAF.PORCENT_BONI_MEDI,
+		   COAF.PORCENT_BONI_HOSP,
+		   COAF.PORCENT_BONI_AMBU,
+		   COAF.PORCENT_BONI_DENT,
+		   COAF.RENUNCIA_EXCEDENTE,
+		   PLAN.CODIGO_COMERCIAL,
+		   DECODE(BEN2.ASEG_CORRELATIVO,NULL,0,BEN2.ASEG_CORRELATIVO),
+		   DECODE(BEN2.RELACION,NULL,'T',BEN2.RELACION)
+	    INTO   VN_COAF_FOLIO_SUSCRIPCION,
+		   VN_COAF_ORGA_CODIGO_ISAPRE,
+		   VV_BENEFICIOS_COMP,
+		   VN_PLAN_CORRELATIVO,
+		   VV_TIPO_PLAN,
+		   VN_PORCENTAJE_BONIF_MED,
+		   VN_PORCENTAJE_BONIF_HOSP,
+		   VN_PORCENTAJE_BONIF_AMBU,
+		   VN_PORCENTAJE_BONIF_DENT,
+		   VV_RENUNCIA_EXCEDENTE,
+		   VV_CODIGO_COMERCIAL_PLAN,
+		   VN_ASEG_CORRELATIVO,
+		   VV_RELACION
+	    FROM   AFI_PERSONAS  PER1,
+		   AFI_PERSONAS  PER2,
+		   AFI_BENEFICIARIOS_CONTRATO  BEN1,
+		   AFI_BENEFICIARIOS_CONTRATO  BEN2,
+		   AFI_CONTRATOS_AFILIADOS  COAF,
+		   PLN_PLANES  PLAN
+	    WHERE  PER1.RUT = VN_RUT_COTIZANTE
+	    AND    BEN1.PERS_CORRELATIVO = PER1.CORRELATIVO
+	    AND    BEN2.COAF_FOLIO_SUSCRIPCION = BEN1.COAF_FOLIO_SUSCRIPCION
+	    AND    PER2.CORRELATIVO = BEN2.PERS_CORRELATIVO
+	    AND    BEN2.CODIGO_CARGA = VN_CODIGO_CARGA
+	    AND    COAF.FOLIO_SUSCRIPCION = BEN2.COAF_FOLIO_SUSCRIPCION
+	    AND    COAF.ORGA_CODIGO_ISAPRE = BEN2.COAF_ORGA_CODIGO_ISAPRE
+	    AND    PLAN.CORRELATIVO = COAF.PLAN_CORRELATIVO;
+
+	    vv_BENEFICIARIO:='S';
+	EXCEPTION
+	    WHEN NO_DATA_FOUND THEN
+		BEGIN
+		    SELECT BEN2.COAF_FOLIO_SUSCRIPCION,
+			   BEN2.COAF_ORGA_CODIGO_ISAPRE,
+			   BEN2.BENCOMCOL,
+			   COAF.PLAN_CORRELATIVO,
+			   PLAN.PLAN_TYPE,
+			   COAF.PORCENT_BONI_MEDI,
+			   COAF.PORCENT_BONI_HOSP,
+			   COAF.PORCENT_BONI_AMBU,
+			   COAF.PORCENT_BONI_DENT,
+			   COAF.RENUNCIA_EXCEDENTE,
+			   PLAN.CODIGO_COMERCIAL,
+			   DECODE(BEN2.ASEG_CORRELATIVO,NULL,0,BEN2.ASEG_CORRELATIVO),
+			   DECODE(BEN2.RELACION,NULL,'T',BEN2.RELACION)
+		    INTO   VN_COAF_FOLIO_SUSCRIPCION,
+			   VN_COAF_ORGA_CODIGO_ISAPRE,
+			   VV_BENEFICIOS_COMP,
+			   VN_PLAN_CORRELATIVO,
+			   VV_TIPO_PLAN,
+			   VN_PORCENTAJE_BONIF_MED,
+			   VN_PORCENTAJE_BONIF_HOSP,
+			   VN_PORCENTAJE_BONIF_AMBU,
+			   VN_PORCENTAJE_BONIF_DENT,
+			   VV_RENUNCIA_EXCEDENTE,
+			   VV_CODIGO_COMERCIAL_PLAN,
+			   VN_ASEG_CORRELATIVO,
+			   VV_RELACION
+		    FROM   AFI_PERSONAS  PER1,
+			   AFI_PERSONAS  PER2,
+			   AFI_BENEFICIARIOS_CONTRATO  BEN1,
+			   AFI_BENEFICIARIOS_CONTRATO  BEN2,
+			   AFI_CONTRATOS_AFILIADOS  COAF,
+			   PLN_PLANES  PLAN
+		    WHERE  PER1.RUT = VN_RUT_COTIZANTE
+		    AND    BEN1.PERS_CORRELATIVO = PER1.CORRELATIVO
+		    AND    BEN2.COAF_FOLIO_SUSCRIPCION = BEN1.COAF_FOLIO_SUSCRIPCION
+		    AND    PER2.CORRELATIVO = BEN2.PERS_CORRELATIVO
+		    AND    BEN2.CODIGO_CARGA = VN_CODIGO_CARGA
+		    AND    COAF.FOLIO_SUSCRIPCION = BEN2.COAF_FOLIO_SUSCRIPCION
+		    AND    COAF.ORGA_CODIGO_ISAPRE = BEN2.COAF_ORGA_CODIGO_ISAPRE
+		    AND    PLAN.CORRELATIVO = COAF.PLAN_CORRELATIVO;
+
+		EXCEPTION
+		    WHEN OTHERS THEN
+			vv_BENEFICIARIO:='N';
+		END;
+	END;
+
+	vn_COAF_FOLIO_SUSCRIPCION:=afil.F_FOLIO_AFIL(vn_RUT_COTIZANTE);
+
+	PCK_BEN_SERVICIOS_IMED.P_C_DATOS_CONTRATO_FECHA(po_cPlan,
+						      vn_COAF_FOLIO_SUSCRIPCION,
+						      vn_CODIGO_CARGA,
+						      TO_CHAR(SYSDATE,'dd/mm/rrrr'));
+
+	BEGIN
+	    LOOP
+	    FETCH po_cPlan INTO vn_PLAN_CORRELATIVO,
+				vn_PLAN_CORRELATIVO_SIETE,
+				vn_PORCENTAJE_BONIF_HOSP,
+				vn_PORCENTAJE_BONIF_AMBU,
+				vn_PORCENTAJE_BONIF_DENT,
+				vn_PORCENTAJE_BONIF_MED;
+	    EXIT WHEN po_cPlan%NOTFOUND;
+	    END LOOP;
+	    CLOSE po_cPlan;
+	END;
+
+	SELECT MAX(TRIM(CODIGO_COMERCIAL))
+	INTO   VV_CODIGO_COMERCIAL_PLAN
+	FROM   PLN_PLANES
+	WHERE  CORRELATIVO =VN_PLAN_CORRELATIVO;
+
+	DBMS_OUTPUT.PUT_LINE ( 'vn_COAF_FOLIO_SUSCRIPCION = ' || vn_COAF_FOLIO_SUSCRIPCION );
+	DBMS_OUTPUT.PUT_LINE ( 'VN_PLAN_CORRELATIVO = ' || VN_PLAN_CORRELATIVO );
+	DBMS_OUTPUT.PUT_LINE ( 'vn_PLAN_CORRELATIVO_SIETE = ' || vn_PLAN_CORRELATIVO_SIETE );
+	DBMS_OUTPUT.PUT_LINE ( 'VN_PORCENTAJE_BONIF_HOSP = ' || VN_PORCENTAJE_BONIF_HOSP );
+	DBMS_OUTPUT.PUT_LINE ( 'VN_PORCENTAJE_BONIF_AMBU = ' || VN_PORCENTAJE_BONIF_AMBU );
+	DBMS_OUTPUT.PUT_LINE ( 'VN_PORCENTAJE_BONIF_DENT = ' || VN_PORCENTAJE_BONIF_DENT );
+	DBMS_OUTPUT.PUT_LINE ( 'VN_PORCENTAJE_BONIF_MED = ' || VN_PORCENTAJE_BONIF_MED );
+	vv_RENUNCIA_EXCEDENTE:='N';
+
+	IF VN_COAF_FOLIO_SUSCRIPCION=0 OR VN_PLAN_CORRELATIVO = 0 THEN
+	    vv_BENEFICIARIO:='N';
+	END IF;
+
+	vn_NUMERO_ERROR:=10;
+	IF  vv_BENEFICIARIO='N' THEN
+	    RAISE e_NO_BENEFICIARIO;
+	END IF;
+
+	vn_NUMERO_ERROR:=11;
+
+	BEGIN
+	    SELECT FECHA_DESAHUCIO
+	    INTO   VD_FECHA_DESAHUCIO
+	    FROM   AFI_CONTRATOS_AFILIADOS    CON,
+		   AFI_BENEFICIARIOS_CONTRATO BEN,
+		   AFI_PERSONAS 	      PER
+	    WHERE  CON.FOLIO_SUSCRIPCION = VN_COAF_FOLIO_SUSCRIPCION
+	    AND    CON.ORGA_CODIGO_ISAPRE = VN_CODIGO_ISAPRE
+	    AND    CON.FOLIO_SUSCRIPCION = BEN.COAF_FOLIO_SUSCRIPCION
+	    AND    CON.ORGA_CODIGO_ISAPRE = BEN.COAF_ORGA_CODIGO_ISAPRE
+	    AND    BEN.CODIGO_CARGA = VN_CODIGO_CARGA
+	    AND    BEN.FECHA_INICIO_BENEFICIOS <= TRUNC(SYSDATE) AND (BEN.FECHA_TERMINO_BENEFICIO >= TRUNC(SYSDATE) OR BEN.FECHA_TERMINO_BENEFICIO IS NULL)
+	    AND    BEN.PERS_CORRELATIVO = PER.CORRELATIVO;
+	EXCEPTION
+	    WHEN OTHERS THEN
+		RAISE e_NO_VIGENTE;
+	END;
+	vn_NUMERO_ERROR:=12;
+
+	BEGIN
+	    SELECT PLA2.SALUD_ADMINISTRADA,
+		   PLA2.CODIGO_COMERCIAL
+	    INTO   vv_SALUD_ADMINISTRADA,
+		   vv_CODIGO_COMERCIAL
+	    FROM   PLN_PLANES PLA2
+	    WHERE  PLA2.CORRELATIVO = vn_PLAN_CORRELATIVO;
+	EXCEPTION
+	    WHEN OTHERS THEN
+		vv_SALUD_ADMINISTRADA:='N';
+	END;
+
+	vn_NUMERO_ERROR:=13;
+	vn_EXISTE_CONSULTA:=0;
+
+
+	IF vv_SALUD_ADMINISTRADA='N' AND vv_CODIGO_ESPECILIDAD_HOMOLOG IN('MCA','MCI') THEN
+	   RAISE e_SALUD_ADMINISTRADA2;
+	END IF;
+
+
+	vn_CONTADOR_PRESTACIONES := 0;
+
+	IF  vv_SALUD_ADMINISTRADA = 'S' THEN
+	    vv_TIPO_ACCESO:='IMED_MF';
+	    FOR vn_LISTA_INDEX IN 1 .. vn_MAX_LISTAS LOOP
+
+		vv_LINEA_A_GUARDAR := OBTIENE_LISTA(vn_LISTA_INDEX);
+		FOR lineas_index IN 1 ..vn_MAX_LINEAS_LISTAS LOOP
+		    vn_PRESTACION_HOMOLOGADA:= TO_NUMBER(NVL(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-5))),0));
+		    vn_CONTADOR_PRESTACIONES := vn_CONTADOR_PRESTACIONES + 1;
+
+		    --IF TRUNC(vn_PRESTACION_HOMOLOGADA/100000)= 1 THEN -- URGENCIA AL MENOS UN CASO!
+		    IF CONMED.f_ES_CONSULTA(vn_PRESTACION_HOMOLOGADA) = 'S' THEN
+		       vn_EXISTE_CONSULTA:=1;
+		    END IF;
+
+		     --EACE 04-12-2006
+		    SELECT COUNT(*)
+		    INTO   vn_CANTIDAD_PREST_DERIVABLES
+		    FROM   PLN_PRESTACIONES_ISAPRE PREIS
+		    WHERE  preis.codigo = vn_PRESTACION_HOMOLOGADA
+		    AND    PREIS.DERIVABLE = 'S';
+
+		    IF	vn_CANTIDAD_PREST_DERIVABLES <> 0 THEN
+			vn_DERIVABLE:= 'S';
+		    END IF;
+		    --JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+		    DBMS_OUTPUT.PUT_LINE ( ' vv_Grupo_01 vn_PRESTACION_HOMOLOGADA= ' || TRUNC(vn_PRESTACION_HOMOLOGADA/100000) );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_Cant_Grupos_No_01= ' || vn_Cant_Grupos_No_01 );
+
+		    IF vn_PRESTACION_HOMOLOGADA = 101601 OR vn_PRESTACION_HOMOLOGADA = 101602 OR vn_PRESTACION_HOMOLOGADA = 101603  THEN
+		       vv_PREST_CONSULTA_VALIDA:='S';
+		       DBMS_OUTPUT.PUT_LINE ( 'vv_PREST_CONSULTA_VALIDA= ' || vv_PREST_CONSULTA_VALIDA );
+		    END IF;
+
+		    IF vn_PRESTACION_HOMOLOGADA >0 THEN
+			--IF TRUNC(vn_PRESTACION_HOMOLOGADA/100000)= 1 AND vn_Cant_Grupos_No_01 = 0 THEN
+			IF CONMED.f_ES_CONSULTA(vn_PRESTACION_HOMOLOGADA) = 'S' AND vn_Cant_Grupos_No_01 = 0  THEN
+			    vv_Grupo_01:='S';
+			ELSE
+			    --IF TRUNC(vn_PRESTACION_HOMOLOGADA/100000)<> 1 THEN
+			    IF CONMED.f_ES_CONSULTA(vn_PRESTACION_HOMOLOGADA) = 'N' THEN
+			       vn_Cant_Grupos_No_01:=vn_Cant_Grupos_No_01+1;
+			    END IF;
+			    vv_Grupo_01:='N';
+			END IF;
+		    END IF;
+		    --JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+		    IF	vn_PRESTACION_HOMOLOGADA > 5000000 AND vn_PRESTACION_HOMOLOGADA < 5200000 THEN
+			vv_SALUD_ADMINISTRADA :='N';
+			DBMS_OUTPUT.PUT_LINE ( 'vv_SALUD_ADMINISTRADA= ' || vv_SALUD_ADMINISTRADA );
+		    END IF;
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_PRESTACION_HOMOLOGADA= ' || vn_PRESTACION_HOMOLOGADA );
+		    IF vn_PRESTACION_HOMOLOGADA = 0 THEN
+			vn_SALE_LINEAS_INDEX :=1;
+		    END IF;
+		    EXIT WHEN vn_SALE_LINEAS_INDEX = 1;
+		END LOOP;
+		IF vn_SALE_LINEAS_INDEX = 1 THEN
+		    vn_SALE_LISTA_INDEX := 1;
+		END IF;
+
+		EXIT WHEN vn_SALE_LISTA_INDEX = 1;
+	    END LOOP;
+
+	ELSE
+	    vv_TIPO_ACCESO:='IMED';
+	    FOR vn_LISTA_INDEX IN 1 .. vn_MAX_LISTAS LOOP
+
+		vv_LINEA_A_GUARDAR := OBTIENE_LISTA(vn_LISTA_INDEX);
+		FOR lineas_index IN 1 ..vn_MAX_LINEAS_LISTAS LOOP
+		    vn_PRESTACION_HOMOLOGADA:= TO_NUMBER(NVL(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-5))),0));
+		    vn_PRESTACION_PRINCIPAL :=0;
+		    vn_CONTADOR_PRESTACIONES := vn_CONTADOR_PRESTACIONES + 1;
+
+		    --IF TRUNC(vn_PRESTACION_HOMOLOGADA/100000)= 1 THEN -- URGENCIA AL MENOS UN CASO!
+		    IF CONMED.f_ES_CONSULTA(vn_PRESTACION_HOMOLOGADA) = 'S' THEN
+		       vn_EXISTE_CONSULTA:=1;
+		    END IF;
+
+
+		    IF vn_PRESTACION_HOMOLOGADA IN(101601,101602,101603) THEN
+			 RAISE e_SALUD_ADMINISTRADA3;
+		    END IF;
+
+		    --EACE 04-12-2006
+		    SELECT COUNT(*)
+		    INTO   vn_CANTIDAD_PREST_DERIVABLES
+		    FROM   PLN_PRESTACIONES_ISAPRE preis
+		    WHERE  preis.codigo = vn_PRESTACION_HOMOLOGADA
+		    AND    preis.derivable = 'S';
+
+		    IF	vn_CANTIDAD_PREST_DERIVABLES <> 0 THEN
+			vn_DERIVABLE:= 'S';
+			EXIT;
+		    END IF;
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_PRESTACION_HOMOLOGADA= ' || vn_PRESTACION_HOMOLOGADA );
+		    IF vn_PRESTACION_HOMOLOGADA = 0 THEN
+			vn_SALE_LINEAS_INDEX :=1;
+		    END IF;
+		    EXIT WHEN vn_SALE_LINEAS_INDEX = 1;
+		END LOOP;
+		IF vn_SALE_LINEAS_INDEX = 1 THEN
+		    vn_SALE_LISTA_INDEX := 1;
+		END IF;
+		EXIT WHEN vn_DERIVABLE = 'S';
+		EXIT WHEN vn_SALE_LISTA_INDEX = 1;
+	    END LOOP;
+
+	END IF;
+
+	DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ACCESO LA PRIMERA  VEZ = ' || vv_TIPO_ACCESO );
+	--gcg 16.08.2011 NUEVO
+	vv_TIPO_ACCESO_1:=vv_TIPO_ACCESO;
+	--gcg 16.08.2011 NUEVO
+
+
+	IF vn_ERROR_ASIGNA_INTER < 0 THEN
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_ERROR_ASIGNA_INTER = ' || vv_ERROR_ASIGNA_INTER );
+	    RAISE e_ASIGNA_NUMERO_INTER;
+	END IF;
+
+
+
+
+--	  DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_ITEM= ' || TO_CHAR(vn_CODIGO_ITEM) );
+	--*********************************************************************
+	--BNF-000784
+	--*********************************************************************
+--	  IF vv_ENTR_URGENCIA = 'S' AND vv_SALUD_ADMINISTRADA = 'S'  THEN
+--	      IF vn_EXISTE_CONSULTA=0 THEN
+--		 RAISE e_CONSULTA;
+--	      END IF;
+--	  END IF;
+	--*********************************************************************
+	--*********************************************************************
+
+	IF  vn_DERIVABLE = 'S' THEN
+	    IF	vn_RUT_PRESTADOR_SOLICITANTE = 0 THEN
+		RAISE e_NO_SOLICITANTE_2;
+	    END IF;
+	ELSIF  vn_RUT_PRESTADOR_SOLICITANTE <> 0 AND vv_SALUD_ADMINISTRADA <> 'S' THEN
+	--    RAISE e_NO_SOLICITANTE_1; pgp por prueba urgencias 19/03/2008
+	    NULL;
+	END IF;
+
+
+	--04-12-2006 POR TEMA CATOLICA
+	IF vn_DERIVABLE = 'S' THEN
+	   vn_RUT_PRESTADOR_TRATANTE:= vn_RUT_PRESTADOR_FACTURADOR;
+	END IF;
+
+	IF  vv_SALUD_ADMINISTRADA = 'S' THEN
+	    --		RAISE e_SALUD_ADMINISTRADA;
+	    DBMS_OUTPUT.PUT_LINE ( 'ENTRO AL PLAN DE SALUD ADMINISTRADA' );
+	    DBMS_OUTPUT.PUT_LINE ( 'VN_COAF_FOLIO_SUSCRIPCION= ' || VN_COAF_FOLIO_SUSCRIPCION );
+	    DBMS_OUTPUT.PUT_LINE ( 'VN_CODIGO_CARGA= ' || VN_CODIGO_CARGA );
+	    DBMS_OUTPUT.PUT_LINE ( 'VN_CODIGO_ISAPRE= ' || VN_CODIGO_ISAPRE );
+	    BEGIN
+		SELECT P.RUT, P.CODIGO_INTERNO
+		INTO   VN_RUT_MEDICO_CABECERA, vn_CODIGO_INTERNO_MED_CAB  --EACE 08/09/2006
+		FROM   AFI_MEDICOS_CABECERA MC,
+		       PLN_PRESTADORES_SUSCRITOS_SA PS,
+		       CON_PRESTADORES P
+		WHERE  MC.BENC_COAF_FOLIO_SUSCRIPCION = VN_COAF_FOLIO_SUSCRIPCION
+		AND    MC.BENC_CODIGO_CARGA = VN_CODIGO_CARGA
+		AND    MC.BENC_COAF_ORGA_CODIGO_ISAPRE = VN_CODIGO_ISAPRE
+		AND    PS.CORRELATIVO = MC.PSA_CORRELATIVO
+		AND    P.CODIGO_INTERNO = PS.PREST_CODIGO_INTERNO
+		AND    MC.VIGENTE = 'S';
+
+		DBMS_OUTPUT.PUT_LINE ( 'MEDICO DE CABECERA = '||vn_RUT_MEDICO_CABECERA );
+	    EXCEPTION
+		WHEN NO_DATA_FOUND THEN
+		DBMS_OUTPUT.PUT_LINE ( 'e_MEDICO_CABECERA ' );
+		    RAISE e_MEDICO_CABECERA;
+		WHEN OTHERS THEN
+		DBMS_OUTPUT.PUT_LINE ( 'e_SALUD_ADMINISTRADA ' );
+		    RAISE e_SALUD_ADMINISTRADA;
+	    END;
+
+	    vn_NUMERO_ERROR:=13.5;
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_PRESTADOR_TRATANTE= ' || vn_RUT_PRESTADOR_TRATANTE );
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_MEDICO_CABECERA= ' || vn_RUT_MEDICO_CABECERA );
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_PRESTADOR_SOLICITANTE= ' || vn_RUT_PRESTADOR_SOLICITANTE );
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_Grupo_01= ' || vv_Grupo_01 );
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_ENTR_URGENCIA= ' || vv_ENTR_URGENCIA );
+
+
+
+	    IF	vn_RUT_PRESTADOR_TRATANTE = vn_RUT_MEDICO_CABECERA THEN
+		    vv_0101601:='S';
+		    vv_MEDICO_CABECERA :='S';
+		    DBMS_OUTPUT.PUT_LINE ( 's vv_0101601= ' || vv_0101601 );
+	    ELSE
+		DBMS_OUTPUT.PUT_LINE ( 'vv_PREST_CONSULTA_VALIDA= ' || vv_PREST_CONSULTA_VALIDA );
+		IF vv_PREST_CONSULTA_VALIDA = 'S'  THEN
+		  DBMS_OUTPUT.PUT_LINE ( 'PRESTACION CONSULTA CORRECTA= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+		     vv_MEDICO_CABECERA :='S';
+		ELSE
+			       IF  vv_Grupo_01='S' AND vv_ENTR_URGENCIA <> 'S'	THEN
+				    vv_0101602:='S';
+				vv_MEDICO_CABECERA :='S';
+				DBMS_OUTPUT.PUT_LINE ( 's vv_0101602= ' || vv_0101602 );
+			    ELSE
+				  IF  vv_Grupo_01 <>'S' AND vv_ENTR_URGENCIA <> 'S' THEN
+					vv_MEDICO_CABECERA :='S';
+				  ELSE
+				      IF vv_ENTR_URGENCIA = 'S' AND vv_Grupo_01='S' THEN
+					   vv_MEDICO_CABECERA :='S';
+				       vv_0101603:='S'; -- Ok consulta 0101603 (para precios y cobertura).
+				       DBMS_OUTPUT.PUT_LINE ( 's vv_0101603= ' || vv_0101603 );
+				    ELSE
+				       vv_MEDICO_CABECERA :='N';
+				       vv_SALUD_ADMINISTRADA :='N';
+				       vn_CODIGO_INTERNO_MED_CAB:=NULL;
+				    END IF;
+				END IF;
+			  END IF;
+		END IF;-- PGP
+	    END IF;
+
+
+	    --JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_0101601= ' || vv_0101601 );
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_0101602= ' || vv_0101602 );
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_0101603= ' || vv_0101603 );
+
+	    DBMS_OUTPUT.PUT_LINE('PASO SALUD ADMINISTRADA');
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_MEDICO_CABECERA= ' || vv_MEDICO_CABECERA );
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_SALUD_ADMINISTRADA= ' || vv_SALUD_ADMINISTRADA );
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_INTERNO_MED_CAB= ' || vn_CODIGO_INTERNO_MED_CAB );
+
+
+	    dbms_output.put_line('PASO SALUD ADMINISTRADA');
+	END IF;
+
+	vn_NUMERO_ERROR:=14;
+	dbms_output.put_line('salud administrada N');
+
+	-----ARREGLIN JLLC HASTA INCORPORAR CALCULOS DE PLANES 7% 12/10/2000
+	IF vv_TIPO_PLAN = 'PSP' THEN
+	   vv_TIPO_PLAN := 'CONT';
+	END IF;
+
+	vn_NUMERO_ERROR:=15;
+
+	dbms_output.put_line('*** = '||vn_COAF_FOLIO_SUSCRIPCION||'  '||vv_CODIGO_COMERCIAL_PLAN||'  '||vn_RUT_COTIZANTE||'  '||vn_CODIGO_CARGA||'  '||vn_RUT_BENEFICIARIO||'  '||vn_RUT_PRESTADOR_TRATANTE||'	'||vn_LUGAR_DE_PRESTACION);
+
+	-- VALIDACIONES DEL PRESTADOR QUE REALIZARA LA ATENCION Y SU CONVENIO
+
+	-- 01/08/2007 PGP CAMBIO DE LLAMADA A FUNCION POR CONVENIOS NUEVOS
+	 IF vn_USAR_TARIFADOR_VIEJO = 'S' THEN
+	BEGIN
+	    --EACE 28-06-2005 GES  SE AGREGA CODIGO INTERNO
+	    SELECT PROF.BLOQUEADO, PROF.CODIGO_INTERNO
+	    INTO   vv_PROFESIONAL_BLOQUEADO, vn_CODIGO_INTERNO_TRATANTE
+	    FROM   CON_PRESTADORES PROF
+	    WHERE  PROF.RUT = vn_RUT_PRESTADOR_TRATANTE;
+	    --EACE 28-06-2005 GES
+	EXCEPTION
+	     WHEN NO_DATA_FOUND THEN
+		  RAISE e_PRESTADOR_NO_REG_CONVENIOS;
+	     WHEN OTHERS THEN
+		  RAISE e_PRESTADOR_ACCESO;
+	END;
+	ELSE
+	    BEGIN
+		Pck_Cm_Imed_Nuevo3.P_EXISTEPRESTADOR(vn_RUT_PRESTADOR_TRATANTE,vv_RESP_PRO_BLOQ);
+		IF vv_RESP_PRO_BLOQ != 'S' THEN
+		   vv_PROFESIONAL_BLOQUEADO:='S';
+		END IF;
+		IF Pck_Cm_Imed_Nuevo3.F_Sacaprestcodigointerno(vn_RUT_PRESTADOR_TRATANTE)=0 THEN
+		   RAISE e_PRESTADOR_NO_REG_CONVENIOS;
+		END IF;
+	    EXCEPTION
+		WHEN OTHERS THEN
+		     RAISE e_PRESTADOR_ACCESO;
+	    END;
+	END IF;
+	-- 01/08/2007 PGP CAMBIO DE LLAMADA A FUNCION POR CONVENIOS NUEVOS
+
+	DBMS_OUTPUT.PUT_LINE ( 'vv_PROFESIONAL_BLOQUEADO= ' || vv_PROFESIONAL_BLOQUEADO );
+
+	vn_NUMERO_ERROR:=16;
+
+	IF  vv_PROFESIONAL_BLOQUEADO <> 'N' THEN
+	      RAISE e_PRESTADOR_BLOQUEADO;
+	END IF;
+
+	vn_NUMERO_ERROR:=17;
+
+	-- PGP 02/08/2007 POR CONVENIOS NUEVOS POR VALIDACION DEL MEDICO TRATANTE PARTE DEL STAFF.-
+
+	IF vn_USAR_TARIFADOR_VIEJO ='S' THEN
+	    BEGIN
+		SELECT DISTINCT prest.codigo_interno,
+		       COFI.PLA_CODIGO,
+		       COFI.UNOR_CORRELATIVO
+		INTO   vn_CODIGO_PRESTADOR,
+		       vv_PLA_CODIGO,
+		       vn_UNOR_CORRELATIVO
+		FROM   CON_PRESTADORES PREST,
+		       CON_CONVENIOS_FINALES COFI,
+		       CON_ASOCIACIONES_PREST_CONVENI ASPCO
+		WHERE  PREST.rut = vn_RUT_PRESTADOR_TRATANTE
+		AND    ASPCO.PREST_CODIGO_INTERNO = PREST.CODIGO_INTERNO
+		AND    ASPCO.VIGENCIA = 'S'
+		AND    COFI.CORRELATIVO = ASPCO.COFI_CORRELATIVO
+		AND    COFI.CORRELATIVO = vn_LUGAR_DE_PRESTACION;
+	    EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE e_MEDICO_TRATANTE_SIN_CONVENIO;
+	    END;
+	ELSE
+	    vv_ES_STAFF:=Pck_Cm_Imed_Nuevo3.F_Prestadoresstaff_De(vn_ENTR_RUT_CONVENIO,vn_RUT_PRESTADOR_TRATANTE);
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_ES_STAFF= ' || vv_ES_STAFF );
+	    IF vv_ES_STAFF = 'N' THEN
+	       RAISE e_MEDICO_TRATANTE_SIN_CONVENIO;
+	    ELSE
+		vn_UNOR_CORRELATIVO:=Pck_Cm_Imed_Nuevo3.f_Unor_Homologado(vn_CORR_LA_CONV_NUEVO,vv_DES_ERROR_LA_TRAT);
+		IF vn_UNOR_CORRELATIVO = 0 THEN
+		   --vn_UNOR_CORRELATIVO:=NULL;
+		   --EACE 16-09-2009 PARA QUE BUSQUE EL PORCENTAJE DE CREDITO CORRESPONDIENTE A LA SUCURSAL
+		   vn_UNOR_CORRELATIVO:=TO_NUMBER(vv_ENTR_HOM_SUCURSAL_VENTA);
+		END IF;
+	    END IF;
+	END IF;
+
+	DBMS_OUTPUT.PUT_LINE ( 'vn_UNOR_CORRELATIVO= ' || vn_UNOR_CORRELATIVO );
+	-- PGP 02/08/2007 POR CONVENIOS NUEVOS POR VALIDACION DEL MEDICO TRATANTE PARTE DEL STAFF.-
+	vn_NUMERO_ERROR:=19;
+
+	DBMS_OUTPUT.PUT_LINE ( 'vv_PLA_CODIGO= ' || vv_PLA_CODIGO );
+    --	ESTO ES PARA CUANDO EL PRESTADOR ES EXTERNO
+	vv_TIPO_ADMINISTRACION:=NULL;
+	IF  vn_UNOR_CORRELATIVO IS NULL THEN
+	    vn_UNOR_CORRELATIVO:=700; --23; CTC
+	    vv_TIPO_ADMINISTRACION:='AMEX';
+	ELSIF  vn_UNOR_CORRELATIVO = 700 THEN
+	       vv_TIPO_ADMINISTRACION:='AMEX';
+	   ELSE
+	       vv_TIPO_ADMINISTRACION:='AMIN';
+	END IF;
+
+	vn_NUMERO_ERROR:=20;
+
+	DBMS_OUTPUT.PUT_LINE ( 'paso 333333333333333333333333333333333333333' );
+
+	--JLLC
+	vn_CENTRO_ATENCION:=vn_UNOR_CORRELATIVO;
+	vn_DOBE_CORRELATIVO:=9109204;
+
+	vn_NUMERO_ERROR:=21;
+	DELETE IMED_AUXILIAR iaux
+	WHERE  iaux.rut=vn_COAF_FOLIO_SUSCRIPCION
+	AND    iaux.carga=vn_CODIGO_CARGA
+	AND    iaux.hom_num_convenio = TO_NUMBER(vv_ENTR_HOM_NUMERO_CONVENIO);
+	COMMIT;--GESARA-000838
+	vn_NUMERO_ERROR:=22;
+
+	--- INICIO FOR
+	vn_INICIA_BLOQUE :=   1;
+	vn_DERIVABLE:= 'N';
+	vn_CANTIDAD_PRESTADORES:=0;
+	-- "vn_LISTA_INDEX" Ciclo que recorre las listas (maximo6)
+	-- "lineas_index" Ciclo que recorre las lineas de cada lista (maximo7)
+	vn_SALE_LISTA_INDEX :=0; -- Variable para salir del ciclo cuando no hallan mas listas
+	vn_SALE_LINEAS_INDEX :=0; -- Variable para salir del ciclo cuando no hallan mas lineas en una lista
+	vn_NUMERO_ERROR:=23;
+	--EACE 28-06-2005 --GES
+	vv_CODIGO_SUB_GRUPO := PCK_GESARA_100_BONIFICACIONES.F_BENEF_POSEE_GES ( vn_ENTR_CODIGO_FINANCIADOR, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, vn_CODIGO_INTERNO_TRATANTE );
+	DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_SUB_GRUPO= ' || vv_CODIGO_SUB_GRUPO );
+	IF vv_CODIGO_SUB_GRUPO <> 'N' THEN
+	    vn_COD_GARANTIA   := SUBSTR(vv_CODIGO_SUB_GRUPO,1,INSTR(vv_CODIGO_SUB_GRUPO,',')-1) ;
+	    vn_GRUPO_SEQ       := SUBSTR(SUBSTR(vv_CODIGO_SUB_GRUPO,INSTR(vv_CODIGO_SUB_GRUPO,',')+1),1,INSTR(SUBSTR(vv_CODIGO_SUB_GRUPO,INSTR(vv_CODIGO_SUB_GRUPO,',')+1),',')-1);
+	    vv_SIN_GRANTIA    := SUBSTR(vv_CODIGO_SUB_GRUPO, INSTR(vv_CODIGO_SUB_GRUPO,',')+1);
+	    vv_SIN_GRUPO      := SUBSTR(vv_SIN_GRANTIA, INSTR(vv_SIN_GRANTIA,',')+1);
+	    vn_SUB_GRUPO_SEQ  := SUBSTR(vv_SIN_GRUPO,1,INSTR(vv_SIN_GRUPO,';')-1);
+	    --vn_SUB_GRUPO_SEQ := SUBSTR(SUBSTR(SUBSTR(vv_CODIGO_SUB_GRUPO,INSTR(vv_CODIGO_SUB_GRUPO,',')+1),INSTR(vv_CODIGO_SUB_GRUPO,',')+1),1,INSTR(SUBSTR(vv_CODIGO_SUB_GRUPO,INSTR(vv_CODIGO_SUB_GRUPO,',')+1),',')-1);
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_COD_GARANTIA= ' || vn_COD_GARANTIA );
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_GRUPO_SEQ= ' || vn_GRUPO_SEQ );
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_SUB_GRUPO_SEQ= ' || vn_SUB_GRUPO_SEQ );
+
+	    --EACE 02-08-2005  GES
+	    PCK_GESARA_100_BONIFICACIONES.p_Elimina_Prestaciones_Ges   (TO_CHAR(vn_ENTR_RUT_TRATANTE)||'/'||TO_CHAR(vn_ENTR_RUT_BENEFICIARIO),
+									   vv_ENTR_HOM_SUCURSAL_VENTA,
+									SYSDATE,
+								       vv_ErrorCode);
+
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_ErrorCode= ' || vv_ErrorCode );
+
+	    IF vv_ErrorCode IS NOT NULL THEN
+	       RAISE e_VALORIZACION_GES;
+	    END IF;
+	    --EACE 02-08-2005  GES
+	END IF;
+	--EACE 28-06-2005 --GES
+
+	vn_NUMERO_ERROR:=35;
+	DBMS_OUTPUT.PUT_LINE ( 'paso 55555555555555555555555555555555555555 ' );
+	--- INICIO FOR
+	vn_INICIA_BLOQUE :=   1;
+	vn_SALE_LISTA_INDEX :=0; -- Variable para salir del ciclo cuando no hallan mas listas
+	vn_SALE_LINEAS_INDEX :=0; -- Variable para salir del ciclo cuando no hallan mas lineas en una lista
+	vn_NUMERO_ERROR:=36;
+	-- contador del total de lineas de todas las listas
+	vn_CONTADOR_LINEAS :=0;
+	vn_NUMERO_ERROR:=37;
+	-- LOOP PARA CALCULO DE BONIFICACION POR LINEA DE DETALLE DEL BONO
+	--Variable para almacenar detalle de salida dinamicamente
+	vv_SALIDA_LINEA_UNO := NULL;
+	vn_SRV_ROW_COUNT :=0;
+	vn_NUMERO_ERROR:=38;
+
+	-- PGP BENEFICIOS NUIEVOS NUEVA LLAMADA 17/04/2008
+	-- LIMPIEZA DE REPOSITORIO
+	DBMS_OUTPUT.PUT_LINE ( ' ELIMINA REPOSITORIO ' );
+
+	P_ELIMINA_REPOSITORIO(TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',
+			      vn_BENEF_ERROR,
+			      vv_BENEF_ERROR_DESCRIP);
+
+	IF     vn_BENEF_ERROR <> 0 THEN
+	    DBMS_OUTPUT.PUT_LINE ( 'FALLO ELIMINACION DE REPOSITORIO DE BONIFICACION:'||vv_BENEF_ERROR_DESCRIP );
+	    vn_BENEF_ERROR_CALC:=vn_BENEF_ERROR;
+	    vv_BENEF_ERROR_DESCRIP_CALC:=vv_BENEF_ERROR_DESCRIP;
+	    RAISE e_EJECUTA_PCK_BONIFICACION;
+	END IF;
+
+	vn_TOTAL_BONIF_BC15	      :=0;
+	vn_TOTAL_BONIF_BC24	      :=0;
+	vn_Total_Prestaciones_BC15 :=0;
+	vn_Total_Prestaciones_BC24 :=0;
+	vn_CONTADOR_PRESTACIONES :=0;
+
+	--Ciclo 1 recorre las Listas
+	FOR vn_LISTA_INDEX IN 1 ..vn_MAX_LISTAS LOOP
+	    vn_NUMERO_ERROR:=39;
+	    vv_LINEA_A_GUARDAR := OBTIENE_LISTA(vn_LISTA_INDEX);
+	    --Ciclo 2 recorre las lineas de cada lista
+	    vn_NUMERO_ERROR:=40;
+	    FOR lineas_index IN 1 ..vn_MAX_LINEAS_LISTAS LOOP
+		vn_CONTADOR_PRESTACIONES:=vn_CONTADOR_PRESTACIONES+1;
+		vn_NUMERO_ERROR:=41;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+		vn_SRV_ROW_COUNT :=vn_SRV_ROW_COUNT + 1;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_SRV_ROW_COUNT= ' || vn_SRV_ROW_COUNT );
+		IF vn_SRV_ROW_COUNT > vn_SRV_TOTAL_ROWS THEN
+		DBMS_OUTPUT.PUT_LINE ( 'e_supera_total_filas= ' );
+		    RAISE e_supera_total_filas;
+		END IF;
+		vn_CONTADOR_LINEAS := vn_CONTADOR_LINEAS + 1; --- numero linea
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CONTADOR_LINEAS= ' || vn_CONTADOR_LINEAS );
+		-- se recalcula ya que no viene, por cada linea
+		vn_MONTO_PRESTACION:=0;
+		vn_NUMERO_ERROR:=42;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+		-- codigo de la prestacion homologada
+		-- vn_CODIGO_PRESTACION_HOMOLOG:=  TO_NUMBER(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*5)-4)); -- OK
+		vn_CODIGO_PRESTACION_HOMOLOG:=	TO_NUMBER(NVL(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-5))),0)); -- OK
+
+
+		vn_PRESTACION_HOMOLOGADA_GES := vn_CODIGO_PRESTACION_HOMOLOG;
+
+		vn_CODIGO_PREST_HOMOLOG_INGRE:=vn_CODIGO_PRESTACION_HOMOLOG;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+		-- POR MULTICODIGO 10/10/2007 PGP - EACE
+		DBMS_OUTPUT.PUT_LINE ( 'lineas_index= ' || lineas_index );
+		DBMS_OUTPUT.PUT_LINE ( 'ADICIONAL= ' ||NVL(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-3))),'0'));
+
+
+
+
+		IF vn_CODIGO_PRESTACION_HOMOLOG <> 0 THEN
+		   vv_CODIGO_ADICIONAL := NVL(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-3))),'0');
+		   BEGIN
+		       IF vn_CODIGO_PRESTACION_HOMOLOG = TO_NUMBER(vv_CODIGO_ADICIONAL) THEN
+			     vv_CODIGO_ADICIONAL:='0';
+		       END IF;
+		   EXCEPTION
+		   WHEN OTHERS THEN
+			   NULL;
+		   END;
+		   vv_INHABIL:=LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-2)));
+		ELSE
+		    vv_INHABIL:='';
+		END IF;
+		DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_ADICIONAL= ' || vv_CODIGO_ADICIONAL );
+		-- POR MULTICODIGO  10/10/2007 PGP - EACE
+		DBMS_OUTPUT.PUT_LINE ( 'vv_INHABIL= ' || vv_INHABIL );
+		IF vn_CODIGO_PRESTACION_HOMOLOG = 0 THEN
+		    vn_SALE_LINEAS_INDEX :=1;
+		END IF;
+
+		EXIT WHEN vn_SALE_LINEAS_INDEX = 1;
+		-- numero de prestaciones
+		DBMS_OUTPUT.PUT_LINE ( 'lineas_index= ' || lineas_index );
+		vn_NUMERO_PRESTACIONES := TO_NUMBER(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6-1))); -- OK
+		DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_PRESTACIONES= ' || vn_NUMERO_PRESTACIONES );
+		IF vn_CODIGO_PRESTACION_HOMOLOG <> 0 THEN
+		   vn_MONTO_TOTAL:= TO_NUMBER(NVL(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)))),0));
+		END IF;
+
+	       IF NVL(vn_MONTO_TOTAL,0)> 0 THEN
+		   -- aqui se debe incliur codigo para rotery PGP 05/07/2006
+		   BEGIN
+			    SELECT TO_NUMBER(ARANCEL.CODIGO_COMERCIAL)
+			    INTO   vn_CODIGO_COMERCIAL_ARANCEL
+			    FROM   PLN_PLANES PLAN,
+				   PLN_ARANCELES ARANCEL
+			    WHERE  PLAN.ARA_CORRELATIVO = ARANCEL.CORRELATIVO
+			    AND       PLAN.CORRELATIVO=vn_PLAN_CORRELATIVO;
+		    EXCEPTION
+		    WHEN OTHERS THEN
+			 vn_CODIGO_COMERCIAL_ARANCEL:=NULL;
+		    END;
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_PLAN_CORRELATIVO= ' || vn_PLAN_CORRELATIVO );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_COMERCIAL_ARANCEL= ' || vn_CODIGO_COMERCIAL_ARANCEL );
+		    vn_CODIGO_PRESTACION_HOMOLOG:=PCK_BENEF_PRESTACION.SacaEquivalenciaPrestacionPlan(vn_CODIGO_PRESTACION_HOMOLOG,'IND','IND','N',vn_CODIGO_COMERCIAL_ARANCEL,vn_PLAN_CORRELATIVO);
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+		    -- PGP 11/07/2006 FIN
+
+		    -- PGP 05/07/2006
+		END IF;
+		-- PGP 11/07/2006 RESTRICION POR GENERO, EDAD
+		IF PCK_BENEF_PRESTACION.Restriccion_GeneroEdad(vn_COAF_FOLIO_SUSCRIPCION,vn_CODIGO_CARGA,vn_CODIGO_PRESTACION_HOMOLOG) = 'T' THEN
+		   RAISE E_PRESTACION_RESTRINGIDA;
+		END IF;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_TOTAL= ' || vn_MONTO_TOTAL );
+		vn_NUMERO_ERROR:=43;
+		IF  vn_CODIGO_PRESTACION_HOMOLOG > 5000000 AND vn_CODIGO_PRESTACION_HOMOLOG < 5200000 THEN
+		    vn_TIPO_ATENCION:= 3;
+		    vn_PORCENTAJE_BONIF_AMBU:=vn_PORCENTAJE_BONIF_DENT;
+		    --		      vv_PLA_CODIGO:='DENTAL';
+		END IF;
+		vn_NUMERO_ERROR:=44;
+		dbms_output.put_line('va a entrar a buscar tariifa '||vn_PORCENTAJE_BONIF_AMBU);
+		DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_PLAN= ' || vv_TIPO_PLAN );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_PLAN_CORRELATIVO= ' || vn_PLAN_CORRELATIVO );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_PLA_CODIGO= ' || vv_PLA_CODIGO );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_PORCENTAJE_BONIF_AMBU= ' || vn_PORCENTAJE_BONIF_AMBU );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ADMINISTRACION= ' || vv_TIPO_ADMINISTRACION );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_ESPECILIDAD_HOMOLOG= ' || vv_CODIGO_ESPECILIDAD_HOMOLOG );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_PORCENTAJE_INCREMENTO= ' || vn_PORCENTAJE_INCREMENTO );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_FACTOR= ' || vn_FACTOR );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO= ' || vn_MONTO );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_TARIFA_NIVEL= ' || vn_TARIFA_NIVEL );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_ERROR= ' || vn_CODIGO_ERROR );
+		-- SE CAMBIA PRESTACION POR CONVENIOS NUEVOS 01/08/2007 PGP
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+		DBMS_OUTPUT.PUT_LINE ( 'CONMED.f_ES_CONSULTA(vn_PRESTACION_HOMOLOGADA)= ' || CONMED.f_ES_CONSULTA(vn_PRESTACION_HOMOLOGADA) );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_SALUD_ADMINISTRADA= ' || vv_SALUD_ADMINISTRADA );
+		    --IF  vn_CODIGO_PRESTACION_HOMOLOG > 100000 AND vn_CODIGO_PRESTACION_HOMOLOG < 200000 THEN
+		    IF CONMED.f_ES_CONSULTA(vn_CODIGO_PRESTACION_HOMOLOG) = 'S' THEN
+
+			vv_Grupo_01:='S'; -- FLUJO ORDENES DE DERIVACION
+
+			IF vv_SALUD_ADMINISTRADA <> 'S' OR vn_CODIGO_PRESTACION_HOMOLOG NOT IN(101601,101603) THEN
+			       DBMS_OUTPUT.PUT_LINE ( 'Entro aqui ' );
+
+			       vn_CODIGO_PREST_NUEVO:=Pck_Cm_Imed_Nuevo3.F_CONSULTA_ESPECIALIDAD (vv_CODIGO_ESPECILIDAD_HOMOLOG,
+												  vn_CODIGO_PRESTACION_HOMOLOG,
+											       vv_ERROR_CONSU_ESPE );
+			       DBMS_OUTPUT.PUT_LINE ( 'X vn_CODIGO_PREST_NUEVO= ' || vn_CODIGO_PREST_NUEVO );
+
+			ELSE
+			    vv_ERROR_CONSU_ESPE:='0';
+			    vn_CODIGO_PREST_NUEVO:=vn_CODIGO_PRESTACION_HOMOLOG;
+			END IF;
+		    ELSE
+			vv_Grupo_01:='N';  -- FLUJO ORDENES DE DERIVACION
+			vv_ERROR_CONSU_ESPE:='0';
+			vn_CODIGO_PREST_NUEVO:=vn_CODIGO_PRESTACION_HOMOLOG;
+		    END IF;
+		-- SE CAMBIA PRESTACION POR CONVENIOS NUEVOS 01/08/2007 PGP
+
+		DBMS_OUTPUT.PUT_LINE ( 'vv_Grupo_01= ' || vv_Grupo_01 );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PREST_NUEVO= ' || vn_CODIGO_PREST_NUEVO );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_BENEFICIARIO= ' || vn_RUT_BENEFICIARIO );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_ERROR_CONSU_ESPE= ' || vv_ERROR_CONSU_ESPE );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_USAR_TARIFADOR_VIEJO= ' || vn_USAR_TARIFADOR_VIEJO );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ACCESO= ' || vv_TIPO_ACCESO );
+		DBMS_OUTPUT.PUT_LINE ( 'TRATANTE = CABECERA?' );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_SALUD_ADMINISTRADA= ' || vv_SALUD_ADMINISTRADA );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_PRESTADOR_TRATANTE= ' || vn_RUT_PRESTADOR_TRATANTE );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_MEDICO_CABECERA= ' || vn_RUT_MEDICO_CABECERA );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+
+		IF vv_SALUD_ADMINISTRADA = 'S' THEN
+		   IF  vn_RUT_PRESTADOR_TRATANTE = vn_RUT_MEDICO_CABECERA AND vn_CODIGO_PRESTACION_HOMOLOG IN(101602,101603)	THEN
+			RAISE e_SALUD_ADMINISTRADA4;
+		   END IF;
+		END IF;
+
+
+		--JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+		IF vv_0101601 = 'S' THEN
+		   vn_CODIGO_PREST_NUEVO:=0101601;
+		   vn_CODIGO_PRESTACION_HOMOLOG:=0101601;
+		END IF;
+
+		IF vv_0101602 = 'S' THEN
+		   --vn_CODIGO_PREST_NUEVO:=0101602;
+		   vn_CODIGO_PRESTACION_HOMOLOG:=0101602;
+		END IF;
+
+		IF vv_0101603 = 'S' THEN
+		   vn_CODIGO_PREST_NUEVO:=0101603;
+		   vn_CODIGO_PRESTACION_HOMOLOG:=0101603;
+		END IF;
+		--JLL 30-01-2008 Planes Medicina Familiar(Codigos de Consultas)
+
+		-- FLUJO NUEVO DE SALUD ADMINISTRADA ORDENES DE DERIVACION PGP 16/12/2008
+
+		DBMS_OUTPUT.PUT_LINE ( 'FLUJO SALUD ADMINISTRADA ORDENES DE DERIVACION' );
+
+
+		IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('VERIFICA_FLUJO_OD_NEW') = 'S' THEN
+		   vv_MARCA_NUEVO := 'S';
+		ELSE
+		   vv_MARCA_NUEVO := 'N';
+		END IF;
+
+		DBMS_OUTPUT.PUT_LINE ( 'vv_MARCA_NUEVO= ' || vv_MARCA_NUEVO );
+
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		IF vv_SALUD_ADMINISTRADA = 'S' THEN
+
+		    IF vv_Grupo_01 = 'S' THEN
+
+		       DBMS_OUTPUT.PUT_LINE ( 'PRESTACIONES CONSULTA' );
+
+		       IF NOT vv_CODIGO_ESPECILIDAD_HOMOLOG IN('MCI','MCA') THEN
+
+			     SELECT REQUIERE_ORDEN_DERIVACION
+			  INTO	   vv_REQUIERE_OD
+			  FROM	   CM_ESPECIALIDADES
+			  WHERE  CODIGO = vv_CODIGO_ESPECILIDAD_HOMOLOG;
+
+			  DBMS_OUTPUT.PUT_LINE ( 'vv_REQUIERE_OD= ' || vv_REQUIERE_OD );
+
+			   IF vv_REQUIERE_OD ='S' THEN
+			   -- BUSQUEDA DE ORDEN DE DERIVACION
+		    --			ORDENES_DERIVACION_PKG.P_CONSULTA_ORDENES_DERIV_NEW2 (vn_UNOR_CORRELATIVO,
+		    ORDENES_DERIVACION_PKG.P_CONSULTA_ORDENES_DERIV_NEW2(vn_UNOR_CORRELATIVO,
+											       vn_RUT_BENEFICIARIO,	     --PIN_RUT_BENEFICIARIO,
+											     vv_CODIGO_ESPECILIDAD_HOMOLOG,--PIV_COD_ESPECIALIDAD,
+											  TO_CHAR(SYSDATE,'dd/mm/rrrr'),--PIV_FEC_EMICION,
+											  'A',				 --PIV_TIPO_DERIVACION,
+											  vv_TIENE_OD,			 --POV_TRAE_DERIVACION,
+											  cur_ORDENES_DERIV,
+											 vv_SERVICIO_FULL,
+											 vn_NUMERO_ORDEN_DERIVACION);
+
+
+				  DBMS_OUTPUT.PUT_LINE ( 'vv_SERVICIO_FULL= ' || vv_SERVICIO_FULL );
+
+				  IF vv_TIENE_OD = 'S' AND (vn_CODIGO_PRESTACION_HOMOLOG NOT IN(0101601,0101602,0101603)) THEN
+				       vn_CODIGO_PREST_NUEVO:=Pck_Cm_Imed_Nuevo3.F_CONSULTA_ESPECIALIDAD
+				       (vv_CODIGO_ESPECILIDAD_HOMOLOG,
+					   vn_CODIGO_PRESTACION_HOMOLOG,
+					vv_ERROR_CONSU_ESPE );
+					vv_0101602:='S';
+					  vn_CODIGO_PRESTACION_HOMOLOG:=0101602;
+				       DBMS_OUTPUT.PUT_LINE ( 'xxvn_CODIGO_PRESTACION_HOMOLOG= ' || vn_CODIGO_PRESTACION_HOMOLOG );
+				  END IF;
+
+
+				  IF vv_SERVICIO_FULL = 'N' THEN
+				       vv_TIENE_OD := 'S';
+				  END IF;
+
+				       IF vv_TIENE_OD = 'S' THEN
+				   --ACTUALIZA BONIF. PREF
+				  vv_ORDEN_DERIVACION:='AUTO';
+				  vn_PREST_CODIGO_INTERNO_PREF:=NULL;
+				  ELSE
+				       -- PROCESO NUEVO O ANTIGUO ??
+				     IF vv_MARCA_NUEVO = 'S' THEN
+					 -- ACTUALIZA LIBRE ELECCION
+					vv_ORDEN_DERIVACION:='SINORDEN';
+					vn_PREST_CODIGO_INTERNO_PREF:=-1;
+				     ELSE
+					 -- COMO SIEMPRE... PREFERENTE
+					vv_ORDEN_DERIVACION:='MANUAL';
+					vn_PREST_CODIGO_INTERNO_PREF:=NULL;
+				     END IF;
+
+				  END IF;
+
+			   END IF;
+
+			 END IF;
+
+		       ELSE
+			      -- NO ES UNA PRESTACION CONSULTA. EXAMENES Y PROCEDIMIENTOS
+			   DBMS_OUTPUT.PUT_LINE ( 'EXAMENES Y PROCEDIMIENTOS' );
+
+			   -- VALIDACION SI HAY INGRESO DE MEDICO SOLICITANTE
+			   IF  vn_RUT_PRESTADOR_SOLICITANTE = 0 THEN
+				  RAISE e_NO_SOLICITANTE_2;
+			   ELSE
+
+				  SALUDADMINISTRADA.ORDENES_DERIVACION_PKG.P_BENEF_MEDICO_DERIVACION_NEW2(vn_UNOR_CORRELATIVO,vn_RUT_BENEFICIARIO, vn_RUT_PRESTADOR_SOLICITANTE, vv_TIENE_OD,vv_TIPO_RES_OD,vv_SERVICIO_FULL,vn_NUMERO_ORDEN_DERIVACION);
+--				    ORDENES_DERIVACION_PKG.P_BENEF_MEDICO_DERIVACION_NEW2(vn_UNOR_CORRELATIVO,vn_RUT_BENEFICIARIO, vn_RUT_PRESTADOR_SOLICITANTE, vv_TIENE_OD,vv_TIPO_RES_OD,vv_SERVICIO_FULL,vn_NUMERO_ORDEN_DERIVACION);
+			      END IF;
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vv_SERVICIO_FULL= ' || vv_SERVICIO_FULL );
+			   DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_RES_OD= ' || vv_TIPO_RES_OD );
+			   IF vv_SERVICIO_FULL = 'N' THEN
+			       vv_TIENE_OD := 'S';
+			   END IF;
+
+
+			   IF	  vv_TIENE_OD = 'S' THEN
+				   -- BONIF PREFERENTE
+				vv_ORDEN_DERIVACION:='AUTO';
+				vn_PREST_CODIGO_INTERNO_PREF:=NULL;
+			   ELSE
+				   -- PROCESO NUEVO O ANTIGUO ??
+				IF vv_MARCA_NUEVO = 'S' THEN
+				    -- ACTUALIZA LIBRE ELECCION
+				    vv_ORDEN_DERIVACION:='SINORDEN';
+				    vn_PREST_CODIGO_INTERNO_PREF:=-1;
+				 ELSE
+				     -- COMO SIEMPRE... PREFERENTE
+				    vv_ORDEN_DERIVACION:='MANUAL';
+				    vn_PREST_CODIGO_INTERNO_PREF:=NULL;
+				 END IF;
+			   END IF;
+
+		       END IF;
+
+		    -- FLUJO NUEVO DE SALUD ADMINISTRADA ORDENES DE DERIVACION PGP 16/12/2008
+		END IF;
+
+		DBMS_OUTPUT.PUT_LINE ( 'vv_ORDEN_DERIVACION= ' || vv_ORDEN_DERIVACION );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_TIENE_OD= ' || vv_TIENE_OD );
+
+
+		BEGIN
+
+		     IF LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-4))) = 'P' THEN
+			 SELECT PRCO.COMP_CODIGO
+			INTO   vn_CODIGO_ITEM
+			FROM   CONMED.CM_PRESTACIONES_COMPONENTE PRCO,
+			       CONMED.CM_COMPONENTE COMP
+			WHERE  PRCO.PRISA_CODIGO= vn_CODIGO_PRESTACION_HOMOLOG
+			AND    COMP.CODIGO= PRCO.COMP_CODIGO
+			AND    SUBSTR(comp.descripcion_abreviada,1,4)= 'PABE';
+		     ELSE
+			 vn_CODIGO_ITEM := NVL(TO_NUMBER(LTRIM(RTRIM(Saca_String(vv_LINEA_A_GUARDAR,vv_SEPARADOR_BARRA,(lineas_index*6)-4)))),0);
+		     END IF;
+		     DBMS_OUTPUT.PUT_LINE ( 'EDO vn_CODIGO_ITEM= ' || vn_CODIGO_ITEM );
+		EXCEPTION
+		WHEN OTHERS THEN
+		     vn_CODIGO_ITEM:=0;
+		END;
+
+		DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_ITEM= ' || vn_CODIGO_ITEM );
+
+
+		BEGIN ---AGREGADO PARA PAQUETES AMBULATORIOS 27-01-2009
+		       vv_TARIFA_PAQUETE:='N';
+		    IF INSTR(vv_CODIGO_ADICIONAL,'PQ')>0 AND Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('ACTIVAR COMBO AMBULATORIO') = 'S' THEN
+			vv_TARIFA_PAQUETE:='S';
+			vn_MONTO := Pck_Valorizacion_New.F_Valor_prestacion_pqte(TO_CHAR(vn_RUT_BENEFICIARIO),
+										  TO_NUMBER(SUBSTR(vv_CODIGO_ADICIONAL,3)),
+										  vn_CODIGO_PRESTACION_HOMOLOG,
+										  vn_CODIGO_ITEM,--TO_NUMBER(vv_CODIGO_ITEM) REVISAR CODIGOS
+										  TO_CHAR(SYSDATE, 'DD/MM/RRRR'),
+										  vn_CODIGO_ERROR,
+										  vv_MENSAJE_ERROR);
+			vn_TARIFA_NIVEL:=0;
+
+			vn_FACTOR:=0;
+			vn_PORCENTAJE_INCREMENTO:=NULL;
+			DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO packete= ' || vn_MONTO );
+		    END IF;
+		EXCEPTION
+		WHEN OTHERS THEN
+		       vn_MONTO :=0;
+		END;
+
+		--gcg 16.08.2011 NUEVO
+		--vv_TIPO_ACCESO_1:=vv_TIPO_ACCESO;
+		--gcg 16.08.2011 NUEVO
+
+			-- Por Ges flujo 09/10/2009 Pablo Gonzalez P.-
+
+		DBMS_OUTPUT.PUT_LINE ( ' ============== Ges Flujo ========================' );
+
+		BEGIN
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ACCESO_1_GCG = ' || vv_TIPO_ACCESO_1 );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_ADICIONAL ANTES DE GES FLUJO = ' || vv_CODIGO_ADICIONAL );
+
+		    IF INSTR(vv_CODIGO_ADICIONAL,'PQ') = 0 AND TRIM(vv_CODIGO_ADICIONAL) <> '0' AND TRIM(SUBSTR(TRIM(vv_CODIGO_ADICIONAL),1,3))='*G*'  THEN
+
+			DBMS_OUTPUT.PUT_LINE ( ' ============== Entre a Ges Flujo ========================' );
+
+			DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_ADICIONAL = ' || vv_CODIGO_ADICIONAL );
+
+			vv_CARTILLA := Retorna_Datos_Ges(TRIM(vv_CODIGO_ADICIONAL),'CARTILLA');
+			vv_PATOLOGIA:= Retorna_Datos_Ges(TRIM(vv_CODIGO_ADICIONAL),'CODIGO PATOLOGIA');
+			--vv_CARTILLA :='34T1';
+			--vv_PATOLOGIA:= '34';
+
+			DBMS_OUTPUT.PUT_LINE ( 'vv_CARTILLA = ' || vv_CARTILLA );
+
+			Pck_Gear_Servicios_Imed.p_ConsultaGESporCartilla (vv_CARTILLA, -- codigo de cartilla
+						  vn_GaraCodigo,
+						  vn_GrupSecuencia,
+						  vv_MENSAJE_GES);
+
+			DBMS_OUTPUT.PUT_LINE ( 'vn_GaraCodigo = ' || vn_GaraCodigo );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_GrupSecuencia = ' || vn_GrupSecuencia );
+			DBMS_OUTPUT.PUT_LINE ( 'vv_MENSAJE_GES = ' || vv_MENSAJE_GES );
+
+			vn_CODIGO_INTERNO_TRATANTE:=F_Sacaprestcodigointerno(vn_RUT_PRESTADOR_TRATANTE);
+
+			DBMS_OUTPUT.PUT_LINE ( '****************************************************************************'  );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PRESTACION_HOMOLOG = ' || vn_CODIGO_PRESTACION_HOMOLOG );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PREST_NUEVO = ' || vn_CODIGO_PREST_NUEVO );
+
+			IF vn_GaraCodigo IS NOT NULL AND Pck_Gear_Servicios_Imed.f_ConsultaBenefGes(vn_COAF_FOLIO_SUSCRIPCION,
+													    71,
+													    vn_CODIGO_CARGA,
+													    Pck_Imed_Externos_Nuevo.F_Sacaprestcodigointerno(vn_RUT_PRESTADOR_FACTURADOR),--vn_CODIGO_INTERNO_TRATANTE,
+													    vn_CORR_LA_CONV_NUEVO,
+													    vn_GaraCodigo,
+													    vn_GrupSecuencia,
+													    vn_PRESTACION_HOMOLOGADA_GES,--vn_CODIGO_PREST_NUEVO,
+													    to_char(sysdate,'dd/mm/rrrr'))='S' THEN
+
+			    DBMS_OUTPUT.PUT_LINE ( 'ES GES************************************** '  );
+			    vn_CODIGO_PREST_NUEVO	 := vn_PRESTACION_HOMOLOGADA_GES;
+			    vn_CODIGO_PRESTACION_HOMOLOG := vn_PRESTACION_HOMOLOGADA_GES;
+			    DBMS_OUTPUT.PUT_LINE ( '******************************************** '  );
+
+
+			    vv_ES_GES :='S';
+			    vv_TIPO_ACCESO:='GES';
+			    vv_CODIGO_ADICIONAL:='0';
+
+			ELSE
+			    vv_ES_GES :='N';
+			    vn_GaraCodigo   := NULL;
+			    vn_GrupSecuencia := NULL;
+
+			END IF;
+
+		    ELSE
+			DBMS_OUTPUT.PUT_LINE ( 'POR AQUI PASO CUANDO NO SOY GES '  );
+			vv_ES_GES :='N';
+			vn_GaraCodigo	:= NULL;
+			vn_GrupSecuencia := NULL;
+		    -- GCG 16.08.2011 SE CREA
+		    --	  vv_TIPO_ACCESO:=vv_TIPO_ACCESO_1;
+		    -- GCG 16.08.2011 SE CREA
+		       DBMS_OUTPUT.PUT_LINE ( 'TIPO ACCESO GCG	--> '||vv_TIPO_ACCESO );
+		    END IF;
+
+		EXCEPTION
+		WHEN OTHERS THEN
+		    vn_GaraCodigo   := NULL;
+		    vn_GrupSecuencia := NULL;
+		    RAISE e_VALORIZACION_GES;
+		END;
+
+
+
+
+		DBMS_OUTPUT.PUT_LINE ( 'vn_GrupSecuencia = ' || vn_GrupSecuencia );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_GaraCodigo = ' || vn_GaraCodigo );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_MENSAJE_GES = ' || vv_MENSAJE_GES );
+		DBMS_OUTPUT.PUT_LINE ( 'vv_CARTILLA = ' || vv_CARTILLA );
+
+
+		IF vv_ES_GES = 'S' THEN
+		    vv_TIPO_ACCESO:='GES';
+		    vn_CANTIDAD_GES:=vn_CANTIDAD_GES+1;
+		ELSE
+		    vn_CANTIDAD_NOGES:=vn_CANTIDAD_NOGES+1;
+		END IF;
+
+--se quita para revisar valorizacion de prestaciones GES y no GES GCG 16.08.2011
+--		  IF vn_CANTIDAD_GES>0 AND vn_CANTIDAD_NOGES>0 THEN
+--		     vv_Mensaje_ERROR_GES :='INGRESAR SOLO PRESTACIONES GES';
+--		     RAISE E_SOLO_PRESTACIONES_GES;
+
+--		  END IF;
+--se quita para revisar valorizacion de prestaciones GES y no GES GCG 16.08.2011
+
+	       DBMS_OUTPUT.PUT_LINE ( 'vn_PRESTACION_PRINCIPAL = ' || vn_PRESTACION_PRINCIPAL );
+	       DBMS_OUTPUT.PUT_LINE ( 'vn_PRESTACION_HOMOLOGADA = ' || vn_PRESTACION_HOMOLOGADA );
+	       DBMS_OUTPUT.PUT_LINE ( '**********************************************************' );
+	       DBMS_OUTPUT.PUT_LINE ( 'vn_MAX_LINEAS_LISTAS = ' || vn_MAX_LINEAS_LISTAS );
+	       DBMS_OUTPUT.PUT_LINE ( 'vv_ITEM_ANTERIOR = ' || vv_ITEM_ANTERIOR );
+	       DBMS_OUTPUT.PUT_LINE ( 'lineas_index = ' || lineas_index);
+	       DBMS_OUTPUT.PUT_LINE ( 'vn_PRESTACION_PRINCIPAL = ' || vn_PRESTACION_PRINCIPAL );
+
+
+		-- VALIDA SI LLAMAR A TARIFICADOR NUEVO O VIEJO POR CONVENIOS NUEVOS 01/08/2007 PGP
+
+		IF vn_USAR_TARIFADOR_VIEJO='N' AND TO_NUMBER(vv_ERROR_CONSU_ESPE) = 0 THEN
+		   DBMS_OUTPUT.PUT_LINE ( 'ENTRE TARIFICADOR NUEVO');
+		   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_LA_CONV_NUEVO= ' || vn_CORR_LA_CONV_NUEVO );
+		   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO= ' || vn_ENTR_RUT_CONVENIO );
+		   DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_PRESTADOR_TRATANTE= ' || vn_RUT_PRESTADOR_TRATANTE );
+		   DBMS_OUTPUT.PUT_LINE ( 'vn_CODIGO_PREST_NUEVO= ' || vn_CODIGO_PREST_NUEVO );
+		   DBMS_OUTPUT.PUT_LINE ( 'vn_PLAN_CORRELATIVO= ' || vn_PLAN_CORRELATIVO );
+		   DBMS_OUTPUT.PUT_LINE ( 'vv_ENTR_URGENCIA= ' || vv_ENTR_URGENCIA );
+		   DBMS_OUTPUT.PUT_LINE ( 'vn_PORCENTAJE_BONIF_AMBU= ' || vn_PORCENTAJE_BONIF_AMBU );
+		   DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_ADICIONAL= ' || vv_CODIGO_ADICIONAL );
+		   DBMS_OUTPUT.PUT_LINE ( 'ANTES DE TARIFICADOR vn_CORR_CONVENIO= ' || vn_CORR_CONVENIO );
+
+
+
+		   IF vv_TARIFA_PAQUETE = 'N' THEN ---AGREGADO PARA PAQUETES AMBULATORIOS 27-01-2009
+
+
+		       IF vv_ES_GES = 'S' THEN
+			vv_TIPO_TARIFA := 'GES';
+		       ELSE
+			vv_TIPO_TARIFA := 'OTRO';
+		       END IF;
+
+			   -- vn_NUMERO_ERROR:=444444;
+		       Pck_Cm_Imed_Nuevo3.P_ENTREGA_TARIF_IMED ( TO_CHAR(vn_RUT_BENEFICIARIO),--PI_USUARIO,
+								       'S',			     --PI_ESINSTITUCIONAL,
+								 vn_CORR_LA_CONV_NUEVO, 	 --PI_NLUGARATENCION,
+								 vn_ENTR_RUT_CONVENIO,		--PI_NRUTPRESTADOR,
+								 vn_RUT_PRESTADOR_TRATANTE,	 --PI_NRUTTRATANTE,
+								 'S',			       --PI_ESPRESTACIONCOMPONENTE,
+								 vn_CODIGO_PREST_NUEVO, 	 --PI_NCODIGOPRESTACION,
+								 vn_COMPONENTE, 		 --PI_NCODIGOCOMPONENTE,
+								 0,				 --PI_CODIGOPAQUETE,
+								 'A',			       --PI_STIPOATENCION,
+								 TO_CHAR(SYSDATE,'DD/MM/RRRR'),--PI_DFECHAVALORIZACION,
+								 vn_PLAN_CORRELATIVO,		--PI_NPLANCORRELATIVO,
+								 'N',			       --PI_STIENENUMEROINTERVENCION,
+								 0,				  --PI_NNUMEROINTERVENCION,
+								 'N',				--PI_STIENEVIA,
+								 'MISMA',			--PI_SVIA,
+								 TRIM(vv_ENTR_URGENCIA),	--PI_URGENCIA,
+								 vv_INHABIL,			--PI_INHABIL, -- 19/10/2007 pgp Por Recargo Horario
+								 NVL(vn_PORCENTAJE_BONIF_AMBU,0),--PI_PORCENTAJEHOSPITALARIO, REVISAR!!!
+								 0,				    --PI_PRECIO,
+								 NULL,				   --PI_CONVENIOPRESTASOCIADO,
+								 NULL,				   --PI_LUAT_CORRELATIVO,
+								 vv_CODIGO_ADICIONAL,		  --PI_CODIGOADICIONAL, MULTICODIGO 10/10/2007 PGP
+								 vn_VALOR_FACTURAR,
+								 vn_VALOR_BONIFICAR,
+								 vv_OBS_TARIFA_CON_NUEVO,
+								 vn_CORR_CONVENIO,
+								 vn_SECO_CORRELATIVO,--pi_nSECO_CORRELATIVO	      IN NUMBER,
+								 vn_SEAL_CORRELATIVO,--pi_nSEAL_CORRELATIVO	      IN NUMBER,
+								 vn_DNP_CORRELATIVO,--pi_nDNP_CORRELATIVO	     IN NUMBER,
+								 vv_TIPO_TARIFA);
+						--		   vn_EXCLUYE_CONV);
+
+								 DBMS_OUTPUT.PUT_LINE ( 'vv_OBS_TARIFA_CON_NUEVO= ' || vv_OBS_TARIFA_CON_NUEVO );
+								 DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_BONIFICAR= ' || vn_VALOR_BONIFICAR );
+								 DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_FACTURAR= ' || vn_VALOR_FACTURAR );
+
+								 IF vn_MONTO_TOTAL > 0 THEN
+								     vn_VALOR_FACTURAR:=vn_MONTO_TOTAL;
+								 END IF;
+
+
+								 IF vn_VALOR_FACTURAR=-1 AND vn_VALOR_BONIFICAR=-1  THEN
+								     RAISE e_EXISTE_MAS_DE_UN_PRECIO;
+								 END IF;
+								 IF vn_VALOR_FACTURAR=-2 AND vn_VALOR_BONIFICAR=-2  THEN
+								     RAISE e_NO_EXISTE_PRECIO;
+								 END IF;
+
+
+								 -- PARA MANTENER LA LOGICA DE TARIFICACION YA QUE MONTO VIENE CALCULADO CON
+								 -- EL FACTOR Y EL PORCENTAJE DE INCREMENTO PGP 01/08/2007 CONVENIOS NUEVOS
+
+								 vn_MONTO :=vn_VALOR_FACTURAR;
+								 vn_FACTOR:=0;
+								 vn_PORCENTAJE_INCREMENTO:=NULL;
+								 DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_NUEVO_CONVENIO= ' || vn_MONTO );
+			END IF;
+
+		ELSE
+		   IF vv_TARIFA_PAQUETE = 'N' THEN ---AGREGADO PARA PAQUETES AMBULATORIOS 27-01-2009
+		       vn_ERROR_TARIFA:= Busca_Tarifa(vv_TIPO_PLAN,
+							  vn_PLAN_CORRELATIVO,
+						      vv_PLA_CODIGO,
+						      vn_PORCENTAJE_BONIF_AMBU,
+						      vn_CODIGO_PRESTACION_HOMOLOG,
+						      vv_TIPO_ADMINISTRACION,
+						      vv_CODIGO_ESPECILIDAD_HOMOLOG,
+						      vn_PORCENTAJE_INCREMENTO,
+						      vn_FACTOR,
+						      vn_MONTO,
+						      vn_TARIFA_NIVEL,
+						      vn_CODIGO_ERROR);
+		   END IF;
+		   dbms_output.put_line('termino buscar tarifas error : '||vn_CODIGO_ERROR||' monto :'||vn_MONTO);
+		END IF;
+
+
+
+
+		-- VALIDA SI LLAMAR A TARIFICADOR NUEVO O VIEJO POR CONVENIOS NUEVOS 01/08/2007 PGP
+		vn_NUMERO_ERROR:=45;
+		DBMS_OUTPUT.PUT_LINE( 'error nro : =  '||vn_ERROR_TARIFA );
+		IF  vn_ERROR_TARIFA <> 0 THEN
+		    IF	   vn_CODIGO_ERROR = 01 THEN
+			   RAISE e_TARIFA_01;
+		    ELSIF  vn_CODIGO_ERROR = 02 THEN
+			   RAISE e_TARIFA_02;
+		    ELSIF  vn_CODIGO_ERROR = 03 THEN
+			   RAISE e_TARIFA_03;
+		    ELSIF  vn_CODIGO_ERROR = 04 THEN
+			   RAISE e_TARIFA_04;
+		    ELSIF  vn_CODIGO_ERROR = 05 THEN
+			   RAISE e_TARIFA_05;
+		    ELSIF  vn_CODIGO_ERROR = 06 THEN
+			   RAISE e_TARIFA_06;
+		    ELSIF  vn_CODIGO_ERROR = 07 THEN
+			   RAISE e_TARIFA_07;
+		    ELSIF  vn_CODIGO_ERROR = 08 THEN
+			   RAISE e_TARIFA_08;
+		    ELSIF  vn_CODIGO_ERROR = 09 THEN
+			   RAISE e_TARIFA_09;
+		    ELSIF  vn_CODIGO_ERROR = 10 THEN
+			   RAISE e_TARIFA_10;
+		    ELSIF  vn_CODIGO_ERROR = 11 THEN
+			   RAISE e_TARIFA_11;
+		    ELSIF  vn_CODIGO_ERROR = 12 THEN
+			   RAISE e_TARIFA_12;
+		    ELSIF  vn_CODIGO_ERROR = 13 THEN
+			   RAISE e_TARIFA_13;
+		    ELSIF  vn_CODIGO_ERROR = 21 THEN
+			   RAISE e_TARIFA_21;
+		    ELSIF  vn_CODIGO_ERROR = 22 THEN
+			   RAISE e_TARIFA_22;
+		    ELSIF  vn_CODIGO_ERROR = 23 THEN
+			   RAISE e_TARIFA_23;
+		    ELSIF  vn_CODIGO_ERROR = 24 THEN
+			   RAISE e_TARIFA_24;
+		    ELSIF  vn_CODIGO_ERROR = 25 THEN
+			   RAISE e_TARIFA_25;
+		    ELSIF  vn_CODIGO_ERROR = 26 THEN
+			   RAISE e_TARIFA_26;
+		    ELSIF  vn_CODIGO_ERROR = 27 THEN
+			   RAISE e_TARIFA_27;
+		    ELSIF  vn_CODIGO_ERROR = 28 THEN
+			   RAISE e_TARIFA_28;
+		    ELSIF  vn_CODIGO_ERROR = 29 THEN
+			   RAISE e_TARIFA_29;
+		    ELSIF  vn_CODIGO_ERROR = 30 THEN
+			   RAISE e_TARIFA_30;
+		    ELSIF  vn_CODIGO_ERROR = 31 THEN
+			   RAISE e_TARIFA_31;
+		    ELSIF  vn_CODIGO_ERROR = 32 THEN
+			   RAISE e_TARIFA_32;
+		    ELSIF  vn_CODIGO_ERROR = 33 THEN
+			   RAISE e_TARIFA_33;
+		    ELSIF  vn_CODIGO_ERROR = 99 THEN
+			   RAISE e_TARIFA_99;
+		    --***********************************************************************
+		    --INICIO - BNF-INC- 000355
+		    --94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+		    --106-108	      tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+		    --***********************************************************************
+		    ELSIF  vn_CODIGO_ERROR = 94 THEN
+			   RAISE e_TARIFA_94;
+		    ELSIF  vn_CODIGO_ERROR = 105 THEN
+			   RAISE e_TARIFA_105;
+		    ELSIF  vn_CODIGO_ERROR = 107 THEN
+			   RAISE e_TARIFA_107;
+		    ELSIF  vn_CODIGO_ERROR = 109 THEN
+			   RAISE e_TARIFA_109;
+		    ELSIF  vn_CODIGO_ERROR = 106 THEN
+			   RAISE e_TARIFA_106;
+		    ELSIF  vn_CODIGO_ERROR = 108 THEN
+			   RAISE e_TARIFA_108;
+		    END IF;
+
+		END IF;
+
+		vn_NUMERO_ERROR:=46;
+		-- calculo finalde la tarifa
+		IF  vn_FACTOR IS NULL OR vn_FACTOR = 0 THEN
+		    vn_FACTOR:=1;
+		END IF;
+
+		vn_NUMERO_ERROR:=47;
+
+		IF  vn_PORCENTAJE_INCREMENTO IS NULL THEN
+		    vn_PORCENTAJE_INCREMENTO:=0;
+		END IF;
+
+
+		vn_NUMERO_ERROR:=48;
+		IF  vn_MONTO IS NULL  THEN
+		    vn_MONTO:=0;
+		END IF;
+
+
+		vn_NUMERO_ERROR:=49;
+		IF  vn_TARIFA_NIVEL IS NULL THEN
+		    vn_TARIFA_NIVEL:=0;
+		END IF;
+
+		vn_NUMERO_ERROR:=500;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_TARIFA_NIVEL= ' || vn_TARIFA_NIVEL );
+		IF  vn_TARIFA_NIVEL <> 0 THEN
+		    BEGIN
+			vn_NUMERO_ERROR:=503;
+			SELECT PRPR.PRECIO_UNITARIO
+			INTO   vn_PRECIO_UNITARIO
+			FROM   CON_TARIFAS TARISA,
+			       CON_PRECIOS_PRESTACIONES PRPR
+			WHERE  TARISA.CORRELATIVO = vn_TARIFA_NIVEL
+			AND    TARISA.TARI_TYPE IN ('TAIS','ARFO')
+			AND    TARISA.STATUS = 'VIGE'
+			AND    PRPR.TARI_CORRELATIVO = TARISA.CORRELATIVO
+			AND    PRPR.PRISA_CODIGO = vn_CODIGO_PRESTACION_HOMOLOG
+			AND    PRPR.ESP_CODIGO = 'IND'
+			ORDER BY PRPR.PRISA_CODIGO DESC;
+
+			vn_NUMERO_ERROR:=501;
+
+		    EXCEPTION
+			WHEN NO_DATA_FOUND THEN
+			    vn_NUMERO_ERROR:=504;
+			    vn_PRECIO_UNITARIO:=0;
+		    END;
+		ELSE
+		    vn_NUMERO_ERROR:=502;
+		    vn_PRECIO_UNITARIO:=0;
+
+		END IF;
+
+		vn_NUMERO_ERROR:=51;
+
+		DBMS_OUTPUT.PUT_LINE ( '*** CHEQUEO *** '||vn_PRECIO_UNITARIO);
+		DBMS_OUTPUT.PUT_LINE ( '*** CHEQUEO *** '||vn_FACTOR);
+		DBMS_OUTPUT.PUT_LINE ( '*** CHEQUEO *** '||vn_PORCENTAJE_INCREMENTO);
+		DBMS_OUTPUT.PUT_LINE ( '*** CHEQUEO *** '||vn_MONTO);
+		DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_TOTAL= ' || vn_MONTO_TOTAL );
+
+		vn_MONTO_PRESTACION:= vn_PRECIO_UNITARIO*vn_FACTOR*((vn_PORCENTAJE_INCREMENTO / 100) + 1)+vn_MONTO;
+		vn_MONTO_PRESTACION:= ROUND(vn_MONTO_PRESTACION,0);
+		vn_NUMERO_ERROR:=511;
+		vn_MONTO_PRESTACION_UNIT:=vn_MONTO_PRESTACION;
+
+
+		DBMS_OUTPUT.PUT_LINE ( '*** MONTO PRESTACION = ' || vn_MONTO_PRESTACION );
+		dbms_output.put_line('VA A llamar a bonificacion en el LOOP');
+		DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_PRESTACIONES= ' || vn_NUMERO_PRESTACIONES );
+		DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_PRESTADOR_TRATANTE= ' || vn_RUT_PRESTADOR_TRATANTE );
+
+		vn_NUMERO_ERROR:=512;
+
+		IF NVL(vn_MONTO_TOTAL,0)> 0 THEN
+		   IF Pck_Imed_Externos_Nuevo.F_Val_Prest_Valor_Variable(vn_RUT_PRESTADOR_TRATANTE) = 'S' THEN -- PGP 11/07/2006
+			 vn_MONTO_PRESTACION_UNIT:=vn_MONTO_TOTAL;
+			vn_MONTO_PRESTACION:= vn_MONTO_TOTAL * vn_NUMERO_PRESTACIONES;
+			DBMS_OUTPUT.PUT_LINE ( 'ENTRE A ROTTERY');
+
+		    ELSE
+			vn_MONTO_PRESTACION:= vn_MONTO_PRESTACION * vn_NUMERO_PRESTACIONES;
+		    END IF;
+		ELSE
+		    vn_MONTO_PRESTACION:= vn_MONTO_PRESTACION * vn_NUMERO_PRESTACIONES;
+		END IF;
+		vn_NUMERO_ERROR:=513;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_PRESTACION= ' || vn_MONTO_PRESTACION );
+		--EACE 28-06-2005 GES
+
+	       DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_SUB_GRUPO_GCG = ' || vv_CODIGO_SUB_GRUPO );
+		IF vv_CODIGO_SUB_GRUPO <> 'N' THEN
+		   vn_NUMERO_ERROR:=514;
+		   vv_PRISA_ES_GES := PCK_GESARA_100_BONIFICACIONES.F_PRESTACION_GES ( vn_CODIGO_PRESTACION_HOMOLOG, vn_COD_GARANTIA, vn_GRUPO_SEQ, vn_SUB_GRUPO_SEQ,SYSDATE );
+		ELSE
+		   vv_PRISA_ES_GES := 'N';
+		END IF;
+		vn_NUMERO_ERROR:=515;
+		DBMS_OUTPUT.PUT_LINE ( 'vv_PRISA_ES_GES= ' || vv_PRISA_ES_GES );
+
+		DBMS_OUTPUT.PUT_LINE ( 'vv_PRISA_ES_GES GCG = ' || vv_PRISA_ES_GES );
+		IF vv_PRISA_ES_GES = 'S' THEN
+
+		   vn_NUMERO_ERROR:=516;
+		   vn_Total_Prestaciones_GES:= vn_Total_Prestaciones_GES + 1;
+
+		   PCK_GESARA_100_BONIFICACIONES.p_Graba_Bonificaciones_Temp(TO_CHAR(vn_ENTR_RUT_TRATANTE)||'/'||TO_CHAR(vn_ENTR_RUT_BENEFICIARIO),
+										  vv_ENTR_HOM_SUCURSAL_VENTA,
+									       TO_CHAR(SYSDATE,'DD/MM/YYYY'),
+										vn_CODIGO_PRESTACION_HOMOLOG,
+									      vn_MONTO_PRESTACION,
+									      vn_COD_GARANTIA,
+									      vn_GRUPO_SEQ,
+									      vn_SUB_GRUPO_SEQ,
+									      vv_PRISA_ES_GES_RES,
+										vv_ErrorCode);
+
+		    IF vv_ErrorCode IS NOT NULL THEN
+		       RAISE e_VALORIZACION_GES;
+		    END IF;
+
+
+		    vn_NUMERO_ERROR:=6422;
+		    vn_MONTO_BCC:=0;
+		    vn_MONTO_SEGURO_TERCERO:=0;
+		    vn_VALOR_COPAGO_LINEA:=0;
+		    vn_VALOR_BONIFICADO_ISAPRE:=0;
+		    vn_NUMERO_ERROR:=6522;
+		    vn_SRV_FETCH_STATUS := '1';
+
+		    vCOL_nExtCodigo_Prestacion(vn_SRV_ROW_COUNT)  :=  vn_CODIGO_PRESTACION_HOMOLOG;
+		    vCOL_vExtES_GES    (vn_SRV_ROW_COUNT)		:= 'S';
+
+		    Col_nExtValorPrestacion(vn_SRV_ROW_COUNT)	  := NVL(vn_MONTO_PRESTACION,0);
+
+
+		    Col_nExtAporteFinanciador(vn_SRV_ROW_COUNT)   := NVL(vn_VALOR_BONIFICADO_ISAPRE,0) + NVL(vn_MONTO_BCC,0);
+		    Col_nExtCopago(vn_SRV_ROW_COUNT)		   := NVL(vn_VALOR_COPAGO_LINEA,0);
+		    Col_vExtInternolsa(vn_SRV_ROW_COUNT)	   := LPAD(LPAD(vv_CORRELATIVO_AUDITORIA,12,' ')||'-'||LPAD(vn_SRV_ROW_COUNT,2,0),15,' ');--vv_CORRELATIVO_AUDITORIA;--'14029918       ';PGP 03/07/2006
+
+
+
+		    DBMS_OUTPUT.PUT_LINE ( '---------------------- TIPOS DE BONIFICACION -----------------' );
+
+		    IF NVL(vn_MONTO_BCC,0) <> 0 THEN
+
+			Col_nExtTipoBonif1(vn_SRV_ROW_COUNT)	       := NVL(vn_TIPO_BONIFICACION_BCC,1); --1; --BCC
+			Col_nExtCopago1(vn_SRV_ROW_COUNT)		  := NVL(vn_MONTO_BCC,0);
+
+		    ELSE
+
+			Col_nExtTipoBonif1(vn_SRV_ROW_COUNT)	       := 77; -- TIPO BONIFICACION GES
+			Col_nExtCopago1(vn_SRV_ROW_COUNT)		  := 0;
+
+		    END IF;
+
+		    IF NVL(vn_MONTO_SEGURO_TERCERO,0) <> 0 THEN
+
+			Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	      := NVL(vn_TIPO_BONIFICACION_SIGNA,2);--2; --CIGNA
+			Col_nExtCopago2(vn_SRV_ROW_COUNT)		  := NVL(vn_MONTO_SEGURO_TERCERO,0);
+
+		    ELSE
+
+			Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	      := 77;--2; --CIGNA
+			Col_nExtCopago2(vn_SRV_ROW_COUNT)		  := 0;
+
+
+		    END IF;
+
+		    IF NVL(vn_Monto_Descto_Especial,0) <> 0 THEN
+
+			Col_nExtTipoBonif3(vn_SRV_ROW_COUNT)	       := NVL(vn_TIPO_BONIF_DESCTO_ESPECIAL,0);
+			Col_nExtCopago3(vn_SRV_ROW_COUNT)		  := NVL(vn_Monto_Descto_Especial,0);
+
+		    ELSE
+
+			Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	      := 77;--2; --CIGNA
+			Col_nExtCopago2(vn_SRV_ROW_COUNT)		  := 0;
+
+		    END IF;
+
+		    IF NVL(vn_Monto_Descto_Especial,0) <> 0 AND NVL(vn_MONTO_SEGURO_TERCERO,0) <> 0 AND NVL(vn_MONTO_BCC,0) <> 0 THEN
+
+			Col_nExtTipoBonif4(vn_SRV_ROW_COUNT)	       := 77; --77;
+			Col_nExtCopago4(vn_SRV_ROW_COUNT)		  := 0; --NVL(vn_VALOR_BONIFICADO_ISAPRE,0);
+
+		    END IF;
+
+
+		    Col_nExtTipoBonif5(vn_SRV_ROW_COUNT)	  := 0;
+		    Col_nExtCopago5(vn_SRV_ROW_COUNT)		      := 0;
+		--se quita para revisar valorizacion de prestaciones GES y no GES GCG 16.08.2011
+		--ELSE
+		   END IF; --Se agrega GCG
+		--se quita para revisar valorizacion de prestaciones GES y no GES GCG 16.08.2011
+		    --EACE 28-06-2005 GES
+
+--		     IF vv_ES_GES <> 'S' then
+--			-- GCG 16.08.2011 SE CREA
+--			     vv_TIPO_ACCESO:=vv_TIPO_ACCESO_1;
+--			 -- GCG 16.08.2011 SE CREA
+--			    DBMS_OUTPUT.PUT_LINE ( 'TIPO ACCESO GCG  --> '||vv_TIPO_ACCESO );
+--		     end if
+--		      ;
+
+--		     IF vv_PRISA_ES_GES <> 'S' THEN
+--		      -- GCG 16.08.2011 SE CREA
+--			  vv_TIPO_ACCESO:=vv_TIPO_ACCESO_1;
+--		      -- GCG 16.08.2011 SE CREA
+--			 DBMS_OUTPUT.PUT_LINE ( 'TIPO ACCESO GCG  --> '||vv_TIPO_ACCESO );
+--		     END IF
+--		     ;
+
+		  DBMS_OUTPUT.PUT_LINE ( 'vn_GrupSecuencia  GCGGGGG  --> = ' || vn_GrupSecuencia );
+
+		   IF vn_GrupSecuencia IS NULL THEN
+		      vv_TIPO_ACCESO:=vv_TIPO_ACCESO_1;
+		      DBMS_OUTPUT.PUT_LINE ( 'TIPO ACCESO GCGGGGG  --> '||vv_TIPO_ACCESO );
+		   END IF
+		   ;
+
+
+		    BEGIN
+			DBMS_OUTPUT.PUT_LINE ( 'paso 666666666666666666666666666666666666 ' );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_RUT_PRESTADOR_SOLICITANTE= ' || vn_RUT_PRESTADOR_SOLICITANTE );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_Rut_Tratante= ' || vn_Rut_Tratante );
+			IF vv_SALUD_ADMINISTRADA = 'S' AND vn_RUT_PRESTADOR_SOLICITANTE <> 0 THEN
+			   vn_Rut_Tratante:=vn_RUT_PRESTADOR_TRATANTE; ---vn_RUT_PRESTADOR_SOLICITANTE;  EACE 08/09/2006 MC
+			ELSE
+			   vn_Rut_Tratante:=vn_RUT_PRESTADOR_TRATANTE;
+			END IF;
+			DBMS_OUTPUT.PUT_LINE ( 'paso 6.111111111111111111111111111111111111 ' );
+			--15/06/2006 ---
+		       -- 03/08/2007 PGP POR CONVENIOS NUEVO, BONIFICADOR NUEVO SE AGREGA LLAMADA A NUEVO SERVICIO DE PREFERENCIA
+		       -- SI SE UTILIZA EL VALORIZADOS CON CONVENIOS NUEVOS 13/08/2006
+		       DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_LA_CONV_NUEVO= ' || vn_CORR_LA_CONV_NUEVO );
+		       DBMS_OUTPUT.PUT_LINE ( 'AQUI VOY A ENTRAR A BONIFICAAAAAAAAAAAR' );
+		       IF vn_USAR_TARIFADOR_VIEJO='S' THEN
+			     vn_CORR_LA_CONV_NUEVO:=0;
+		       END IF;
+
+		    IF vv_POSEE_BENEFICIO_BC17 = 'S' THEN -- PGP 25/05/2006
+		       vn_CONT_BC17:=vn_CONT_BC17+1;
+		    END IF;
+
+		    EXCEPTION
+			 WHEN OTHERS THEN
+			       DBMS_OUTPUT.PUT_LINE ( 'FALLO ACCESO A PCK BONIFICACION'||SQLERRM );
+				vn_BENEF_ERROR_CALC:=1001;
+				vv_BENEF_ERROR_DESCRIP_CALC:=SUBSTR(SQLERRM,1,50);
+			       RAISE e_EJECUTA_PCK_BONIFICACION;
+		    END;
+
+
+		    DBMS_OUTPUT.PUT_LINE ( ' INSERTA REPOSITORIO ' );
+		    -- INSERTA DETALLE DE PRESTACION EN EL REPOSITORIO
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ACCESO= ' || vv_TIPO_ACCESO );
+
+		    -- AGRUPACIONES ATENCION DE URGENCIA BC,PGP 06/10/2008
+
+		    IF TRIM(vv_ENTR_URGENCIA)='S' THEN
+			IF vv_TIPO_ACCESO='IMED' THEN
+			   SELECT PRISA_CODIGO_BONIF_NORMAL
+			   INTO      vn_CODIGO_PRESTACION_PPAL
+			   FROM      CONMED.CM_ESPECIALIDADES
+			   WHERE  CODIGO = 'CMU';
+			ELSE
+			   SELECT PRISA_CODIGO_BONIF_MECA
+			   INTO      vn_CODIGO_PRESTACION_PPAL
+			   FROM      CONMED.CM_ESPECIALIDADES
+			   WHERE  CODIGO = 'CMU';
+			END IF;
+		    ELSE
+			vn_CODIGO_PRESTACION_PPAL:=NULL;
+		    END IF;
+
+
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_FACTURAR= ' || vn_VALOR_FACTURAR );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_PRESTACIONES= ' || vn_NUMERO_PRESTACIONES );
+		    DBMS_OUTPUT.PUT_LINE ( 'pi_nMONTO_PRESTACION= ' || vn_MONTO_PRESTACION*vn_MONTO_PRESTACION);
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_PRESTACION= ' || vn_MONTO_PRESTACION );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_PRESTACIONES= ' || vn_NUMERO_PRESTACIONES );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_PRESTACION_UNIT= ' || vn_MONTO_PRESTACION_UNIT );
+
+		    vn_NUMERO_ERROR:=5199;
+		    --
+		    --GCG 16.08.2011
+		    DBMS_OUTPUT.PUT_LINE ( 'PASE POR AQUI '||vn_CODIGO_PRESTACION_PPAL );
+		    --GCG 16.08.2011
+		  --  vn_NUMERO_ERROR:=5166;
+
+
+
+		   --INICIO AMG BNF-000745
+		    vv_ATENCION:= 'NORMAL';
+		    -- atencion IN ( 'NORMAL' , 'URGENCIA' , 'INHABIL' , 'URGINH' )
+		    IF TRIM(vv_ENTR_URGENCIA) = 'S'  AND vv_INHABIL = 'S' THEN
+			vv_ATENCION:= 'URGINH';
+		    ELSIF TRIM(vv_ENTR_URGENCIA) = 'S'	AND vv_INHABIL = 'N' THEN
+			vv_ATENCION:= 'URGENCIA';
+		    ELSIF TRIM(vv_ENTR_URGENCIA) = 'N'	AND vv_INHABIL = 'S' THEN
+			vv_ATENCION:= 'INHABIL';
+		    END IF;
+
+		    --TERMINO AMG BNF-000745
+
+
+		    PCK_BEN_REPOSITORIO.P_MANT_BEN_REPOSITORIO_BONOS(vn_BENEF_CORRELATIVO,					    --pi_nCORRELATIVO		 IN OUT NUMBER,
+								     vv_TIPO_ACCESO,							  --pi_nTIPO_ACCESO	       IN VARCHAR2,
+								     TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',				   --pi_nUSUARIO_EMISION	IN VARCHAR2,
+								     vn_COAF_FOLIO_SUSCRIPCION, 				   --pi_nFOLIO_SUSCRIPCION	IN NUMBER,
+								     vn_CODIGO_ISAPRE,						  --pi_nCODIGO_ISAPRE	       IN NUMBER,
+								     vn_CODIGO_CARGA,						 --pi_nCODIGO_CARGA	      IN NUMBER,
+								     '2',							 -- AMBULATORIA --pi_vTIPO_COBERTURA	     IN VARCHAR2,
+								     Pck_Imed_Externos_Nuevo.Saca_Valor_Uf,		  --pi_nVALOR_UF	       IN NUMBER,
+								     vn_PLAN_CORRELATIVO,					--pi_nPLAN_CORRELATIVO	     IN NUMBER,
+								     'BONO',						       --pi_vDOLI_TYPE		    IN VARCHAR2,
+								     'IMED',						       --pi_vTIPO_PRESTACION	    IN VARCHAR2,
+								     TO_CHAR(SYSDATE,'DD/MM/RRRR'),				   --pi_vFECHA_PRESTACION	IN VARCHAR2,
+								     'IND',							  --pi_vTIPO_AGRUP_PRESTACION  IN VARCHAR2,
+								     vn_CODIGO_PREST_NUEVO,				   --pi_nPRISA_CODIGO		IN NUMBER,
+								     vn_COMPONENTE,					      --pi_nCOMPONENTE		   IN NUMBER,
+								     (vn_MONTO_PRESTACION_UNIT),				       --pi_nVALOR_UNITARIO	    IN NUMBER,
+								     vn_NUMERO_PRESTACIONES,					    --pi_nCANTIDAD		 IN NUMBER,
+								     (vn_MONTO_PRESTACION_UNIT*vn_NUMERO_PRESTACIONES), 	      --pi_nMONTO_PRESTACION	   IN NUMBER,
+								     TO_CHAR(SYSDATE,'DD/MM/RRRR'),				  --pi_vFECHA_CREACION	       IN VARCHAR2,
+								     TO_CHAR(vn_RUT_BENEFICIARIO),				 --pi_vUSUARIO_CREACION       IN VARCHAR2,
+								     vn_UNOR_CORRELATIVO,					--pi_nOFICINA_CREACION	     IN NUMBER,
+								     'N',							--pi_vES_DERIV_DE_PREST_PREF IN VARCHAR2,
+								     vn_PREST_CODIGO_INTERNO_PREF,				    --pi_nPREST_CODIGO_INTERNO_PREF IN NUMBER,
+								     vn_PORCENTAJE_BONIF_HOSP,					       --pi_nBONIF_HOSPITALARIA        IN NUMBER, -- REVISAR!!
+								     vn_PORCENTAJE_BONIF_AMBU,					 --pi_nBONIF_AMBULATORIA	 IN NUMBER,
+								     vn_PORCENTAJE_BONIF_DENT,					 --pi_nBONIF_DENTAL		 IN NUMBER,
+								     vn_PORCENTAJE_BONIF_MED,					--pi_nBONIF_MEDICAMENTOS	IN NUMBER,
+								     NULL,							 --pi_vOBSERVACIONES		 IN VARCHAR2,
+								     NULL,							 --pi_vTIPO_DOCUMENTO		 IN VARCHAR2,
+								     NULL,							 --pi_vNUMERO_DOCUMENTO 	 IN VARCHAR2,
+								     NULL,							 --pi_nRUT_COBRADOR_REEMBOLSO	 IN NUMBER,
+								     NULL,							 --pi_vDIGRUT_COBRADOR_REEMBOLSO IN VARCHAR2,
+								     vn_GaraCodigo,							  --pi_nGRUP_GARA_CODIGO	  IN NUMBER,
+								     vn_GrupSecuencia,							     --pi_nGRUP_SECUENCIA	     IN NUMBER,
+								     NULL,							 --pi_nSECUENCIA_AGRUP_PRESTACION IN NUMBER,
+								     Pck_Imed_Externos_Nuevo.F_Sacaprestcodigointerno(vn_RUT_PRESTADOR_FACTURADOR),--pi_nPREST_CODIGO_INTERNO	    IN NUMBER,
+								     Pck_Imed_Externos_Nuevo.F_Sacaprestcodigointerno(vn_RUT_PRESTADOR_TRATANTE),--vn_CODIGO_INTERNO_TRATANTE,					   --pi_nPREST_CODIGO_INTERNO_TRATA IN NUMBER,
+								     vn_CORR_CONVENIO,								   --vv_ENTR_HOM_NUMERO_CONVENIO,--pi_nCONV_CORRELATIVO 	  IN NUMBER,
+								     vn_CORR_LA_CONV_NUEVO,							    --pi_nLUAT_CORRELATIVO	     IN NUMBER,
+								     vn_SECO_CORRELATIVO,--pi_nSECO_CORRELATIVO 	  IN NUMBER,
+								     vn_SEAL_CORRELATIVO,--pi_nSEAL_CORRELATIVO 	  IN NUMBER,
+								     vn_DNP_CORRELATIVO,--pi_nDNP_CORRELATIVO		 IN NUMBER,
+								     NULL,							 --pi_nMONTO_BONIFICADO 	  IN NUMBER,
+								     (vn_MONTO_PRESTACION_UNIT*vn_NUMERO_PRESTACIONES), 	   --pi_nMONTO_COPAGO		    IN NUMBER,
+								     NULL,						      --pi_nUNOR_CORR_AMPLIA_COB	IN NUMBER,
+								     NULL,						      --pi_nPRISA_CODIGO_DIA_CAMA      IN NUMBER,
+								     vn_CODIGO_PRESTACION_PPAL, 			   --pi_nPRISA_CODIGO_PPAL	    IN NUMBER,
+								     NULL,							   --pi_nVALOR_DIA_CAMA 	    IN NUMBER,
+								     NULL,						      --pi_nPABELLON		       IN NUMBER,
+								     NULL,						      --pi_nNRO_DIAS_HOSP	       IN NUMBER,
+								     'S',						     --pi_vEMITE		      IN VARCHAR2,
+								       vn_REB_CORRELATIVO,				      --pi_nREB_CORRELATIVO	       IN OUT NUMBER,
+								     'N',						     --pi_vINSTITUCIONAL	       IN VARCHAR2,
+								     'I',						     --pi_vTIPO_ACCION				  IN VARCHAR2,
+								     vn_BENEF_ERROR_INSERT,				       --po_nNERROR					IN OUT NUMBER,
+								     vv_BENEF_ERROR_DESCRIP_INSERT,			       --po_vDESC_ERROR 				   IN OUT VARCHAR2,
+								     NULL,						      --pi_vCOPAGO_GRATIS_GES			  IN VARCHAR2 DEFAULT NULL,
+								     NULL,						      --pi_nMONTO_COBERTURA_ADIC_GES		 IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_nMONTO_COB_ADIC_GES_CAEC		IN NUMBER DEFAULT NULL,
+								     'NORMAL',						      --pi_vTIPO_USO				 IN VARCHAR2 DEFAULT 'NORMAL',
+								     NULL,						      --pi_nPRISA_CODIGO_ESPECIALIDAD		  IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_nDOCO_CORRELATIVO			 IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_nPRCO_CORRELATIVO			 IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_nCUME_CORRELATIVO			 IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_nNUMERO_PAM				   IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_vTIPO_MANUAL 			IN VARCHAR2 DEFAULT 'N',
+								     NULL,						      --pi_nDERIV_CODIGO_INTERNO		 IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_nMOTIVO_MANUAL			 IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_vTIPO_REEMBOLSO			  IN VARCHAR2 DEFAULT 'NORMAL',
+								     NULL,						      --pi_nDERIV_RUT				  IN NUMBER DEFAULT NULL,
+								     NULL,						      --pi_vDERIV_DIGRUT			IN VARCHAR2 DEFAULT NULL,
+								     'S',						     --pi_vREGISTRAR_TOPE			 IN VARCHAR2 DEFAULT 'N',
+								     vv_ORDEN_DERIVACION,				     --pi_vORDEN_DERIVACION		       IN VARCHAR2 DEFAULT NULL,
+								     NULL,						      --pi_vUSUARIO_AUT_MANUAL		     IN VARCHAR2 DEFAULT NULL,
+								     NULL,						      --pi_vFECHA_AUT_MANUAL		       IN VARCHAR2 DEFAULT NULL,
+								     NULL,						    --pi_vAUT_MANUAL					    IN VARCHAR2 DEFAULT 'N'*/
+								     NULL,						    -- ORDENAMIENTO
+								     vn_NUMERO_ORDEN_DERIVACION,			     --pin_NUMERO ORDEN
+								     vv_SERVICIO_FULL,
+								     vv_ATENCION
+								     ); 						   --pi_vAUT_MANUAL					   IN VARCHAR2 DEFAULT 'N'*/
+
+		    vn_NUMERO_ERROR:=vn_BENEF_ERROR_INSERT;
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_BENEF_CORRELATIVO= ' || vn_BENEF_CORRELATIVO );
+
+		    --*****************************************************************************
+		    --BNF-000828 20/04/2012 - bloquear el ingreso de los codigos de prestaciones de urgencia
+		    --Integral y Tradicional
+		    --*****************************************************************************
+		    IF	NVL(vn_BENEF_ERROR_INSERT,0) BETWEEN 7001 AND 7003 THEN
+			DBMS_OUTPUT.PUT_LINE ( 'ERROR VALIDADOR DE URGENCIA INTEGRAL/TRADICIONAL :'||vv_BENEF_ERROR_DESCRIP_INSERT );
+			RAISE e_VAL_URGENCIA_INTEGRAL;
+		    END IF;
+
+
+		    IF	NVL(vn_BENEF_ERROR_INSERT,0) <> 0 THEN
+			DBMS_OUTPUT.PUT_LINE ( 'FALLO INSERTA REPOSITORIO DE BONIFICACION :'||vv_BENEF_ERROR_DESCRIP_INSERT );
+			vn_BENEF_ERROR_CALC:=vn_BENEF_ERROR_INSERT;
+			vv_BENEF_ERROR_DESCRIP_CALC:=vv_BENEF_ERROR_DESCRIP_INSERT;
+			RAISE e_EJECUTA_PCK_BONIFICACION;
+		    END IF;
+		    vn_NUMERO_ERROR:=5168;
+		    --se quita para revisar valorizacion de prestaciones GES y no GES GCG 16.08.2011
+		    --END IF;
+		    --se quita para revisar valorizacion de prestaciones GES y no GES GCG 16.08.2011
+
+
+		    END LOOP;
+
+		    vn_NUMERO_ERROR:=70;
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+		    IF vn_SALE_LINEAS_INDEX =1 THEN
+		       vn_SALE_LISTA_INDEX := 1;
+		    END IF;
+
+		    EXIT WHEN vn_SALE_LISTA_INDEX = 1;
+			 vn_NUMERO_ERROR:=71;
+		    END LOOP;
+
+
+		    -- CALCULA BONIFICACION EN REPOSITORIO
+		    DBMS_OUTPUT.PUT_LINE ( ' CALCULA COPAGO BONIFICACION ' );
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ACCESO= ' || vv_TIPO_ACCESO );
+		    DBMS_OUTPUT.PUT_LINE ( 'TO_CHAR(vn_RUT_BENEFICIARIO)= ' || TO_CHAR(vn_RUT_BENEFICIARIO) );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_COAF_FOLIO_SUSCRIPCION= ' || vn_COAF_FOLIO_SUSCRIPCION );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_BENEF_ERROR_CALC= ' || vn_BENEF_ERROR_CALC );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_BENEF_ERROR_DESCRIP_CALC= ' || SUBSTR(vv_BENEF_ERROR_DESCRIP_CALC,200) );
+		    vn_NUMERO_ERROR:= 516;
+		    --vv_BENEF_ERROR_DESCRIP_CALC:='';
+
+
+
+--			  PCK_BEN_REPOSITORIO.P_CALCULA_COPAGO_BONIFICACION(vv_TIPO_ACCESO,			  --pi_vTIPO_ACCESO	  IN VARCHAR2,
+--									    TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED', --pi_vUSUARIO		 IN VARCHAR2,
+--									    vn_COAF_FOLIO_SUSCRIPCION,	  --pi_nFOLIO_SUSCRIPCION IN NUMBER,
+--									    TO_CHAR(SYSDATE,'DD/MM/RRRR'),--pi_vFECHA_CREACION	  IN VARCHAR2,
+--									    vn_BENEF_ERROR_CALC,	    --po_nNERROR	      IN OUT NUMBER,
+--									    vv_BENEF_ERROR_DESCRIP_CALC,  --po_vDESC_ERROR	       IN OUT VARCHAR2,
+--									    2				     --ps_nTIPO_COBERTURA      IN NUMBER DEFAULT 2
+--									    );
+
+		    -- // GCG 30/08/2011
+		    FOR RS_LEE_REPOSITORIO IN C_LEE_REPOSITORIO (TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',TO_CHAR(SYSDATE,'DD/MM/RRRR'),vn_COAF_FOLIO_SUSCRIPCION)  LOOP
+			DBMS_OUTPUT.PUT_LINE ( ' LLAMA A BONIFICACION' );
+			DBMS_OUTPUT.PUT_LINE ( 'vv_TIPO_ACCESO = ' || vv_TIPO_ACCESO );
+			vv_TIPO_ACCESO:=RS_LEE_REPOSITORIO.TIPO_ACCESO;
+			vn_BENEF_ERROR_CALC:=0;
+			vv_BENEF_ERROR_DESCRIP_CALC:=NULL;
+			PCK_BEN_REPOSITORIO.P_CALCULA_COPAGO_BONIFICACION(vv_TIPO_ACCESO,			--pi_vTIPO_ACCESO	IN VARCHAR2,
+									  TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED', --pi_vUSUARIO		       IN VARCHAR2,
+									  vn_COAF_FOLIO_SUSCRIPCION,	--pi_nFOLIO_SUSCRIPCION IN NUMBER,
+									  TO_CHAR(SYSDATE,'DD/MM/RRRR'),--pi_vFECHA_CREACION	IN VARCHAR2,
+									  vn_BENEF_ERROR_CALC,		  --po_nNERROR		    IN OUT NUMBER,
+									  vv_BENEF_ERROR_DESCRIP_CALC,	--po_vDESC_ERROR	     IN OUT VARCHAR2,
+									  2				   --ps_nTIPO_COBERTURA      IN NUMBER DEFAULT 2
+									  );
+		    END LOOP
+		    ;
+
+		    -- // GCG 30/08/2011
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_BENEF_ERROR_CALC= ' || vn_BENEF_ERROR_CALC );
+		    vn_NUMERO_ERROR:= 517;
+		    IF	   nvl(vn_BENEF_ERROR_CALC,0) <> 0 THEN
+			DBMS_OUTPUT.PUT_LINE ( 'vn_BENEF_ERROR_CALC= ' || vn_BENEF_ERROR_CALC );
+			DBMS_OUTPUT.PUT_LINE ( 'FALLO CALCULO DE BONIFICACION EN REPOSITORIO:'||vv_BENEF_ERROR_DESCRIP_CALC );
+			RAISE e_EJECUTA_PCK_BONIFICACION;
+		    END IF;
+		    -- RETORNA CURSOR DE PRESTACIONES DEL REPOSITORIO -- PGP 30/05/2008
+
+
+		    --********************************************************************************************************
+		    --01/02/2014 - DEJA LOS TOPES CON ORIGEN IMED - PARA NO DEJARLO TOMADO Y AFECTE OTRAS VALORIZACIONES DE PORTAL
+		    --BNF-000988 Centralizacion de IMED a Servidor ISCTOS
+		    --********************************************************************************************************
+--		      DBMS_OUTPUT.PUT_LINE ( 'LLAMA CURSOR TOPES vn_RUT_BENEFICIARIO = ' || TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED' );
+--		      DBMS_OUTPUT.PUT_LINE ( 'vn_COAF_FOLIO_SUSCRIPCION = ' || vn_COAF_FOLIO_SUSCRIPCION );
+		    BEGIN
+			FOR REG IN C_TOPES (TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',TO_CHAR(SYSDATE,'DD/MM/RRRR'),vn_COAF_FOLIO_SUSCRIPCION)  LOOP
+			      -- TOPE
+			      DBMS_OUTPUT.PUT_LINE ( 'REG.TOPE_CORRELATIVO = ' || REG.TOPE_CORRELATIVO );
+			      IF REG.TOPE_CORRELATIVO IS NOT NULL THEN
+
+				 UPDATE TOPES.EMBE_MOVIMIENTOS_DE_TOPES SET
+				 ORIGEN='IMED'
+				 WHERE
+				    SECUENCIA_TOPE = REG.TOPE_CORRELATIVO;
+
+			     END IF;
+			     --
+--				-- TOPE    BC
+--				IF REG.TOPE_CORRELATIVO_BC IS NOT NULL THEN
+--
+--				   UPDATE TOPES.EMBE_MOVIMIENTOS_DE_TOPES_BC SET
+--				   ORIGEN='IMED'
+--				   WHERE
+--				      SECUENCIA_TOPE = REG.TOPE_CORRELATIVO;
+--			       END IF;
+			     --
+			END LOOP;
+		    EXCEPTION
+			WHEN E_TOPES THEN
+			    NULL;
+			WHEN OTHERS THEN
+			    NULL;
+
+		    END;
+		    --********************************************************************************************************
+		    --********************************************************************************************************
+
+
+
+		    vn_NUMERO_ERROR:= 5177;
+		    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('VERIFICA_RESTR_CREDITO') = 'S' THEN
+
+			 vv_BENEFICIARIO_CON_CREDITO:=F_Es_Benef_Cred_Rest_Empresa(vn_COAF_FOLIO_SUSCRIPCION,
+										  vn_CODIGO_CARGA,
+										  vn_CODIGO_ISAPRE,
+										  vn_UNOR_CORRELATIVO);
+		       DBMS_OUTPUT.PUT_LINE ( 'CON RESTRICCION CREDITO EMPRESA' );
+
+		    ELSE
+
+
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			DBMS_OUTPUT.PUT_LINE ( 'SIN RESTRICCION CREDITO EMPRESA' );
+			vv_BENEFICIARIO_CON_CREDITO:=BENEFICIOS.Pck_Ben_Calc_Repositorio_Benef.F_CALCULAR_CREDITO(vv_TIPO_ACCESO,
+														  TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',
+														  vn_COAF_FOLIO_SUSCRIPCION,
+														  TO_CHAR(SYSDATE,'DD/MM/RRRR'));
+		    END IF;
+
+		    IF vv_BENEFICIARIO_CON_CREDITO = 'S' THEN
+
+
+			BENEFICIOS.Pck_Ben_Calc_Repositorio_Benef.P_BONIFICA_CREDITO(vv_TIPO_ACCESO,
+									  TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',
+									  vn_COAF_FOLIO_SUSCRIPCION,
+									  TO_CHAR(SYSDATE,'DD/MM/RRRR'),
+									  'CREDITO',
+									  vv_MONTO_CREDITO_OTORGADO,
+									  vv_MENSAJE_CREDITO_OTORGADO,
+									  vn_ERROR_CREDITO,
+									  vv_DESC_ERROR_CREDITO);
+
+
+			vn_MONTO_CREDITO_OTORGADO := TO_NUMBER(vv_MONTO_CREDITO_OTORGADO);
+
+			DBMS_OUTPUT.PUT_LINE ( 'vv_MONTO_CREDITO_OTORGADO= ' || vn_MONTO_CREDITO_OTORGADO );
+			IF     vn_ERROR_CREDITO <> 0 THEN
+				DBMS_OUTPUT.PUT_LINE ( 'FALLO CALCULO DE CREDITO :'||vv_DESC_ERROR_CREDITO );
+				RAISE e_EJECUTA_P_BONIFICA_CREDITO;
+			END IF;
+
+		    END IF;
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_MENSAJE_CREDITO_OTORGADO = ' || vv_MENSAJE_CREDITO_OTORGADO );
+		    vn_NUMERO_ERROR:= 5179;
+
+		    vn_SRV_ROW_COUNT:=0;
+		    FOR DET IN C_COBERTURA(vv_TIPO_ACCESO,TO_CHAR(vn_RUT_BENEFICIARIO)||'_IMED',vn_COAF_FOLIO_SUSCRIPCION) LOOP
+
+			IF  DET.TIPO_ACCESO = 'GES' THEN
+			    vv_ES_GES :='S';
+			ELSE
+			    vv_ES_GES :='N';
+			END IF;
+
+			vn_SRV_ROW_COUNT :=vn_SRV_ROW_COUNT + 1;
+			DBMS_OUTPUT.PUT_LINE ( 'vn_SRV_ROW_COUNT= ' || vn_SRV_ROW_COUNT );
+			IF vn_SRV_ROW_COUNT > vn_SRV_TOTAL_ROWS THEN
+			   DBMS_OUTPUT.PUT_LINE ( 'e_supera_total_filas= ' );
+			   RAISE e_supera_total_filas;
+			END IF;
+			vn_BENEF_CORRELATIVO := DET.CORRELATIVO;
+			vn_CODIGO_PRESTACION_HOMOLOG := DET.PRISA_CODIGO;
+
+			DBMS_OUTPUT.PUT_LINE ( ' RESCATA COBERTURA ' );
+			vn_NUMERO_ERROR:= 518;
+			PCK_BEN_REPOSITORIO.P_C_DET_COB_REPOSITORIO_CORR(vn_BENEF_CORRELATIVO,		  --pi_nREB_CORRELATIVO    IN NUMBER,
+								      cur_COBER_PRESTACIONES,		     --po_cCURSOR		IN OUT vCursor,
+								      vn_BENEF_ERROR_RETORNA,	     --po_nNERROR		IN OUT NUMBER,
+								      vv_BENEF_ERROR_DESCRIP_RETORNA	--po_vDESC_ERROR	      IN OUT VARCHAR2
+									   );
+
+			IF     vn_BENEF_ERROR_RETORNA <> 0 THEN
+			    DBMS_OUTPUT.PUT_LINE ( 'FALLO RETORNO DETALLE COBERTURAS :'||vv_BENEF_ERROR_DESCRIP_RETORNA );
+			    vn_BENEF_ERROR_CALC:=vn_BENEF_ERROR_RETORNA;
+			    vv_BENEF_ERROR_DESCRIP_CALC:=vv_BENEF_ERROR_DESCRIP_RETORNA;
+			    RAISE e_EJECUTA_PCK_BONIFICACION;
+			END IF;
+
+			DBMS_OUTPUT.PUT_LINE ( 'vn_BENEF_ERROR_RETORNA= ' || vn_BENEF_ERROR_RETORNA );
+			DBMS_OUTPUT.PUT_LINE ( 'vv_BENEF_ERROR_DESCRIP_RETORNA= ' || vv_BENEF_ERROR_DESCRIP_RETORNA );
+			DBMS_OUTPUT.PUT_LINE ( ' RESCATA INFORMACION DEL CURSOR ' );
+			vn_NUMERO_ERROR:= 518;
+
+			vv_MONTO_COBERTURA :='';
+			vv_MONTO_COBERTURA_FORZADA:='';
+			vv_MONTO_COBERTURA_APLICADA:='';
+			vn_VALOR_BONIFICADO_ISAPRE :=0;
+			vn_TOTAL_MONTO_COBER_APLI  :=0;
+			vn_MONTO_BCC:=0;
+			vn_MONTO_CREDITO:=0;
+		    BEGIN
+			LOOP
+			FETCH cur_COBER_PRESTACIONES INTO vn_CORRELATIVO_REP_BONOS,
+							  vn_NUMERO_DETALLE_COBER_REP,
+							  vv_MONTO_COBERTURA,
+							  vv_MONTO_COBERTURA_FORZADA,
+							  vv_MONTO_COBERTURA_APLICADA,
+							  vv_TIBE_CODIGO,
+							  vv_TIBE_DESCRIPCION,
+							  vv_CODIGO_CALCULO;
+
+			EXIT WHEN cur_COBER_PRESTACIONES%NOTFOUND;
+
+			DBMS_OUTPUT.PUT_LINE ( 'vv_TIBE_CODIGO = ' || vv_TIBE_CODIGO );
+			DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_CALCULO = ' || vv_CODIGO_CALCULO );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO ='||vn_ENTR_RUT_CONVENIO );
+			DBMS_OUTPUT.PUT_LINE ( 'BENEFICIO COMPLEMENTARIO ='||Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO) );
+
+			SELECT	MAX(NVL(CORRELATIVO_CONVENIO,0))
+			INTO	vn_CONVENIO_DENTAL_VIP
+			FROM	CM_CONVENIOSCONMASPRECIO;
+
+			DBMS_OUTPUT.PUT_LINE ( ' PARA PRUEBAS DE BC33 vn_CONVENIO_DENTAL_VIP ='||vn_CONVENIO_DENTAL_VIP );
+
+
+			IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='15' THEN
+			   vv_POSEE_BENEFICIO_BC15:='S';
+			   vn_Total_Prestaciones_BC15:= vn_Total_Prestaciones_BC15 + 1;
+			   vn_TOTAL_BONIF_BC15:=vn_TOTAL_BONIF_BC15+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+			   IF vn_ENTR_RUT_CONVENIO <> 99999999 THEN
+				 RAISE E_POSEE_BENEFICIO_BC15;
+			   END IF;
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='24' THEN
+			   vv_POSEE_BENEFICIO_BC24:='S';
+			   vn_Total_Prestaciones_BC24:= vn_Total_Prestaciones_BC24 + 1;
+			   vn_TOTAL_BONIF_BC24:=vn_TOTAL_BONIF_BC24+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+			   IF vn_ENTR_RUT_CONVENIO <> 66666666 THEN
+				 RAISE E_POSEE_BENEFICIO_BC24;
+			   END IF;
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='33' THEN
+			   vv_POSEE_BENEFICIO_BC33:='S';
+			   vn_Total_Prestaciones_BC33:= vn_Total_Prestaciones_BC33 + 1;
+			   vn_TOTAL_BONIF_BC33:=vn_TOTAL_BONIF_BC33+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 22222222 THEN
+				 RAISE E_POSEE_BENEFICIO_BC33;
+			   END IF;
+/* INICIO BNF-000955 BC 99 Rut 88.888.889-6*/
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='99' THEN
+			   vv_POSEE_BENEFICIO_BC99:='S';
+			   vn_Total_Prestaciones_BC99:= vn_Total_Prestaciones_BC99 + 1;
+			   vn_TOTAL_BONIF_BC99:=vn_TOTAL_BONIF_BC99+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 88888889 THEN
+				 RAISE E_POSEE_BENEFICIO_BC99;
+			   END IF;
+/* FIN BNF-000955 BC 99 Rut 88.888.889-6*/
+			--***********************************************************************
+			--INICIO - BNF-INC- 000355
+			--94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+			--106-108	  tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+			--***********************************************************************
+			--94
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='94' THEN
+			   vv_POSEE_BENEFICIO_BC94:='S';
+			   vn_Total_Prestaciones_BC94:= vn_Total_Prestaciones_BC94 + 1;
+			   vn_TOTAL_BONIF_BC94:=vn_TOTAL_BONIF_BC94+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 22222222 THEN
+				 RAISE E_POSEE_BENEFICIO_BC94;
+			   END IF;
+			--105
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='105' THEN
+			   vv_POSEE_BENEFICIO_BC105:='S';
+			   vn_Total_Prestaciones_BC105:= vn_Total_Prestaciones_BC105 + 1;
+			   vn_TOTAL_BONIF_BC105:=vn_TOTAL_BONIF_BC105+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 22222222 THEN
+				 RAISE E_POSEE_BENEFICIO_BC105;
+			   END IF;
+			--107
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='107' THEN
+			   vv_POSEE_BENEFICIO_BC107:='S';
+			   vn_Total_Prestaciones_BC107:= vn_Total_Prestaciones_BC107 + 1;
+			   vn_TOTAL_BONIF_BC107:=vn_TOTAL_BONIF_BC107+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 22222222 THEN
+				 RAISE E_POSEE_BENEFICIO_BC107;
+			   END IF;
+			--109
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='109' THEN
+			   vv_POSEE_BENEFICIO_BC109:='S';
+			   vn_Total_Prestaciones_BC109:= vn_Total_Prestaciones_BC109 + 1;
+			   vn_TOTAL_BONIF_BC109:=vn_TOTAL_BONIF_BC109+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 22222222 THEN
+				 RAISE E_POSEE_BENEFICIO_BC109;
+			   END IF;
+			--106
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='106' THEN
+			   vv_POSEE_BENEFICIO_BC106:='S';
+			   vn_Total_Prestaciones_BC106:= vn_Total_Prestaciones_BC106 + 1;
+			   vn_TOTAL_BONIF_BC106:=vn_TOTAL_BONIF_BC106+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 88888889 THEN
+				 RAISE E_POSEE_BENEFICIO_BC106;
+			   END IF;
+			--108
+			ELSIF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)='108' THEN
+			   vv_POSEE_BENEFICIO_BC108:='S';
+			   vn_Total_Prestaciones_BC108:= vn_Total_Prestaciones_BC108 + 1;
+			   vn_TOTAL_BONIF_BC108:=vn_TOTAL_BONIF_BC108+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CONVENIO_DENTAL_VIP = ' || vn_CONVENIO_DENTAL_VIP );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_CORR_CONVENIO = ' || vn_CORR_CONVENIO );
+
+
+			    IF vn_ENTR_RUT_CONVENIO <> 88888889 THEN
+				 RAISE E_POSEE_BENEFICIO_BC108;
+			   END IF;
+			--***********************************************************************
+			ELSIF TRIM(vv_TIBE_CODIGO) = 'PLANBC' THEN
+			   vn_MONTO_BCC:=vn_MONTO_BCC+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+			   vn_TIPO_BONIFICACION_BCC:=1;
+			   vn_USO_BCC:=1;
+
+			   DBMS_OUTPUT.PUT_LINE ( 'BONIFICANDO POR PLANBC ' );
+			   DBMS_OUTPUT.PUT_LINE ( 'vn_ENTR_RUT_CONVENIO = ' || vn_ENTR_RUT_CONVENIO );
+
+			    --IF vn_ENTR_RUT_CONVENIO IN(99999999,66666666,22222222) THEN
+			       --  RAISE E_POSEE_BENEFICIO_NORMAL;
+			    --END IF;
+
+			ELSIF TRIM(vv_TIBE_CODIGO) = 'CREDITO' THEN
+			   vn_MONTO_CREDITO:=vn_MONTO_CREDITO+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+
+			ELSIF TRIM(vv_TIBE_CODIGO) = 'PLACOMP' THEN
+			    DBMS_OUTPUT.PUT_LINE ( 'vv_MONTO_COBERTURA111111111111111111111 = ' || vv_MONTO_COBERTURA_APLICADA );
+			    IF vn_ENTR_RUT_CONVENIO IN(99999999,66666666,22222222) AND TO_NUMBER(vv_MONTO_COBERTURA_APLICADA) <> 0  THEN
+				 RAISE E_POSEE_BENEFICIO_NORMAL;
+			    END IF;
+
+			END IF;
+
+			IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)<>'24' AND vn_ENTR_RUT_CONVENIO = 66666666 THEN
+			    RAISE e_NO_POSEE_BENEF_BC24;
+			END IF;
+
+			IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)<>'15' AND vn_ENTR_RUT_CONVENIO = 99999999 THEN
+			    RAISE e_NO_POSEE_BENEF_BC15;
+			END IF;
+
+			--***********************************************************************
+			--INICIO - BNF-INC- 000355
+			--94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+			--106-108	  tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+			--***********************************************************************
+
+
+--BNF-INC- 000355			 IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)<>'33' AND vn_ENTR_RUT_CONVENIO = 22222222 THEN
+			IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO) NOT IN ('33','94','105','107','109') AND vn_ENTR_RUT_CONVENIO = 22222222 THEN
+			    RAISE e_NO_POSEE_BENEF_BC33;
+			END IF;
+
+/* INICIO BNF-000955 BC 99 Rut 88.888.889-6*/
+
+--BNF-INC- 000355			 IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO)<>'99' AND vn_ENTR_RUT_CONVENIO = 88888889 THEN
+			IF Pck_Imed_Benef_Comp_Nuevo.F_IMED_RETORNA_DOMI_PLANBC(vv_CODIGO_CALCULO) NOT IN ('99','106','108') AND vn_ENTR_RUT_CONVENIO = 88888889 THEN
+			    RAISE e_NO_POSEE_BENEF_BC99;
+			END IF;
+
+/* FIN BNF-000955 BC 99 Rut 88.888.889-6*/
+
+			DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_BCC= ' || vn_MONTO_BCC );
+			DBMS_OUTPUT.PUT_LINE ( 'vv_MONTO_COBERTURA_APLICADA= ' || vv_MONTO_COBERTURA_APLICADA );
+			vn_TOTAL_MONTO_COBER_APLI:=vn_TOTAL_MONTO_COBER_APLI+TO_NUMBER(vv_MONTO_COBERTURA_APLICADA);
+			DBMS_OUTPUT.PUT_LINE ( 'vn_TOTAL_MONTO_COBER_APLI= ' || vn_TOTAL_MONTO_COBER_APLI );
+
+			END LOOP;
+
+			CLOSE cur_COBER_PRESTACIONES;
+		    END;
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_CREDITO = ' || vn_MONTO_CREDITO );
+
+		    -- REVISAR
+		    vn_VALOR_BONIFICADO_ISAPRE := vn_TOTAL_MONTO_COBER_APLI-vn_MONTO_BCC-vn_MONTO_CREDITO;
+		    -- REVISAR
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_MONTO_COBERTURA= ' || vv_MONTO_COBERTURA );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_MONTO_COBERTURA_FORZADA= ' || vv_MONTO_COBERTURA_FORZADA );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_MONTO_COBERTURA_APLICADA= ' || vv_MONTO_COBERTURA_APLICADA );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_TIBE_CODIGO= ' || vv_TIBE_CODIGO );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_TIBE_DESCRIPCION= ' || vv_TIBE_DESCRIPCION );
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_CODIGO_CALCULO= ' || vv_CODIGO_CALCULO );
+
+		    IF	vv_CREA_CUENTA= 'S' THEN
+			vn_USO_TOPE:=1;
+			INSERT INTO IMED_AUXILIAR(rut,carga,hom_num_convenio,prestacion,PRESTACION_CONVERTIDA,item_codigo,ticob_codigo,saldo_cuenta,fecha_tope,numero_linea)
+			VALUES(vn_COAF_FOLIO_SUSCRIPCION,vn_CODIGO_CARGA,vv_ENTR_HOM_NUMERO_CONVENIO,vn_CODIGO_PREST_HOMOLOG_INGRE,vn_CODIGO_PRESTACION_HOMOLOG,vn_ITEM_CODIGO,vv_TICOB_CODIGO,vn_SALDO_LINEA,TO_CHAR(SYSDATE,'dd/mm/yyyy'),vn_CONTADOR_LINEAS);
+		    END IF;
+
+		    vn_NUMERO_ERROR:=53;
+		    vn_NUMERO_PRESTACIONES:=DET.CANTIDAD;
+		    vn_MONTO_PRESTACION:=DET.MONTO_PRESTACION;
+		    vn_VALOR_COPAGO_LINEA:=vn_MONTO_PRESTACION-vn_VALOR_BONIFICADO_ISAPRE-vn_MONTO_BCC-vn_MONTO_CREDITO;
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_COPAGO_LINEA= ' || vn_VALOR_COPAGO_LINEA );
+
+		    -- PGP 29/06/2006
+		    IF vn_MONTO_PRESTACION < vn_VALOR_COPAGO_LINEA THEN
+		       vn_VALOR_BONIFICADO_ISAPRE :=0;
+		       vn_VALOR_COPAGO_LINEA:=vn_MONTO_PRESTACION;
+		    END IF;
+
+		    --PGP 29/06/2006
+		    vn_NUMERO_ERROR:=65;
+		    vn_SRV_FETCH_STATUS := '1';
+		    Col_nExtValorPrestacion(vn_SRV_ROW_COUNT)	:= NVL(vn_MONTO_PRESTACION,0);
+		    vCOL_nExtCodigo_Prestacion(vn_SRV_ROW_COUNT):= vn_CODIGO_PRESTACION_HOMOLOG;
+		    vCOL_vExtES_GES    (vn_SRV_ROW_COUNT)	     := 'N';
+		    Col_nExtAporteFinanciador(vn_SRV_ROW_COUNT)  := NVL(vn_VALOR_BONIFICADO_ISAPRE,0) + NVL(vn_MONTO_BCC,0)+ NVL(vn_MONTO_CREDITO,0) ;
+		    Col_nExtCopago(vn_SRV_ROW_COUNT)		   := NVL(vn_VALOR_COPAGO_LINEA,0);
+		    Col_vExtInternolsa(vn_SRV_ROW_COUNT)	   := LPAD(LPAD(vv_CORRELATIVO_AUDITORIA,12,' ')||'-'||LPAD(vn_SRV_ROW_COUNT,2,0),15,' ');
+
+		    DBMS_OUTPUT.PUT_LINE ( 'GCGCGCG vv_ES_GES = ' || vv_ES_GES );
+		    IF vv_ES_GES <> 'S' THEN
+			Col_nExtTipoBonif1(vn_SRV_ROW_COUNT)	       := NVL(vn_TIPO_BONIFICACION_BCC,1); --1; --BCC
+			Col_nExtCopago1(vn_SRV_ROW_COUNT)		  := NVL(vn_MONTO_BCC,0);
+			Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	      := NVL(vn_TIPO_BONIFICACION_SIGNA,2);--2; --CIGNA
+			Col_nExtCopago2(vn_SRV_ROW_COUNT)		  := NVL(vn_MONTO_SEGURO_TERCERO,0);
+			Col_nExtTipoBonif3(vn_SRV_ROW_COUNT)	       := NVL(vn_TIPO_BONIF_DESCTO_ESPECIAL,0);
+			Col_nExtCopago3(vn_SRV_ROW_COUNT)		  := NVL(vn_Monto_Descto_Especial,0);
+			Col_nExtTipoBonif4(vn_SRV_ROW_COUNT)	       := 0;
+			Col_nExtCopago4(vn_SRV_ROW_COUNT)		  := 0;
+		    ELSE
+
+			DBMS_OUTPUT.PUT_LINE ( '---------------------- TIPOS DE BONIFICACION -----------------' );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_BCC = ' || vn_MONTO_BCC );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_SEGURO_TERCERO = ' || vn_MONTO_SEGURO_TERCERO );
+			DBMS_OUTPUT.PUT_LINE ( 'vn_Monto_Descto_Especial = ' || vn_Monto_Descto_Especial );
+
+			DBMS_OUTPUT.PUT_LINE ( 'ENTRE' );
+
+			IF NVL(vn_MONTO_BCC,0) = 0 THEN
+
+			    DBMS_OUTPUT.PUT_LINE ( 'ENTRE1' );
+			    Col_nExtTipoBonif1(vn_SRV_ROW_COUNT)	   := 77; -- TIPO BONIFICACION GES
+			    Col_nExtCopago1(vn_SRV_ROW_COUNT)		      := TO_NUMBER(vv_PATOLOGIA);
+
+			ELSE
+
+			    Col_nExtTipoBonif1(vn_SRV_ROW_COUNT)	   := NVL(vn_TIPO_BONIFICACION_BCC,1); --1; --BCC
+			    Col_nExtCopago1(vn_SRV_ROW_COUNT)		      := NVL(vn_MONTO_BCC,0);
+
+			END IF;
+
+			IF NVL(vn_MONTO_SEGURO_TERCERO,0) = 0 AND NVL(vn_MONTO_BCC,0) <> 0    THEN
+
+			    DBMS_OUTPUT.PUT_LINE ( 'ENTRE2' );
+			    Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	  := 77;--2; --CIGNA
+			    Col_nExtCopago2(vn_SRV_ROW_COUNT)		      := TO_NUMBER(vv_PATOLOGIA);
+
+			ELSE
+
+			    Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	  := NVL(vn_TIPO_BONIFICACION_SIGNA,2);--2; --CIGNA
+			    Col_nExtCopago2(vn_SRV_ROW_COUNT)		      := NVL(vn_MONTO_SEGURO_TERCERO,0);
+
+
+			END IF;
+
+			IF NVL(vn_Monto_Descto_Especial,0) = 0 AND NVL(vn_MONTO_SEGURO_TERCERO,0) <> 0	THEN
+
+			    DBMS_OUTPUT.PUT_LINE ( 'ENTRE3' );
+			    Col_nExtTipoBonif2(vn_SRV_ROW_COUNT)	  := 77;--2; --CIGNA
+			    Col_nExtCopago2(vn_SRV_ROW_COUNT)		      := TO_NUMBER(vv_PATOLOGIA);
+
+			ELSE
+
+			    Col_nExtTipoBonif3(vn_SRV_ROW_COUNT)	   := NVL(vn_TIPO_BONIF_DESCTO_ESPECIAL,0);
+			    Col_nExtCopago3(vn_SRV_ROW_COUNT)		      := NVL(vn_Monto_Descto_Especial,0);
+
+			END IF;
+
+			IF NVL(vn_Monto_Descto_Especial,0) <> 0 AND NVL(vn_MONTO_SEGURO_TERCERO,0) <> 0 AND NVL(vn_MONTO_BCC,0) <> 0 THEN
+
+			    DBMS_OUTPUT.PUT_LINE ( 'ENTRE4' );
+			    Col_nExtTipoBonif4(vn_SRV_ROW_COUNT)	   := 77; --77;
+			    Col_nExtCopago4(vn_SRV_ROW_COUNT)		      := TO_NUMBER(vv_PATOLOGIA); --NVL(vn_VALOR_BONIFICADO_ISAPRE,0);
+
+			ELSE
+
+			    Col_nExtTipoBonif4(vn_SRV_ROW_COUNT)	   := 0;
+			    Col_nExtCopago4(vn_SRV_ROW_COUNT)		      := 0;
+
+			END IF;
+
+
+
+		    END IF;
+
+
+
+		    DBMS_OUTPUT.PUT_LINE ( 'vv_BENEFICIARIO_CON_CREDITO = ' || vv_BENEFICIARIO_CON_CREDITO );
+		    DBMS_OUTPUT.PUT_LINE ( 'vn_MONTO_CREDITO = ' || vn_MONTO_CREDITO );
+
+		    IF vv_BENEFICIARIO_CON_CREDITO = 'S' AND vn_MONTO_CREDITO > 0 THEN
+			Col_nExtTipoBonif5(vn_SRV_ROW_COUNT)	      := 5;
+			Col_nExtCopago5(vn_SRV_ROW_COUNT)		  := NVL(vn_MONTO_CREDITO,0);
+		    ELSE
+			Col_nExtTipoBonif5(vn_SRV_ROW_COUNT)	      := 0;
+			Col_nExtCopago5(vn_SRV_ROW_COUNT)		  := 0;
+		    END IF;
+
+
+		vn_NUMERO_ERROR:=66;
+		vn_NUMERO_ERROR:=67;
+		dbms_output.put_line('ESTAMOS ENTRE CHEQUEO Y ACUMULADO');
+		vn_VALOR_TOTAL_PRESTACION:=NVL(vn_VALOR_TOTAL_PRESTACION,0)+vn_MONTO_PRESTACION;
+		vn_VALOR_TOTAL_BONIFICACION:=NVL(vn_VALOR_TOTAL_BONIFICACION,0)+vn_VALOR_BONIFICADO_ISAPRE;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_TOTAL_COPAGO ERROR 67= ' || vn_VALOR_TOTAL_COPAGO );
+		vn_VALOR_TOTAL_COPAGO:=NVL(vn_VALOR_TOTAL_COPAGO,0)+vn_VALOR_COPAGO_LINEA;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_TOTAL_COPAGO= ' || vn_VALOR_TOTAL_COPAGO );
+		vn_TOTAL_PRESTACIONES:=NVL(vn_TOTAL_PRESTACIONES,0)+vn_NUMERO_PRESTACIONES;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_TOTAL_PRESTACIONES= ' || vn_TOTAL_PRESTACIONES );
+		vn_NUMERO_ERROR:=68;
+		 vn_VALOR_TOTAL_BCC:=NVL(vn_VALOR_TOTAL_BCC,0)+NVL(vn_MONTO_BCC,0);
+		DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_TOTAL_BCC:= ' || vn_VALOR_TOTAL_BCC );
+		vn_NUMERO_ERROR:=69;
+		DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+
+
+		IF vv_POSEE_BENEFICIO_BC15 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC15';
+		ELSIF vv_POSEE_BENEFICIO_BC24 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC24';
+		ELSIF  vv_POSEE_BENEFICIO_BC17 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC17';
+		ELSIF  vv_POSEE_BENEFICIO_BC33 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC33';
+/* INICIO BNF-000955 BC 99 Rut 88.888.889-6*/
+		ELSIF  vv_POSEE_BENEFICIO_BC99 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC99';
+/* FIN BNF-000955 BC 99 Rut 88.888.889-6*/
+		--***********************************************************************
+		--INICIO - BNF-INC- 000355
+		--94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+		--106-108	  tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+		--***********************************************************************
+		ELSIF  vv_POSEE_BENEFICIO_BC94 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC94';
+		ELSIF  vv_POSEE_BENEFICIO_BC105 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC105';
+		ELSIF  vv_POSEE_BENEFICIO_BC107 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC107';
+		ELSIF  vv_POSEE_BENEFICIO_BC109 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC109';
+		ELSIF  vv_POSEE_BENEFICIO_BC106 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC106';
+		ELSIF  vv_POSEE_BENEFICIO_BC108 = 'S' THEN
+		   vv_BENEF_COMP_APLICADO:='BC108';
+		--***********************************************************************
+		--***********************************************************************
+		ELSE
+		   vv_BENEF_COMP_APLICADO:=NULL;
+		END IF;
+
+
+		BEGIN
+		vn_RES_INSERT_DETALLE_AUDI:=0;
+		vn_RES_INSERT_DETALLE_AUDI:=Imed_Graba_Detalle_Audi(vn_CORRELATIVO_AUDITORIA,
+									       vn_SRV_ROW_COUNT,--LINEAS_INDEX,
+									       vn_VALOR_COPAGO_LINEA,
+									       vn_VALOR_BONIFICADO_ISAPRE,
+									       0,--pin_MONTO_OTROS		   IN NUMBER,
+									       vn_MONTO_TOTAL,--pin_MONTO_TOTAL 	      IN NUMBER,
+									       vn_NUMERO_PRESTACIONES,--pin_NUMERO_PRESTACIONES       IN NUMBER,
+									       vn_CODIGO_PRESTACION_HOMOLOG,--pin_PRISA_CODIGO		    IN NUMBER,
+									       vv_CODIGO_ESPECILIDAD_HOMOLOG,--piv_ESP_CODIGO			IN VARCHAR2,
+									       vn_MONTO_BCC,--pin_MONTO_BCC		      IN NUMBER,
+									       0,--pin_MONTO_GES		    IN NUMBER,
+									       0,--pin_COPAGO_GES		  IN NUMBER,
+									       NULL,--piv_CODIGO_GRUPO		      IN VARCHAR2,
+									       NULL,--piv_COPAGO_GRATIS 	     IN VARCHAR2,
+									       vn_SALDO_LINEA,--pin_TOPE_SALDO_CUENTA		IN NUMBER,
+									       TO_CHAR(SYSDATE,'dd/mm/yyyy'),--piv_FECHA_TOPE			IN VARCHAR2,
+									       0,--pin_TOPE_SALDO_ACTUAL	 IN NUMBER,
+									       0,--pin_PRESTACION_CONVERTIDA	 IN NUMBER,
+									       0,--pin_MONTO_DSCTO_MEGA 	 IN NUMBER,
+									       vv_BENEF_COMP_APLICADO,--piv_BENEF_COMP_APLICADO       IN VARCHAR2,
+									       0,--pin_MONTO_SEGURO_CATASTROFICO IN NUMBER,
+									       0,--pin_MONTO_COB_ADIC_GES  IN NUMBER,
+									       0,--pin_MONTO_COB_ADIC_GES_CAEC IN NUMBER,
+									       0,--pin_MONTO_GES_CAEC			IN NUMBER,
+									       0,--pin_MONTO_COPAGO_GES_CAEC	     IN NUMBER,
+									       0,--pin_MONTO_SEGURO_SECURITY	     IN NUMBER,
+									       vn_MONTO_SEGURO_TERCERO,--pin_MONTO_SEGURO_CIGNA 	   IN NUMBER,
+									       vn_VALOR_COPAGO_LINEA,--pin_MONTO_COPAGO_FINAL		  IN NUMBER,
+									       vn_Monto_Descto_Especial,--pin_MONTO_DESCTO_ESPECIAL	       IN NUMBER,
+									       vn_Monto_Precio_Rebajado,--pin_MONTO_PRECIO_REBAJADO	       IN NUMBER,
+									       vn_Monto_bonif_Precio_Rebajado,
+									       vn_BENEF_CORRELATIVO,
+									       vn_SECO_CORRELATIVO,
+										vn_SEAL_CORRELATIVO,
+										vn_DNP_CORRELATIVO,
+									       vn_GaraCodigo,
+									       vn_GrupSecuencia);
+
+		    IF NVL(vn_RES_INSERT_DETALLE_AUDI,0) <> 0 THEN
+			DBMS_OUTPUT.PUT_LINE ( 'ERROR AL INSERTAR DETALLE DE AUDITORIA ' );
+			LIMPIA;
+			Out_vExtCodError:= 'N';
+			Out_vExtMensajeError:= RPAD('ERROR INSERT DET AUDITORIA',30);
+			vv_OUTPUT_MENSAJE:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+			vv_OUTOPUT_CODIGO_MENSAJE:= '00000';
+			vv_OUTPUT_STATUS_SERVICIO:= '1';
+			SRV_Message:= vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+			vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+			vv_PARAMETROS_SALIDA:= SETEA_SALIDA;
+			vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, '*OJO* '||SUBSTR(SQLERRM,1,22), vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+			RETURN;
+		    END IF;
+
+
+		EXCEPTION
+		WHEN OTHERS THEN
+		    DBMS_OUTPUT.PUT_LINE ( 'ERROR AL INSERTAR DETALLE DE AUDITORIA ' );
+		    LIMPIA;
+		    Out_vExtCodError:= 'N';
+		    Out_vExtMensajeError:= RPAD('OTHERS GRABA_DETALLE_AUDI',30);
+		    vv_OUTPUT_MENSAJE:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+		    vv_OUTOPUT_CODIGO_MENSAJE:= '00000';
+		    vv_OUTPUT_STATUS_SERVICIO:= '1';
+		    SRV_Message:= vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+		    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+		    vv_PARAMETROS_SALIDA:= SETEA_SALIDA;
+		    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, '*OJO* '||SUBSTR(SQLERRM,1,22), vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+		    RETURN;
+		END;
+
+
+
+	    END LOOP;
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+	    vn_NUMERO_ERROR:=72;
+	DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+	--EACE 28-06-2005  GES
+	IF vn_Total_Prestaciones_GES > 0 THEN
+
+	    P_VALORIZA_GES   (TO_CHAR(vn_ENTR_RUT_TRATANTE)||'/'||TO_CHAR(vn_ENTR_RUT_BENEFICIARIO),
+			       vv_ENTR_HOM_SUCURSAL_VENTA,
+			      SYSDATE,
+			      vn_COAF_FOLIO_SUSCRIPCION,
+			      vn_ENTR_CODIGO_FINANCIADOR,
+			      vn_CODIGO_CARGA,
+			      vv_ErrorCode);
+
+
+	    IF vv_ErrorCode IS NOT NULL THEN
+	       RAISE e_VALORIZACION_GES;
+	    END IF;
+	END IF;
+	--EACE 28-06-2005  GES
+
+	dbms_output.put_line('MONTO BCC O CIGNA ACUMULADO: '||vn_MONTO_CIGNA||' '||vn_VALOR_TOTAL_BCC);
+	DBMS_OUTPUT.PUT_LINE ( 'paso 888888888888888888888888888888888888888888 ' );
+
+	vn_NUMERO_ERROR:=75;
+	-- excedente JLLC --
+	vn_MONTO_EXCEDENTE:=0;	--MJBV 1/6/2000, por politicas de la empresa
+	DBMS_OUTPUT.PUT_LINE ( '*** EXCEDENTES ***  vv_RENUNCIA_EXCEDENTE= ' || vv_RENUNCIA_EXCEDENTE );
+	vn_DOBE_CORRELATIVO:=vn_CENTRO_ATENCION;
+	vn_NUMERO_ERROR:=76;
+
+	IF  vv_RENUNCIA_EXCEDENTE ='N' THEN
+
+	    vn_CON_EXCEDENTE:=1;
+
+	    BEGIN
+		Pr_Actualiza_Ctaind('CONSULTA',1,vn_COAF_FOLIO_SUSCRIPCION,vn_CODIGO_ISAPRE, 0, TO_CHAR(SYSDATE,'dd/mm/yyyy'), 0, vn_CODIGO_MENSAJE_EXCEDENTE,vv_GLOSA_EXCEDENTE);
+		vn_MONTO_EXCEDENTE:= NVL(TO_NUMBER(vv_GLOSA_EXCEDENTE),0);
+	    EXCEPTION
+		WHEN OTHERS THEN
+		    LIMPIA;
+		    Out_vExtCodError:= 'N';
+		    Out_vExtMensajeError:= RPAD('EXCEDENTE NO DISPONIBLE',30);
+		    vv_OUTPUT_MENSAJE:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+		    vv_OUTOPUT_CODIGO_MENSAJE:= '00000';
+		    vv_OUTPUT_STATUS_SERVICIO:= '1';
+		    SRV_Message:= vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+		    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+		    vv_PARAMETROS_SALIDA:= SETEA_SALIDA;
+		    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, '*OJO* '||SUBSTR(SQLERRM,1,22), vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+		    RETURN;
+	    END;
+	END IF;
+
+	vn_NUMERO_ERROR:=77;
+	DBMS_OUTPUT.PUT_LINE ( '*** EXCEDENTES ***  vn_MONTO_EXCEDENTE= '||vn_MONTO_EXCEDENTE||'  vv_GLOSA_EXCEDENTE= '||vv_GLOSA_EXCEDENTE);
+	vn_MONTO_COPAGO_EXCEDENTE:=NVL(vn_MONTO_COPAGO_EXCEDENTE,0)+NVL(vn_MONTO_EXCEDENTE,0);
+	Out_vExtPlan	       := vv_CODIGO_COMERCIAL_PLAN;
+	--Inicio Mesajeria
+	Out_vExtGlosa1	      := '						    ';
+	Out_vExtGlosa2	      := '						    ';
+	Out_vExtGlosa3	      := '						    ';
+	Out_vExtGlosa4	      := '						    ';
+	Out_vExtGlosa5	      := '						    ';
+
+	--- 06-09-2005 Patirico Alarcon
+	IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('VERIFICA_DEUDA_COMPAG') = 'S' THEN
+	    BEGIN
+		SELECT PERS.RUT
+		INTO   vn_RUT_AFILIADO
+		FROM   AFI_BENEFICIARIOS_CONTRATO BENC,
+		       AFI_PERSONAS PERS
+		WHERE  BENC.PERS_CORRELATIVO = PERS.CORRELATIVO
+		AND    BENC.COAF_FOLIO_SUSCRIPCION = vn_COAF_FOLIO_SUSCRIPCION
+		AND    BENC.COAF_ORGA_CODIGO_ISAPRE IS NOT NULL
+		AND    BENC.CODIGO_CARGA = 0;
+	    EXCEPTION
+	    WHEN OTHERS THEN
+		 vn_RUT_AFILIADO:=0;
+	    END;
+
+	    IF	   (Pck_Imed_Externos_Nuevo.F_IMED_Posee_Deuda_ult_peri(vn_RUT_AFILIADO , 'N','N'))= 'S' THEN
+
+		vv_FONO_COBRADOR    := Pck_Compag_Imed.F_retorna_cobrador(vn_COAF_FOLIO_SUSCRIPCION,'TELEFONO');
+		vv_NOM_COBRADOR        :=  Pck_Compag_Imed.F_retorna_cobrador(vn_COAF_FOLIO_SUSCRIPCION,'NOMBRE');
+		vv_TEXTO	    := Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE COBRANZA');
+		vv_TEXTO	    := REPLACE(REPLACE(vv_TEXTO, '<NOMBRE_EJECUTIVO_DE_COBRANZA>', vv_NOM_COBRADOR),'<TELEFONO_EJECUTIVO>', vv_FONO_COBRADOR);
+		Out_vExtGlosa1	    := RPAD(F_Parsea_Datos(vv_TEXTO,50,1),50);
+		Out_vExtGlosa2		  := RPAD(F_Parsea_Datos(vv_TEXTO,50,2),50);
+		Out_vExtGlosa3	       := RPAD(F_Parsea_Datos(vv_TEXTO,50,3),50);
+
+		IF NVL(TRIM(RPAD(F_Parsea_Datos(vv_TEXTO,50,4),50)),'0')= '0'  THEN
+		    Out_vExtGlosa4	   := RPAD(F_Parsea_Datos(vv_TEXTO,50,4),50);
+		END IF;
+
+		IF NVL(TRIM(RPAD(F_Parsea_Datos(vv_TEXTO,50,5),50)),'0')= '0'  THEN
+		    Out_vExtGlosa5	   := RPAD(F_Parsea_Datos(vv_TEXTO,50,5),50);
+		END IF;
+	    END IF;
+	END IF;
+	--- 06-09-2005 Patricio Alarcon
+
+	IF  NVL(vn_VALOR_TOTAL_BCC,0) = 0 THEN
+	    NULL;
+	/*ELSE
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_VALOR_TOTAL_BCC= ' || vn_VALOR_TOTAL_BCC );
+
+	    IF NVL(TRIM(Out_vExtGlosa1) ,'0')= '0' THEN
+	       Out_vExtGlosa1	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BCC')||LTRIM(TO_CHAR(vn_VALOR_TOTAL_BCC, '$9,999,999')),50,' ');
+	    ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+	       Out_vExtGlosa2	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BCC')||LTRIM(TO_CHAR(vn_VALOR_TOTAL_BCC, '$9,999,999')),50,' ');
+	    ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+	       Out_vExtGlosa3	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BCC')||LTRIM(TO_CHAR(vn_VALOR_TOTAL_BCC, '$9,999,999')),50,' ');
+	    ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+	       Out_vExtGlosa4	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BCC')||LTRIM(TO_CHAR(vn_VALOR_TOTAL_BCC, '$9,999,999')),50,' ');
+	    ELSIF NVL(TRIM(Out_vExtGlosa5),'0')= '0'  THEN
+	       Out_vExtGlosa5	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BCC')||LTRIM(TO_CHAR(vn_VALOR_TOTAL_BCC, '$9,999,999')),50,' ');
+	    END IF;*/
+	END IF;
+
+	DBMS_OUTPUT.PUT_LINE ( 'vn_Total_Prestaciones_GES= ' || vn_Total_Prestaciones_GES );
+
+	--EACE 28-06-2005  GES
+	IF vn_Total_Prestaciones_GES > 0 THEN
+	    IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+	       Out_vExtGlosa1	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_GES, '$9,999,999')),50,' ');
+	       vv_MSJE_GES	      := Out_vExtGlosa1;
+	    ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+	       Out_vExtGlosa2	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_GES, '$9,999,999')),50,' ');
+	       vv_MSJE_GES	      := Out_vExtGlosa2;
+	    ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+	       Out_vExtGlosa3	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_GES, '$9,999,999')),50,' ');
+	       vv_MSJE_GES	      := Out_vExtGlosa3;
+	    ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+	       Out_vExtGlosa4	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_GES, '$9,999,999')),50,' ');
+	       vv_MSJE_GES	      := Out_vExtGlosa4;
+	    ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+	       Out_vExtGlosa5	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_GES, '$9,999,999')),50,' ');
+	       vv_MSJE_GES	      := Out_vExtGlosa5;
+	    END IF;
+	END IF;
+	--EACE 28-06-2005  GES
+
+	--EACE 29-01-2009 GES
+	IF vn_CODIGO_INTERNO_CONV = 146510 AND vv_ES_GES ='S' AND vv_TIPO_ACCESO ='GES' THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_GES') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES II'),50,' ');
+		   vv_MSJE_GES		  := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES II'),50,' ');
+		   vv_MSJE_GES		  := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES II'),50,' ');
+		   vv_MSJE_GES		  := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES II'),50,' ');
+		   vv_MSJE_GES		  := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE GES II'),50,' ');
+		   vv_MSJE_GES		  := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+	--PGP 29/12/2005 BC15
+	IF vn_Total_Prestaciones_BC15 > 0 THEN
+	    IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+	       Out_vExtGlosa1	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC15')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC15, '$9,999,999')),50,' ');
+	       vv_MSJE_BC15	       := Out_vExtGlosa1;
+	    ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+	       Out_vExtGlosa2	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC15')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC15, '$9,999,999')),50,' ');
+	       vv_MSJE_BC15	       := Out_vExtGlosa2;
+	    ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+	       Out_vExtGlosa3	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC15')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC15, '$9,999,999')),50,' ');
+	       vv_MSJE_BC15	       := Out_vExtGlosa3;
+	    ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+	       Out_vExtGlosa4	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC15')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC15, '$9,999,999')),50,' ');
+	       vv_MSJE_BC15	       := Out_vExtGlosa4;
+	    ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+	       Out_vExtGlosa5	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC15')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC15, '$9,999,999')),50,' ');
+	       vv_MSJE_BC15	       := Out_vExtGlosa5;
+	    END IF;
+	END IF;
+	--PGP 29/12/2005 BC15
+
+	--PGP 27/06/2006 BC24
+	IF vn_Total_Prestaciones_BC24 > 0 THEN
+	    IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+	       Out_vExtGlosa1	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC24')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC24, '$9,999,999')),50,' ');
+	       vv_MSJE_BC24	       := Out_vExtGlosa1;
+	    ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+	       Out_vExtGlosa2	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC24')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC24, '$9,999,999')),50,' ');
+	       vv_MSJE_BC24	       := Out_vExtGlosa2;
+	    ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+	       Out_vExtGlosa3	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC24')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC24, '$9,999,999')),50,' ');
+	       vv_MSJE_BC24	       := Out_vExtGlosa3;
+	    ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+	       Out_vExtGlosa4	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC24')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC24, '$9,999,999')),50,' ');
+	       vv_MSJE_BC24	       := Out_vExtGlosa4;
+	    ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+	       Out_vExtGlosa5	     := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC24')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC24, '$9,999,999')),50,' ');
+	       vv_MSJE_BC24	       := Out_vExtGlosa5;
+	    END IF;
+	END IF;
+	--PGP 27/06/2006 BC24
+
+	--PGP 27/06/2006 BC33
+	IF vn_Total_Prestaciones_BC33 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC33') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC33')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC33, '$9,999,999')),50,' ');
+		   vv_MSJE_BC33 	   := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC33')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC33, '$9,999,999')),50,' ');
+		   vv_MSJE_BC33 	   := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC33')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC33, '$9,999,999')),50,' ');
+		   vv_MSJE_BC33 	   := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC33')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC33, '$9,999,999')),50,' ');
+		   vv_MSJE_BC33 	   := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC33')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC33, '$9,999,999')),50,' ');
+		   vv_MSJE_BC33 	   := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+	--PGP 27/06/2006 BC33
+
+/* INICIO BNF-000955 BC 99 Rut 88.888.889-6*/
+	IF vn_Total_Prestaciones_BC99 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC99') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC99')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC99, '$9,999,999')),50,' ');
+		   vv_MSJE_BC99 	   := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC99')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC99, '$9,999,999')),50,' ');
+		   vv_MSJE_BC99 	   := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC99')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC99, '$9,999,999')),50,' ');
+		   vv_MSJE_BC99 	   := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC99')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC99, '$9,999,999')),50,' ');
+		   vv_MSJE_BC99 	   := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC99')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC99, '$9,999,999')),50,' ');
+		   vv_MSJE_BC99 	   := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+/* FIN BNF-000955 BC 99 Rut 88.888.889-6*/
+
+
+	--***********************************************************************
+	--INICIO - BNF-INC- 000355
+	--94-105-107-109  tienen mismo funcionamiento BC33 (rut: 22222222-2)
+	--106-108	  tiene mismo funcionamiento que BC99 (rut: 88888889-6)
+	--***********************************************************************
+
+	--94
+	IF vn_Total_Prestaciones_BC94 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC94') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC94')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC94, '$9,999,999')),50,' ');
+		   vv_MSJE_BC94 	   := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC94')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC94, '$9,999,999')),50,' ');
+		   vv_MSJE_BC94 	   := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC94')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC94, '$9,999,999')),50,' ');
+		   vv_MSJE_BC94 	   := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC94')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC94, '$9,999,999')),50,' ');
+		   vv_MSJE_BC94 	   := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC94')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC94, '$9,999,999')),50,' ');
+		   vv_MSJE_BC94 	   := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+
+	--105
+	IF vn_Total_Prestaciones_BC105 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC105') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC105')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC105, '$9,999,999')),50,' ');
+		   vv_MSJE_BC105	    := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC105')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC105, '$9,999,999')),50,' ');
+		   vv_MSJE_BC105	    := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC105')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC105, '$9,999,999')),50,' ');
+		   vv_MSJE_BC105	    := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC105')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC105, '$9,999,999')),50,' ');
+		   vv_MSJE_BC105	    := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC105')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC105, '$9,999,999')),50,' ');
+		   vv_MSJE_BC105	    := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+
+	--107
+	IF vn_Total_Prestaciones_BC107 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC107') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC107')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC107, '$9,999,999')),50,' ');
+		   vv_MSJE_BC107	    := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC107')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC107, '$9,999,999')),50,' ');
+		   vv_MSJE_BC107	    := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC107')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC107, '$9,999,999')),50,' ');
+		   vv_MSJE_BC107	    := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC107')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC107, '$9,999,999')),50,' ');
+		   vv_MSJE_BC107	    := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC107')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC107, '$9,999,999')),50,' ');
+		   vv_MSJE_BC107	    := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+
+	--109
+	IF vn_Total_Prestaciones_BC109 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC109') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC109')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC109, '$9,999,999')),50,' ');
+		   vv_MSJE_BC109	    := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC109')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC109, '$9,999,999')),50,' ');
+		   vv_MSJE_BC109	    := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC109')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC109, '$9,999,999')),50,' ');
+		   vv_MSJE_BC109	    := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC109')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC109, '$9,999,999')),50,' ');
+		   vv_MSJE_BC109	    := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC109')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC109, '$9,999,999')),50,' ');
+		   vv_MSJE_BC109	    := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+
+	--106
+	IF vn_Total_Prestaciones_BC106 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC106') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC106')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC106, '$9,999,999')),50,' ');
+		   vv_MSJE_BC106	    := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC106')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC106, '$9,999,999')),50,' ');
+		   vv_MSJE_BC106	    := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC106')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC106, '$9,999,999')),50,' ');
+		   vv_MSJE_BC106	    := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC106')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC106, '$9,999,999')),50,' ');
+		   vv_MSJE_BC106	    := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC106')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC106, '$9,999,999')),50,' ');
+		   vv_MSJE_BC106	    := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+
+	--108
+	IF vn_Total_Prestaciones_BC108 > 0 THEN
+	    IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_BC108') = 'S' THEN
+		IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		   Out_vExtGlosa1	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC108')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC108, '$9,999,999')),50,' ');
+		   vv_MSJE_BC108	    := Out_vExtGlosa1;
+		ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		   Out_vExtGlosa2	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC108')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC108, '$9,999,999')),50,' ');
+		   vv_MSJE_BC108	    := Out_vExtGlosa2;
+		ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   Out_vExtGlosa3	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC108')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC108, '$9,999,999')),50,' ');
+		   vv_MSJE_BC108	    := Out_vExtGlosa3;
+		ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		   Out_vExtGlosa4	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC108')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC108, '$9,999,999')),50,' ');
+		   vv_MSJE_BC108	    := Out_vExtGlosa4;
+		ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		   Out_vExtGlosa5	 := RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC108')||LTRIM(TO_CHAR(vn_TOTAL_BONIF_BC108, '$9,999,999')),50,' ');
+		   vv_MSJE_BC108	    := Out_vExtGlosa5;
+		END IF;
+	    END IF;
+	END IF;
+
+	--***********************************************************************
+	--***********************************************************************
+
+
+	vn_NUMERO_ERROR:=78;
+
+	-- PGP 25/05/2006 BC17
+	DBMS_OUTPUT.PUT_LINE ( 'vn_CONT_BC17= ' || vn_CONT_BC17 );
+	IF vn_CONT_BC17 > 0 THEN
+	   IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		 Out_vExtGlosa1:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC17'),50,' ');
+	      vv_MSJE_BC17 :=Out_vExtGlosa1;
+	   ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		 Out_vExtGlosa2:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC17'),50,' ');
+	      vv_MSJE_BC17 :=Out_vExtGlosa2;
+	   ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		 Out_vExtGlosa3:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC17'),50,' ');
+	      vv_MSJE_BC17 :=Out_vExtGlosa3;
+	   ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		 Out_vExtGlosa4:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC17'),50,' ');
+	      vv_MSJE_BC17 :=Out_vExtGlosa4;
+	   ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		 Out_vExtGlosa5:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE DE BC17'),50,' ');
+	      vv_MSJE_BC17 :=Out_vExtGlosa5;
+	   END IF;
+
+	END IF;
+	-- PGP 25/05/2006 BC17
+
+
+	-- PGP 25/05/2006 BC17
+	DBMS_OUTPUT.PUT_LINE ( 'vv_BENEFICIARIO_CON_CREDITO= ' || vv_BENEFICIARIO_CON_CREDITO );
+	IF vv_BENEFICIARIO_CON_CREDITO = 'S' AND vn_MONTO_CREDITO_OTORGADO>0 THEN
+	   IF Pck_Imed_Adm_Proc.F_IMED_BLOQUEA_SECCION('MOSTRAR_MENSAJE_CREDITO') = 'N' THEN
+	       IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		     Out_vExtGlosa1:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE CREDITO'),50,' ');
+		  vv_MSJE_CREDITO :=Out_vExtGlosa1;
+	       ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'	THEN
+		     Out_vExtGlosa2:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE CREDITO'),50,' ');
+		  vv_MSJE_CREDITO :=Out_vExtGlosa2;
+	       ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'	THEN
+		     Out_vExtGlosa3:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE CREDITO'),50,' ');
+		  vv_MSJE_CREDITO :=Out_vExtGlosa3;
+	       ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'	THEN
+		     Out_vExtGlosa4:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE CREDITO'),50,' ');
+		  vv_MSJE_CREDITO :=Out_vExtGlosa4;
+	       ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'	THEN
+		     Out_vExtGlosa5:=RPAD(Pck_Imed_Adm_Proc.F_IMED_RETORNA_MENSAJE('MENSAJE CREDITO'),50,' ');
+		  vv_MSJE_CREDITO :=Out_vExtGlosa5;
+
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	       END IF;
+	   END IF;
+
+	END IF;
+	-- PGP 25/05/2006 BC17
+
+
+
+
+	--Fin Mensajeria
+
+	-- AlVARO CALDERON 07/06/2006
+	DBMS_OUTPUT.PUT_LINE ( 'vv_Aplicar_Msg_Descuento= ' || vv_Aplicar_Msg_Descuento );
+	   IF vv_Aplicar_Msg_Descuento = 'S' THEN
+	       IF NVL(TRIM(Out_vExtGlosa1),'0')='0'  THEN
+		 DBMS_OUTPUT.PUT_LINE ( 'vv_Mensaje_Descto_Especial= ' || vv_Mensaje_Descto_Especial );
+		 Out_vExtGlosa1:= RPAD(vv_Mensaje_Descto_Especial,50,' ');
+		DBMS_OUTPUT.PUT_LINE ( 'Out_vExtGlosa1= ' || Out_vExtGlosa1 );
+	     ELSIF NVL(TRIM(Out_vExtGlosa2),'0')='0'  THEN
+		 DBMS_OUTPUT.PUT_LINE ( 'Out_vExtGlosa2= ' || Out_vExtGlosa2 );
+		 Out_vExtGlosa2:= RPAD(vv_Mensaje_Descto_Especial,50,' ');
+	     ELSIF NVL(TRIM(Out_vExtGlosa3),'0')='0'  THEN
+		   DBMS_OUTPUT.PUT_LINE ( 'Out_vExtGlosa3= ' || Out_vExtGlosa3 );
+		 Out_vExtGlosa3:= RPAD(vv_Mensaje_Descto_Especial,50,' ');
+	     ELSIF NVL(TRIM(Out_vExtGlosa4),'0')='0'  THEN
+		 DBMS_OUTPUT.PUT_LINE ( 'Out_vExtGlosa4= ' || Out_vExtGlosa4 );
+		Out_vExtGlosa4:= RPAD(vv_Mensaje_Descto_Especial,50,' ');
+	     ELSIF NVL(TRIM(Out_vExtGlosa5),'0')='0'  THEN
+		 DBMS_OUTPUT.PUT_LINE ( 'Out_vExtGlosa5= ' || Out_vExtGlosa5 );
+		Out_vExtGlosa5:= RPAD(vv_Mensaje_Descto_Especial,50,' ');
+	     END IF;
+	END IF;
+	DBMS_OUTPUT.PUT_LINE( 'alvaro cinco ');
+	-- FIN ALVARO CALDERON 07/06/2006
+
+	IF Col_nExtValorPrestacion.COUNT = 0 THEN
+	    SETEA_VALOR_DEFECTO_COLUMN;
+	END IF;
+
+
+	Out_vExtCodError			     := 'S';
+	Out_vExtMensajeError				  := 'Servicio Correcto';
+	vv_OUTPUT_STATUS_SERVICIO			     := '1';
+	vv_OUTPUT_MENSAJE			   := vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	vv_OUTOPUT_CODIGO_MENSAJE			    := '00000';  --'38001';
+	SRV_Message := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	 vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	vv_PARAMETROS_SALIDA  :=vv_PARAMETROS_SALIDA||vv_SEPARADOR||vv_MSJE_GES||vv_SEPARADOR||vv_MSJE_BC15||vv_MSJE_BC24||vv_SEPARADOR||vv_MSJE_BC17||vv_SEPARADOR||vv_MSJE_CREDITO||vv_SEPARADOR||vv_Mensaje_Descto_Especial;
+
+	vn_NUMERO_ERROR:=79;
+	vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+
+
+
+	DBMS_OUTPUT.PUT_LINE ( 'vv_ORDEN_DERIVACION = ' || vv_ORDEN_DERIVACION );
+	DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ORDEN_DERIVACION = ' || vn_NUMERO_ORDEN_DERIVACION );
+	DBMS_OUTPUT.PUT_LINE ( 'vv_SERVICIO_FULL = ' || vv_SERVICIO_FULL );
+
+	vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO,  vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA, vd_FECHA_LLEGADA, vd_FECHA_SALIDA,(vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+
+
+	--*****************************************************************************************
+	--BNF-000924
+	--*****************************************************************************************
+	--PROCESO QUE REALIZA RESPALDO DE REPOSITORIO CON DETALLE DE PRESTACIONES VALORIZADAS
+	--*****************************************************************************************
+	Convalorvari_Pkg.P_RESPALDA_REPOSITORIO(vn_CORRELATIVO_AUDITORIA,v_nERROR_RESP,v_vDESC_ERROR_RESP);
+	--*****************************************************************************************
+	IF NVL(v_nERROR_RESP,0) <> 0 THEN
+	   RAISE e_RESPALDO_REPOSITORIO;
+	END IF;
+
+	COMMIT;--GESARA-000838
+	RETURN;
+	vn_NUMERO_ERROR:=80;
+
+    EXCEPTION
+	 WHEN e_RESPALDO_REPOSITORIO THEN --BNF-000924
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD(v_vDESC_ERROR_RESP,30);
+	    vv_OUTPUT_MENSAJE	 := vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+
+	WHEN e_ASIGNA_NUMERO_INTER THEN
+	    vn_NUMERO_ERROR:=205;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 01: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError      := RPAD(vv_ERROR_ASIGNA_INTER ,30);
+	    Out_vExtCodError		 := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+
+	WHEN e_F_CONS_DII THEN
+	    vn_NUMERO_ERROR:=202;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 01: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError      := RPAD(vv_ERROR_F_CONS_DII,30);
+	    Out_vExtCodError		 := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_P_INSERT_PRESTA THEN
+	    vn_NUMERO_ERROR:=200;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 01: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError      := RPAD(vv_ERROR_INSERT_PRESTA,30);
+	    Out_vExtCodError		 := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+
+	WHEN e_P_ELIM_DII THEN
+	    vn_NUMERO_ERROR:=200;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 01: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError      := RPAD(vv_ERROR_P_ELIM_DII,30);
+	    Out_vExtCodError		 := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_CONSULTA THEN
+	    vn_NUMERO_ERROR:=11;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 01: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError      := RPAD('Debe Ing. Prest. Consulta',30);
+	    Out_vExtCodError		 := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_NO_BENEFICIARIO THEN
+	    vn_NUMERO_ERROR:=81;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 01: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError      := RPAD('Problemas al buscar el folio del afiliado',30);
+	    Out_vExtCodError		 := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_NO_VIGENTE THEN
+	    vn_NUMERO_ERROR:=82;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 02: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('vv_BENEFICIARIO No Vigente',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE, vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,
+	    vd_FECHA_LLEGADA,vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_PRESTADOR_BLOQUEADO THEN
+	    vn_NUMERO_ERROR:=83;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 03: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Prestador Bloqueado por Convenios Consalud',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_PRESTADOR_NO_REG_CONVENIOS THEN
+	    vn_NUMERO_ERROR:=84;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 04: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Prestador no registrado en Convenios Consalud',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_PRESTADOR_ACCESO THEN
+	    vn_NUMERO_ERROR:=85;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 05: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Prestador con error en Acceso',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_MEDICO_TRATANTE_SIN_CONVENIO THEN
+	    vn_NUMERO_ERROR:=86;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 06: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Medico Tratante Sin Convenio',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_NO_SOLICITANTE_1 THEN
+	    vn_NUMERO_ERROR:=87;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 07: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('NO ingrese Rut Solicitante',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_NO_SOLICITANTE_2 THEN
+	    vn_NUMERO_ERROR:=88;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 08: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Debe ingresar Rut Solicitante',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_NO_SOLICITANTE_3 THEN
+	    vn_NUMERO_ERROR:=89;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 09: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Rut Solicitante NO registrado',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,  vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_MULTIPLES_PRESTACIONES THEN
+	    vn_NUMERO_ERROR:=90;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 13: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Se permite solo una prestacion',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	 WHEN e_SALUD_ADMINISTRADA THEN
+	    vn_NUMERO_ERROR:=92;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 15: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Benef.con mas de un Med.Cab.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_SALUD_ADMINISTRADA2 THEN
+	    vn_NUMERO_ERROR:=92;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 155: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Benef.con Plan Tradicional',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_SALUD_ADMINISTRADA3 THEN
+	    vn_NUMERO_ERROR:=93;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 155.1: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Prest. No Valida en Plan Benef.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	    RETURN;
+	WHEN e_SALUD_ADMINISTRADA4 THEN
+	    vn_NUMERO_ERROR:=94;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 155.2: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Solo Emitir Codigo 0101866',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN e_TARIFA_01 THEN
+	    vn_NUMERO_ERROR:=93;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 16: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E01:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_02 THEN
+	    vn_NUMERO_ERROR:=94;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 17: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E02:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_03 THEN
+	    vn_NUMERO_ERROR:=95;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 18: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E03:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_04 THEN
+	    vn_NUMERO_ERROR:=96;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 19: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E04:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_05 THEN
+	    vn_NUMERO_ERROR:=97;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 20: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E05:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_06 THEN
+	    vn_NUMERO_ERROR:=98;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 21: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E06:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_07 THEN
+	    vn_NUMERO_ERROR:=99;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 22: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E07:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_08 THEN
+	    vn_NUMERO_ERROR:=100;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 23: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E08:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,  vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_09 THEN
+	    vn_NUMERO_ERROR:=101;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 24: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E09:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_10 THEN
+	    vn_NUMERO_ERROR:=102;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 25: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E10:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    LIMPIA;
+	    RETURN;
+	 WHEN e_TARIFA_11 THEN
+	    vn_NUMERO_ERROR:=103;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 26: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E11:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_12 THEN
+	    vn_NUMERO_ERROR:=104;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 27: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E12:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_13 THEN
+	    vn_NUMERO_ERROR:=105;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 28: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E13:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_21 THEN
+	    vn_NUMERO_ERROR:=106;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 29: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E21:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_22 THEN
+	    vn_NUMERO_ERROR:=107;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 30: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E22:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_23 THEN
+	    vn_NUMERO_ERROR:=108;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 31: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E23:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_24 THEN
+	    vn_NUMERO_ERROR:=109;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 32: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E24:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_25 THEN
+	    vn_NUMERO_ERROR:=110;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 33: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E25:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_26 THEN
+	    vn_NUMERO_ERROR:=111;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 34: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E26:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_27 THEN
+	    vn_NUMERO_ERROR:=112;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 35: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E27:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_28 THEN
+	    vn_NUMERO_ERROR:=113;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 36: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E28:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_29 THEN
+	    vn_NUMERO_ERROR:=114;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 37: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E29:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_30 THEN
+	    vn_NUMERO_ERROR:=115;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 38: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E30:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_31 THEN
+	    vn_NUMERO_ERROR:=116;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 39: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E31:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_32 THEN
+	    vn_NUMERO_ERROR:=117;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 40: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E32:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_33 THEN
+	    vn_NUMERO_ERROR:=118;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 41: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E33:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_99 THEN
+	    vn_NUMERO_ERROR:=119;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 42: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('E99:No Existe Esp. o Conv.Vig.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_TARIFA_PROPIA THEN
+	    vn_NUMERO_ERROR:=120;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 43: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Isapre SOLO acepta tarifas Convenidas... NO INGRESE VALOR PRESTADOR',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_EJECUTA_PCK_BONIFICACION THEN
+	    --vn_NUMERO_ERROR:=121;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 44: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    --Out_vExtMensajeError := RPAD(TO_CHAR(vv_BENEF_ERROR_DESCRIP_CALC),30);
+	    --Out_vExtMensajeError := RPAD(TO_CHAR(vv_BENEF_ERROR_DESCRIP_INSERT||to_char(vn_NUMERO_ERROR)),30);
+	    Out_vExtMensajeError := RPAD(to_char(vn_NUMERO_ERROR)||':'||to_char(vn_BENEF_ERROR_CALC)||'-'||vv_BENEF_ERROR_DESCRIP_CALC,30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_EJECUTA_P_BONIFICA_CREDITO THEN
+	    --vn_NUMERO_ERROR:=121;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 45: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD(TO_CHAR(vv_DESC_ERROR_CREDITO),30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_ISAPRE_NO_CORRESPONDE THEN
+	    vn_NUMERO_ERROR:=122;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 45: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError     := RPAD('Codigo isapre no corresponde',30);
+	    Out_vExtCodError	       := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_supera_total_filas THEN  --20030212 CAGF para validar que numero de variables de cursor no superen lo pedido por entrada
+	    vn_NUMERO_ERROR:=123;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 46: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtMensajeError     := RPAD('Numero de Filas de Cursor mayor al Requerido',30);
+	    Out_vExtCodError	       := 'N';
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA,	 vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_FAMILIA_HOMOLOGADA THEN
+	    vn_NUMERO_ERROR:=124;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 47: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('No existe Homologacion Familia Atesa',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_ESPECIALIDAD_NO_VALIDA THEN
+	    vn_NUMERO_ERROR:=124.5;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 48: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cod. de Esp. NO Valida'||vv_CODIGO_ESPECILIDAD_HOMOLOG||'.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_MENSAJE_RESPUESTA THEN
+	    vn_NUMERO_ERROR:=125;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 49: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD(vv_GLOSA_ERROR,30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;  -- sal; CTC 20030811;
+	 WHEN e_MENSAJE_ERROR_BENEFICIARIO THEN
+	    vn_NUMERO_ERROR:=126;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 50: '||SQLERRM);
+	    LIMPIA;
+
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('AL VERIFICAR vv_BENEFICIARIO',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;  -- sal; CTC 2003080117
+	    /*SALUD ADMINISTRADA*/
+	 WHEN e_MEDICO_CABECERA THEN
+	    vn_NUMERO_ERROR:=127;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 51: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('PACIENTE SIN MEDICO CABECERA',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	    /*SALUD ADMINISTRADA*/
+	 WHEN e_MEDICO_CABECERA_TRATANTE THEN
+	    vn_NUMERO_ERROR:=128;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 52: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('TRATANTE NO ES MEDICO CABECERA',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	    /*SALUD ADMINISTRADA*/
+	 WHEN e_MEDICO_CABECERA_DERIVADOR THEN
+	    vn_NUMERO_ERROR:=129;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 53: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('DERIVADOR NOES MEDICO CABECERA',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN E_SOLO_PRESTACIONES_GES THEN --EACE 02-02-2009  GES
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 53: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD(vv_Mensaje_ERROR_GES,30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	 WHEN e_VALORIZACION_GES THEN --EACE 28-06-2005  GES
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 53: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('ER AL VALOR PREST.GES'||vv_ErrorCode||'-'||vn_NUMERO_ERROR,30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	WHEN e_PRESTACION_RESTRINGIDA THEN
+	     vn_NUMERO_ERROR:=131;
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('L:'||LPAD(vn_CONTADOR_LINEAS,2,'0')||' C/RESTRICCION GENERO,EDAD',30);
+	    DBMS_OUTPUT.PUT_LINE ( 'Out_vExtMensajeError= ' || Out_vExtMensajeError );
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    DBMS_OUTPUT.PUT_LINE ( 'vv_OUTPUT_MENSAJE= ' || vv_OUTPUT_MENSAJE );
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	WHEN e_EXISTE_MAS_DE_UN_PRECIO THEN
+	    vn_NUMERO_ERROR:=130;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Existe mas de un Precio.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	WHEN e_NO_EXISTE_PRECIO THEN
+	    vn_NUMERO_ERROR:=131;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('No Existe Precio.',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN e_NO_POSEE_BENEF_BC15 THEN
+	    vn_NUMERO_ERROR:=1291;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Benef.sin Dental Ok',30);
+	    --Out_vExtMensajeError := RPAD('Cambie a Dental OK(99999999-9)',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+
+TEXT
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN e_NO_POSEE_BENEF_BC24 THEN
+	    vn_NUMERO_ERROR:=1291;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Benef.sin Dental Plus',30);
+	    --Out_vExtMensajeError := RPAD('Cambie a Dental OK(99999999-9)',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+/* INICIO BNF-000955 BC 99 Rut 88.888.889-6*/
+	WHEN e_NO_POSEE_BENEF_BC99 THEN
+	vn_NUMERO_ERROR:=1292;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Benef.sin Cta.Dent.Controlada',30);
+	    --Out_vExtMensajeError := RPAD('Cambie a Dental OK(99999999-9)',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+/* FIN BNF-000955 BC 99 Rut 88.888.889-6*/
+	WHEN e_NO_POSEE_BENEF_BC33 THEN
+	vn_NUMERO_ERROR:=1293;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Benef.sin Dental Vip',30);
+	    --Out_vExtMensajeError := RPAD('Cambie a Dental OK(99999999-9)',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_BC15 THEN
+	    vn_NUMERO_ERROR:=135;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Dental OK(99999999-9)',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_BC24 THEN
+	    vn_NUMERO_ERROR:=136;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a DentalPlus 66666666-6',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_NORMAL THEN
+	    vn_NUMERO_ERROR:=137;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Error en Convenio Seleccionado',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+/* INICIO BNF-000955 BC 99 Rut 88.888.889-6*/
+	WHEN E_POSEE_BENEFICIO_BC99 THEN
+	    vn_NUMERO_ERROR:=137;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Cta.Contr. 88888889-6',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+/* FIN BNF-000955 BC 99 Rut 88.888.889-6*/
+	WHEN E_POSEE_BENEFICIO_BC33 THEN
+	    vn_NUMERO_ERROR:=137;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 130: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Dental.VIP 22222222-2',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	--***********************************************************************
+	--INICIO - BNF-INC- 000355
+	--94-105-107-109  tienen mismo funcionamiento BC94 (rut: 22222222-2)
+	--108-108	  tiene mismo funcionamiento que BC108 (rut: 88888889-6)
+	--***********************************************************************
+	WHEN E_POSEE_BENEFICIO_BC94 THEN
+	    vn_NUMERO_ERROR:=138;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 138: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Dental.VIP 22222222-2',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_BC105 THEN
+	    vn_NUMERO_ERROR:=139;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 139: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Dental.VIP 22222222-2',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_BC107 THEN
+	    vn_NUMERO_ERROR:=140;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 140: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Dental.VIP 22222222-2',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_BC109 THEN
+	    vn_NUMERO_ERROR:=141;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 141: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Dental.VIP 22222222-2',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	--
+	WHEN E_POSEE_BENEFICIO_BC106 THEN
+	    vn_NUMERO_ERROR:=142;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 142: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Cta.Contr. 88888889-6',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	WHEN E_POSEE_BENEFICIO_BC108 THEN
+	    vn_NUMERO_ERROR:=143;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 143: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Cambie a Cta.Contr. 88888889-6',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+	--***********************************************************************
+	--***********************************************************************
+	 WHEN e_COMPONENTE_NO_VALIDO THEN
+	    vn_NUMERO_ERROR:=1367;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 132: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Pabellon no Valido',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	 WHEN e_UN_SOLO_PABELLON THEN
+	    vn_NUMERO_ERROR:=1366;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 113: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Debe Ing.Una Prest.Pabellon',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	 WHEN e_FALTA_PABELLON THEN
+	    vn_NUMERO_ERROR:=137;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 111: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Debe Ingresar Prest.Pabellon',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	    WHEN e_PABELLON THEN
+	    vn_NUMERO_ERROR:=137;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 111: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD('Debe Ingresar Prest.Honorario',30);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SQLERRM;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	 WHEN e_VAL_URGENCIA_INTEGRAL THEN ----BNF-000828 20/04/2012 - bloquear el ingreso de los codigos de prestaciones de urgencia
+	    --vn_NUMERO_ERROR:=7001;
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 7000: '||SQLERRM);
+	    LIMPIA;
+	    Out_vExtCodError := 'N';
+	    Out_vExtMensajeError := RPAD(vv_BENEF_ERROR_DESCRIP_INSERT,30);
+	    vv_OUTPUT_MENSAJE	 := vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA;
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+	 WHEN OTHERS THEN
+	    DBMS_OUTPUT.PUT_LINE ('ERROR 99: 2 '||SQLERRM);
+	    DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || vn_NUMERO_ERROR );
+	    LIMPIA;
+	    Out_vExtCodError	      := 'N';
+	    Out_vExtMensajeError      := RPAD('(1)ERROR PROC: '||vn_NUMERO_ERROR,30);
+--	      Out_vExtMensajeError	:= TO_CHAR(vn_BENEF_ERROR_INSERT)||'-'||SUBSTR(SQLERRM,21,20);
+	    vv_OUTPUT_MENSAJE		:= vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	    vv_OUTOPUT_CODIGO_MENSAJE	     := '00000';
+	    vv_OUTPUT_STATUS_SERVICIO	  := '1';
+	    SRV_Message 	     := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	    vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	    vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SUBSTR(SQLERRM,1,100);
+	    vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,	    vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO);
+	    RETURN;
+
+    END;
+EXCEPTION
+    WHEN OTHERS THEN
+	DBMS_OUTPUT.PUT_LINE ( 'vn_NUMERO_ERROR= ' || TO_CHAR(vn_NUMERO_ERROR) || SQLERRM );
+	LIMPIA;
+	Out_vExtCodError	  := 'N';
+	Out_vExtMensajeError	  := RPAD('(2)ERROR PROC: '||vn_NUMERO_ERROR,30);
+	vv_OUTPUT_MENSAJE	    := vv_INICIO_TEXTO_MENSAJE||Out_vExtMensajeError;
+	vv_OUTOPUT_CODIGO_MENSAJE	 := '00000';
+	vv_OUTPUT_STATUS_SERVICIO     := '1';
+	SRV_Message		 := vv_OUTPUT_STATUS_SERVICIO||vv_OUTOPUT_CODIGO_MENSAJE||vn_SRV_FETCH_STATUS||vv_OUTPUT_MENSAJE;
+	vd_FECHA_SALIDA:= TO_DATE(TO_CHAR(SYSDATE,'rrrr/mm/dd hh24:mi:ss'),'rrrr/mm/dd hh24:mi:ss');
+	vv_PARAMETROS_SALIDA  := SETEA_SALIDA||':'||SUBSTR(SQLERRM,1,100);
+	vn_RESULTADO_INSERT_AUDITORIA:=F_Imed_Graba_Auditoria(vn_CORRELATIVO_AUDITORIA,vv_NOMBRE_TRANSACCION, vd_FECHA_LLEGADA,vv_ENTR_HOM_NUMERO_CONVENIO,vv_ENTR_HOM_LUGAR_CONVENIO,vv_ENTR_HOM_SUCURSAL_VENTA,vn_ENTR_RUT_TRATANTE,vn_ENTR_RUT_BENEFICIARIO,vn_RUT_COTIZANTE, vn_COAF_FOLIO_SUSCRIPCION, vn_CODIGO_CARGA, 0,vn_VALOR_TOTAL_PRESTACION,vn_TOTAL_PRESTACIONES,vn_VALOR_TOTAL_BONIFICACION,vn_VALOR_TOTAL_COPAGO, vv_PARAMETROS_ENTRADA, vv_PARAMETROS_SALIDA,vd_FECHA_LLEGADA, vd_FECHA_SALIDA, (vd_FECHA_SALIDA - vd_FECHA_LLEGADA) * 86400, vn_USO_BCC, vn_VALOR_TOTAL_BCC, vn_CON_EXCEDENTE, vn_MONTO_COPAGO_EXCEDENTE, vn_USO_TOPE, vn_USO_CIGNA, vn_MONTO_CIGNA, vn_MONTO_CREDITO_OTORGADO,vv_ORDEN_DERIVACION,vn_NUMERO_ORDEN_DERIVACION,vv_SERVICIO_FULL);
+	RETURN;
+END CONValorVari;
+
+--
+--
+-- funcion para efectuar un redondeo del copago
+
+FUNCTION embe_redondeo(n_valor_i IN NUMBER) RETURN NUMBER IS
+
+n_ultimo_numero NUMBER(10);
+redondeo NUMBER(10);
+
+BEGIN
+
+    n_ultimo_numero := MOD(ABS(n_valor_i),10);
+
+    IF n_ultimo_numero<5 THEN
+       redondeo:=n_valor_i-n_ultimo_numero;
+    ELSE
+       redondeo:=n_valor_i+(10-n_ultimo_numero);
+    END IF;
+
+    RETURN redondeo;
+
+--RETURN n_valor_i;
+END embe_redondeo;
+--
+--
+--
+--
+
+PROCEDURE P_ELIMINA_REPOSITORIO(pi_vUSUARIO	      IN VARCHAR2,
+				 ps_nERROR		 IN OUT NUMBER,
+				 ps_vDESC_ERROR 	     IN OUT VARCHAR2)
+IS
+--
+--
+FINAL EXCEPTION;
+--
+ CURSOR c_REG IS
+	SELECT DISTINCT(TIPO_ACCESO), USUARIO_EMISION, FOLIO_SUSCRIPCION, FECHA_CREACION
+	FROM   BENEFICIOS.BEN_REPOSITORIO_EMISION_BONOS REB
+	WHERE  USUARIO_EMISION	       = pi_vUSUARIO;
+vn_valor NUMBER;
+BEGIN
+
+ps_nERROR:=0;
+ps_vDESC_ERROR:=NULL;
+--
+ FOR REG IN c_REG LOOP
+
+      PCK_BEN_REPOSITORIO.P_ELIMINA_REPOSITORIO_TIPO(REG.TIPO_ACCESO,
+							REG.USUARIO_EMISION, --     pi_vUSUARIO 	  IN VARCHAR2,
+							REG.FOLIO_SUSCRIPCION,	  --	 pi_nFOLIO_SUSCRIPCION IN NUMBER,
+							TO_CHAR(REG.FECHA_CREACION,'DD/MM/RRRR'),--	pi_vFECHA_CREACION    IN VARCHAR2,
+							ps_nERROR,		 --	po_nNERROR		 IN OUT NUMBER,
+							ps_vDESC_ERROR,       --     po_vDESC_ERROR		 IN OUT VARCHAR2,
+							 'S');				 --	pi_vREVERSAR	       IN VARCHAR DEFAULT 'S');
+
+
+
+	   IF NVL(ps_nERROR,0) > 0 THEN
+		 RAISE FINAL;
+	   END IF;
+
+ END LOOP;
+
+--DELETE beneficios.zzzzz WHERE campo = 1;
+--SELECT count(*) INTO vn_valor FROM beneficios.zzzzz
+--;
+--DBMS_OUTPUT.PUT_LINE ( 'vn_valor = ' || vn_valor );
+--ps_nERROR:=vn_valor;
+EXCEPTION
+  WHEN FINAL THEN
+	 NULL;
+  WHEN OTHERS THEN
+     ps_nERROR		  := 5028;
+     ps_vDESC_ERROR    := SUBSTR(SQLERRM,1,200);
+
+END P_ELIMINA_REPOSITORIO;
+
+
+--
+--PROCESO QUE REALIZA RESPALDO DE REPOSITORIO CON DETALLE DE PRESTACIONES VALORIZADAS
+PROCEDURE P_RESPALDA_REPOSITORIO(pi_nCORRELATIVO_AUDITORIA	IN VARCHAR2,
+						 		 ps_nERROR				IN OUT NUMBER,
+						 		 ps_vDESC_ERROR	   		IN OUT VARCHAR2) IS
+
+E_ERROR EXCEPTION;
+CURSOR c_AUDI IS
+   SELECT DISTINCT REB_CORRELATIVO FROM
+   IMED_DETALLE_AUDITORIA
+   WHERE
+    AUDI_CORRELATIVO=pi_nCORRELATIVO_AUDITORIA;--101338938;
+BEGIN
+
+
+FOR AUD IN c_AUDI LOOP
+
+    INSERT INTO IMED_REPOSITORIO_EMISION_BONOS
+    (CORRELATIVO, TIPO_ACCESO, USUARIO_EMISION, FOLIO_SUSCRIPCION, CODIGO_ISAPRE, CODIGO_CARGA, TIPO_COBERTURA,
+    VALOR_UF, PLAN_CORRELATIVO, DOLI_TYPE, TIPO_PRESTACION, FECHA_PRESTACION, TIPO_AGRUP_PRESTACION, PRISA_CODIGO,
+    COMPONENTE, VALOR_UNITARIO, CANTIDAD, MONTO_PRESTACION, FECHA_CREACION, USUARIO_CREACION, OFICINA_CREACION,
+    ES_DERIV_DE_PREST_PREF, PREST_CODIGO_INTERNO_PREF, BONIF_HOSPITALARIA, BONIF_AMBULATORIA, BONIF_DENTAL,
+    BONIF_MEDICAMENTOS, OBSERVACIONES, TIPO_DOCUMENTO, NUMERO_DOCUMENTO, RUT_COBRADOR_REEMBOLSO, DIGRUT_COBRADOR_REEMBOLSO,
+    GRUP_GARA_CODIGO, GRUP_SECUENCIA, SECUENCIA_AGRUP_PRESTACION, PREST_CODIGO_INTERNO, PREST_CODIGO_INTERNO_TRATANTE,
+    CONV_CORRELATIVO, LUAT_CORRELATIVO, SECO_CORRELATIVO, SEAL_CORRELATIVO, DNP_CORRELATIVO, MONTO_BONIFICADO, MONTO_COPAGO,
+    UNOR_CORRELATIVO_AMPLIA_COB, PRISA_CODIGO_DIA_CAMA, PRISA_CODIGO_PPAL, VALOR_DIA_CAMA, PABELLON, NRO_DIAS_HOSP, EMITE,
+    REB_CORRELATIVO, INSTITUCIONAL, COPAGO_GRATIS_GES, MONTO_COBERTURA_ADIC_GES, MONTO_COBERTURA_ADIC_GES_CAEC, TIPO_USO,
+    PRISA_CODIGO_ESPECIALIDAD, DOCO_CORRELATIVO, PRCO_CORRELATIVO, CUME_CORRELATIVO, NUMERO_PAM, TIPO_MANUAL, DERIV_CODIGO_INTERNO,
+    MOTIVO_MANUAL, TIPO_REEMBOLSO, DERIV_RUT, DERIV_DIGRUT, REGISTRAR_TOPE, TOPE_CORRELATIVO, ORDEN_DERIVACION, TOPE_CORRELATIVO_BC,
+    USUARIO_AUT_MANUAL, FECHA_AUT_MANUAL, AUT_MANUAL, NUM_AGRUPA_BONO, NRO_ORDEN_DERIVACION, SERV_DERIVACION_FULL_OFI,
+    BUSQUEDA_CON_PRESTADOR, PRESTADOR_IGUAL_AL_ING, PRESTADOR_ES_SOQUEABLE, PRESTADOR_ES_RELACIONADO,
+    EXISTEN_MAS_ALT_SOC, MCBE_CORRELATIVO, ID_SOLICITUD_WORKFLOW, CAMBIA_WORKFLOW, NUMERO_SOBRE, ATENCION)
+    SELECT
+    CORRELATIVO, TIPO_ACCESO, USUARIO_EMISION, FOLIO_SUSCRIPCION, CODIGO_ISAPRE, CODIGO_CARGA, TIPO_COBERTURA,
+    VALOR_UF, PLAN_CORRELATIVO, DOLI_TYPE, TIPO_PRESTACION, FECHA_PRESTACION, TIPO_AGRUP_PRESTACION, PRISA_CODIGO,
+    COMPONENTE, VALOR_UNITARIO, CANTIDAD, MONTO_PRESTACION, FECHA_CREACION, USUARIO_CREACION, OFICINA_CREACION,
+    ES_DERIV_DE_PREST_PREF, PREST_CODIGO_INTERNO_PREF, BONIF_HOSPITALARIA, BONIF_AMBULATORIA, BONIF_DENTAL,
+    BONIF_MEDICAMENTOS, OBSERVACIONES, TIPO_DOCUMENTO, NUMERO_DOCUMENTO, RUT_COBRADOR_REEMBOLSO, DIGRUT_COBRADOR_REEMBOLSO,
+    GRUP_GARA_CODIGO, GRUP_SECUENCIA, SECUENCIA_AGRUP_PRESTACION, PREST_CODIGO_INTERNO, PREST_CODIGO_INTERNO_TRATANTE,
+    CONV_CORRELATIVO, LUAT_CORRELATIVO, SECO_CORRELATIVO, SEAL_CORRELATIVO, DNP_CORRELATIVO, MONTO_BONIFICADO, MONTO_COPAGO,
+    UNOR_CORRELATIVO_AMPLIA_COB, PRISA_CODIGO_DIA_CAMA, PRISA_CODIGO_PPAL, VALOR_DIA_CAMA, PABELLON, NRO_DIAS_HOSP, EMITE,
+    REB_CORRELATIVO, INSTITUCIONAL, COPAGO_GRATIS_GES, MONTO_COBERTURA_ADIC_GES, MONTO_COBERTURA_ADIC_GES_CAEC, TIPO_USO,
+    PRISA_CODIGO_ESPECIALIDAD, DOCO_CORRELATIVO, PRCO_CORRELATIVO, CUME_CORRELATIVO, NUMERO_PAM, TIPO_MANUAL, DERIV_CODIGO_INTERNO,
+    MOTIVO_MANUAL, TIPO_REEMBOLSO, DERIV_RUT, DERIV_DIGRUT, REGISTRAR_TOPE, TOPE_CORRELATIVO, ORDEN_DERIVACION, TOPE_CORRELATIVO_BC,
+    USUARIO_AUT_MANUAL, FECHA_AUT_MANUAL, AUT_MANUAL, NUM_AGRUPA_BONO, NRO_ORDEN_DERIVACION, SERV_DERIVACION_FULL_OFI,
+    BUSQUEDA_CON_PRESTADOR, PRESTADOR_IGUAL_AL_ING, PRESTADOR_ES_SOQUEABLE, PRESTADOR_ES_RELACIONADO,
+    EXISTEN_MAS_ALT_SOC, MCBE_CORRELATIVO, ID_SOLICITUD_WORKFLOW, CAMBIA_WORKFLOW, NUMERO_SOBRE, ATENCION
+     FROM
+    BENEFICIOS.BEN_REPOSITORIO_EMISION_BONOS REB
+    WHERE
+    REB.CORRELATIVO = AUD.REB_CORRELATIVO;
+
+    INSERT INTO IMED_DET_COBERTURA_REPOSITORIO
+    SELECT REB_CORRELATIVO, NUMERO, TIBE_CODIGO, MONTO_COBERTURA, MONTO_COBERTURA_FORZADA, MONTO_COBERTURA_APLICADA FROM
+    BENEFICIOS.BEN_DET_COBERTURAS_REPOSITORIO DCR
+    WHERE
+    DCR.REB_CORRELATIVO = AUD.REB_CORRELATIVO;
+
+    INSERT INTO IMED_RESP_CALC_COB_REPOSITORIO
+    (CORRELATIVO, DCR_REB_CORRELATIVO, DCR_NUMERO, TIBE_CODIGO, MONTO_PRESTACION_CALCULO, MONTO_BONIFICADO, MONTO_COPAGO,
+    ITEM, VALOR_ARANCEL, ES_PREFERENTE, PORCENTAJE_COBERTURA, VALOR_TOPE, UNIDAD_MEDIDA_TOPE, TIPO_TOPE, VALOR_TOPE_ANUAL,
+    UNIDAD_MEDIDA_TOPE_ANUAL, TIPO_COPAGO, VALOR_COPAGO, UNIDAD_MEDIDA_COPAGO, VALOR_TOPE_COPAGO, UNIDAD_MEDIDA_TOPE_COPAGO,
+    BONIFICABLE, BLOQUEADA, CON_COBERTURA, PREST_CODIGO_INTERNO_COB, MONTO_MINIMO_APLICADO, TIPO_MONTO_MINIMO_APLICADO,
+    OBSERVACIONES, PLAN_CORRELATIVO, PLBC_CORRELATIVO, GRUP_GARA_CODIGO, GRUP_SECUENCIA, CRED_CORRELATIVO, CODP_CORRELATIVO)
+    SELECT CORRELATIVO, DCR_REB_CORRELATIVO, DCR_NUMERO, TIBE_CODIGO, MONTO_PRESTACION_CALCULO, MONTO_BONIFICADO, MONTO_COPAGO,
+    ITEM, VALOR_ARANCEL, ES_PREFERENTE, PORCENTAJE_COBERTURA, VALOR_TOPE, UNIDAD_MEDIDA_TOPE, TIPO_TOPE, VALOR_TOPE_ANUAL,
+    UNIDAD_MEDIDA_TOPE_ANUAL, TIPO_COPAGO, VALOR_COPAGO, UNIDAD_MEDIDA_COPAGO, VALOR_TOPE_COPAGO, UNIDAD_MEDIDA_TOPE_COPAGO,
+    BONIFICABLE, BLOQUEADA, CON_COBERTURA, PREST_CODIGO_INTERNO_COB, MONTO_MINIMO_APLICADO, TIPO_MONTO_MINIMO_APLICADO,
+    OBSERVACIONES, PLAN_CORRELATIVO, PLBC_CORRELATIVO, GRUP_GARA_CODIGO, GRUP_SECUENCIA, CRED_CORRELATIVO, CODP_CORRELATIVO
+    FROM
+    BENEFICIOS.BEN_RESP_CALC_COB_REPOSITORIO RCC
+    WHERE
+    RCC.DCR_REB_CORRELATIVO = AUD.REB_CORRELATIVO;
+
+END LOOP;
+
+EXCEPTION
+  WHEN E_ERROR THEN
+	 NULL;
+  WHEN OTHERS THEN
+     ps_nERROR		  := 5029;
+     ps_vDESC_ERROR    := 'ERR.RESP.->'||SUBSTR(SQLERRM,1,100);
+
+END P_RESPALDA_REPOSITORIO;
+
+END Convalorvari_Pkg;
+
+5469 rows selected.
+
+SQL> Disconnected from Oracle Database 10g Enterprise Edition Release 10.2.0.5.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options

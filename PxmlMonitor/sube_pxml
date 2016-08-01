@@ -1,0 +1,40 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+PATH1="."
+MODULO="Pxml_Monitor"
+case "$1" in 
+  start)
+	if [ -x $PATH1/Pxml_Monitor ]; then
+		#Con parametro timeoutbd
+		./Pxml_Monitor scgi=1 proceso=PXML_MONITOR portdb=9000 log=1 prefijo_log=SLA timeoutbd=10 >/dev/null&
+		echo "./Pxml_Monitor scgi=1 proceso=PXML_MONITOR portdb=9000 log=1 prefijo_log=SLA timeoutbd=10 "
+		echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	killproc $PATH1/$MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop 
+	$0 start
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        #rm *.LOG
+        rm *_APP.LOG
+        rm *_XXX.LOG
+        rm *.ERR
+        rm *.log
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

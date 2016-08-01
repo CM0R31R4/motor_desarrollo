@@ -1,0 +1,27 @@
+
+Conección al SQLPLUS
+/home/isys/instantclient_11_2/sqlplus usr_imed/076imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.100.100.42)(PORT=1521))(CONNECT_DATA=(SID=test)))"
+
+Query para ver los objetos
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('PACKAGE');
+
+Descipción de estructura
+desc FNDANULABONOU_PKG
+
+** Conexion con el conector de Python	
+./fundacion_gateway.py localhost 8076 'usr_imed/076imed@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.100.100.42)(PORT=1521))(CONNECT_DATA=(SID=test)))'
+
+~/ApiORACLE_FUNDACION/./fundacion_gateway.py localhost 8076 'usr_imed/076imed@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.100.100.42)(PORT=1521))(CONNECT_DATA=(SID=test)))'
+
+
+SQL> show pagesize lines
+pagesize 14
+linesize 80
+SET PAGESIZE 999 LINESIZE 300
+
+define_editor = vi;
+
+
+
+
+

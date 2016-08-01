@@ -1,0 +1,9 @@
+
+/**/
+tsql -H 164.77.11.9 -p 1521 -U imed -P rxb532
+
+--Examples: Para preguntar por el listado de SP en Sybase
+--xml2:=put_campo(xml2,'SQLINPUT','select top 1 * from dbo.sybsystemprocs');
+--xml2:=put_campo(xml2,'SQLINPUT','exec sp_help');
+--xml2:=put_campo(xml2,'SQLINPUT','select top 1 * from dbo.sysusers');
+--xml2:=put_campo(xml2,'SBSINPUT','select top 1 * from dbo.sysusers');

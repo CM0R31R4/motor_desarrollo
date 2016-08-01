@@ -1,0 +1,40 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+PATH1="/home/motor/SEGUROS/ProcesadorSCGI"
+MODULO="Procesa_SCGI"
+
+case "$1" in 
+  start)
+	if [ -x $PATH1/Procesa_SCGI ]; then
+		#Con parametro timeoutbd
+		cd $PATH1
+		$PATH1/Procesa_SCGI scgi=1 proceso=PROCESADOR_SCGI portdb=9000 log=1 init_rsa_din=1 prefijo_log=CGI timeoutbd=4 >/dev/null&
+		echo "$PATH1/Procesa_SCGI scgi=1 proceso=PROCESADOR_SCGI portdb=9000 log=0 init_rsa_din=1 prefijo_log=CGI timeoutbd=4"
+		echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	pkill $PATH1/$MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop $2
+	$0 start $2
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        #rm *.LOG
+        rm *_APP.LOG
+        rm *_XXX.LOG
+        rm *.ERR
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

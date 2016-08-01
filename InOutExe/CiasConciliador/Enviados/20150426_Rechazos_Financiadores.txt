@@ -1,0 +1,12 @@
+CODIGO ; FINANCIADOR ; CANTIDAD ; TIPO
+ 
+1;FONASA;42;bencertif
+1;FONASA;42;coptran
+67;COLMENA;38;valorvari
+67;COLMENA;38;bencertif
+80;VIDA_TRES;3;valorvari
+80;VIDA_TRES;13;bencertif
+81;FERROSALUD;288;valorvari
+81;FERROSALUD;288;bencertif
+94;CRUZ_DEL_NORTE;288;bencertif
+94;CRUZ_DEL_NORTE;288;valorvari

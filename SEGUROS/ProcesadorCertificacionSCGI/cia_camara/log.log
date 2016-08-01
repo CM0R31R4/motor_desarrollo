@@ -1,0 +1,24 @@
+TOTAL_REGISTROS:Confirmacion;1401 Certificacion;2066 Conciliacion;1
+Certificacion;37901260;20140628;20140628-11:10:03;
+99;44;13564;37901260;0020048279-4;0077200240-8;0101808   |00|01|0000032688|0000009806|; ; ; ; ; ;
+<CodRetorno>1</CodRetorno>
+
+<MsgError>0</MsgError>
+
+<MsgText>
+
+</MsgText>
+
+<columns>
+
+<extAporteSeguro>4903</extAporteSeguro>
+
+</columns>
+
+<extCodEstBen>V</extCodEstBen>
+
+<extCodError>S</extCodError>
+
+<extMensajeError>
+
+</extMensajeError>;

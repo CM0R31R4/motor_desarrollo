@@ -1,0 +1,19 @@
+#Busca clean: en archivo makefile
+make clean
+#Busca distclean: en archivo makefile
+make distclean
+date
+make all
+date
+echo "*****************"
+#echo "Renombrando ejecutable servidor x WsGatewayDesa "
+#cp -f servidor WsGatewayDesa
+date
+echo "*****************"
+#echo "Copiando WsGatewayDesa a /home/iswitch/WsGatewayDesa/"
+#cp -f WsGatewayDesa /home/iswitch/WsGatewayDesa/.
+date
+echo "*****************"
+echo "Termina Compila"
+echo "*****************"
+

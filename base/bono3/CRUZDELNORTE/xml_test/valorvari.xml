@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope  
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  
+	xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+	xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/">   
+<soapenv:Body>     
+	<ns1:valorvari>      
+		<extCodFinanciador>99</extCodFinanciador>
+		<extHomNumeroConvenio>52119-0</extHomNumeroConvenio>
+		<extHomLugarConvenio>255</extHomLugarConvenio>
+		<extSucVenta>130600</extSucVenta>
+		<extRutConvenio>76016305-8</extRutConvenio>
+		<extRutTratante>0013915583-1</extRutTratante>
+		<extEspecialidad>TRAUMA</extEspecialidad>
+		<extRutSolicitante>0013915583-1</extRutSolicitante>
+		<extRutBeneficiario>0013915583-1</extRutBeneficiario>
+		<extTratamiento>N</extTratamiento>
+		<extCodigoDiagnostico>888888</extCodigoDiagnostico>
+		<extNivelConvenio>0</extNivelConvenio>
+		<extUrgencia>N</extUrgencia>
+		<extLista1>lista1</extLista1>
+		<extLista2>lista2</extLista2>
+		<extLista3>lista3</extLista3>
+		<extLista4>lista4</extLista4>
+		<extLista5>lista5</extLista5>
+		<extLista6>lista6</extLista6>
+		<ExtLista7>lista7</ExtLista7>
+		<extNumPrestaciones>1</extNumPrestaciones>
+	</ns1:valorvari>     
+</soapenv:Body>  
+</soapenv:Envelope>
+
+<extLista1>0405001000| A|0405001000     |N|01|000000000000|</extLista1>

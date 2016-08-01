@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Tue, 13 Jan 2015 19:06:37 GMT
+Server: Apache
+Connection: close
+Content-Length: 549
+Content-Type: text/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="urn:wsaudit"><SOAP-ENV:Header></SOAP-ENV:Header><SOAP-ENV:Body SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><WSAuditReadResp><Resultado><Err>0</Err><Glosa>No hay datos.</Glosa></Resultado></WSAuditReadResp></SOAP-ENV:Body></SOAP-ENV:Envelope>

@@ -1,0 +1,21 @@
+Api.Fundacion 127.0.0.1 8360 usr_imed/076imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.100.100.42)(PORT=1521))(CONNECT_DATA=(SID=test)))" ./fundacion 2 5 FUNDACION.py
+Api.Fundacion 127.0.0.1 8361 usr_imed/076imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.100.100.42)(PORT=1521))(CONNECT_DATA=(SID=test)))" ./fundacion 2 5 FUNDACION.py
+Inicializa FUNDACION.py
+Traceback (most recent call last):
+  File "./ORACLE.py", line 206, in <module>
+    server = ReusingTCPServer((HOST, int(PORT)), DBRequestHandler)
+  File "/usr/lib64/python2.6/SocketServer.py", line 402, in __init__
+    self.server_bind()
+  File "./ORACLE.py", line 117, in server_bind
+    self.socket.bind(self.server_address)
+  File "<string>", line 1, in bind
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "./ORACLE.py", line 206, in <module>
+    server = ReusingTCPServer((HOST, int(PORT)), DBRequestHandler)
+  File "/usr/lib64/python2.6/SocketServer.py", line 402, in __init__
+    self.server_bind()
+  File "./ORACLE.py", line 117, in server_bind
+    self.socket.bind(self.server_address)
+  File "<string>", line 1, in bind
+socket.error: [Errno 98] Address already in use

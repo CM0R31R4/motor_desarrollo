@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" targetNamespace="http://tempuri.org/">
+   <types>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="wmImed_SrvMedioPago">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string" />
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="wmImed_SrvMedioPagoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvMedioPagoResult" type="s:string" />
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string" />
+      </s:schema>
+   </types>
+   <message name="wmImed_SrvMedioPagoSoapIn">
+      <part name="parameters" element="s0:wmImed_SrvMedioPago" />
+   </message>
+   <message name="wmImed_SrvMedioPagoSoapOut">
+      <part name="parameters" element="s0:wmImed_SrvMedioPagoResponse" />
+   </message>
+   <message name="wmImed_SrvMedioPagoHttpGetIn">
+      <part name="XML_INPUT" type="s:string" />
+   </message>
+   <message name="wmImed_SrvMedioPagoHttpGetOut">
+      <part name="Body" element="s0:string" />
+   </message>
+   <message name="wmImed_SrvMedioPagoHttpPostIn">
+      <part name="XML_INPUT" type="s:string" />
+   </message>
+   <message name="wmImed_SrvMedioPagoHttpPostOut">
+      <part name="Body" element="s0:string" />
+   </message>
+   <portType name="WsMedioPagoSoap">
+      <operation name="wmImed_SrvMedioPago">
+         <input message="s0:wmImed_SrvMedioPagoSoapIn" />
+         <output message="s0:wmImed_SrvMedioPagoSoapOut" />
+      </operation>
+   </portType>
+   <portType name="WsMedioPagoHttpGet">
+      <operation name="wmImed_SrvMedioPago">
+         <input message="s0:wmImed_SrvMedioPagoHttpGetIn" />
+         <output message="s0:wmImed_SrvMedioPagoHttpGetOut" />
+      </operation>
+   </portType>
+   <portType name="WsMedioPagoHttpPost">
+      <operation name="wmImed_SrvMedioPago">
+         <input message="s0:wmImed_SrvMedioPagoHttpPostIn" />
+         <output message="s0:wmImed_SrvMedioPagoHttpPostOut" />
+      </operation>
+   </portType>
+   <binding name="WsMedioPagoSoap" type="s0:WsMedioPagoSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+      <operation name="wmImed_SrvMedioPago">
+         <soap:operation soapAction="http://tempuri.org/wmImed_SrvMedioPago" style="document" />
+         <input>
+            <soap:body use="literal" />
+         </input>
+         <output>
+            <soap:body use="literal" />
+         </output>
+      </operation>
+   </binding>
+   <binding name="WsMedioPagoHttpGet" type="s0:WsMedioPagoHttpGet">
+      <http:binding verb="GET" />
+      <operation name="wmImed_SrvMedioPago">
+         <http:operation location="/wmImed_SrvMedioPago" />
+         <input>
+            <http:urlEncoded />
+         </input>
+         <output>
+            <mime:mimeXml part="Body" />
+         </output>
+      </operation>
+   </binding>
+   <binding name="WsMedioPagoHttpPost" type="s0:WsMedioPagoHttpPost">
+      <http:binding verb="POST" />
+      <operation name="wmImed_SrvMedioPago">
+         <http:operation location="/wmImed_SrvMedioPago" />
+         <input>
+            <mime:content type="application/x-www-form-urlencoded" />
+         </input>
+         <output>
+            <mime:mimeXml part="Body" />
+         </output>
+      </operation>
+   </binding>
+   <service name="WsMedioPago">
+      <port name="WsMedioPagoSoap" binding="s0:WsMedioPagoSoap">
+         <soap:address location="http://10.100.32.153/liquidador/pruebas/WsMedioPago/service" />
+      </port>
+      <port name="WsMedioPagoHttpGet" binding="s0:WsMedioPagoHttpGet">
+         <http:address location="http://10.100.32.153/liquidador/pruebas/WsMedioPago/service" />
+      </port>
+      <port name="WsMedioPagoHttpPost" binding="s0:WsMedioPagoHttpPost">
+         <http:address location="http://10.100.32.153/liquidador/pruebas/WsMedioPago/service" />
+      </port>
+   </service>
+</definitions>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope  
+	xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  
+	xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+	xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/">   
+<soapenv:Body>     
+	<ns1:bencertif>      
+		<extCodFinanciador>78</extCodFinanciador>      
+		<extRutBeneficiario>0009512009-1</extRutBeneficiario>      
+		<extFechaActual>2013-05-22</extFechaActual>     
+	</ns1:bencertif>     
+</soapenv:Body>  
+</soapenv:Envelope>
+------------------------------------------------------------------------------------------------------------------------------------
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.imed.embswitch.chileoffshore.com/">
+<soapenv:Header/>
+<soapenv:Body>
+	<ws:bencertif>
+		<extCodFinanciador>78</extCodFinanciador>
+                <extRutBeneficiario>0009512009-1</extRutBeneficiario>
+                <extFechaActual>2013-05-22</extFechaActual>
+        </ws:bencertif>
+ </soapenv:Body>
+ </soapenv:Envelope>

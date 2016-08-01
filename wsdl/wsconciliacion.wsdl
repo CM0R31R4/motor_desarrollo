@@ -1,0 +1,104 @@
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://tempuri.org/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+<types>
+<s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+<s:element name="wmImed_SrvConciliacion">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="wmImed_SrvConciliacionResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvConciliacionResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="string" nillable="true" type="s:string"/>
+</s:schema>
+</types>
+<message name="wmImed_SrvConciliacionSoapIn">
+<part name="parameters" element="s0:wmImed_SrvConciliacion"/>
+</message>
+<message name="wmImed_SrvConciliacionSoapOut">
+<part name="parameters" element="s0:wmImed_SrvConciliacionResponse"/>
+</message>
+<message name="wmImed_SrvConciliacionHttpGetIn">
+<part name="XML_INPUT" type="s:string"/>
+</message>
+<message name="wmImed_SrvConciliacionHttpGetOut">
+<part name="Body" element="s0:string"/>
+</message>
+<message name="wmImed_SrvConciliacionHttpPostIn">
+<part name="XML_INPUT" type="s:string"/>
+</message>
+<message name="wmImed_SrvConciliacionHttpPostOut">
+<part name="Body" element="s0:string"/>
+</message>
+<portType name="wsConciliacionSoap">
+<operation name="wmImed_SrvConciliacion">
+<input message="s0:wmImed_SrvConciliacionSoapIn"/>
+<output message="s0:wmImed_SrvConciliacionSoapOut"/>
+</operation>
+</portType>
+<portType name="wsConciliacionHttpGet">
+<operation name="wmImed_SrvConciliacion">
+<input message="s0:wmImed_SrvConciliacionHttpGetIn"/>
+<output message="s0:wmImed_SrvConciliacionHttpGetOut"/>
+</operation>
+</portType>
+<portType name="wsConciliacionHttpPost">
+<operation name="wmImed_SrvConciliacion">
+<input message="s0:wmImed_SrvConciliacionHttpPostIn"/>
+<output message="s0:wmImed_SrvConciliacionHttpPostOut"/>
+</operation>
+</portType>
+<binding name="wsConciliacionSoap" type="s0:wsConciliacionSoap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="wmImed_SrvConciliacion">
+<soap:operation soapAction="http://tempuri.org/wmImed_SrvConciliacion" style="document"/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<binding name="wsConciliacionHttpGet" type="s0:wsConciliacionHttpGet">
+<http:binding verb="GET"/>
+<operation name="wmImed_SrvConciliacion">
+<http:operation location="/wmImed_SrvConciliacion"/>
+<input>
+<http:urlEncoded/>
+</input>
+<output>
+<mime:mimeXml part="Body"/>
+</output>
+</operation>
+</binding>
+<binding name="wsConciliacionHttpPost" type="s0:wsConciliacionHttpPost">
+<http:binding verb="POST"/>
+<operation name="wmImed_SrvConciliacion">
+<http:operation location="/wmImed_SrvConciliacion"/>
+<input>
+<mime:content type="application/x-www-form-urlencoded"/>
+</input>
+<output>
+<mime:mimeXml part="Body"/>
+</output>
+</operation>
+</binding>
+<service name="WsConciliacion">
+<port name="WsConciliacionSoap" binding="s0:wsConciliacionSoap">
+<soap:address location="http://10.100.32.153/liquidador/pruebas/WsConciliacion/service"/>
+</port>
+<port name="WsConciliacionHttpGet" binding="s0:wsConciliacionHttpGet">
+<http:address location="http://10.100.32.153/liquidador/pruebas/WsConciliacion/service"/>
+</port>
+<port name="WsConciliacionHttpPost" binding="s0:wsConciliacionHttpPost">
+<http:address location="http://10.100.32.153/liquidador/pruebas/WsConciliacion/service"/>
+</port>
+</service>
+</definitions>

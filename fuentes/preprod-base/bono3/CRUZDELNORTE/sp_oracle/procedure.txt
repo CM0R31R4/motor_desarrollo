@@ -1,0 +1,18 @@
+
+SQL*Plus: Release 10.2.0.3.0 - Production on Tue Aug 5 11:49:07 2014
+
+Copyright (c) 1982, 2006, Oracle.  All Rights Reserved.
+
+
+Connected to:
+Oracle8i Release 8.1.7.4.0 - Production
+JServer Release 8.1.7.4.0 - Production
+
+SQL> SQL> select OBJECT_NAME,PROCEDURE_NAME,OBJECT_TYPE,OWNER from ALL_PROCEDURES order by PROCEDURE_NAME
+                                                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> Disconnected from Oracle8i Release 8.1.7.4.0 - Production
+JServer Release 8.1.7.4.0 - Production

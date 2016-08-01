@@ -1,0 +1,37 @@
+# Source function library.
+. /etc/init.d/functions
+
+MODULO="BaseMysql"
+RUTA="/home/motor/ApiMysqlRME"
+case "$1" in 
+  start)
+	cd $RUTA
+	$RUTA/$MODULO rme 2 basedatos=rme proceso=MYSQL_RME log=1 prefijo_log=RME_API portdb=9010 ip_conexion_bd=172.16.9.233 port_postgres=3306 usuario_bd=rme clave_bd=rme2014 >/dev/null &
+	echo "$RUTA/$MODULO rme 2 basedatos=rme proceso=MYSQL_RME log=0 prefijo_log=RME_API portdb=9010 ip_conexion_bd=172.16.9.233 port_postgres=3306 usuario_bd=rme clave_bd=rme2014"
+	echo Inicializa $MODULO
+	sleep 1
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	killproc $RUTA/$MODULO >/dev/null
+	;;
+  restart|reload)
+	cd $RUTA
+	$0 stop
+	$0 start
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        cd $RUTA
+        rm *.LOG
+        rm *.ERR
+	echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

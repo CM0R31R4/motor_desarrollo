@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="http://tempuri.org/">
+ <SOAP-ENV:Body>
+   <ns1:wmImed_SrvConfirmacion>
+    <ns1:XML_INPUT>
+<MsgInput>
+<extCodSeguro>12</extCodSeguro>
+<extNumOperacion>5894</extNumOperacion>
+<extRutBeneficiario>0012549775-6</extRutBeneficiario>
+<extRutPrestador>0088770500-3</extRutPrestador>
+<extFechaEmision>2014-06-21</extFechaEmision>
+<extRutEmisor>0088770500-3</extRutEmisor>
+<extRutCajero>0088770500-3</extRutCajero>
+<extFolioBono>123456</extFolioBono>
+<extCodFinanciador>88</extCodFinanciador>
+<extCodLugar>13202</extCodLugar>
+<extMtoTot>5000</extMtoTot>
+<extMtoCopago>500</extMtoCopago>
+<extMtoBonif>50</extMtoBonif>
+<extLisPrest1>0101855   |00|01|0000015700|0000003140|</extLisPrest1>
+<extLisPrest2> </extLisPrest2>
+<extLisPrest3> </extLisPrest3>
+<extLisPrest4> </extLisPrest4>
+<extLisPrest5> </extLisPrest5>
+<extLisPrest6> </extLisPrest6>
+</MsgInput>
+</ns1:XML_INPUT>
+   </ns1:wmImed_SrvConfirmacion>
+
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

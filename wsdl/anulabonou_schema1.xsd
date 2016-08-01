@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="anulabonou" type="tns:anulabonou"/>
+<xs:element name="anulabonouResponse" type="tns:anulabonouResponse"/>
+<xs:complexType name="anulabonou">
+    <xs:sequence>
+      <xs:element name="extCodFinanciador" type="xs:int"/>
+      <xs:element name="extFolioBono" type="xs:long"/>
+      <xs:element minOccurs="0" name="extIndTratam" type="xs:string"/>
+      <xs:element minOccurs="0" name="extFecTratam" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="anulabonouResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:anulabonouResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="anulabonouResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extMensajeError" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

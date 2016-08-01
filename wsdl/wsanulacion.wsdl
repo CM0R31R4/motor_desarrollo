@@ -1,0 +1,104 @@
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://tempuri.org/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+<types>
+<s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+<s:element name="wmImed_SrvAnulacion">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="wmImed_SrvAnulacionResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvAnulacionResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="string" nillable="true" type="s:string"/>
+</s:schema>
+</types>
+<message name="wmImed_SrvAnulacionSoapIn">
+<part name="parameters" element="s0:wmImed_SrvAnulacion"/>
+</message>
+<message name="wmImed_SrvAnulacionSoapOut">
+<part name="parameters" element="s0:wmImed_SrvAnulacionResponse"/>
+</message>
+<message name="wmImed_SrvAnulacionHttpGetIn">
+<part name="XML_INPUT" type="s:string"/>
+</message>
+<message name="wmImed_SrvAnulacionHttpGetOut">
+<part name="Body" element="s0:string"/>
+</message>
+<message name="wmImed_SrvAnulacionHttpPostIn">
+<part name="XML_INPUT" type="s:string"/>
+</message>
+<message name="wmImed_SrvAnulacionHttpPostOut">
+<part name="Body" element="s0:string"/>
+</message>
+<portType name="WsAnulacionSoap">
+<operation name="wmImed_SrvAnulacion">
+<input message="s0:wmImed_SrvAnulacionSoapIn"/>
+<output message="s0:wmImed_SrvAnulacionSoapOut"/>
+</operation>
+</portType>
+<portType name="WsAnulacionHttpGet">
+<operation name="wmImed_SrvAnulacion">
+<input message="s0:wmImed_SrvAnulacionHttpGetIn"/>
+<output message="s0:wmImed_SrvAnulacionHttpGetOut"/>
+</operation>
+</portType>
+<portType name="WsAnulacionHttpPost">
+<operation name="wmImed_SrvAnulacion">
+<input message="s0:wmImed_SrvAnulacionHttpPostIn"/>
+<output message="s0:wmImed_SrvAnulacionHttpPostOut"/>
+</operation>
+</portType>
+<binding name="WsAnulacionSoap" type="s0:WsAnulacionSoap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="wmImed_SrvAnulacion">
+<soap:operation soapAction="http://tempuri.org/wmImed_SrvAnulacion" style="document"/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<binding name="WsAnulacionHttpGet" type="s0:WsAnulacionHttpGet">
+<http:binding verb="GET"/>
+<operation name="wmImed_SrvAnulacion">
+<http:operation location="/wmImed_SrvAnulacion"/>
+<input>
+<http:urlEncoded/>
+</input>
+<output>
+<mime:mimeXml part="Body"/>
+</output>
+</operation>
+</binding>
+<binding name="WsAnulacionHttpPost" type="s0:WsAnulacionHttpPost">
+<http:binding verb="POST"/>
+<operation name="wmImed_SrvAnulacion">
+<http:operation location="/wmImed_SrvAnulacion"/>
+<input>
+<mime:content type="application/x-www-form-urlencoded"/>
+</input>
+<output>
+<mime:mimeXml part="Body"/>
+</output>
+</operation>
+</binding>
+<service name="WsAnulacion">
+<port name="WsAnulacionSoap" binding="s0:WsAnulacionSoap">
+<soap:address location="http://10.100.32.153/liquidador/pruebas/WsAnulacion/service"/>
+</port>
+<port name="WsAnulacionHttpGet" binding="s0:WsAnulacionHttpGet">
+<http:address location="http://10.100.32.153/liquidador/pruebas/WsAnulacion/service"/>
+</port>
+<port name="WsAnulacionHttpPost" binding="s0:WsAnulacionHttpPost">
+<http:address location="http://10.100.32.153/liquidador/pruebas/WsAnulacion/service"/>
+</port>
+</service>
+</definitions>

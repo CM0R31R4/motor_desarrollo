@@ -1,0 +1,1514 @@
+------ Monitor Percona  ----------------/
+TIME_TOTAL_PERCONA = 0.20007326
+------ Monitor Autentia  ----------------/
+http://10.100.32.179/PRUEBA/monitor_autentia.php
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:13 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1037
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>
+            http://www.autentia.cl/wsaudit.wsdl
+        </url_ws>
+        <timeout>15</timeout>
+        <xml><table><wsUsuario>Autentia</wsUsuario><wsClave>@ut3nti4.</wsClave><NroAudit>INFO-..A8-XVQF-K9NR</NroAudit><bWsq>0</bWsq><bBmp>0</bBmp></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><Resultado><Err>0</Err><Glosa>No hay registros</Glosa></Resultado></RSP_WS>
+        <Header_WS>
+            HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:14 GMT
+Server: Apache/2.2.22 (Debian)
+Content-Length: 517
+X-ProcessingTime: D=409389
+X-Server: au-web02-st17
+Vary: Accept-Encoding
+Content-Type: text/xml; charset=utf-8
+        </Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:13</Inicio>
+        <Termino>15:39:14</Termino>
+        <Intervalo>0.652667</Intervalo>
+    </datos_salida>
+</table>        <http_code>200</http_code><time_total>0,935</time_total>
+HTTP_CODE---->200
+HEADER_WS---- :  HTTP/1.1 200 OK Date: Fri, 13 Mar 2015 18:39:14 GMT Server: Apache/2.2.22 (Debian) Content-Length: 517 X-ProcessingTime: D=409389 X-Server: au-web02-st17 Vary: Accept-Encoding Content-Type: text/xml; charset=utf-8
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <Resultado><Err>0</Err><Glosa>No hay registros</Glosa></Resultado>
+TIME_TOTAL_AUTENTIA---- : 0.652667
+ERROR----: 0
+STATUS_SERVICIO AUTENTIA 0
+------ Monitor Servicios  ----------------
+FINANCIADOR 01 11 44 62 63 65 67 68 71 76 78 80 81 88 94 99
+PUERTOS 01 11 44 63 63 63 67 63 71 76 78 99 81 88 94 99
+TIMEOUT 15
+DELAY 10
+INTENTOS 1
+PORT 8001
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8001/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>01</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:14 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1607
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8001/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>01</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo> </extSexo><extFechaNacimi>190001</extFechaNacimi><extCodEstBen> </extCodEstBen><extDescEstado></extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision> </extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>0000000000-0</extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1251
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:14 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:14</Inicio>
+        <Termino>15:39:14</Termino>
+        <Intervalo>0.383594</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,387</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1251 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:14 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo> </extSexo><extFechaNacimi>190001</extFechaNacimi><extCodEstBen> </extCodEstBen><extDescEstado></extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision> </extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>0000000000-0</extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.383594
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8001/WSIMedBono/services/COPTRANPort/\?wsdl
+XML <table><extCodFinanciador>01</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:14 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1611
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>
+            http://10.100.32.177:8001/WSIMedBono/services/COPTRANPort/\?wsdl
+        </url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>01</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>Prestacion Autorizada</errorMsg><extCodError>S</extCodError><extMensajeError>Prestacion Autorizada</extMensajeError><extPlan>0</extPlan><lstValores/></return></RSP_WS>
+        <Header_WS>
+            HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 677
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:14 GMT
+        </Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:14</Inicio>
+        <Termino>15:39:15</Termino>
+        <Intervalo>0.354617</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,358</time_total>
+HTTP_CODE---->200
+HEADER_WS---- :  HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 677 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:14 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>Prestacion Autorizada</errorMsg><extCodError>S</extCodError><extMensajeError>Prestacion Autorizada</extMensajeError><extPlan>0</extPlan><lstValores/></return>
+TIME_TOTAL_VALORVARI---- : 0.354617
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-01-2015-03-13:15:39-0.652667-0.383594-0.354617-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>01</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.383594</TmBencertif><TmValoriz>0.354617</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8011
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8011/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>11</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1622
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8011/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>11</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extApellidoPat>X</extApellidoPat><extApellidoMat>X</extApellidoMat><extNombres>X</extNombres><extSexo>X</extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>R</extCodEstBen><extDescEstado>Rechazado</extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante>X</extNomCotizante><extDirPaciente>X</extDirPaciente><extGlosaComuna>X</extGlosaComuna><extGlosaCiudad>X</extGlosaCiudad><extPrevision>X</extPrevision><extGlosa>Bloqueado</extGlosa><extPlan>X</extPlan><extDescuentoxPlanilla>X</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>[]</extRutAcompanante><extNombreAcompanante>[]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1266
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:14 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:15</Inicio>
+        <Termino>15:39:15</Termino>
+        <Intervalo>0.096437</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,099</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1266 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:14 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extApellidoPat>X</extApellidoPat><extApellidoMat>X</extApellidoMat><extNombres>X</extNombres><extSexo>X</extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>R</extCodEstBen><extDescEstado>Rechazado</extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante>X</extNomCotizante><extDirPaciente>X</extDirPaciente><extGlosaComuna>X</extGlosaComuna><extGlosaCiudad>X</extGlosaCiudad><extPrevision>X</extPrevision><extGlosa>Bloqueado</extGlosa><extPlan>X</extPlan><extDescuentoxPlanilla>X</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>[]</extRutAcompanante><extNombreAcompanante>[]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.096437
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8011/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>11</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2106
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8011/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>11</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Beneficiario Sin Planes</extMensajeError><extPlan>NULL</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1307
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:15</Inicio>
+        <Termino>15:39:15</Termino>
+        <Intervalo>0.110436</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,114</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1307 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:15 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Beneficiario Sin Planes</extMensajeError><extPlan>NULL</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.110436
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-11-2015-03-13:15:39-0.652667-0.096437-0.110436-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>11</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.096437</TmBencertif><TmValoriz>0.110436</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8044
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8044/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>44</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1723
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8044/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>44</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat>.</extApellidoPat><extApellidoMat>.</extApellidoMat><extNombres>.</extNombres><extSexo>F</extSexo><extFechaNacimi>19790319</extFechaNacimi><extCodEstBen>C</extCodEstBen><extDescEstado>CERTIFICADO</extDescEstado><extRutCotizante>0013738105-2</extRutCotizante><extNomCotizante>WITTWER BACHMANN JOCELYNE JENNIFER</extNomCotizante><extDirPaciente>CAMINO EL TREBOL, RICARDO NEUMANN 1000</extDirPaciente><extGlosaComuna>PUERTO VARAS</extGlosaComuna><extGlosaCiudad>LLANQUIHUE</extGlosaCiudad><extPrevision>A</extPrevision><extGlosa>Vigente</extGlosa><extPlan>MODW07</extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>[]</extRutAcompanante><extNombreAcompanante>[]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1367
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:16</Inicio>
+        <Termino>15:39:16</Termino>
+        <Intervalo>0.109225</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,111</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1367 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:15 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat>.</extApellidoPat><extApellidoMat>.</extApellidoMat><extNombres>.</extNombres><extSexo>F</extSexo><extFechaNacimi>19790319</extFechaNacimi><extCodEstBen>C</extCodEstBen><extDescEstado>CERTIFICADO</extDescEstado><extRutCotizante>0013738105-2</extRutCotizante><extNomCotizante>WITTWER BACHMANN JOCELYNE JENNIFER</extNomCotizante><extDirPaciente>CAMINO EL TREBOL, RICARDO NEUMANN 1000</extDirPaciente><extGlosaComuna>PUERTO VARAS</extGlosaComuna><extGlosaCiudad>LLANQUIHUE</extGlosaCiudad><extPrevision>A</extPrevision><extGlosa>Vigente</extGlosa><extPlan>MODW07</extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>[]</extRutAcompanante><extNombreAcompanante>[]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.109225
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8044/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>44</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2132
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8044/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>44</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Prestacion 1          No es De</extMensajeError><extPlan>NULL</extPlan><ExtGlosa1>NULL</ExtGlosa1><ExtGlosa2>NULL</ExtGlosa2><ExtGlosa3>NULL</ExtGlosa3><ExtGlosa4>NULL</ExtGlosa4><ExtGlosa5>NULL</ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1334
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:16</Inicio>
+        <Termino>15:39:16</Termino>
+        <Intervalo>0.10386</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,106</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1334 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:15 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Prestacion 1 No es De</extMensajeError><extPlan>NULL</extPlan><ExtGlosa1>NULL</ExtGlosa1><ExtGlosa2>NULL</ExtGlosa2><ExtGlosa3>NULL</ExtGlosa3><ExtGlosa4>NULL</ExtGlosa4><ExtGlosa5>NULL</ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.10386
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-44-2015-03-13:15:39-0.652667-0.109225-0.10386-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>44</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.109225</TmBencertif><TmValoriz>0.10386</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8063
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>62</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1588
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>62</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1242
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:16</Inicio>
+        <Termino>15:39:16</Termino>
+        <Intervalo>0.063573</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,066</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1242 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:15 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.063573
+ERROR----: 99
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>62</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2060
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>62</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1262
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:15 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:16</Inicio>
+        <Termino>15:39:16</Termino>
+        <Intervalo>0.07702</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,079</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1262 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:15 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.07702
+ERROR----: 99
+STATUS_SERVICIO VALORIZA 1
+1-62-2015-03-13:15:39-0.652667-0.063573-0.07702-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>62</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.063573</TmBencertif><TmValoriz>0.07702</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8063
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>63</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1588
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>63</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1242
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:16</Inicio>
+        <Termino>15:39:16</Termino>
+        <Intervalo>0.061299</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,064</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1242 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:16 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.061299
+ERROR----: 99
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>63</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:17 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2061
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>63</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1262
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:17</Inicio>
+        <Termino>15:39:17</Termino>
+        <Intervalo>0.071297</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,075</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1262 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:16 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.071297
+ERROR----: 99
+STATUS_SERVICIO VALORIZA 1
+1-63-2015-03-13:15:39-0.652667-0.061299-0.071297-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>63</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.061299</TmBencertif><TmValoriz>0.071297</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8063
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>65</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:17 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1587
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>65</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1242
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:17</Inicio>
+        <Termino>15:39:17</Termino>
+        <Intervalo>0.06385</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,066</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1242 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:16 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.06385
+ERROR----: 99
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>65</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:17 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2061
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>65</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1262
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:16 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:17</Inicio>
+        <Termino>15:39:17</Termino>
+        <Intervalo>0.070811</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,073</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1262 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:16 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.070811
+ERROR----: 99
+STATUS_SERVICIO VALORIZA 1
+1-65-2015-03-13:15:39-0.652667-0.06385-0.070811-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>65</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.06385</TmBencertif><TmValoriz>0.070811</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8067
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8067/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>67</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:17 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1025
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8067/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>67</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return></RSP_WS>
+        <Header_WS>HTTP/1.1 500 Error Conexion Financiador
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 549
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:26 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:17</Inicio>
+        <Termino>15:39:27</Termino>
+        <Intervalo>10.032492</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>10,035</time_total>
+HEADER_WS---- : HTTP/1.1 500 Error Conexion Financiador Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 549 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:26 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return>
+TIME_TOTAL_BENCERTIF---- : 10.032492
+ERROR----: 500
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8067/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>67</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:27 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1493
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8067/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>67</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return></RSP_WS>
+        <Header_WS>HTTP/1.1 500 Error Conexion Financiador
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 549
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:37 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:27</Inicio>
+        <Termino>15:39:37</Termino>
+        <Intervalo>10.032092</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>10,034</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 500 Error Conexion Financiador Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 549 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:37 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return>
+TIME_TOTAL_VALORVARI---- : 10.032092
+ERROR----: 500
+STATUS_SERVICIO VALORIZA 1
+1-67-2015-03-13:15:39-0.652667-10.032492-10.032092-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>67</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>10.032492</TmBencertif><TmValoriz>10.032092</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8063
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>68</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:37 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1588
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>68</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1242
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:37 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:37</Inicio>
+        <Termino>15:39:38</Termino>
+        <Intervalo>0.032675</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,035</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1242 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:37 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.032675
+ERROR----: 99
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>68</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2061
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8063/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>68</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1262
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:37 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:38</Inicio>
+        <Termino>15:39:38</Termino>
+        <Intervalo>0.040275</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,043</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1262 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:37 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"Falla Oracle"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.040275
+ERROR----: 99
+STATUS_SERVICIO VALORIZA 1
+1-68-2015-03-13:15:39-0.652667-0.032675-0.040275-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>68</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.032675</TmBencertif><TmValoriz>0.040275</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8071
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8071/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>71</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1610
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8071/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>71</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"ORA-03114: not connected to ORACLE"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1264
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:37 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:38</Inicio>
+        <Termino>15:39:38</Termino>
+        <Intervalo>0.052032</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,055</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1264 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:37 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"ORA-03114: not connected to ORACLE"</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen></extCodEstBen><extDescEstado></extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa></extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente></extMontoExcedente><extRutAcompanante></extRutAcompanante><extNombreAcompanante></extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.052032
+ERROR----: 99
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8071/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>71</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2084
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8071/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>71</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>99</errorCod><errorMsg>"ORA-03114: not connected to ORACLE
+"</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1285
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:37 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:38</Inicio>
+        <Termino>15:39:38</Termino>
+        <Intervalo>0.067692</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,071</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1285 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:37 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>99</errorCod><errorMsg>"ORA-03114: not connected to ORACLE "</errorMsg><extCodError></extCodError><extMensajeError></extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion></extValorPrestacion><extAporteFinanciador></extAporteFinanciador><extCopago></extCopago><extInternoIsa></extInternoIsa><ExtTipoBonif1></ExtTipoBonif1><ExtCopago1></ExtCopago1><ExtTipoBonif2></ExtTipoBonif2><ExtCopago2></ExtCopago2><ExtTipoBonif3></ExtTipoBonif3><ExtCopago3></ExtCopago3><ExtTipoBonif4></ExtTipoBonif4><ExtCopago4></ExtCopago4><ExtTipoBonif5></ExtTipoBonif5><ExtCopago5></ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.067692
+ERROR----: 99
+STATUS_SERVICIO VALORIZA 1
+1-71-2015-03-13:15:39-0.652667-0.052032-0.067692-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>71</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.052032</TmBencertif><TmValoriz>0.067692</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8076
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8076/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>76</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1632
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8076/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>76</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>1000000</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>X</extCodEstBen><extDescEstado>Benef NO Vig.</extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa>Beneficiario NO Vigente en Isapre</extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>[]</extRutAcompanante><extNombreAcompanante>[]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1278
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:38</Inicio>
+        <Termino>15:39:38</Termino>
+        <Intervalo>0.254704</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,258</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1278 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:38 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>1000000</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo></extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>X</extCodEstBen><extDescEstado>Benef NO Vig.</extDescEstado><extRutCotizante></extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa>Beneficiario NO Vigente en Isapre</extGlosa><extPlan></extPlan><extDescuentoxPlanilla></extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>[]</extRutAcompanante><extNombreAcompanante>[]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.254704
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8076/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>76</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2113
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8076/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>76</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>1000000</errorMsg><extCodError>N</extCodError><extMensajeError>Rut no es STAFF del Prestador</extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1314
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:38</Inicio>
+        <Termino>15:39:39</Termino>
+        <Intervalo>0.243981</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,246</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1314 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:38 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>1000000</errorMsg><extCodError>N</extCodError><extMensajeError>Rut no es STAFF del Prestador</extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.243981
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-76-2015-03-13:15:39-0.652667-0.254704-0.243981-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>76</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.254704</TmBencertif><TmValoriz>0.243981</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8078
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8078/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>78</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:39 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1981
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8078/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>78</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat>ZAMBRANO</extApellidoPat><extApellidoMat>SOTOMAYOR</extApellidoMat><extNombres>LUCCA STEFANO</extNombres><extSexo>M</extSexo><extFechaNacimi>20140710</extFechaNacimi><extCodEstBen>C</extCodEstBen><extDescEstado>CERTIFICADO</extDescEstado><extRutCotizante>0000047661-7</extRutCotizante><extNomCotizante>ZAMBRANO VIDAL ALFONSO VLADIMIR</extNomCotizante><extDirPaciente>CALLE OPALO #10620 CONDOMINIO LA RESERVA</extDirPaciente><extGlosaComuna>COLINA</extGlosaComuna><extGlosaCiudad>COLINA</extGlosaCiudad><extPrevision>V</extPrevision><extGlosa></extGlosa><extPlan>1ISAT50013</extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0000000001-9","0000047662-5","0000047663-3","0000047664-1","0000047661-7"]</extRutAcompanante><extNombreAcompanante>["ZAMBRANO SOTOMAYOR LUCCA STEFANO","SOTOMAYOR SALAVARRIA BLANCA LEONOR","ZAMBRANO SOTOMAYOR JUAN MARTIN","ZAMBRANO SOTOMAYOR JOSEMILIANO","ZAMBRANO VIDAL ALFONSO VLADIMIR"]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1725
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:39</Inicio>
+        <Termino>15:39:39</Termino>
+        <Intervalo>0.052915</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,055</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1725 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:38 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat>ZAMBRANO</extApellidoPat><extApellidoMat>SOTOMAYOR</extApellidoMat><extNombres>LUCCA STEFANO</extNombres><extSexo>M</extSexo><extFechaNacimi>20140710</extFechaNacimi><extCodEstBen>C</extCodEstBen><extDescEstado>CERTIFICADO</extDescEstado><extRutCotizante>0000047661-7</extRutCotizante><extNomCotizante>ZAMBRANO VIDAL ALFONSO VLADIMIR</extNomCotizante><extDirPaciente>CALLE OPALO #10620 CONDOMINIO LA RESERVA</extDirPaciente><extGlosaComuna>COLINA</extGlosaComuna><extGlosaCiudad>COLINA</extGlosaCiudad><extPrevision>V</extPrevision><extGlosa></extGlosa><extPlan>1ISAT50013</extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0000000001-9","0000047662-5","0000047663-3","0000047664-1","0000047661-7"]</extRutAcompanante><extNombreAcompanante>["ZAMBRANO SOTOMAYOR LUCCA STEFANO","SOTOMAYOR SALAVARRIA BLANCA LEONOR","ZAMBRANO SOTOMAYOR JUAN MARTIN","ZAMBRANO SOTOMAYOR JOSEMILIANO","ZAMBRANO VIDAL ALFONSO VLADIMIR"]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.052915
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8078/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>78</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:39 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2116
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8078/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>78</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Conv. no vigente o suspendido</extMensajeError><extPlan>1ISAT50013</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1319
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:38 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:39</Inicio>
+        <Termino>15:39:39</Termino>
+        <Intervalo>0.0787</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,081</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1319 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:38 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Conv. no vigente o suspendido</extMensajeError><extPlan>1ISAT50013</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.0787
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-78-2015-03-13:15:39-0.652667-0.052915-0.0787-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>78</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.052915</TmBencertif><TmValoriz>0.0787</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8099
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8099/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>80</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:39 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1686
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8099/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>80</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>1000000Hay Mas de un Benef. Vigente.!</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo>M</extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>R</extCodEstBen><extDescEstado>Rechazado</extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa>HAY MAS DE UN BENEF. VIGENTE.!</extGlosa><extPlan></extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0000000000-0"]</extRutAcompanante><extNombreAcompanante>[" "]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1350
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:39 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:39</Inicio>
+        <Termino>15:39:40</Termino>
+        <Intervalo>0.402939</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,406</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1350 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:39 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>1000000Hay Mas de un Benef. Vigente.!</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo>M</extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>R</extCodEstBen><extDescEstado>Rechazado</extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa>HAY MAS DE UN BENEF. VIGENTE.!</extGlosa><extPlan></extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0000000000-0"]</extRutAcompanante><extNombreAcompanante>[" "]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.402939
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8099/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>80</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:40 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2142
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8099/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>80</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>1000000Prestador NO Autorizado..!!</errorMsg><extCodError>N</extCodError><extMensajeError>Prestador NO Autorizado..!!</extMensajeError><extPlan>null</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1343
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:40 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:40</Inicio>
+        <Termino>15:39:41</Termino>
+        <Intervalo>0.966902</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,969</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1343 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:40 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>1000000Prestador NO Autorizado..!!</errorMsg><extCodError>N</extCodError><extMensajeError>Prestador NO Autorizado..!!</extMensajeError><extPlan>null</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.966902
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-80-2015-03-13:15:39-0.652667-0.402939-0.966902-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>80</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.402939</TmBencertif><TmValoriz>0.966902</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8081
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8081/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>81</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:41 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1024
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8081/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>81</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return></RSP_WS>
+        <Header_WS>HTTP/1.1 500 Error Conexion Financiador
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 549
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:45 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:41</Inicio>
+        <Termino>15:39:46</Termino>
+        <Intervalo>5.032616</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>5,036</time_total>
+HEADER_WS---- : HTTP/1.1 500 Error Conexion Financiador Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 549 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:45 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return>
+TIME_TOTAL_BENCERTIF---- : 5.032616
+ERROR----: 500
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8081/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>81</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:46 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1459
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8081/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>81</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>2</errorCod><errorMsg>Reintente por Favor</errorMsg></return></RSP_WS>
+        <Header_WS>HTTP/1.1 500 Error Service
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 529
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:45 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:46</Inicio>
+        <Termino>15:39:46</Termino>
+        <Intervalo>0.048802</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,052</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 500 Error Service Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 529 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:45 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>2</errorCod><errorMsg>Reintente por Favor</errorMsg></return>
+TIME_TOTAL_VALORVARI---- : 0.048802
+ERROR----: 2
+STATUS_SERVICIO VALORIZA 1
+1-81-2015-03-13:15:39-0.652667-5.032616-0.048802-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>81</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>5.032616</TmBencertif><TmValoriz>0.048802</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8088
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8088/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>88</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:46 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1957
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8088/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>88</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat>MUNITA</extApellidoPat><extApellidoMat></extApellidoMat><extNombres>LUCA</extNombres><extSexo>M</extSexo><extFechaNacimi>20140518</extFechaNacimi><extCodEstBen>C</extCodEstBen><extDescEstado>Certificado</extDescEstado><extRutCotizante>0013351963-7</extRutCotizante><extNomCotizante>JOSE MANUEL MUNITA SEPULVEDA</extNomCotizante><extDirPaciente>LUIS PASTEUR 7529 DPTO A-51</extDirPaciente><extGlosaComuna>VITACURA</extGlosaComuna><extGlosaCiudad>VITACURA</extGlosaCiudad><extPrevision>D</extPrevision><extGlosa></extGlosa><extPlan>MAS2005G</extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0009410652-4","0013351963-7","0020469967-4","0022756455-5","0023131341-9","0023636360-0"]</extRutAcompanante><extNombreAcompanante>["RODRIGUEZ VIAL, MACARENA","MUNITA SEPULVEDA, JOSE MANUEL","MUNITA NOVOA, MARIA LUISA","MUNITA RODRIGUEZ, MATILDA","MUNITA RODRIGUEZ, MATEO","MUNITA RODRIGUEZ, ELOISA"]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1722
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:46 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:46</Inicio>
+        <Termino>15:39:46</Termino>
+        <Intervalo>0.25264</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,256</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1722 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:46 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg></errorMsg><extApellidoPat>MUNITA</extApellidoPat><extApellidoMat></extApellidoMat><extNombres>LUCA</extNombres><extSexo>M</extSexo><extFechaNacimi>20140518</extFechaNacimi><extCodEstBen>C</extCodEstBen><extDescEstado>Certificado</extDescEstado><extRutCotizante>0013351963-7</extRutCotizante><extNomCotizante>JOSE MANUEL MUNITA SEPULVEDA</extNomCotizante><extDirPaciente>LUIS PASTEUR 7529 DPTO A-51</extDirPaciente><extGlosaComuna>VITACURA</extGlosaComuna><extGlosaCiudad>VITACURA</extGlosaCiudad><extPrevision>D</extPrevision><extGlosa></extGlosa><extPlan>MAS2005G</extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0009410652-4","0013351963-7","0020469967-4","0022756455-5","0023131341-9","0023636360-0"]</extRutAcompanante><extNombreAcompanante>["RODRIGUEZ VIAL, MACARENA","MUNITA SEPULVEDA, JOSE MANUEL","MUNITA NOVOA, MARIA LUISA","MUNITA RODRIGUEZ, MATILDA","MUNITA RODRIGUEZ, MATEO","MUNITA RODRIGUEZ, ELOISA"]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.25264
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8088/WSIMedBono/services/VALORIZIPort/\?wsdl
+XML <table><extCodFinanciador>88</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:47 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2096
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8088/WSIMedBono/services/VALORIZIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>88</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Convenio NO vigente</extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1297
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:46 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:47</Inicio>
+        <Termino>15:39:47</Termino>
+        <Intervalo>0.14288</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,145</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1297 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:46 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>OK</errorMsg><extCodError>N</extCodError><extMensajeError>Convenio NO vigente</extMensajeError><extPlan></extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.14288
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-88-2015-03-13:15:39-0.652667-0.25264-0.14288-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>88</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.25264</TmBencertif><TmValoriz>0.14288</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8094
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8094/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>94</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:47 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1025
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8094/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>94</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return></RSP_WS>
+        <Header_WS>HTTP/1.1 500 Error Conexion Financiador
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 549
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:39:57 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:47</Inicio>
+        <Termino>15:39:58</Termino>
+        <Intervalo>11.055229</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>11,057</time_total>
+HEADER_WS---- : HTTP/1.1 500 Error Conexion Financiador Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 549 Connection: keep-alive Date: Fri, 13 Mar 2015 18:39:57 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return>
+TIME_TOTAL_BENCERTIF---- : 11.055229
+ERROR----: 500
+STATUS_SERVICIO BENCERTIF1
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8094/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>94</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:39:58 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1493
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8094/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>94</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return></RSP_WS>
+        <Header_WS>HTTP/1.1 500 Error Conexion Financiador
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 549
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:40:08 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:39:58</Inicio>
+        <Termino>15:40:09</Termino>
+        <Intervalo>11.040702</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>11,043</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 500 Error Conexion Financiador Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 549 Connection: keep-alive Date: Fri, 13 Mar 2015 18:40:08 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>500</errorCod><errorMsg>Error de Comunicacion con Financiador</errorMsg></return>
+TIME_TOTAL_VALORVARI---- : 11.040702
+ERROR----: 500
+STATUS_SERVICIO VALORIZA 1
+1-94-2015-03-13:15:39-0.652667-11.055229-11.040702-0-0-1-1-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>94</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>11.055229</TmBencertif><TmValoriz>11.040702</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>1</RcBencertif><RcValoriz>1</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----
+PORT 8099
+---- Monitor Bencertif ----- 
+WS http://10.100.32.177:8099/WSIMedBono/services/BENCERTIFPort/\?wsdl
+XML <table><extCodFinanciador>99</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:40:09 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 1686
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8099/WSIMedBono/services/BENCERTIFPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>99</extCodFinanciador><extRutBeneficiario>0000000001-9</extRutBeneficiario><extFechaActual>20150313</extFechaActual></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>1000000Hay Mas de un Benef. Vigente.!</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo>M</extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>R</extCodEstBen><extDescEstado>Rechazado</extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa>HAY MAS DE UN BENEF. VIGENTE.!</extGlosa><extPlan></extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0000000000-0"]</extRutAcompanante><extNombreAcompanante>[" "]</extNombreAcompanante></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1350
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:40:08 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:40:09</Inicio>
+        <Termino>15:40:09</Termino>
+        <Intervalo>0.053639</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,057</time_total>
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1350 Connection: keep-alive Date: Fri, 13 Mar 2015 18:40:08 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>1000000Hay Mas de un Benef. Vigente.!</errorMsg><extApellidoPat></extApellidoPat><extApellidoMat></extApellidoMat><extNombres></extNombres><extSexo>M</extSexo><extFechaNacimi></extFechaNacimi><extCodEstBen>R</extCodEstBen><extDescEstado>Rechazado</extDescEstado><extRutCotizante>0000000000-0</extRutCotizante><extNomCotizante></extNomCotizante><extDirPaciente></extDirPaciente><extGlosaComuna></extGlosaComuna><extGlosaCiudad></extGlosaCiudad><extPrevision></extPrevision><extGlosa>HAY MAS DE UN BENEF. VIGENTE.!</extGlosa><extPlan></extPlan><extDescuentoxPlanilla>N</extDescuentoxPlanilla><extMontoExcedente>0</extMontoExcedente><extRutAcompanante>["0000000000-0"]</extRutAcompanante><extNombreAcompanante>[" "]</extNombreAcompanante></return>
+TIME_TOTAL_BENCERTIF---- : 0.053639
+ERROR----: 0
+STATUS_SERVICIO BENCERTIF0
+---- Monitor Valorvari ----- 
+WS http://10.100.32.177:8099/WSIMedBono/services/VALORVARIPort/\?wsdl
+XML <table><extCodFinanciador>99</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table>
+RSP---- : HTTP/1.1 200 OK
+Date: Fri, 13 Mar 2015 18:40:09 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.3.28
+Content-Length: 2142
+Connection: close
+Content-Type: text/xml
+
+<table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">        
+    <datos_entrada>
+        <url_ws>http://10.100.32.177:8099/WSIMedBono/services/VALORVARIPort/\?wsdl</url_ws>
+        <timeout>15</timeout>
+        <xml><table><extCodFinanciador>99</extCodFinanciador><extHomNumeroConvenio>1</extHomNumeroConvenio><extHomLugarConvenio>13001</extHomLugarConvenio><extSucVenta>2</extSucVenta><extRutConvenio>0096986050-3</extRutConvenio><extRutTratante>0009252525-2</extRutTratante><extEspecialidad></extEspecialidad><extRutSolicitante>0000000001-9</extRutSolicitante><extRutBeneficiario>0000000001-9</extRutBeneficiario><extTratamiento></extTratamiento><extCodigoDiagnostico>3</extCodigoDiagnostico><extNivelConvenio>1</extNivelConvenio><extUrgencia>2</extUrgencia><extLista1>1</extLista1><extNumPrestaciones>1</extNumPrestaciones></table></xml>
+    </datos_entrada>
+    <datos_salida>
+        <Estado>0</Estado>
+        <Mensaje>WS OK !!!</Mensaje>
+        <RSP_WS><return><errorCod>0</errorCod><errorMsg>1000000Prestador NO Autorizado..!!</errorMsg><extCodError>N</extCodError><extMensajeError>Prestador NO Autorizado..!!</extMensajeError><extPlan>null</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return></RSP_WS>
+        <Header_WS>HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Content-Type: text/xml;charset= UTF-8
+Content-Length: 1343
+Connection: keep-alive
+Date: Fri, 13 Mar 2015 18:40:09 GMT
+</Header_WS>
+        <Response_WS></Response_WS>
+        <Inicio>15:40:09</Inicio>
+        <Termino>15:40:09</Termino>
+        <Intervalo>0.045506</Intervalo>
+    </datos_salida>
+</table>        
+<http_code>200</http_code><time_total>0,048</time_total>
+HTTP_CODE---->200
+HEADER_WS---- : HTTP/1.1 200 OK Server: nginx/1.6.0 Content-Type: text/xml;charset= UTF-8 Content-Length: 1343 Connection: keep-alive Date: Fri, 13 Mar 2015 18:40:09 GMT
+ESTADO---- : 0
+MENSAJE---- : WS OK !!!
+RSP_WS----- : <return><errorCod>0</errorCod><errorMsg>1000000Prestador NO Autorizado..!!</errorMsg><extCodError>N</extCodError><extMensajeError>Prestador NO Autorizado..!!</extMensajeError><extPlan>null</extPlan><ExtGlosa1></ExtGlosa1><ExtGlosa2></ExtGlosa2><ExtGlosa3></ExtGlosa3><ExtGlosa4></ExtGlosa4><ExtGlosa5></ExtGlosa5><extValorPrestacion>[]</extValorPrestacion><extAporteFinanciador>[]</extAporteFinanciador><extCopago>[]</extCopago><extInternoIsa>[""]</extInternoIsa><ExtTipoBonif1>[]</ExtTipoBonif1><ExtCopago1>[]</ExtCopago1><ExtTipoBonif2>[]</ExtTipoBonif2><ExtCopago2>[]</ExtCopago2><ExtTipoBonif3>[]</ExtTipoBonif3><ExtCopago3>[]</ExtCopago3><ExtTipoBonif4>[]</ExtTipoBonif4><ExtCopago4>[]</ExtCopago4><ExtTipoBonif5>[]</ExtTipoBonif5><ExtCopago5>[]</ExtCopago5></return>
+TIME_TOTAL_VALORVARI---- : 0.045506
+ERROR----: 0
+STATUS_SERVICIO VALORIZA 0
+1-99-2015-03-13:15:39-0.652667-0.053639-0.045506-0-0-0-0-0-0.20007326-1
+REQ2 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:wsmonitor"><soapenv:Header/><soapenv:Body><urn:Insert soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><ReqIns xsi:type="urn:Estad"><TipoEstad>1</TipoEstad><CodEntidad>99</CodEntidad><Fecha>2015-03-13:15:39</Fecha><TmAutentia>0.652667</TmAutentia><TmBencertif>0.053639</TmBencertif><TmValoriz>0.045506</TmValoriz><TmPHP>0</TmPHP><RcAutentia>0</RcAutentia><RcBencertif>0</RcBencertif><RcValoriz>0</RcValoriz><RcPHP>0</RcPHP><TmPercBono>0.20007326</TmPercBono><RcPercBono>0</RcPercBono></ReqIns></urn:Insert></soapenv:Body></soapenv:Envelope>
+URL2 http://172.16.9.233/cgi-bin/autentia-monitor.cgi
+HTTP_CODE WS_MONITOR ---- : 200
+----

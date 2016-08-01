@@ -1,0 +1,29 @@
+locale is "es_ES.UTF-8"
+locale charset is "UTF-8"
+locale is "es_ES.UTF-8"
+locale charset is "UTF-8"
+1> 2> 3> Parameter Name	Default	Memory Used	Config Value	Run Value	Unit	Type
+max network packet size       	       2048	          0	        2048	        2048	bytes               	static              
+(1 row affected)
+(return status = 0)
+1> 2> 3> 4> Parameter Name	Default	Memory Used	Config Value	Run Value	Unit	Type
+max number network listeners  	          5	       5792	          10	          10	number              	dynamic             
+(1 row affected)
+(return status = 0)
+1> 2> 3> 4> Parameter Name	Default	Memory Used	Config Value	Run Value	Unit	Type
+number of remote connections  	         20	       9305	        1500	        1500	number              	static              
+(1 row affected)
+(return status = 0)
+1> 2> 3> 4> Parameter Name	Default	Memory Used	Config Value	Run Value	Unit	Type
+number of remote logins       	         20	       6211	        1500	        1500	number              	static              
+(1 row affected)
+(return status = 0)
+1> 2> 3> 4> Parameter Name	Default	Memory Used	Config Value	Run Value	Unit	Type
+number of remote sites        	         10	      17389	          30	          30	number              	static              
+(1 row affected)
+(return status = 0)
+1> 2> 3> 4> Parameter Name	Default	Memory Used	Config Value	Run Value	Unit	Type
+number of user connections    	         25	    1737858	        3000	        3000	number              	dynamic             
+(1 row affected)
+(return status = 0)
+1> 

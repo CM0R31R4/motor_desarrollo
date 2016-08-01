@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope  
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  
+	xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+	xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/">   
+<soapenv:Body>     
+	<ns1:infenrola>      
+		<extCodFinanciador>99</extCodFinanciador>      
+		<extRutBeneficiario>0013915583-1</extRutBeneficiario>    
+		<extRutAcompanante>1-9</extRutAcompanante>
+		<extIndEnrola>1</extIndEnrola>
+	</ns1:infenrola>     
+</soapenv:Body>  
+</soapenv:Envelope>

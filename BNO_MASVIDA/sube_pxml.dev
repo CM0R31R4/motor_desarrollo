@@ -1,0 +1,57 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_pxml reload BANMEDICA
+# $1 = comando          start | stop | reload
+# #2 = financiador      FONASA | MASVIDA | BANMEDICA | CONSALUD
+
+A=`/usr/bin/psql dmotor -At -F';' -c "SELECT pxml_modulo,pxml_puerto_bd,pxml_prefijo_log,pxml_timeoutbd from parametros_procesos where nom_fin='$2'"`
+DATA=($A)
+I=0;
+STR=${DATA[$I]}
+MODULO=$(echo $STR | cut -f 1 -d';')
+PORTDB=$(echo $STR | cut -f 2 -d';')
+PREFIJO_LOG=$(echo $STR | cut -f 3 -d';')
+TIMEOUTBD=$(echo $STR | cut -f 4 -d';')
+PATH1="."
+echo $MODULO,$PORTDB,$PREFIJO_LOG,$TIMEOUT_LEEDATA
+
+#MODULO ="BANMEDICA_PXML_BN3"
+case "$1" in 
+  start)
+	#if [ -x $PATH1/BANMEDICA.py ]; then
+	if [ -x $PATH1/PXML_SCGI ]; then
+		#Con parametro timeoutbd
+		./PXML_SCGI scgi=1 proceso=$MODULO portdb=$PORTDB log=1 init_rsa_din=1 prefijo_log=$PREFIJO_LOG timeoutbd=$TIMEOUTBD ruta_log="/tmp" >/dev/null&
+		#Sin parametro timeoutbd
+		#./BANMEDICA.py proceso=BANMEDICA_PXML_BN3 portdb=8000 log=1 init_rsa_din=1 prefijo_log=177 >/dev/null&
+		echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	killproc $PATH1/$MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop $2
+	$0 start $2
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        #rm *.LOG
+        rm *_APP.LOG
+        rm *_XXX.LOG
+        rm *.ERR
+        rm *.log
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

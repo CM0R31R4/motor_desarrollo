@@ -1,0 +1,25 @@
+
+--Ejemplo de Ejecucio, forma remota
+tsql -H 4.0.11.22 -p 12700 -U orden -P orden"$"1$
+select top 1 * from dbo.sysusers
+exec sp_help
+
+To look at your current database:
+select db_name()
+
+Looking at the list of available databases:
+sp_helpdb
+
+Changing your default database to the pubs database:
+use pubs
+
+Doing a select against a table in the current database (assuming the current
+database is pubs):
+select * from authors
+
+Doing a select against a table in another database:
+select name from tempdb..sysobjects
+select name from tempdb.dbo.sysobjects
+
+
+

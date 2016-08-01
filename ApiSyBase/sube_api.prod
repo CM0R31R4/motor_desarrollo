@@ -1,0 +1,35 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+PATH1="/home/motor/SYBASE_IMED"
+MODULO="Sybase_Imed"
+
+case "$1" in 
+start)
+	if [ -x $PATH1/Sybase_Imed ]; then
+        export ENCODING=LATIN1
+	cd $PATH1
+	$PATH1/Sybase_Imed proceso=SYBASE_IMED portdb=4100 log=1 hilos=4 prefijo_log=PRD basedatos=CertificaDB ip_conexion_bd=10.100.33.120:4100 usuario_bd=certificadba clave_bd=ndpmlqphh >/dev/null&		
+	echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo "Detiene Proceso $MODULO"
+	killproc $MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop $2
+	$0 start $2
+	echo "Proceso $MODULO Reiniciado"
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

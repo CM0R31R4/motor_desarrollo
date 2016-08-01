@@ -1,0 +1,64 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_api reload MASVIDA_CME
+# $1 = comando          start | stop | reload
+# #2 = financiador      FONASA | MASVIDA | BANMEDICA | CONSALUD
+
+A=`/usr/bin/psql dmotor -At -F';' -c "SELECT fin_modulo_api,fin_puerto_local_api,fin_hilos_api,fin_prefijo_api,fin_base_datos,fin_ip_conexion_bd,fin_usuario_bd,fin_clave_bd from parametros_procesos where nom_fin='$2'"`
+DATA=($A)
+I=0;
+STR=${DATA[$I]}
+MODULO=$(echo $STR | cut -f 1 -d';')
+#MODULO="MASVIDA_CME"
+PORTDB=$(echo $STR | cut -f 2 -d';')
+HILOS=$(echo $STR | cut -f 3 -d';')
+PREFIJO_LOG=$(echo $STR | cut -f 4 -d';')
+BASEDATOS=$(echo $STR | cut -f 5 -d';')
+IP_CONEXION_BD=$(echo $STR | cut -f 6 -d';')
+USUARIO_BD=$(echo $STR | cut -f 7 -d';')
+CLAVE_BD=$(echo $STR | cut -f 8 -d';')
+PATH1="."
+#echo $1
+#echo $2
+#echo $MODULO,$PORTDB,$HILOS,$PREFIJO_LOG,$BASEDATOS,$IP_CONEXION_BD,$USUARIO_BD,$CLAVE_BD
+#pwd
+
+case "$1" in 
+start)
+	if [ -x $PATH1/API_CME_SQL ]; then
+	./API_CME_SQL proceso=$MODULO portdb=$PORTDB log=1 hilos=$HILOS prefijo_log=$PREFIJO_LOG basedatos=$BASEDATOS ip_conexion_bd=$IP_CONEXION_BD usuario_bd=$USUARIO_BD clave_bd=$CLAVE_BD >/dev/null&
+	echo "gdb API_CME_SQL run proceso=$MODULO portdb=$PORTDB log=1 hilos=$HILOS prefijo_log=$PREFIJO_LOG basedatos=$BASEDATOS ip_conexion_bd=$IP_CONEXION_BD usuario_bd=$USUARIO_BD clave_bd=$CLAVE_BD"
+	#gdb API_CME_SQL run proceso=API_MASVIDA_CME portdb=8788 log=1 hilos=2 prefijo_log=API basedatos=AGENCIA_PRUEBA ip_conexion_bd=150.10.10.31:1433 usuario_bd=CMELEC clave_bd=IMED01
+	
+#f [ -x $PATH1/API_FIN_SQL_PERSIST ]; then
+#/API_FIN_SQL_PERSIST proceso=$MODULO portdb=$PORTDB log=1 hilos=$HILOS prefijo_log=$PREFIJO_LOG basedatos=$BASEDATOS ip_conexion_bd=$IP_CONEXION_BD usuario_bd=$USUARIO_BD clave_bd=$CLAVE_BD >/dev/null&
+#cho "gdb API_FIN_SQL_PERSIST  run proceso=$MODULO portdb=$PORTDB log=1 hilos=$HILOS prefijo_log=$PREFIJO_LOG basedatos=$BASEDATOS ip_conexion_bd=$IP_CONEXION_BD usuario_bd=$USUARIO_BD clave_bd=$CLAVE_BD"
+	
+	echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo "Detiene Proceso $MODULO"
+	killproc $MODULO >/dev/null
+	;;
+  restart|reload)
+	#0 stop MASVIDA_CME
+	#0 start MASVIDA_CME
+	$0 stop $2
+	$0 start $2
+	echo "Proceso $MODULO Reiniciado"
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

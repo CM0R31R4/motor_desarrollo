@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="imedconsultaconvenio" type="tns:imedconsultaconvenio"/>
+	<xs:element name="imedconsultaconvenioResponse" type="tns:imedconsultaconvenioResponse"/>
+	<xs:complexType name="imedconsultaconvenio">
+       		<xs:sequence>
+             		<xs:element name="TIPO_TX" type="xs:string"/> 
+             		<xs:element name="PC_KEY" type="xs:string"/>
+             		<xs:element name="COD_LUGAR" type="xs:string"/>
+             		<xs:element name="RUT_TITULAR" type="xs:string"/>
+             		<xs:element name="MONTO" type="xs:string"/> 
+             		<xs:element name="EMISOR" type="xs:string"/>
+       		</xs:sequence>
+   	</xs:complexType>
+   	<xs:complexType name="imedconsultaconvenioResponse">
+      		<xs:sequence>
+            		<xs:element minOccurs="0" name="return" type="tns:imedconsultaconvenioResp"/>
+      		</xs:sequence>
+   	</xs:complexType>
+   	<xs:complexType name="imedconsultaconvenioResp">
+      		<xs:sequence>
+            		<xs:element minOccurs="0" name="TIPO_TX" type="xs:string"/>
+            		<xs:element minOccurs="0" name="CODIGO_RESPUESTA" type="xs:string"/>
+            		<xs:element minOccurs="0" name="MENSAJE_RESPUESTA" type="xs:string"/>
+            		<xs:element minOccurs="0" name="CUOTA_MINIMA" type="xs:string"/>
+      			<xs:element minOccurs="0" name="CUOTA_MAXIMA" type="xs:string"/>
+      			<xs:element minOccurs="0" name="INDICADOR_AUTORIZACION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

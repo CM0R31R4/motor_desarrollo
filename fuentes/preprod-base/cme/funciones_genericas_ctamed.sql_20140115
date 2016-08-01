@@ -1,0 +1,172 @@
+CREATE OR REPLACE FUNCTION control_persistencia_bd(varchar)
+returns varchar as
+$$
+declare
+        xml1    alias for $1;
+        xml2	varchar;
+
+        cmd_sql1	varchar; 	--Begin - Commit - Rollback
+	input1	varchar;	--Lo que viene en el SQLINPUT
+	
+begin
+        xml2:=xml1;
+	--Permite API contenga la sesion en la bd.
+        --xml2:=put_campo(xml2,'__CONTROL_BD_PERSISTENTE__','NO');
+
+	--Tomo la instuccion SQL
+	input1:=get_campo('SQLINPUT',xml2);
+
+	--Concateno el Begin Trx
+	cmd_sql1:='BEGIN TRASANCTION' || input1;
+
+	--En caso de Exito
+	/*if get_campo('SQLCOMMIT') = 'SI' then
+		cmd_sql1:= input1 || 'COMMIT';
+	end if;*/
+	
+	--En caso de Error o Rechazo por el Financiador
+	/*if get_campo('SQLROLLBACK') = 'SI' then
+                cmd_sql1:= 'ROLLBACK';
+        end if;*/
+
+
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION iniciotx_ctamed (varchar)
+returns varchar as
+$$
+declare
+        xml1    alias for $1;
+        xml2    varchar;
+	
+	cod_ctamed1	varchar;
+
+begin
+        xml2:=xml1;
+	--xml2:=put_campo(xml2,'__SECUENCIAOK__','0');
+	xml2:=put_campo(xml2,'ESTADO_TX','EN_PROCESO');
+        xml2:=put_campo(xml2,'CODIGO_RESP','2');
+        xml2:=put_campo(xml2,'MENSAJE_RESP','');
+       	--xml2:=put_campo(xml2,'FECHA_IN_FIN',to_char(clock_timestamp(),'YYYY-MM-DD HH24MISS'));
+
+	--Este cod puede venir en tag IDXTX. 
+	cod_ctamed1:=get_campo('COD_CTAMED',xml2);
+
+	--Si no viene.
+	if motor_isnumber(cod_ctamed1)=0 then
+		cod_ctamed1:=nextval('correlativo_ctamed')::varchar;
+		--Necesario para el Update de tx_ctamed
+		xml2:=put_campo(xml2,'COD_CTAMED',cod_ctamed1);
+	end if;
+
+	--Necesario para la respuesta del WebService
+	xml2:=put_campo(xml2,'IDXTX',cod_ctamed1);
+	
+	raise notice 'JCC_iniciotx_ctamed cod_ctamed1=%',cod_ctamed1;
+        
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fintx_ctamed(varchar)
+returns varchar as
+$$
+declare
+        xml1	alias for $1;
+        xml2	varchar;
+	stCme	tx_ctamed%ROWTYPE;
+	stSec	bono3.define_secuencia_ws%ROWTYPE;
+	reg	record;
+	
+	id_fin1		varchar;
+	cod_cme1	varchar;
+	cod_motor_orig1	varchar;
+	i	integer =1;
+	cuenta1	integer =0;
+	
+begin
+        xml2:=xml1;
+	/*xml2:=put_campo(xml2,'ESTADO_TX','EN_PROCESO');
+        xml2:=put_campo(xml2,'CODIGO_RESP','2');
+        xml2:=put_campo(xml2,'MENSAJE_RESP','');
+        xml2:=put_campo(xml2,'FECHA_OUT_FIN',to_char(clock_timestamp(),'YYYY-MM-DD HH24MISS'));*/
+
+	id_fin1:=get_campo('ID_FIN',xml2);
+	cod_cme1:=get_campo('COD_CTAMED',xml2);
+
+	--Cuenta el total de CME registadas por cod_cme.
+	select count(*) into cuenta1 from tx_ctamed WHERE cod_fin=id_fin1::integer and cod_ctamed=cod_cme1::integer and estado='CONTENIDA';
+	raise notice 'JCC_Contenidas1 =%',cuenta1;
+	if not found then
+		xml2:=put_campo(xml2,'ERR','S');
+		xml2:=put_campo(xml2,'GLOSA','CME idxTx="'||cod_cme1||'", sin registros');
+		return xml2;
+	end if;
+	--Si hay trx CME. Abro una conexion persistente al financiador
+	--xml2:=put_campo(xml2,'__CONTROL_BD_PERSISTENTE__','OPEN');
+
+	--Saco los SP que debo ejecutar
+	for stCme in SELECT * FROM tx_ctamed WHERE cod_fin=id_fin1::integer and cod_ctamed=cod_cme1::integer and estado='CONTENIDA' ORDER BY fecha_in_tx ASC 
+	--for reg in SELECT * FROM tx_ctamed WHERE cod_fin=id_fin1::integer and cod_ctamed=cod_cme1::integer and estado='CONTENIDA' ORDER BY fecha_in_tx ASC 
+	LOOP
+		--while 
+		--raise notice 'JCC_SP-Request tx_cme=% - stCmereg=%',stCme.tipo_tx,stCme.sp_request;
+		raise notice 'JCC_SP-Request tx_cme=% ',stCme.tipo_tx;
+		xml2:=put_campo(xml2,'SQL_CME',stCme.sp_request);
+		
+		--Toma el SP y lo envia a la Api	
+		xml2:=put_campo(xml2,'__SECUENCIAOK__','188');
+		
+		--Tengo que ejecutar la fx de respuesta por cada tipo_tx procesado
+		select * into stSec from bono3.define_secuencia_ws where tipo_tx=stCme.tipo_tx and financiador = id_fin1::integer;
+		xml2:=put_campo(xml2,'FUNCION_OUTPUT',stSec.funcion_output);
+		raise notice 'JCC_stSec.funcion_output =% ',stSec.funcion_output;
+
+/*
+	--Cuando se comsume este metodo
+		--Debe buscar todas las trx de la CME. Use cod_ctamed
+		--Enviar Paquete CME a la API.
+		--Leer c/respuesta de los SP llamados
+			--Si OK. Ejecuta Commit
+			--Si NOK. Ejecuta Roollback
+		--Debe enviar in CLOSE
+*/
+	END LOOP;
+	--Cierra conexion
+	--xml2:=put_campo(xml2,'__CONTROL_BD_PERSISTENTE__','CLOSE');
+
+	--Debo actualizar el estado de CONTENIDA a INFORMADAS en tx_ctamed
+	xml2:=put_campo(xml2,'ERR','N');
+        xml2:=put_campo(xml2,'GLOSA','Transacciones Informadas');
+
+        return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION anulatx_ctamed(varchar)
+returns varchar as
+$$
+declare
+        xml1            alias for $1;
+        xml2            varchar;
+
+        cod_ctamed1     varchar;
+begin
+        xml2:=xml1;
+        xml2:=put_campo(xml2,'ESTADO_TX','EN_PROCESO');
+        xml2:=put_campo(xml2,'CODIGO_RESP','2');
+        xml2:=put_campo(xml2,'MENSAJE_RESP','');
+        xml2:=put_campo(xml2,'FECHA_OUT_FIN',to_char(clock_timestamp(),'YYYY-MM-DD HH24MISS'));
+
+        xml2:=put_campo(xml2,'ERR','S');
+        xml2:=put_campo(xml2,'GLOSA','Transacciones Anuladas');
+
+        return xml2;
+end;
+$$
+LANGUAGE plpgsql;

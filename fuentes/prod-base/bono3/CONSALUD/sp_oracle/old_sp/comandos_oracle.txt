@@ -1,0 +1,27 @@
+
+Conección al SQLPLUS
+/home/isys/instantclient_11_2/sqlplus IMEDCON/imedcon@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.20.2.204)(PORT=1522))(CONNECT_DATA=(SID=TATESA)))"
+
+** Conexion con el conector de Python	
+./consalud_gateway.py localhost 8071 'IMEDCON/imedcon@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.20.2.204)(PORT=1522))(CONNECT_DATA=(SID=TATESA)))'
+
+~/ApiORACLE_CONSALUD/./consalud_gateway.py localhost 8071 'IMEDCON/imedcon@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.20.2.204)(PORT=1522))(CONNECT_DATA=(SID=TATESA)))'
+
+Query para ver los objetos
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('PACKAGE');
+
+Descipción de estructura
+desc VIDVALTRANS_PKG
+
+
+SQL> show pagesize lines
+pagesize 14
+linesize 80
+SET PAGESIZE 999 LINESIZE 300
+
+define_editor = vi;
+
+
+
+
+

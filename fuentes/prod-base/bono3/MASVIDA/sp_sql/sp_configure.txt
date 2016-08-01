@@ -1,0 +1,15 @@
+locale is "en_US.UTF-8"
+locale charset is "UTF-8"
+using default charset "UTF-8"
+locale is "en_US.UTF-8"
+locale charset is "UTF-8"
+using default charset "UTF-8"
+1> 2> 3> name	minimum	maximum	config_value	run_value
+remote access	0	1	1	1
+(1 row affected)
+(return status = 0)
+1> 2> 3> 4> name	minimum	maximum	config_value	run_value
+user connections	0	32767	0	0
+(1 row affected)
+(return status = 0)
+1> 

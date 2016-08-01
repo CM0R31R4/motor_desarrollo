@@ -1,0 +1,43 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_api start MOTOR
+# $1 = comando          start | stop | reload
+
+PATH1="/home/motor/ApiPerconaLiq"
+MODULO="Api_PerconaLiq"
+
+case "$1" in 
+start)
+	if [ -x $PATH1/Api_PerconaLiq ]; then
+	export PGCLIENTENCODING=LATIN1
+	export ENCODING=LATIN1
+	#Percona DESA
+	$PATH1/Api_PerconaLiq liquidador 2 proceso=MYSQL_LIQUIDADOR basedatos=liqdevel log=1 prefijo_log=PER  portdb=10002 port_postgres=3306 ip_conexion_bd=10.100.32.57 usuario_bd=liqdevel clave_bd=JrCmrVKr6vukHGk  >/dev/null &
+	echo "$PATH1/Api_PerconaLiq liquidador 2 proceso=MYSQL_LIQUIDADOR basedatos=liqdevel log=1 prefijo_log=PER  portdb=10002 port_postgres=3306 ip_conexion_bd=10.100.32.57 usuario_bd=liqdevel clave_bd=JrCmrVKr6vukHGk"
+	
+	echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo "Detiene Proceso $MODULO"
+	killproc $MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop 
+	$0 start 
+	echo "Proceso $MODULO Reiniciado"
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

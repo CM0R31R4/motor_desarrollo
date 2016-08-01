@@ -1,0 +1,43 @@
+# Source function library.
+. /etc/init.d/functions
+
+MODULO="Pxml"
+PATH1="/home/motor/Pxml/"
+
+case "$1" in 
+  start)
+	if [ -x $PATH1/$MODULO ]; then
+		cd $PATH1
+		#Con parametro timeoutbd
+		./$MODULO proceso=PROCESA_XML portdb=9000 log=1 init_rsa_din=1 prefijo_log=PXML_177 timeoutbd=10 >/dev/null&
+		echo "./$MODULO proceso=PROCESA_XML portdb=9000 log=1 init_rsa_din=1 prefijo_log=PXML_177 timeoutbd=10"
+		
+		#Sin parametro timeoutbd
+		#./$MODULO proceso=PROCESA_XML portdb=8000 log=1 init_rsa_din=1 prefijo_log=177 >/dev/null&
+		echo Inicializa $MODULO
+	fi
+	sleep 1
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	killproc $PATH1/$MODULO >/dev/null
+	;;
+  restart|reload)
+	cd $PATH1
+	$0 stop
+	$0 start
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        cd $PATH1
+        rm *_APP.LOG
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

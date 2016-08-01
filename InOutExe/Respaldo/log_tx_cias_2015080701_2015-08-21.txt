@@ -1,0 +1,17 @@
+======================================================================
+>> Hora de Inicio de respaldo de tabla [tx_cias_2015080701] : vie 21 ago 2015 15:22:41 CLT
+Se encontraron (50) registros en tabla [tx_cias_2015080701]
+Generando archivo /home/motor/InOutExe/Respaldo/tx_cias_2015080701_2015-08-21.dump ...
+Contando lineas del archivo (tx_cias_2015080701_2015-08-21.dump) : (50) contra registros en tabla de origen (50)...
+Verificando existencia de [tx_cias_2015080701] en Amazon...
+Tabla no existe.
+Creando tabla [tx_cias_2015080701] en Amazon....
+Cargando respaldo en Amazon-RDS...
+Total registros cargados en tabla de destino [tx_cias_2015080701] en Amazon : (50).
+Se borra la tabla local : [tx_cias_2015080701].
+DROP TABLE
+Cantidad de registros en tabla de origen [tx_cias_2015080701] : (50).
+Cantidad de registros en tabla de Amazon [tx_cias_2015080701] : (50).
+Cantidad de registros en archivo (tx_cias_2015080701_2015-08-21.dump) : (50).
+Proceso Respaldo OK. Se genera archivo : (tx_cias_2015080701_2015-08-21.dump).
+>> Hora de termino del respaldo : vie 21 ago 2015 15:22:46 CLT

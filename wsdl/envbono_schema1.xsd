@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="envbono" type="tns:envbono"/>
+<xs:element name="envbonoResponse" type="tns:envbonoResponse"/>
+<xs:complexType name="envbono">
+    <xs:sequence>
+      <xs:element name="extCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="extHomNumeroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extHomLugarConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extSucVenta" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutAsociado" type="xs:string"/>
+      <xs:element minOccurs="0" name="extNomPrestador" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutTratante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutBeneficiario" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutAcompanante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutEmisor" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutCajero" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodigoDiagnostico" type="xs:string"/>
+      <xs:element minOccurs="0" name="extDescuentoxPlanilla" type="xs:string"/>
+      <xs:element name="extMontoExcedente" type="xs:long"/>
+      <xs:element minOccurs="0" name="extFechaEmision" type="xs:string"/>
+      <xs:element name="extNivelConvenio" type="xs:int"/>
+      <xs:element name="extFolioFinanciador" type="xs:long"/>
+      <xs:element name="extMontoValorTotal" type="xs:long"/>
+      <xs:element name="extMontoAporteTotal" type="xs:long"/>
+      <xs:element name="extMontoCopagoTotal" type="xs:long"/>
+      <xs:element name="extNumOperacion" type="xs:long"/>
+      <xs:element name="extCorrPrestacion" type="xs:long"/>
+      <xs:element name="extTipoSolicitud" type="xs:int"/>
+      <xs:element minOccurs="0" name="extFechaInicio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="extPlan" type="xs:string"/>
+      <xs:element minOccurs="0" name="lstPrest" type="tns:ArrayOfEnvBono_ColInp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="ArrayOfEnvBono_ColInp">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EnvBono_ColInp" nillable="true" type="tns:EnvBono_ColInp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="EnvBono_ColInp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="extCodigoHomologo" type="xs:string"/>
+      <xs:element minOccurs="0" name="extItem" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodigoAdicional" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRecargoFueraHora" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCantidad" type="xs:int"/>
+      <xs:element minOccurs="0" name="extValorPrestacion" type="xs:long"/>
+      <xs:element minOccurs="0" name="extAporteFinanciador" type="xs:long"/>
+      <xs:element minOccurs="0" name="extCopago" type="xs:long"/>
+      <xs:element minOccurs="0" name="extInternoIsa" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="envbonoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:envbonoResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="envbonoResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extMensajeError" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

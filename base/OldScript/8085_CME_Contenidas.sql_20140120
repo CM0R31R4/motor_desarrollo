@@ -1,0 +1,134 @@
+delete from isys_querys_tx where llave='8085';
+
+insert into isys_querys_tx values ('8085',10,1,1,'SELECT proc_parser_input_cme_8085(''$$__XMLCOMPLETO__$$'') as __XML__',0,0,0,1,1,-1,0);
+
+--MASVIDA_CME
+insert into isys_querys_tx values ('8085',88,188,1,'$$SP_CME$$',0,0,0,6,1,100,100);	--GET_MULTIPLE 
+
+insert into isys_querys_tx values ('8085',100,1,1,'SELECT proc_parser_output_cme_8085(''$$__XMLCOMPLETO__$$'') as __XML__',0,0,0,1,1,-1,0);
+--Limpia Variables
+--insert into isys_querys_tx values ('8085',35,1,1,'SELECT ''CLEAR_JCC'' as SQLINPUT',0,0,0,1,1,30,30);
+
+--Parsea el WS para identificar la transacciones entrante
+CREATE OR REPLACE FUNCTION proc_parser_input_cme_8085(varchar)
+returns varchar as $$
+declare
+        xml1   	alias for $1;
+        xml2   	varchar;
+	--i	integer;
+	--stSec		bono3.define_secuencia_ws%ROWTYPE;
+	--stData		bono3.respuestas_soap%ROWTYPE;
+
+	sql_cme1	varchar;
+	tx_cme1		varchar;
+	cod_motor_orig1	varchar;
+	total_cme1	integer;
+	cont_cme1	integer;
+	func_out1	varchar;
+	
+begin
+	xml2:=xml1;
+	xml2:=put_campo(xml2,'__SECUENCIAOK__','0');
+	xml2:=put_campo(xml2,'CODIGO_RESP','');
+	xml2:=put_campo(xml2,'MENSAJE_RESP','');
+	--xml2:=put_campo(xml2,'FECHA_IN_FIN,to_char(clock_timestamp(),'YYYY-MM-DD HH24:MI:SS'));
+
+	--Total de Execute	
+	total_cme1:=get_campo('TOTAL_CME',xml2)::integer;
+	cont_cme1:=get_campo('CONTADOR_CME',xml2)::integer;
+	--cont_cme1:=coalesce(nullif(get_campo('CONTADOR_CME',xml2),''),'0')::integer;
+	raise notice 'JCC_8085_CONT =% * TOTAL =% ',cont_cme1,total_cme1;
+
+	--Si viene 1, ejecuta el 1er SP. Luego en la resp, aumenta el contador para volver a por aca
+	/*if (cont_cme1 = 1) then
+		--cont_cme1:=1;
+		raise notice 'JCC_Input_CONT Cero =% ',cont_cme1;
+		xml2:=put_campo(xml2,'CONTADOR_CME',cont_cme1::varchar);
+	else
+                cont_cme1:=cont_cme1 + 1;
+                raise notice 'JCC_Input_CONT+1 =% ',cont_cme1;
+                xml2:=put_campo(xml2,'CONTADOR_CME',cont_cme1::varchar);
+	end if;*/
+
+	/*if (cont_cme1 > 1) then
+		cont_cme1:=cont_cme1 + 1;
+                raise notice 'JCC_Input_CONT+1 =% ',cont_cme1;
+                --xml2:=put_campo(xml2,'CONTADOR_CME',cont_cme1::varchar);
+	end if;*/
+		
+	--Tomo el primer sql_CME. Se inyecta.
+	sql_cme1	:=get_campo('SQL_CME_'||cont_cme1::varchar,xml2);
+	cod_motor_orig1	:=get_campo('COD_MOTOR_ORIG_'||cont_cme1::varchar,xml2);
+	func_out1	:=get_campo('FUNCION_OUTPUT_'||cont_cme1::varchar,xml2);
+	--tx_cme1		:=get_campo('TX_CME_'||cont_cme1::varchar,xml2);
+
+	--Tomo de a 1SP. Procesa la respuesta y vuelve al input de 8085
+	if ( cont_cme1 <= total_cme1) then 
+		xml2:=put_campo(xml2,'SP_CME',sql_cme1);
+		xml2:=put_campo(xml2,'COD_MOTOR_CME',cod_motor_orig1);
+		xml2:=put_campo(xml2,'FUNC_CME_OUTPUT',func_out1);
+		xml2:=put_campo(xml2,'__SECUENCIAOK__','88');
+		raise notice 'JCC_8085_LOOP > SECUENCIAOK=88';
+
+	else
+		raise notice 'JCC_8085_FIN-LOOP > SECUENCIAOK=0';
+		xml2:=put_campo(xml2,'__SECUENCIAOK__','0');
+		
+	end if;
+	
+	return xml2;	
+end;
+$$
+LANGUAGE plpgsql;
+
+--Parsea el WS para identificar la transacciones entrante
+CREATE OR REPLACE FUNCTION proc_parser_output_cme_8085(varchar)
+returns varchar as $$
+declare
+        xml1   	alias for $1;
+	xml2   	varchar;
+	--i	integer ='1';
+
+	func_out1	varchar;
+	cont_cme1	integer;
+	tx_cme1		varchar;
+
+begin
+	xml2:=xml1;
+	--xml2	:=put_campo(xml2,'__SECUENCIAOK__','0');
+	--xml2	:=put_campo(xml2,'ESTADO_TX','EN_PROCESO');
+	--xml2	:=put_campo(xml2,'CODIGO_RESP','');
+	--xml2	:=put_campo(xml2,'MENSAJE_RESP','');
+	xml2	:=put_campo(xml2,'FECHA_OUT_FIN',to_char(clock_timestamp(),'YYYY-MM-DD HH24:MI:SS'));
+
+	cont_cme1:=get_campo('CONTADOR_CME',xml2)::integer;
+	func_out1:=get_campo('FUNC_CME_OUTPUT',xml2);
+	--tx_cme1:=get_campo('TX_CME',xml2);
+        --raise notice 'JCC_8085_Output_EXEC=%',func_out1;
+
+	--Parseo respuesta con la funcion_output de cada CME.
+        if length(func_out1)>0 then
+                --xml2 := put_campo(xml2,'__FUNCION__',get_campo('__FUNCION__',xml2) || '-' || func_out1);
+                EXECUTE 'SELECT ' || func_out1 || '(' || chr(39) || xml2 || chr(39) || ')' into xml2;
+        end if;
+	--No vuelva a ejecutar Funcion_Out en 8081.
+	--xml2:=put_campo(xml2,'FUNCION_OUTPUT','');
+
+	--Si viene ROLLBACK
+	if get_campo('SP_ROLLBACK',xml2) = 'SI' then
+		--Envia un Rollback. Recursion de Secuencia
+		xml2:=put_campo(xml2,'SP_CME','ROLLBACK');
+		xml2:=put_campo(xml2,'__SECUENCIAOK__','88');
+	end if;
+
+	--cont_cme1:=cont_cme1 + 1;
+	--raise notice 'JCC_8085_cont_cme1 + 1 =%',cont_cme1;
+	xml2:=put_campo(xml2,'CONTADOR_CME',(cont_cme1+1)::varchar);
+	xml2:=put_campo(xml2,'__SECUENCIAOK__','10');
+
+	xml2:=put_campo(xml2,'SP_CME','LIMPIA');
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+

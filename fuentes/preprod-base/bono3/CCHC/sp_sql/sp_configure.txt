@@ -1,0 +1,4 @@
+name			minimum	maximum	config_value	run_value
+remote access		0	1	1		1
+
+user connections	0	32767	0		0

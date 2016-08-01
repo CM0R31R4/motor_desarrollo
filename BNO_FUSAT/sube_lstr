@@ -1,0 +1,49 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_lstr reload MASVIDA
+# $1 = comando          start | stop | reload
+# #2 = financiador      FONASA | MASVIDA | BANMEDICA | CONSALUD
+#
+
+A=`/usr/bin/psql dmotor -At -F';' -c "SELECT lstr_modulo,lstr_puerto_db,lstr_prefijo_log,lstr_timeout_leedata from parametros_procesos where nom_fin='$2'"`
+DATA=($A)
+I=0;
+STR=${DATA[$I]}
+MODULO=$(echo $STR | cut -f 1 -d';')
+PORTDB=$(echo $STR | cut -f 2 -d';')
+PREFIJO_LOG=$(echo $STR | cut -f 3 -d';')
+TIMEOUT_LEEDATA=$(echo $STR | cut -f 4 -d';')
+PATH1="."
+#echo $MODULO,$PORTDB,$PREFIJO_LOG,$TIMEOUT_LEEDATA
+
+case "$1" in 
+start)
+	if [ -x $PATH1/LISTENER ]; then
+		#./LISTENER proceso=$MODULO log=1 patron_final1="</soapenv:Envelope>" patron_final2="</SOAP-ENV:Envelope>" portdb=$PORTDB display=2 prefijo_log=$PREFIJO_LOG patron_final3="?wsdl" patron_final4="?xsd=" timeoutleedata=$TIMEOUT_LEEDATA >/dev/null&
+		./LISTENER proceso=$MODULO log=1 http=1 portdb=$PORTDB display=2 prefijo_log=$PREFIJO_LOG timeoutleedata=$TIMEOUT_LEEDATA >/dev/null&
+		echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	killproc $PATH1/$MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop $2
+	$0 start $2
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

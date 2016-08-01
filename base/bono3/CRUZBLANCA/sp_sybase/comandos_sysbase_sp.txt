@@ -1,0 +1,49 @@
+INGAnulaBonoU		bo	stored procedure(bono3)
+INGBenCertif		bo	stored procedure(bono3)
+INGBenCertif_out	dbo	stored procedure(bono3)
+INGBenRec		dbo	stored procedure(bono3)
+INGCopTran		dbo	stored procedure(bono3)
+INGCopTranLL		dbo	stored procedure(bono3)
+INGCopTranRESP		dbo	stored procedure(bono3)
+INGCtrl_TratSol		dbo	stored procedure(bono3)
+INGEnrola		dbo	stored procedure(bono3)
+INGEnvBonIs		dbo	stored procedure(bono3)
+INGEnvBono		dbo	stored procedure(bono3)
+INGGesCana		dbo	stored procedure(bono3)
+INGLeeRutCotiz		dbo	stored procedure(bono3)
+INGMovExcedente		dbo	stored procedure(bono3)
+INGPrestPaquete		dbo	stored procedure(bono3)
+INGRegBonoIMED_Fallido	dbo	stored procedure(bono3)
+INGSelConMar		dbo	stored procedure(bono3)
+INGSolicFolios		dbo	stored procedure(bono3)
+INGSwitch_FechaEmision	dbo	stored procedure(bono3)
+INGValPre		dbo	stored procedure(bono3)
+INGValTrans		dbo	stored procedure(bono3)
+INGValorVari		dbo	stored procedure(bono3)
+INGValorVari_NewCon	dbo	stored procedure(bono3)
+
+--Ejemplo de Ejecucio, forma remota
+tsql -H 172.31.16.49 -p 10000 -U CSALUD00 -P CSALUD00
+select top 1 * from dbo.sysusers
+exec sp_help
+
+To look at your current database:
+select db_name()
+
+Looking at the list of available databases:
+sp_helpdb
+
+Changing your default database to the pubs database:
+use pubs
+
+Doing a select against a table in the current database (assuming the current
+database is pubs):
+select * from authors
+
+Doing a select against a table in another database:
+select name from tempdb..sysobjects
+select name from tempdb.dbo.sysobjects
+
+INGBenCertif @extCodFinanciador=78,@extRutBeneficiario='1-9',@extMontoExcedente=1000,@extDescuentoxPlanilla='0',@extPlan='0',@extGlosa='0',@extPrevision='0',@extGlosaCiudad='0',@extFechaActual=0,@extApellidoPat='0',@extApellidoMat='0',@extNombres='0',@extSexo='0',@extFechaNacimi=0,@extCodEstBen='0',@extDescEstado='0',@extRutCotizante='0',@extNomCotizante='0',@extDirPaciente='0',@extGlosaComuna='0'
+
+

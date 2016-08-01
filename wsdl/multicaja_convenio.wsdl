@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="WsMultiCaja" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCaja/ImedConsultaConvenio?xsd=multicaja_convenios_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="imedconsultaconvenio">
+    <wsdl:part element="tns:imedconsultaconvenio" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="imedconsultaconvenioResponse">
+    <wsdl:part element="tns:imedconsultaconvenioResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IMEDCONSULTACONVENIOSEI">
+    <wsdl:operation name="imedconsultaconvenio">
+      <wsdl:input message="tns:imedconsultaconvenio" name="imedconsultaconvenio">
+    </wsdl:input>
+      <wsdl:output message="tns:imedconsultaconvenioResponse" name="imedconsultaconvenioResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IMEDCONSULTACONVENIOServiceSoapBinding" type="tns:IMEDCONSULTACONVENIOSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="imedconsultaconvenio">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="imedconsultaconvenio">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="imedconsultaconvenioResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IMEDCONSULTACONVENIOService">
+    <wsdl:port binding="tns:IMEDCONSULTACONVENIOServiceSoapBinding" name="IMEDCONSULTACONVENIO">
+      <soap:address location="http://$$LOCATION$$/WsMultiCaja/ImedConsultaConvenio"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

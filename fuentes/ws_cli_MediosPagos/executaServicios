@@ -1,0 +1,38 @@
+#Source function library.
+. /etc/init.d/functions
+
+MODULO=ServiciosSodexo
+PATH1=/home/switch/fuentes/fuentes2/WsSodexho
+
+case "$1" in
+  start)
+        if [ -x $PATH1/$MODULO ]; then
+                cd $PATH1
+                ./$MODULO 7023 proceso=WS_SODEXHO_DESA display=2 prefijo_log=170 ipcontrol=10.100.32.171 >/dev/null &
+                echo Inicializa $MODULO
+        fi
+        sleep 1
+        ;;
+  stop)
+        PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+        kill -USR1 $PID &>/dev/null
+        echo Detiene Proceso $MODULO
+        killproc $PATH1/$MODULO >/dev/null
+        ;;
+  restart|reload)
+        cd $PATH1
+        $0 stop
+        $0 start
+        echo Proceso $MODULO Reiniciado
+        ;;
+  borralog)
+        cd $PATH1
+        rm *.LOG
+        rm *.ERR
+        echo Borra Logs $MODULO
+        ;;
+
+
+  *) echo start | stop
+
+esac

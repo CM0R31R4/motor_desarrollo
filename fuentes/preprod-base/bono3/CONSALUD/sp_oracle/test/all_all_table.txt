@@ -1,0 +1,21 @@
+
+SQL*Plus: Release 11.2.0.3.0 Production on Tue Apr 8 16:07:45 2014
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.5.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> SQL> select * from ALL_ALL_TABLES order by TABLE_NAME asc
+                                                   *
+ERROR at line 1:
+ORA-03113: end-of-file on communication channel
+Process ID: 0
+Session ID: 6879 Serial number: 1500
+
+
+
+SQL> Disconnected from Oracle Database 10g Enterprise Edition Release 10.2.0.5.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options

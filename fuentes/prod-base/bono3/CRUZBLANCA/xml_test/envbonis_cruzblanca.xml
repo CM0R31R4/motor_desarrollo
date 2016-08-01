@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/">
+<soapenv:Body>
+	<ns1:envbonis>
+		<extCodFinanciador>78</extCodFinanciador>
+		<extHomNumeroConvenio>45940-0</extHomNumeroConvenio>
+		<extHomLugarConvenio>75600</extHomLugarConvenio>
+		<extSucVenta>75600</extSucVenta>
+		<extRutConvenio>0013915583-1</extRutConvenio>
+		<extRutAsociado>0013915583-1</extRutAsociado>
+		<extNomPrestador>Cruz Blanca</extNomPrestador>
+		<extRutTratante>0013915583-1</extRutTratante>
+		<extEspecialidad>666</extEspecialidad>
+		<extRutBeneficiario>0013915583-1</extRutBeneficiario>
+		<extRutCotizante>0013915583-1</extRutCotizante>
+		<extRutAcompanante>0013915583-1</extRutAcompanante>
+		<extRutEmisor>0013915583-1</extRutEmisor>
+		<extRutCajero>13915583-1</extRutCajero>
+		<extCodigoDiagnostico>888</extCodigoDiagnostico>
+		<extDescuentoxPlanilla>N</extDescuentoxPlanilla>
+		<extMontoExcedente>33333</extMontoExcedente>
+		<extFechaEmision>20130704</extFechaEmision>
+		<extNivelConvenio>1</extNivelConvenio>
+		<extFolioFinanciador>333</extFolioFinanciador>
+		<extMontoValorTotal>9020</extMontoValorTotal>
+		<extMontoAporteTotal>4270</extMontoAporteTotal>
+		<extMontoCopagoTotal>4750</extMontoCopagoTotal>
+		<extNumOperacion>99</extNumOperacion>
+		<extCorrPrestacion>666</extCorrPrestacion>
+		<extTipoSolicitud>2</extTipoSolicitud>
+		<extFechaInicio>20130704</extFechaInicio>
+		<extUrgencia>S</extUrgencia>
+		<extPlan>ICS010606B</extPlan>
+		<extLista1>0</extLista1>
+		<extLista2>0</extLista2>
+		<ExtLista3>0</ExtLista3>
+	</ns1:envbonis>
+</soapenv:Body>
+</soapenv:Envelope>

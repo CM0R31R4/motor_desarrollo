@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="LEERUTCOTIZService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WSIMedBono/services/LEERUTCOTIZPort?xsd=leerutcotiz_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="leerutcotizResponse">
+    <wsdl:part element="tns:leerutcotizResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="leerutcotiz">
+    <wsdl:part element="tns:leerutcotiz" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="LEERUTCOTIZSEI">
+    <wsdl:operation name="leerutcotiz">
+      <wsdl:input message="tns:leerutcotiz" name="leerutcotiz">
+    </wsdl:input>
+      <wsdl:output message="tns:leerutcotizResponse" name="leerutcotizResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LEERUTCOTIZServiceSoapBinding" type="tns:LEERUTCOTIZSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="leerutcotiz">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="leerutcotiz">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="leerutcotizResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LEERUTCOTIZService">
+    <wsdl:port binding="tns:LEERUTCOTIZServiceSoapBinding" name="LEERUTCOTIZPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedBono/services/LEERUTCOTIZPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

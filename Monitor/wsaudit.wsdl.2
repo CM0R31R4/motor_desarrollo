@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="wsaudit"
+ targetNamespace="urn:wsaudit"
+ xmlns:tns="urn:wsaudit"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns="urn:wsaudit"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="urn:wsaudit"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns="urn:wsaudit"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <complexType name="CDatosSistema">
+   <sequence>
+     <element name="NroAudit" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Registrado" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Ahora" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Antiguedad" type="xsd:int" minOccurs="1" maxOccurs="1" default="0"/>
+     <element name="Institucion" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Origen" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Operacion" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Estacion" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="RutOper" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Resultado" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Descripcion" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Version" type="string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CDatosAuditados">
+   <sequence>
+     <element name="Rut" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Nombre" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Dedo-id" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Dedo-Fecha" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="NombreOper" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Enrolado" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Dedo-Wsq" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Dedo-Bmp" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="CodLugar" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="TipoDoc" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="ConClave" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="S-Ubicacion" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="S-Descripcion" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="S-Serie" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Texto1" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Texto2" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Texto3" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Valor1" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Valor2" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="Valor3" type="string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CResultado">
+   <sequence>
+     <element name="Err" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Glosa" type="string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CAuditReadReq">
+   <sequence>
+     <element name="wsUsuario" type="string" minOccurs="1" maxOccurs="1" default=""/>
+     <element name="wsClave" type="string" minOccurs="1" maxOccurs="1" default=""/>
+     <element name="NroAudit" type="string" minOccurs="1" maxOccurs="1"/>
+     <element name="bWsq" type="xsd:boolean" minOccurs="1" maxOccurs="1" default="true"/>
+     <element name="bBmp" type="xsd:boolean" minOccurs="1" maxOccurs="1" default="true"/>
+   </sequence>
+  </complexType>
+ </schema>
+
+</types>
+
+<message name="wsaudit">
+ <part name="WSAuditReadReq" type="ns:CAuditReadReq"/>
+</message>
+
+<message name="WSAuditReadResp">
+ <part name="Resultado" type="ns:CResultado"/>
+ <part name="DatosSistema" type="ns:CDatosSistema"/>
+ <part name="DatosAuditados" type="ns:CDatosAuditados"/>
+</message>
+
+<portType name="wsauditPortType">
+ <operation name="wsaudit">
+  <documentation>Service definition of function ns__wsaudit</documentation>
+  <input message="tns:wsaudit"/>
+  <output message="tns:WSAuditReadResp"/>
+ </operation>
+</portType>
+
+<binding name="wsaudit" type="tns:wsauditPortType">
+ <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="wsaudit">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body use="encoded" namespace="urn:wsaudit" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </input>
+  <output>
+     <SOAP:body use="encoded" namespace="urn:wsaudit" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="wsaudit">
+ <documentation>gSOAP 2.7.15 generated service definition</documentation>
+ <port name="wsaudit" binding="tns:wsaudit">
+  <SOAP:address location="http://www.autentia.cl/cgi-bin/autentia-audit.cgi"/>
+ </port>
+</service>
+
+</definitions>

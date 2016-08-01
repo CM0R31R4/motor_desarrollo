@@ -1,0 +1,21 @@
+Api.Banmedica 0.0.0.0 8390 imed/imedqa@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.82)(PORT=1521))(CONNECT_DATA=(SID=QSUCU)))" ./banmedica 2 5 BANMEDICA.py
+Api.Banmedica 0.0.0.0 8391 imed/imedqa@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.82)(PORT=1521))(CONNECT_DATA=(SID=QSUCU)))" ./banmedica 2 5 BANMEDICA.py
+Inicializa BANMEDICA.py
+Traceback (most recent call last):
+  File "./ORACLE.py", line 193, in <module>
+    server = ReusingTCPServer((HOST, int(PORT)), DBRequestHandler)
+  File "/usr/lib64/python2.6/SocketServer.py", line 402, in __init__
+    self.server_bind()
+  File "./ORACLE.py", line 104, in server_bind
+    self.socket.bind(self.server_address)
+  File "<string>", line 1, in bind
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "./ORACLE.py", line 193, in <module>
+    server = ReusingTCPServer((HOST, int(PORT)), DBRequestHandler)
+  File "/usr/lib64/python2.6/SocketServer.py", line 402, in __init__
+    self.server_bind()
+  File "./ORACLE.py", line 104, in server_bind
+    self.socket.bind(self.server_address)
+  File "<string>", line 1, in bind
+socket.error: [Errno 98] Address already in use

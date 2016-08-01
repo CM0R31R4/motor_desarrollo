@@ -1,0 +1,579 @@
+delete from isys_querys_tx where llave='3000';
+
+insert into isys_querys_tx values ('3000',10,1,1,'SELECT proc_parser_traductor_ws_3000(''$$__XMLCOMPLETO__$$'') as __XML__',0,0,0,1,1,-1,0);
+
+--insert into isys_querys_tx values ('3000',20,1,1,'SELECT sp_call_cme_3000(''$$__XMLCOMPLETO__$$'') as __XML__',0,0,0,1,1,-1,0);
+
+insert into isys_querys_tx values ('3000',30,1,1,'SELECT proc_parser_respuesta_ws_3000(''$$__XMLCOMPLETO__$$'') as __XML__',0,0,0,1,1,-1,0);
+--Limpia Variables
+--insert into isys_querys_tx values ('3000',35,1,1,'SELECT ''CLEAR_JCC'' as SQLINPUT',0,0,0,1,1,30,30);
+
+--SERVICIO MEDICO CCHC (Con GET_MULTIPLE)
+insert into isys_querys_tx values ('3000',11,11,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);
+--VIDA CAMARA (Con GET_MULTIPLE)
+insert into isys_querys_tx values ('3000',44,44,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);
+
+--SAN LORENZO (Port=8062)
+insert into isys_querys_tx values ('3000',62,1,2,'Oracle SANLORENZO',8063,110,111,1,1,30,30);
+--FUSAT (Port=8063)
+insert into isys_querys_tx values ('3000',63,1,2,'Oracle FUSAT',8063,110,111,1,1,30,30);
+--CHUQUICAMATA (Port=8065)
+insert into isys_querys_tx values ('3000',65,1,2,'Oracle CHUQUICAMATA',8063,110,111,1,1,30,30);
+--RIO BLANCO (Port=8068)
+insert into isys_querys_tx values ('3000',68,1,2,'Oracle RIOBLANCO',8063,110,111,1,1,30,30);
+
+--COLMENA
+insert into isys_querys_tx values ('3000',67,67,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);
+--CONSALUD
+insert into isys_querys_tx values ('3000',71,1,2,'Oracle CONSALUD',8071,110,111,1,1,30,30);
+--insert into isys_querys_tx values ('3000',71,2,1,'Oracle CONSALUD',8071,100,101,1,1,30,30);
+--FUNDACION
+insert into isys_querys_tx values ('3000',76,1,2,'Oracle FUNDACION',8076,110,111,1,1,30,30);
+--CRUZ_BLANCA
+--JCC:06-06-2013 Nuevo ESPERA_OUTPUT_1. Soporta Array
+--insert into isys_querys_tx values ('3000',78,78,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);
+insert into isys_querys_tx values ('3000',78,78,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);
+--FERROSALUD (Con GET_MULTIPLE)
+insert into isys_querys_tx values ('3000',81,81,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);
+--MASVIDA (Con GET_MULTIPLE)
+insert into isys_querys_tx values ('3000',88,88,1,'$$SQLINPUT$$',0,0,0,6,1,30,30);	--GET_MULTIPLE
+--insert into isys_querys_tx values ('3000',88,88,1,'$$SQLINPUT$$',0,0,0,1,1,30,30);	--GET_RECORD
+
+--VIDA TRES (Port=8077)
+insert into isys_querys_tx values ('3000',80,1,2,'Oracle VIDATRES',8099,110,111,1,1,30,30);	--Por la Api de Banmedica
+--BANMEDICA (Port=8099)
+insert into isys_querys_tx values ('3000',99,1,2,'Oracle BANMEDICA',8099,110,111,1,1,30,30);
+
+--Servicio MultiApis Oracle
+insert into isys_querys_tx values ('3000',900,1,2,'Oracle MultiApis',8100,110,111,1,1,30,30);
+
+--FONASA(Consume WebService)
+insert into isys_querys_tx values ('3000',100,1,2,'FONASA_WS',9000,110,111,1,1,30,30);   --Llama un servicio de tabla servicios
+--insert into isys_querys_tx values ('3000',100,1,2,'FONASA_WS',9000,200,201,1,1,30,30);   --Llama un servicio de tabla servicios
+--insert into isys_querys_tx values ('3000',100,2,1,'FONASA_WS',9000,200,201,1,1,30,30); --Usa la BaseDatos Nro=2
+
+--CME (Call SP)
+insert into isys_querys_tx values ('3000',500,1,8,'Flujo CME Contenidas',8085,0,0,1,1,30,30);
+
+--Parsea el WS para identificar la transacciones entrante
+CREATE OR REPLACE FUNCTION proc_parser_traductor_ws_3000(varchar)
+returns varchar as
+$$
+declare
+        xml1    	alias for $1;
+        xml2    	varchar;
+	stSec		bono3.define_secuencia_ws%ROWTYPE;
+	stData		bono3.respuestas_soap%ROWTYPE;
+	tipo_tx1	varchar;
+	input1	 	varchar;
+	cod_motor1	varchar;
+        id_fin1 	integer;
+	xml_error1	varchar;
+	tag_cme1	varchar;	--Para guardar en otra tabla
+	query1		varchar;
+	puerto1		varchar;
+	
+begin
+	xml2:=xml1;
+	tag_cme1:='NO';	--Con este Tag veo si debo guardar en tx_ctamed o tx_bono3 
+	xml2	:=put_campo(xml2,'__SECUENCIAOK__','0');
+	--xml2	:=put_campo(xml2,'ESTADO_TX','');
+	xml2	:=put_campo(xml2,'CODIGO_RESP','');
+	xml2	:=put_campo(xml2,'MENSAJE_RESP','');
+	xml2	:=put_campo(xml2,'FECHA_IN_TX',to_char(clock_timestamp(),'YYYY-MM-DD HH24:MI:SS'));
+	
+	input1	:=get_campo('INPUT',xml2);
+	
+	--Validamos si el XML entrante es un documento xml valido
+	xml2 	:=valida_documento_xml_3000(xml2);
+	if length(get_campo('__XML_STD__',xml2))=0 then
+		xml2:=put_campo(xml2,'STATUS_HTTP','400 Xml Invalido');
+		xml2:=put_campo(xml2,'ERRORCOD','400');
+                xml2:=put_campo(xml2,'ERRORMSG','Xml Invalido');
+
+                --Busca el xml de error
+                select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+                if not found then
+                        xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx1');
+                        --xml2:=responde_http_3000(xml2);
+                        --return xml2;
+                end if;
+                --En caso de error, igual respondo un con un XML
+                xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+                xml2:=responde_http_3000(xml2);
+		
+		return xml2;
+	end if;
+	
+	--Busca el tipo_tx en el XML Input. tag1:='<ws:' o tag1:='<ns1:'
+	xml2 	:=busca_tx_3000(xml2);
+	
+	tipo_tx1:=get_campo('TX_WS',xml2);	
+	cod_motor1:=nextval('correlativo_motor')::varchar;
+        xml2:=put_campo(xml2,'CODIGO_MOTOR',cod_motor1);
+
+	--Parsea los datos del XML entrante, recibe un xml como parametro tag_busqueda='<ws:datosprest>'
+	xml2:=parser_xml(xml2,get_campo('TAG_BUSQUEDA',xml2));
+	--xml2:=parser_xml2(xml2,get_campo('TAG_BUSQUEDA',xml2));
+
+	--Input Financiador Bono3
+	if is_number(get_campo('EXTCODFINANCIADOR',xml2)) then
+		id_fin1	:=get_campo('EXTCODFINANCIADOR',xml2)::integer;
+	
+	--Input Financiador CtaMed()
+	elsif is_number(get_campo('CTACODFINANCIADOR',xml2)) then
+		id_fin1	:=get_campo('CTACODFINANCIADOR',xml2)::integer;
+		tag_cme1:='SI';
+	
+	--Input Financiador CtaMed (Protocolo Operatorio)
+	elsif is_number(get_campo('PROCODFINANCIADOR',xml2)) then
+		id_fin1	:=get_campo('PROCODFINANCIADOR',xml2)::integer;
+		tag_cme1:='SI';
+	
+	--Input Financiador CtasMed (Anamnesis)
+	elsif is_number(get_campo('ANAMCODFINANCIADOR',xml2)) then
+		id_fin1	:=get_campo('ANAMCODFINANCIADOR',xml2)::integer;
+		tag_cme1:='SI';
+	
+	--Input Financiador CtaMed (Epicrisis)
+	elsif is_number(get_campo('EPICODFINANCIADOR',xml2)) then
+		id_fin1	:=get_campo('EPICODFINANCIADOR',xml2)::integer;
+		tag_cme1:='SI';
+	
+	else
+		xml2:=put_campo(xml2,'STATUS_HTTP','400 Financiador No Encontrado');
+		xml2:=put_campo(xml2,'ERRORCOD','400');
+                xml2:=put_campo(xml2,'ERRORMSG','Financiador No Encontrado');
+
+                --Busca el xml de error
+                select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+                if not found then
+                        xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+                        --xml2:=responde_http_3000(xml2);
+                        --return xml2;
+                end if;
+                --En caso de error, igual respondo un con un XML
+                xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+                xml2:=responde_http_3000(xml2);
+
+                return xml2;
+	end if;
+	
+	--Para guardar el Id del Financiador en la Base	
+	xml2:=put_campo(xml2,'ID_FIN',id_fin1::varchar);
+	xml2:=put_campo(xml2,'TAG_CME',tag_cme1);
+
+	--Si viene el idxTx. Usa ese valor como codigo de la ctamedica
+	if ( (length(get_campo('IDXTX',xml2))::integer > 0) and (tag_cme1='SI') )then
+		xml2:=put_campo(xml2,'COD_CME',get_campo('IDXTX',xml2));
+	else 
+		xml2:=put_campo(xml2,'COD_CME','0'::varchar);
+		/*Solo para iniciatx
+		if tipo_tx1 = 'iniciotx' then
+			xml2:=put_campo(xml2,'COD_CME',nextval('correlativo_ctamed')::varchar);
+		else
+			xml2:=put_campo(xml2,'COD_CME','0'::varchar);
+		end if;
+		*/
+	end if;
+
+	--Obtengo el secuenciaOK y la funcion Input del financiador. Por tipo de trx. 
+	select * into stSec from bono3.define_secuencia_ws where tipo_tx=tipo_tx1 and financiador = id_fin1;
+	if not found then
+		xml2:=put_campo(xml2,'ERROR_LOG','No existe transaccion = '||tipo_tx1||' financiador = '||id_fin1::varchar);
+		xml2:=put_campo(xml2,'STATUS_HTTP','400 Peticion Incorrecta');
+		xml2:=put_campo(xml2,'ERRORCOD','400');
+		xml2:=put_campo(xml2,'ERRORMSG','Servicio No Habilitado');
+	
+		--Busca el xml de error
+	        select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+        	if not found then
+                	xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+	                --xml2:=responde_http_3000(xml2);
+        	        --return xml2;
+	        end if;
+		--En caso de error, igual respondo un con un XML
+	        xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+        	
+		--Proceso la respuesta con los datos en el XML
+	        xml2:=respuesta_xml(xml2);
+        	xml2:=responde_http_3000(xml2);
+	
+		return xml2;
+	end if;
+
+	xml2:=put_campo(xml2,'FUNCION_OUTPUT',stSec.funcion_output);
+	xml2:=put_campo(xml2,'FINANCIADOR',stSec.descripcion);
+
+	--EJECUTA FUNCION INPUT
+	raise notice 'JCC_3000_INPUT_EXEC=%',stSec.funcion_input;
+	if length(stSec.funcion_input)>0 then 
+		--xml2 := put_campo(xml2,'__FUNCION__',get_campo('__FUNCION__',xml2) || '-' || stSec.funcion_input);
+		EXECUTE 'SELECT ' || stSec.funcion_input || '(' || chr(39) || xml2 || chr(39) || ')' into xml2;
+	end if;
+
+	--Si trae ip_generica la usamos
+	if (stSec.ip_generica is not null) then
+		xml2:=put_campo(xml2,'__IP_CONEXION_CLIENTE__',stSec.ip_generica);
+		query1:='SELECT NEXTVAL('||quote_literal(stSec.correlativo_port_generica)||')';
+		EXECUTE query1 into puerto1;
+		xml2:=put_campo(xml2,'__IP_PORT_CLIENTE__',coalesce(puerto1,'0'));
+	end if;
+	
+	--Si es CTAMED, setea la secuencia en la funcion fintx_ctamed
+	if (stSec.tipo_tx<>'fintx') then 
+		--Llama a la Api, segun Secuencia definida en bono3.define_secuencia_ws
+		xml2:=put_campo(xml2,'__SECUENCIAOK__',stSec.secuencia::varchar);
+	end if;
+
+	--En caso de error en el formato del Rut 
+	if get_campo('ERROR_RUT',xml2) = 'SI' then
+                xml2:=put_campo(xml2,'STATUS_HTTP','500 Error Rut');
+                xml2:=put_campo(xml2,'ERRORCOD','500');
+                xml2:=put_campo(xml2,'ERRORMSG','Rut Invalido');
+
+                --Busca el xml de error
+                select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+                if not found then
+                        xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+                end if;
+                --En caso de error, igual respondo un con un XML
+                xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+                xml2:=responde_http_3000(xml2);
+		--No va al Financiador en caso de error
+		xml2:=put_campo(xml2,'__SECUENCIAOK__','0');
+                return xml2;
+        end if;
+	
+	--Si voy al financiador, guardo el registro en la tabla
+	--Si viene este tag, guarda en tabla de cuenta medica.
+	if tag_cme1 = 'SI' then
+		xml2:=ctamed_registra_tx(xml2);
+		--xml2:=put_campo(xml2,'TAG_CME','SI');
+		--No levanta funcion de respuesta. Ejecuta Contencion y con metodo fintx, son procesadas.
+		--if (stSec.tipo_tx<>'fintx') then
+		xml2:=put_campo(xml2,'FUNCION_OUTPUT','');
+		--end if;
+		xml2:=put_campo(xml2,'__XML_STD__','LIMPIADO_3000_IN');
+		
+	else 
+		--Guardo en bono3
+		xml2:=b3_registra_tx(xml2);
+	end if;
+
+	return xml2;	
+end;
+$$
+LANGUAGE plpgsql;
+
+--Parsea el WS para identificar la transacciones entrante
+CREATE OR REPLACE FUNCTION proc_parser_respuesta_ws_3000(varchar)
+returns varchar as
+$$
+declare
+        xml1    	alias for $1;
+	stData		bono3.respuestas_soap%ROWTYPE;
+        xml2   		varchar;
+	tipo_tx1	varchar;
+	func_out1	varchar;
+        id_fin1 	integer;
+
+	tag_cme1	varchar;
+begin
+	xml2:=xml1;
+	xml2	:=put_campo(xml2,'__SECUENCIAOK__','0');
+	xml2	:=put_campo(xml2,'SQLINPUT','');
+	xml2	:=put_campo(xml2,'RQT_XML','CLEAR');
+	--xml2	:=put_campo(xml2,'ESTADO_TX','EN_PROCESO');
+	--xml2	:=put_campo(xml2,'CODIGO_RESP','');
+	--xml2	:=put_campo(xml2,'MENSAJE_RESP','');
+	xml2	:=put_campo(xml2,'FECHA_OUT_TX',to_char(clock_timestamp(),'YYYY-MM-DD HH24:MI:SS'));
+	
+	tipo_tx1:=get_campo('TX_WS',xml2); --Bencertif
+        id_fin1:=get_campo('ID_FIN',xml2)::integer;
+	tag_cme1:=get_campo('TAG_CME',xml2);
+	
+	func_out1:=get_campo('FUNCION_OUTPUT',xml2);
+	raise notice 'JCC_3000_OUT_EXEC=%',func_out1;
+	--Antes de ejecutar la funcion_out, 
+	--Si fue a la API del Financiador, debe pasar por traductor_out_solicfolios_xxxx y luego entra a esta funcion
+       	if length(func_out1)>0 then
+       		--xml2 := put_campo(xml2,'__FUNCION__',get_campo('__FUNCION__',xml2) || '-' || func_out1);
+               	EXECUTE 'SELECT ' || func_out1 || '(' || chr(39) || xml2 || chr(39) || ')' into xml2;
+		raise notice 'JCC_3000_RESP_1 Mens=% - Cod_Resp=%',get_campo('MENSAJE_RESP',xml2),get_campo('CODIGO_RESP',xml2);
+       	end if;
+
+	-- Error o Falla de Api.
+        if strpos(get_campo('__STS_ERROR_SOCKET__',xml2),'FALLA_CONEXION')>0 then 
+           	--strpos(get_campo('__STS_ERROR_SOCKET__',xml2),'FALLA_CONEXION_BD')>0 or	--FALLA_CONEXION_BD 
+                
+		xml2:=put_campo(xml2,'STATUS_HTTP','500 Error Motor');
+                xml2:=put_campo(xml2,'ERRORCOD','500');
+                xml2:=put_campo(xml2,'ERRORMSG','Falla Conectividad Financiador');
+                --Registro la falla de conexion
+                xml2    :=put_campo(xml2,'CODIGO_RESP','2');
+                xml2    :=put_campo(xml2,'ESTADO_TX','FALLA_API');
+                xml2    :=put_campo(xml2,'MENSAJE_RESP','Error_Motor');
+
+                --Busca el xml de error
+                select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+                if not found then
+                        xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+                        --xml2:=responde_http_3000(xml2);
+                        --return xml2;
+                end if;
+                xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+                xml2:=responde_http_3000(xml2);
+
+                --Guardo este error, para shell control servicios
+                --Si viene el tag_ctamed
+                if (tag_cme1 = 'SI') then
+                        xml2:=ctamed_update_tx(xml2);
+                else
+                        xml2:=b3_update_tx(xml2);
+                end if;
+
+                xml2:=put_campo(xml2,'ERROR_LOG','Falla:Conexion_API = '||tipo_tx1);
+                return xml2;
+        end if;
+
+	-- Error por Timeout.
+        if strpos(get_campo('__STS_ERROR_SOCKET__',xml2),'SOCKET_NO_RESPONSE')>0 or	--SOCKET_NO_RESPONSE_BD		--TIMEOUT 
+           --Para FONASA llama a un WS
+	   get_campo('ESTADO_WS',xml2)='-1' then 
+		
+		xml2:=put_campo(xml2,'STATUS_HTTP','500 Financiador TimeOut');
+                xml2:=put_campo(xml2,'ERRORCOD','500');
+                --xml2:=put_campo(xml2,'ERRORMSG','Financiador TimeOut');
+                xml2:=put_campo(xml2,'ERRORMSG','Financiador TimeOut');
+                --Registro la falla de conexion
+                xml2    :=put_campo(xml2,'CODIGO_RESP','2');
+                xml2    :=put_campo(xml2,'ESTADO_TX','FALLA_API');
+                xml2    :=put_campo(xml2,'MENSAJE_RESP','Financiador_TimeOut');
+
+                --Busca el xml de error
+                select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+                if not found then
+                        xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+                        --xml2:=responde_http_3000(xml2);
+                        --return xml2;
+                end if;
+                xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+                xml2:=responde_http_3000(xml2);
+
+                --Guardo este error, para shell control servicios
+		--Si viene el tag_ctamed
+		if (tag_cme1 = 'SI') then
+                	xml2:=ctamed_update_tx(xml2);
+		else 
+                	xml2:=b3_update_tx(xml2);
+		end if;
+
+        	xml2:=put_campo(xml2,'ERROR_LOG','Falla:TimeOut_Financiador = '||tipo_tx1);
+                return xml2;
+        end if;
+
+	--Si falla la ejecucion del SP Remoto.
+	if get_campo('__STS_ERROR_PXML__',xml2)<>'OK' 		or
+	   get_campo('ERRORCOD',xml2)='99' 			or	--Oracle
+	   get_campo('STATUS',xml2)='FALLA' 			then	--Msql/Sybase  ..Viene del /fuentes/BaseDatosMSSQL
+	   --get_campo('CODRESPUESTA',xml2)='2' 			then	--Msql/Sybase  ..Viene del /fuentes/BaseDatosMSSQL
+
+		--En caso de Error. Pega el mismo ErrorMsg del Financiador en el Xml Response. 
+		--Si es Sybase/MySql
+		if get_campo('ERRORCOD',xml2)<>'99' then
+                	xml2:=put_campo(xml2,'ERRORMSG',get_campo('ERROR',xml2)); --Msql/Sybase(Viene del /fuentes/BaseDatosMSSQL)
+		end if;
+		
+		--Cambiar este mensaje
+		xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Ejecucion');
+                xml2:=put_campo(xml2,'ERRORCOD','500');
+		
+		--Registro la falla de conexion
+		xml2    :=put_campo(xml2,'CODIGO_RESP','2');
+                xml2    :=put_campo(xml2,'ESTADO_TX','FALLA_SP');
+                xml2    :=put_campo(xml2,'MENSAJE_RESP','Falla_Ejecucion');
+
+		--Busca el xml de error
+                select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+                if not found then
+                        xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+                end if;
+                xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+		xml2:=responde_http_3000(xml2);
+
+		--Guardo este error, para shell control servicios
+		--Si viene el tag_ctamed
+                if (tag_cme1 = 'SI') then
+                        xml2:=ctamed_update_tx(xml2);
+                else
+                        xml2:=b3_update_tx(xml2);
+                end if;
+		
+		xml2:=put_campo(xml2,'ERROR_LOG','Falla:Execute_SPCall = '||tipo_tx1);
+		return xml2;	
+	end if;
+
+	--Si no hay Xml respuesta de tipo_tx
+	select * into stData from bono3.respuestas_soap where tipo_tx=tipo_tx1;
+	if not found then
+		xml2:=put_campo(xml2,'STATUS_HTTP','500 Falla Tx');
+		xml2:=put_campo(xml2,'ERRORCOD','500');
+                xml2:=put_campo(xml2,'ERRORMSG','Falla Servicio Respuesta');
+                
+		--Registro la falla de conexion
+                xml2    :=put_campo(xml2,'CODIGO_RESP','2');
+                xml2    :=put_campo(xml2,'ESTADO_TX','RECHAZADO');
+                xml2    :=put_campo(xml2,'MENSAJE_RESP','Falla_SOAP');
+		
+		xml2:=put_campo(xml2,'RESPUESTA',stData.xml_error);
+                --Proceso la respuesta con los datos en el XML
+                xml2:=respuesta_xml(xml2);
+                xml2:=responde_http_3000(xml2);
+
+                --Guardo este error, para shell control servicios
+		--Si viene el tag_ctamed
+                if (tag_cme1 = 'SI') then
+                        xml2:=ctamed_update_tx(xml2);
+                else
+                        xml2:=b3_update_tx(xml2);
+                end if;
+
+                xml2:=put_campo(xml2,'ERROR_LOG','Falla:Respuesta_SOAP = '||tipo_tx1);
+                return xml2;
+	end if;
+
+	--Genera Respuesta SOAP OK.
+	--raise notice 'JCC_stData.respuesta=% - tipo_tx=%',stData.respuesta,tipo_tx1;
+
+	--Response Xml
+	xml2:=put_campo(xml2,'RESPUESTA',stData.respuesta);
+	--Proceso la respuesta con los datos en el XML
+	xml2:=respuesta_xml(xml2);
+	xml2:=put_campo(xml2,'STATUS_HTTP','200 OK');
+	xml2:=responde_http_3000(xml2);
+
+	--Si todo fue OK. Updateo el registro
+	--Si viene el tag_ctamed
+        if (tag_cme1 = 'SI') then
+		--Solo para CtaMedica
+		if (tipo_tx1 = 'iniciotx') or (tipo_tx1 = 'fintx') or (tipo_tx1 = 'anulatx') then
+			--and financiador = 'CTAMED') then
+			--raise notice 'JCC_Update_CtaMedica tipo_tx1=%',tipo_tx1;	
+			xml2:=put_campo(xml2,'ESTADO_TX','TERMINADO_OK');
+	        	xml2:=put_campo(xml2,'CODIGO_RESP','1');
+	        	xml2:=put_campo(xml2,'MENSAJE_RESP','Trx_Signal_OK');
+			--Para el Update de la CME
+			xml2:=put_campo(xml2,'ERR','N');
+		end if;
+                xml2:=ctamed_update_tx(xml2);
+		raise notice 'JCC_3000_RESP_5 tag_cme1 =% - tipo_tx1=% - Mens=% - Cod_Resp=% - CodMotor=% - CodCme=% ',tag_cme1,tipo_tx1,get_campo('MENSAJE_RESP',xml2),get_campo('CODIGO_RESP',xml2),get_campo('CODIGO_MOTOR',xml2),get_campo('COD_CME',xml2);
+        else
+                xml2:=b3_update_tx(xml2);
+        end if;
+
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION busca_tx_3000(varchar)
+returns varchar as
+$$
+declare
+        xml1    	alias for $1;
+        xml2   		varchar;
+	tipo_tx1	varchar;
+	input1		varchar;
+	tag1		varchar;
+begiN
+	xml2:=xml1;
+	input1	:=get_campo('INPUT',xml2);
+	if length(split_part(split_part(input1,'<ns1:',2),'>',1))>0 then
+		tag1:='<ns1:';
+	elsif length(split_part(split_part($1,'<ws:',2),'>',1))>0 then
+		tag1:='<ws:';
+	else
+		tag1:='';
+	end if;
+
+	tipo_tx1:=split_part(split_part(input1,tag1,2),'>',1);
+	xml2	:=put_campo(xml2,'TX_WS',lower(tipo_tx1));		--El tx siempre en minusculas. En CME el formato es cerEnvCta
+
+	xml2	:=put_campo(xml2,'TAG_BUSQUEDA',tag1||tipo_tx1||'>');
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION valida_documento_xml_3000(varchar)
+returns varchar as
+$$
+declare
+        xml1    	alias for $1;
+        xml2   		varchar;
+	input1		varchar;
+	xml_std1	varchar;
+begiN
+	xml2:=xml1;
+	input1  :=replace(get_campo('INPUT',xml2),chr(13),'');
+	--Validamos si el XML entrante es un documento xml valido
+        if (strpos(input1,chr(10)||chr(10))>0) then
+                --Me salto las 2 lineas
+                xml_std1:=substring(input1,strpos(input1,chr(10)||chr(10))+2,length(input1)+1024);
+        else
+                xml_std1:=input1;
+        end if;
+	begin
+        if xml_std1::xml is not document then
+                --Si no es un xml valido rechazo
+		xml2:=put_campo(xml2,'MENSAJE_RESPUESTA','Xml Is Not Document');
+                return ml2;
+        end if;
+	exception when others then
+		xml2:=put_campo(xml2,'MENSAJE_RESPUESTA','Xml no valido');
+		return xml2;
+	end;
+        --Guardo el xml validado para uso posterior mediante xpath
+        xml2:=put_campo(xml2,'__XML_STD__',xml_std1);
+
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION responde_http_3000(varchar)
+returns varchar as
+$$
+declare
+        xml1    	alias for $1;
+        xml2   		varchar;
+	respuesta1	varchar;
+begiN
+	xml2:=xml1;
+	respuesta1:=get_campo('RESPUESTA',xml2);
+	--respuesta1:=reemplaza_caracteres_web(respuesta1);
+	xml2:=put_campo(xml2,'RESPUESTA','HTTP/1.1 '||get_campo('STATUS_HTTP',xml2)||chr(10)||'Server: Apache-Coyote/1.1'||chr(10)||'Content-Type: text/xml;charset=UTF-8'||chr(10)||'Content-Length: '||length(respuesta1)::varchar||chr(10)||'Date: '||to_char(now() AT TIME ZONE 'GMT','Dy, DD Mon YYYY HH24:MI:SS GMT')||chr(10)||'Connection: close'||chr(10)||chr(10)||respuesta1);
+	return xml2;
+end;
+$$
+LANGUAGE plpgsql;
+
+

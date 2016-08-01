@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION public.json_field(json_struct text, field_name text)
+ RETURNS text
+ LANGUAGE plpython2u
+AS $function$
+
+try:
+        import simplejson as json
+        struct = json.loads(json_struct)
+        if type(struct) == dict:
+		return json.dumps(struct[field_name])
+        if type(struct) == list:
+                list_index = int(field_name)
+		return json.dumps(struct[list_index])
+except:
+        return None
+$function$
+

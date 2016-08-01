@@ -1,0 +1,16 @@
+12;Confirmacion;232695172;42973019;20150115;CIA_RECHAZO;N;Error: ORA-06502: PL/SQL: nume
+12;Confirmacion;232695173;42973019;20150115;CIA_RECHAZO;N;Error: ORA-06502: PL/SQL: nume
+12;Confirmacion;232695174;42973019;20150115;CIA_RECHAZO;N;Error: ORA-06502: PL/SQL: nume
+12;Confirmacion;232701775;42977161;20150115;CIA_RECHAZO;N;00003: Error al procesar informacion de certificacion en base de datos.
+12;AnulacionBono3;232716873;;20150115;CIA_RECHAZO;N;No existe autorizacion
+12;ConfirmacionBono3;52304982;401430952;20150115;CIA_RECHAZO;N;Inf. de Cert. no coincide
+12;Anulacion;52895316;;20150115;CIA_RECHAZO;N;No existe autorizacion
+12;Anulacion;52906171;;20150115;CIA_RECHAZO;N;No existe autorizacion
+12;AnulacionBono3;622905934;;20150115;CIA_RECHAZO;N;No existe autorizacion
+12;ConfirmacionBono3;77890560;401431175;20150115;CIA_RECHAZO;N;Inf. de Cert. no coincide
+12;ConfirmacionBono3;77890582;401431243;20150115;CIA_RECHAZO;N;Inf. de Cert. no coincide
+12;ConfirmacionBono3;77890587;401431255;20150115;CIA_RECHAZO;N;Inf. de Cert. no coincide
+12;ConfirmacionBono3;77890638;401431358;20150115;CIA_RECHAZO;N;Inf. de Cert. no coincide
+12;Confirmacion;973718509;42974271;20150115;CIA_RECHAZO;N;Error: ORA-06502: PL/SQL: nume
+12;ConfirmacionBono3;974130796;401431117;20150115;CIA_RECHAZO;N;Inf. de Cert. no coincide
+12;ConfirmacionBono3;975115402;401648084;20150115;CIA_ERROR;;

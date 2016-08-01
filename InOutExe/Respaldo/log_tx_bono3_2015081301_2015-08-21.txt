@@ -1,0 +1,19 @@
+======================================================================
+>> Hora de Inicio de respaldo de tabla [tx_bono3_2015081301] : vie 21 ago 2015 15:21:53 CLT
+Se encontraron (43) registros en tabla [tx_bono3_2015081301]
+Generando archivo /home/motor/InOutExe/Respaldo/tx_bono3_2015081301_2015-08-21.dump ...
+Contando lineas del archivo (tx_bono3_2015081301_2015-08-21.dump) : (43) contra registros en tabla de origen (43)...
+Verificando existencia de [tx_bono3_2015081301] en Amazon...
+Tabla no existe.
+Creando tabla [tx_bono3_2015081301] en Amazon....
+Cargando respaldo en Amazon-RDS...
+Total registros cargados en tabla de destino [tx_bono3_2015081301] en Amazon : (43).
+Se borra la tabla local : [tx_bono3_2015081301].
+DROP TABLE
+Cantidad de registros en tabla de origen [tx_bono3_2015081301] : (43).
+Cantidad de registros en tabla de Amazon [tx_bono3_2015081301] : (43).
+Cantidad de registros en archivo (tx_bono3_2015081301_2015-08-21.dump) : (43).
+Proceso Respaldo OK. Se genera archivo : (tx_bono3_2015081301_2015-08-21.dump).
+>> Hora de termino del respaldo : vie 21 ago 2015 15:22:01 CLT
+======================================================================
+Tabla tx_bono3_2015081301 no existe.

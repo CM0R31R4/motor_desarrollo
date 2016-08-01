@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+ xmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="http://Seguros.CruzBlanca.cl/WsIntegracionLGM/">
+ <SOAP-ENV:Body>
+   <ns1:Confirmacion>
+    <ns1:extCodSeguro>0</ns1:extCodSeguro>
+    <ns1:extNumOperacion>0</ns1:extNumOperacion>
+    <ns1:extRutBeneficiario></ns1:extRutBeneficiario>
+    <ns1:extRutPrestador></ns1:extRutPrestador>
+    <ns1:extFechaEmision></ns1:extFechaEmision>
+    <ns1:extRutEmisor></ns1:extRutEmisor>
+    <ns1:extRutCajero></ns1:extRutCajero>
+    <ns1:extFolioBono>0</ns1:extFolioBono>
+    <ns1:extCodFinanciador>0</ns1:extCodFinanciador>
+    <ns1:extCodLugar>0</ns1:extCodLugar>
+    <ns1:extMtoTot>0</ns1:extMtoTot>
+    <ns1:extMtoCopago>0</ns1:extMtoCopago>
+    <ns1:extMtoBonif>0</ns1:extMtoBonif>
+    <ns1:ExtLisPrest1></ns1:ExtLisPrest1>
+   </ns1:Confirmacion>
+
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

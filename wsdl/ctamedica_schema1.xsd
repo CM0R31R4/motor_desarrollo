@@ -1,0 +1,829 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.cme.motor/" version="1.0" xmlns:tns="http://ws.imed.cme.motor/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="cerAntHab" type="tns:cerAntHab"/>
+<xs:element name="cerAntHabResponse" type="tns:cerAntHabResponse"/>
+<xs:element name="cerAntMor" type="tns:cerAntMor"/>
+<xs:element name="cerAntMorResponse" type="tns:cerAntMorResponse"/>
+<xs:element name="cerAntQui" type="tns:cerAntQui"/>
+<xs:element name="cerAntQuiResponse" type="tns:cerAntQuiResponse"/>
+<xs:element name="cerDetAnam" type="tns:cerDetAnam"/>
+<xs:element name="cerDetAnamResponse" type="tns:cerDetAnamResponse"/>
+<xs:element name="cerDetEvo" type="tns:cerDetEvo"/>
+<xs:element name="cerDetEvoResponse" type="tns:cerDetEvoResponse"/>
+<xs:element name="cerDetProt" type="tns:cerDetProt"/>
+<xs:element name="cerDetProtResponse" type="tns:cerDetProtResponse"/>
+<xs:element name="cerDiaEgr" type="tns:cerDiaEgr"/>
+<xs:element name="cerDiaEgrResponse" type="tns:cerDiaEgrResponse"/>
+<xs:element name="cerDiagPosOp" type="tns:cerDiagPosOp"/>
+<xs:element name="cerDiagPosOpResponse" type="tns:cerDiagPosOpResponse"/>
+<xs:element name="cerDiagPreOp" type="tns:cerDiagPreOp"/>
+<xs:element name="cerDiagPreOpResponse" type="tns:cerDiagPreOpResponse"/>
+<xs:element name="cerEncAnam" type="tns:cerEncAnam"/>
+<xs:element name="cerEncAnamResponse" type="tns:cerEncAnamResponse"/>
+<xs:element name="cerEncEpi" type="tns:cerEncEpi"/>
+<xs:element name="cerEncEpiResponse" type="tns:cerEncEpiResponse"/>
+<xs:element name="cerEncProt" type="tns:cerEncProt"/>
+<xs:element name="cerEncProtResponse" type="tns:cerEncProtResponse"/>
+<xs:element name="cerEnvCta" type="tns:cerEnvCta"/>
+<xs:element name="cerEnvCtaResponse" type="tns:cerEnvCtaResponse"/>
+<xs:element name="cerEnvDetEquipo" type="tns:cerEnvDetEquipo"/>
+<xs:element name="cerEnvDetEquipoResponse" type="tns:cerEnvDetEquipoResponse"/>
+<xs:element name="cerEnvDetHotele" type="tns:cerEnvDetHotele"/>
+<xs:element name="cerEnvDetHoteleResponse" type="tns:cerEnvDetHoteleResponse"/>
+<xs:element name="cerEnvDetInsumo" type="tns:cerEnvDetInsumo"/>
+<xs:element name="cerEnvDetInsumoResponse" type="tns:cerEnvDetInsumoResponse"/>
+<xs:element name="cerEnvInfPac" type="tns:cerEnvInfPac"/>
+<xs:element name="cerEnvInfPacResponse" type="tns:cerEnvInfPacResponse"/>
+<xs:element name="cerEnvPaquete" type="tns:cerEnvPaquete"/>
+<xs:element name="cerEnvPaqueteResponse" type="tns:cerEnvPaqueteResponse"/>
+<xs:element name="cerEnvTipAnt" type="tns:cerEnvTipAnt"/>
+<xs:element name="cerEnvTipAntResponse" type="tns:cerEnvTipAntResponse"/>
+<xs:element name="cerEpiInd" type="tns:cerEpiInd"/>
+<xs:element name="cerEpiIndResponse" type="tns:cerEpiIndResponse"/>
+<xs:element name="cerEquMed" type="tns:cerEquMed"/>
+<xs:element name="cerEquMedResponse" type="tns:cerEquMedResponse"/>
+<xs:element name="cerExaFis" type="tns:cerExaFis"/>
+<xs:element name="cerExaFisResponse" type="tns:cerExaFisResponse"/>
+<xs:element name="cerGrpFam" type="tns:cerGrpFam"/>
+<xs:element name="cerGrpFamResponse" type="tns:cerGrpFamResponse"/>
+<xs:element name="cerObtFecPag" type="tns:cerObtFecPag"/>
+<xs:element name="cerObtFecPagResponse" type="tns:cerObtFecPagResponse"/>
+<xs:element name="cerOtrCir" type="tns:cerOtrCir"/>
+<xs:element name="cerOtrCirResponse" type="tns:cerOtrCirResponse"/>
+<xs:element name="cerRelHmqProt" type="tns:cerRelHmqProt"/>
+<xs:element name="cerRelHmqProtResponse" type="tns:cerRelHmqProtResponse"/>
+<xs:element name="cerTraPro" type="tns:cerTraPro"/>
+<xs:element name="cerTraProResponse" type="tns:cerTraProResponse"/>
+<xs:element name="finTx" type="tns:finTx"/>
+<xs:element name="finTxResponse" type="tns:finTxResponse"/>
+<xs:element name="inicioTx" type="tns:inicioTx"/>
+<xs:element name="inicioTxResponse" type="tns:inicioTxResponse"/>
+<xs:complexType name="cerEnvCta">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHomLugarConvenio" type="xs:string"/>
+      <xs:element name="CtaTipCta" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaFecEmision" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaFecIngreso" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraIngreso" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaFecCorte" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaFecAlta" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraAlta" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaFecFUR" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRutCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRutBeneficiario" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaApellidoPat" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaApellidoMat" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombres" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodDiagPrin" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaGloDiagPrin" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodDiagSec" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaGloDiagSec" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRutTratante" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreTratante" type="xs:string"/>
+      <xs:element name="CtaTipCobro" type="xs:int"/>
+      <xs:element name="CtaTipSala" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCartaResguardo" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaLeyUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaIndCaec" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaIndAuge" type="xs:string"/>
+      <xs:element name="CtaNroCirugias" type="xs:int"/>
+      <xs:element name="CtaNroEquipMed" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaIndEnvio" type="xs:string"/>
+      <xs:element name="CtaMtoTotal" type="xs:float"/>
+      <xs:element name="CtaNumDetEquipo" type="xs:float"/>
+      <xs:element name="CtaMtoDetEquipo" type="xs:float"/>
+      <xs:element name="CtaNumDetHoteleria" type="xs:int"/>
+      <xs:element name="CtaMtoDetHoteleria" type="xs:float"/>
+      <xs:element name="CtaNumDetInsumo" type="xs:int"/>
+      <xs:element name="CtaMtoDetInsumos" type="xs:float"/>
+      <xs:element name="CtaNumDetPaquetes" type="xs:int"/>
+      <xs:element name="CtaMtoDetPaquetes" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvCtaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="SPResponse">
+    <xs:sequence>
+      <xs:element default="0" minOccurs="0" name="Err" type="xs:string"/>
+      <xs:element default="0" name="Glosa" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDiagPreOp">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="ProTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProNumCta" type="xs:string"/>
+      <xs:element name="ProNumCobro" type="xs:int"/>
+      <xs:element name="ProTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHomLugarConvenio" type="xs:string"/>
+      <xs:element name="ProCorrelativo" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProCodDiagPre" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProGloDiagPre" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDiagPreOpResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerTraPro">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="EpiTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiNumCta" type="xs:string"/>
+      <xs:element name="EpiNumCobro" type="xs:int"/>
+      <xs:element name="EpiTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiHomLugarConvenio" type="xs:string"/>
+      <xs:element name="EpiNumCor" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerTraProResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDiagPosOp">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="ProTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProNumCta" type="xs:string"/>
+      <xs:element name="ProNumCobro" type="xs:int"/>
+      <xs:element name="ProTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHomLugarConvenio" type="xs:string"/>
+      <xs:element name="ProCorrelativo" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProCodDiagPost" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProGloDiagPost" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDiagPosOpResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEncEpi">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiNumCta" type="xs:string"/>
+      <xs:element name="EpiNumCobro" type="xs:int"/>
+      <xs:element name="EpiTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiHomLugarConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiRutPaciente" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiApellidoPat" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiApellidoMat" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiNombres" type="xs:string"/>
+      <xs:element name="EpiEdad" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiRutProfesional" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiNombreProfesional" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiFecControl" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEncEpiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerAntQui">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="AnamTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element name="AnamNumCor" type="xs:int"/>
+      <xs:element name="AnamCodAntQuir" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamAntQuir" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamFecInter" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerAntQuiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerAntHab">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="AnamTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element name="AnamNumCor" type="xs:int"/>
+      <xs:element name="AnamCodHabito" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamGloHabito" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamTipHabito" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamOcurHab" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamCantHab" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamTiempo" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerAntHabResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerGrpFam">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="AnamTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element name="AnamCodParent" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamAntPar" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerGrpFamResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvInfPac">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaPacCalle" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacNro" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacDpto" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacComuna" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacCiudad" type="xs:string"/>
+      <xs:element name="CtaPacRegion" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaPacFonCasa" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacFonCel" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacFonOfic" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPacMail" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaFecAlta" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraAlta" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaObserv1" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaObserv2" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaObserv3" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCtaRel" type="xs:string"/>
+      <xs:element name="CtaNumCobroRel" type="xs:int"/>
+      <xs:element name="CtaTipEnvioRel" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaFecInicioCorte" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraInicioCorte" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraTerminoCorte" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvInfPacResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDiaEgr">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="EpiTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiNumCta" type="xs:string"/>
+      <xs:element name="EpiNumCobro" type="xs:int"/>
+      <xs:element name="EpiTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiHomLugarConvenio" type="xs:string"/>
+      <xs:element name="EpiNumCor" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDiaEgrResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerExaFis">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="AnamTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element name="AnamCodItemEx" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamItemEx" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamResulEx" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerExaFisResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvTipAnt">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaAntElec" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaAntManual" type="xs:string"/>
+      <xs:element name="CtaTipEnv" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaDetAnt" type="xs:string"/>
+      <xs:element name="CtaCantDoc" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvTipAntResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvDetHotele">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenHom" type="xs:string"/>
+      <xs:element name="CtaNroInterven" type="xs:int"/>
+      <xs:element name="CtaTipoVal" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaFecAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRecargoHora" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaOrigenAten" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodPrestPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCoItemPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescPrestPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodPrestHom" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCoItemHom" type="xs:string"/>
+      <xs:element name="CtaCantidadPtd" type="xs:float"/>
+      <xs:element name="CtaNroDiasCama" type="xs:float"/>
+      <xs:element name="CtaNroHorasCama" type="xs:float"/>
+      <xs:element name="CtaTipoMov" type="xs:int"/>
+      <xs:element name="CtaMtoTotal" type="xs:float"/>
+      <xs:element name="CtaMtoAfecto" type="xs:float"/>
+      <xs:element name="CtaMtoExento" type="xs:float"/>
+      <xs:element name="CtaMtoIva" type="xs:float"/>
+      <xs:element name="CtaMtoRecargoHorario" type="xs:float"/>
+      <xs:element minOccurs="0" name="CtaRutFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaIndBonificable" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvDetHoteleResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvDetInsumo">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenHom" type="xs:string"/>
+      <xs:element name="CtaNroInterven" type="xs:int"/>
+      <xs:element name="CtaTipoVal" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaFecAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraAtencion" type="xs:string"/>
+      <xs:element name="CtaTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRecargoHora" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaOrigenAten" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodInsumo" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescInsumo" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodInsumoHom" type="xs:string"/>
+      <xs:element name="CtaCantidadIns" type="xs:float"/>
+      <xs:element name="CtaTipoMov" type="xs:int"/>
+      <xs:element name="CtaMtoTotal" type="xs:float"/>
+      <xs:element name="CtaMtoAfecto" type="xs:float"/>
+      <xs:element name="CtaMtoExento" type="xs:float"/>
+      <xs:element name="CtaMtoIva" type="xs:float"/>
+      <xs:element name="CtaMtoRecargoHorario" type="xs:float"/>
+      <xs:element minOccurs="0" name="CtaRutFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaIndBonificable" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvDetInsumoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDetProt">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="ProTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProNumCta" type="xs:string"/>
+      <xs:element name="ProNumCobro" type="xs:int"/>
+      <xs:element name="ProTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHomLugarConvenio" type="xs:string"/>
+      <xs:element name="ProCorrelativo" type="xs:int"/>
+      <xs:element name="ProNumCor" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDetProtResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="finTx">
+    <xs:sequence>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element name="idxTx" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="finTxResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEncAnam">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamFecEmi" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamProce" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamRutTratante" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamNombreTratante" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamRutInform" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamInform" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamSerDest" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamFicha" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEncAnamResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDetAnam">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="AnamTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element name="AnamNumCor" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDetAnamResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="inicioTx">
+    <xs:sequence>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="inicioTxResponse">
+    <xs:sequence>
+      <!--xs:element minOccurs="0" name="return" type="tns:SPResponse"/-->
+      <xs:element name="return" type="tns:IdTxResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="IdTxResp">
+    <xs:sequence>
+      <xs:element default="0" minOccurs="0" name="idxTx" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerOtrCir">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="ProTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProNumCta" type="xs:string"/>
+      <xs:element name="ProNumCobro" type="xs:int"/>
+      <xs:element name="ProTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHomLugarConvenio" type="xs:string"/>
+      <xs:element name="ProCorrelativo" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProDescInterven" type="xs:string"/>
+      <xs:element name="ProNroInterven" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerOtrCirResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvDetEquipo">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenHom" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodPrestPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaItemPrestPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescPrestPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodPrestHom" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaItemPrestHom" type="xs:string"/>
+      <xs:element name="CtaNroInterven" type="xs:int"/>
+      <xs:element name="CtaTipoVia" type="xs:int"/>
+      <xs:element name="CtaTipoTecnica" type="xs:int"/>
+      <xs:element name="CtaTipoVal" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaFecAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRecargoHora" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaOrigenAten" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRutProfesional" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreProfesional" type="xs:string"/>
+      <xs:element name="CtaTipoProfesional" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodEspecialidad" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescEspecialidad" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaPtdStaff" type="xs:string"/>
+      <xs:element name="CtaTipoMov" type="xs:int"/>
+      <xs:element name="CtaMtoTotal" type="xs:float"/>
+      <xs:element name="CtaMtoAfecto" type="xs:float"/>
+      <xs:element name="CtaMtoExento" type="xs:float"/>
+      <xs:element name="CtaMtoIva" type="xs:float"/>
+      <xs:element name="CtaMtoRecargoHorario" type="xs:float"/>
+      <xs:element minOccurs="0" name="CtaRutFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaIndBonificable" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvDetEquipoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEquMed">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="ProTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProNumCta" type="xs:string"/>
+      <xs:element name="ProNumCobro" type="xs:int"/>
+      <xs:element name="ProTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHomLugarConvenio" type="xs:string"/>
+      <xs:element name="ProCorrelativo" type="xs:int"/>
+      <xs:element name="ProTipoProfesional" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutProfesional" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProNombreProfesional" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProCodIntervenPtd" type="xs:string"/>
+      <xs:element name="ProNroInterven" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEquMedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvPaquete">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenHom" type="xs:string"/>
+      <xs:element name="CtaNroInterven" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodPaquete" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaDescPaquete" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodPaqueteHom" type="xs:string"/>
+      <xs:element name="CtaTipoGrupo" type="xs:int"/>
+      <xs:element name="CtaTipoMov" type="xs:int"/>
+      <xs:element name="CtaMtoTotal" type="xs:float"/>
+      <xs:element name="CtaMtoAfecto" type="xs:float"/>
+      <xs:element name="CtaMtoExento" type="xs:float"/>
+      <xs:element name="CtaMtoIva" type="xs:float"/>
+      <xs:element minOccurs="0" name="CtaRutFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNombreFacturador" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaIndBonificable" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEnvPaqueteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDetEvo">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="EpiTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiNumCta" type="xs:string"/>
+      <xs:element name="EpiNumCobro" type="xs:int"/>
+      <xs:element name="EpiTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiHomLugarConvenio" type="xs:string"/>
+      <xs:element name="EpiNumCor" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerDetEvoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerRelHmqProt">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCorrRegistro" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+      <xs:element name="CtaTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodPrestPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaItemPrestPtd" type="xs:string"/>
+      <xs:element name="CtaNroInterv" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaFecAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaHoraAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaRutProfesional" type="xs:string"/>
+      <xs:element name="CtaTipoProfesional" type="xs:int"/>
+      <xs:element name="CtaMtoTotal" type="xs:float"/>
+      <xs:element name="CtaProCorrelativo" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaCodProto" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerRelHmqProtResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEpiInd">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="EpiTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiNumCta" type="xs:string"/>
+      <xs:element name="EpiNumCobro" type="xs:int"/>
+      <xs:element name="EpiTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="EpiHomLugarConvenio" type="xs:string"/>
+      <xs:element name="EpiNumCor" type="xs:int"/>
+      <xs:element minOccurs="0" name="EpiDescripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEpiIndResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerObtFecPag">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="CtaRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaNumCta" type="xs:string"/>
+      <xs:element name="CtaNumCobro" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerObtFecPagResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:cerObtFecPagResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerObtFecPagResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaFecPago" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaCodError" type="xs:string"/>
+      <xs:element minOccurs="0" name="CtaMensajeError" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEncProt">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProNumCta" type="xs:string"/>
+      <xs:element name="ProNumCobro" type="xs:int"/>
+      <xs:element name="ProTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHomLugarConvenio" type="xs:string"/>
+      <xs:element name="ProCorrelativo" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProCodIntervenPtd" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProDescPresta" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProNombreMedico" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProRutPaciente" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProApellidoPat" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProApellidoMat" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProNombres" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProSexo" type="xs:string"/>
+      <xs:element name="ProEdad" type="xs:int"/>
+      <xs:element minOccurs="0" name="ProUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProAnestesia" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProPabellon" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProFecIngPabellon" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHoraIngPabellon" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProFecTerPabellon" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProHoraTerPabellon" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProRiesgo" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProPieza" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProObservacion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerEncProtResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerAntMor">
+    <xs:sequence>
+      <xs:element name="idxTx" type="xs:int"/>
+      <xs:element name="AnamTipoDet" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamRutPrestador" type="xs:string"/>
+      <xs:element name="CtaCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamNumCta" type="xs:string"/>
+      <xs:element name="AnamNumCobro" type="xs:int"/>
+      <xs:element name="AnamTipEnvio" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamHomNroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamHomLugarConvenio" type="xs:string"/>
+      <xs:element name="AnamNumCor" type="xs:int"/>
+      <xs:element name="AnamCodTipAnte" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamTipAnte" type="xs:string"/>
+      <xs:element name="AnamCodDescAnte" type="xs:int"/>
+      <xs:element minOccurs="0" name="AnamDescAnte" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamOcurAnt" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamFecDiag" type="xs:string"/>
+      <xs:element minOccurs="0" name="AnamObserva" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="cerAntMorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

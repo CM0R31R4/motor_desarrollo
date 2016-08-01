@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="WsMultiCaja" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCaja/ImedVerder?xsd=multicaja_verder_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="imedverder">
+    <wsdl:part element="tns:imedverder" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="imedverderResponse">
+    <wsdl:part element="tns:imedverderResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IMEDVERDERSEI">
+    <wsdl:operation name="imedverder">
+      <wsdl:input message="tns:imedverder" name="imedverder">
+    </wsdl:input>
+      <wsdl:output message="tns:imedverderResponse" name="imedverderResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IMEDVERDERServiceSoapBinding" type="tns:IMEDVERDERSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="imedverder">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="imedverder">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="imedverderResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IMEDVERDERService">
+    <wsdl:port binding="tns:IMEDVERDERServiceSoapBinding" name="IMEDVERDER">
+      <soap:address location="http://$$LOCATION$$/WsMultiCaja/ImedVerder"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

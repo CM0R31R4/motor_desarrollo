@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="MCWebSdxWS"
+ targetNamespace="http://www.multicaja.cl/sodexho/MCWebSdxWS.wsdl"
+ xmlns:tns="http://www.multicaja.cl/sodexho/MCWebSdxWS.wsdl"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns1="urn:"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="urn:"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns1="urn:"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <complexType name="ActivacionTarjeta">
+   <sequence>
+     <element name="arg0" type="ns1:WSInputActivacionTarjeta" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="WSInputActivacionTarjeta">
+   <sequence>
+     <element name="sTipoId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="sValorId" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+     <element name="sServicio" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="sCliente" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+     <element name="sTarjetas" type="ns1:ListTarjetas" minOccurs="1" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="ListTarjetas">
+   <sequence>
+     <element name="Tarjeta" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ActivacionTarjetaResponse">
+   <sequence>
+     <element name="return" type="ns1:outputWSActivacionTarjeta" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="outputWSActivacionTarjeta">
+   <sequence>
+     <element name="listaTrjOut" type="ns1:listTrjOut" minOccurs="0" maxOccurs="unbounded"/>
+     <element name="SGlosaStatus" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SStatusMsg" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="listTrjOut">
+   <sequence>
+     <element name="SStatusTarjeta" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="STarjeta" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ConsultaSaldoYTrxDiaPorAfiliado">
+   <sequence>
+     <element name="arg0" type="ns1:WSInputSaldoTrx" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="WSInputSaldoTrx">
+   <sequence>
+     <element name="S_Tipo_ID" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="S_Valor_ID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+     <element name="S_Servicio" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="S_Cliente" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ConsultaSaldoYTrxDiaPorAfiliadoResponse">
+   <sequence>
+     <element name="return" type="ns1:outputWSSaldoTrxAfiliad" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="outputWSSaldoTrxAfiliad">
+   <sequence>
+     <element name="SGlosaStatus" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SStatus" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="trxsAfiliado" type="ns1:rsspSaldoTrxAfiliad" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="rsspSaldoTrxAfiliad">
+   <sequence>
+     <element name="SFecha" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SIdConsumo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SMonto" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="SRutBenef" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SStatusTrx" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="STarjeta" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="STipo" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="ConsultaSaldoYTrxDiaPorBeneficiario">
+   <sequence>
+     <element name="arg0" type="ns1:WSInputSaldoTrx" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ConsultaSaldoYTrxDiaPorBeneficiarioResponse">
+   <sequence>
+     <element name="return" type="ns1:outputWSSaldoTrxBenef" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="outputWSSaldoTrxBenef">
+   <sequence>
+     <element name="SGlosaStatus" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SSaldoDisp" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="SSaldoVenc" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="SStatus" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="trxsBeneficiario" type="ns1:rsspSaldoTrxBenef" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="rsspSaldoTrxBenef">
+   <sequence>
+     <element name="SFecha" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SIdConsumo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SMonto" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="STarjeta" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="STipo" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <element name="ActivacionTarjeta" type="ns1:ActivacionTarjeta"/>
+  <element name="ConsultaSaldoYTrxDiaPorAfiliado" type="ns1:ConsultaSaldoYTrxDiaPorAfiliado"/>
+  <element name="ConsultaSaldoYTrxDiaPorBeneficiario" type="ns1:ConsultaSaldoYTrxDiaPorBeneficiario"/>
+  <!-- operation response element -->
+  <element name="ActivacionTarjetaResponse" type="ns1:ActivacionTarjetaResponse"/>
+  <!-- operation response element -->
+  <element name="ConsultaSaldoYTrxDiaPorAfiliadoResponse" type="ns1:ConsultaSaldoYTrxDiaPorAfiliadoResponse"/>
+  <!-- operation response element -->
+  <element name="ConsultaSaldoYTrxDiaPorBeneficiarioResponse" type="ns1:ConsultaSaldoYTrxDiaPorBeneficiarioResponse"/>
+ </schema>
+
+</types>
+
+<message name="ActivacionTarjeta">
+ <part name="parameters" element="ns1:ActivacionTarjeta"/>
+</message>
+
+<message name="ActivacionTarjetaResponse">
+ <part name="parameters" element="ns1:ActivacionTarjetaResponse"/>
+</message>
+
+<message name="ConsultaSaldoYTrxDiaPorAfiliado">
+ <part name="parameters" element="ns1:ConsultaSaldoYTrxDiaPorAfiliado"/>
+</message>
+
+<message name="ConsultaSaldoYTrxDiaPorAfiliadoResponse">
+ <part name="parameters" element="ns1:ConsultaSaldoYTrxDiaPorAfiliadoResponse"/>
+</message>
+
+<message name="ConsultaSaldoYTrxDiaPorBeneficiario">
+ <part name="parameters" element="ns1:ConsultaSaldoYTrxDiaPorBeneficiario"/>
+</message>
+
+<message name="ConsultaSaldoYTrxDiaPorBeneficiarioResponse">
+ <part name="parameters" element="ns1:ConsultaSaldoYTrxDiaPorBeneficiarioResponse"/>
+</message>
+
+<portType name="MCWebSdxWSPortType">
+ <operation name="ActivacionTarjeta">
+  <documentation>Service definition of function __ns1__ActivacionTarjeta</documentation>
+  <input message="tns:ActivacionTarjeta"/>
+  <output message="tns:ActivacionTarjetaResponse"/>
+ </operation>
+ <operation name="ConsultaSaldoYTrxDiaPorAfiliado">
+  <documentation>Service definition of function __ns1__ConsultaSaldoYTrxDiaPorAfiliado</documentation>
+  <input message="tns:ConsultaSaldoYTrxDiaPorAfiliado"/>
+  <output message="tns:ConsultaSaldoYTrxDiaPorAfiliadoResponse"/>
+ </operation>
+ <operation name="ConsultaSaldoYTrxDiaPorBeneficiario">
+  <documentation>Service definition of function __ns1__ConsultaSaldoYTrxDiaPorBeneficiario</documentation>
+  <input message="tns:ConsultaSaldoYTrxDiaPorBeneficiario"/>
+  <output message="tns:ConsultaSaldoYTrxDiaPorBeneficiarioResponse"/>
+ </operation>
+</portType>
+
+<binding name="MCWebSdxWS" type="tns:MCWebSdxWSPortType">
+ <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="ActivacionTarjeta">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ConsultaSaldoYTrxDiaPorAfiliado">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ConsultaSaldoYTrxDiaPorBeneficiario">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="MCWebSdxWS">
+ <documentation>gSOAP 2.7.13 generated service definition</documentation>
+ <port name="MCWebSdxWS" binding="tns:MCWebSdxWS">
+  <SOAP:address location="http://192.168.1.10:7023/"/>
+ </port>
+</service>
+
+</definitions>

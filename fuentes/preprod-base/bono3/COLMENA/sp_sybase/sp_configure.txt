@@ -1,0 +1,12 @@
+Parameter Name				Default	Memory Used	Config Value	Run Value	Unit	Type
+max network packet size       	        512	          0	       8192	     8192	bytes   static    
+
+max number network listeners  	          5	       1923	          5          	5	number  dynamic   
+
+number of remote connections  	         20	         35	         20	       20	number  static    
+
+number of remote logins       	         20	         23	         20	       20	number  static    
+
+number of remote sites        	         10	       3851	         10	       10	number  static    
+
+number of user connections    	         25	    1462216	       3800	     3800	number  dynamic   

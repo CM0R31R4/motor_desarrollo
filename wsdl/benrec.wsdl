@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="BENRECService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WSIMedBono/services/BENRECPort?xsd=benrec_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="benrecResponse">
+    <wsdl:part element="tns:benrecResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benrec">
+    <wsdl:part element="tns:benrec" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BENRECSEI">
+    <wsdl:operation name="benrec">
+      <wsdl:input message="tns:benrec" name="benrec">
+    </wsdl:input>
+      <wsdl:output message="tns:benrecResponse" name="benrecResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BENRECServiceSoapBinding" type="tns:BENRECSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="benrec">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="benrec">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="benrecResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BENRECService">
+    <wsdl:port binding="tns:BENRECServiceSoapBinding" name="BENRECPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedBono/services/BENRECPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

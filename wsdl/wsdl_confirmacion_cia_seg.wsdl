@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="wmImed_SrvConfirmacion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmImed_SrvConfirmacionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvConfirmacionResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="wmImed_SrvConfirmacionSoapIn">
+    <wsdl:part name="parameters" element="tns:wmImed_SrvConfirmacion" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvConfirmacionSoapOut">
+    <wsdl:part name="parameters" element="tns:wmImed_SrvConfirmacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvConfirmacionHttpGetIn">
+    <wsdl:part name="XML_INPUT" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvConfirmacionHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvConfirmacionHttpPostIn">
+    <wsdl:part name="XML_INPUT" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvConfirmacionHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:portType name="wsConfirmacionSoap">
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Confirma Liquidacion</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvConfirmacionSoapIn" />
+      <wsdl:output message="tns:wmImed_SrvConfirmacionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsConfirmacionHttpGet">
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Confirma Liquidacion</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvConfirmacionHttpGetIn" />
+      <wsdl:output message="tns:wmImed_SrvConfirmacionHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsConfirmacionHttpPost">
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Confirma Liquidacion</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvConfirmacionHttpPostIn" />
+      <wsdl:output message="tns:wmImed_SrvConfirmacionHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsConfirmacionSoap" type="tns:wsConfirmacionSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <soap:operation soapAction="http://tempuri.org/wmImed_SrvConfirmacion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsConfirmacionSoap12" type="tns:wsConfirmacionSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <soap12:operation soapAction="http://tempuri.org/wmImed_SrvConfirmacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsConfirmacionHttpGet" type="tns:wsConfirmacionHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <http:operation location="/wmImed_SrvConfirmacion" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsConfirmacionHttpPost" type="tns:wsConfirmacionHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="wmImed_SrvConfirmacion">
+      <http:operation location="/wmImed_SrvConfirmacion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsConfirmacion">
+    <wsdl:port name="wsConfirmacionSoap" binding="tns:wsConfirmacionSoap">
+      <soap:address location="http://10.100.32.177/Confirmacion/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsConfirmacionSoap12" binding="tns:wsConfirmacionSoap12">
+      <soap12:address location="http://10.100.32.177/Confirmacion/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsConfirmacionHttpGet" binding="tns:wsConfirmacionHttpGet">
+      <http:address location="http://10.100.32.177/Confirmacion/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsConfirmacionHttpPost" binding="tns:wsConfirmacionHttpPost">
+      <http:address location="http://10.100.32.177/Confirmacion/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

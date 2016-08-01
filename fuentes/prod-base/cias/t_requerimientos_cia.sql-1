@@ -1,0 +1,8 @@
+create table requerimientos_cia (
+fecha	timestamp,
+nemo	varchar,
+codigo	varchar,
+tx	varchar,
+data	varchar);
+
+create index requerimientos_cia_01 on requerimientos_cia(nemo,tx);

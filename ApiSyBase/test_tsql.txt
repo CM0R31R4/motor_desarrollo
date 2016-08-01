@@ -1,0 +1,12 @@
+base datos CertificaDB
+
+tsql -H 10.100.33.183 -p 5000 -U certifica -P certifica
+
+DECLARE	@CodError tinyint 
+EXECUTE CSConfirmaSegU 50299471,67,751222, @CodError OUTPUT 
+SELECT @CodError as respuesta_sybase
+
+cat <<EOT | tsql -H 10.100.33.183 -p 5000 -U certifica -P $certifica > CSConfirmaSegU.sql
+sp_help CSConfirmaSegU
+go
+EOT

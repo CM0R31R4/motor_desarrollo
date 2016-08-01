@@ -1,0 +1,2 @@
+80;VIDA_TRES;3;valorvari
+80;VIDA_TRES;13;bencertif

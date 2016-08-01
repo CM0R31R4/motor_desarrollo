@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="coptran" type="tns:coptran"/>
+<xs:element name="coptranResponse" type="tns:coptranResponse"/>
+  <xs:complexType name="coptran">
+    <xs:sequence>
+	<xs:element name="extCodFinanciador" type="xs:int"/>
+	<xs:element minOccurs="0" name="extHomNumeroConvenio" type="xs:string"/>
+	<xs:element minOccurs="0" name="extHomLugarConvenio" type="xs:string"/>
+	<xs:element minOccurs="0" name="extSucVenta" type="xs:string"/>
+	<xs:element minOccurs="0" name="extRutConvenio" type="xs:string"/>
+	<xs:element minOccurs="0" name="extRutTratante" type="xs:string"/>
+	<xs:element minOccurs="0" name="extRutSolicitante" type="xs:string"/>
+	<xs:element minOccurs="0" name="extRutBeneficiario" type="xs:string"/>
+	<xs:element minOccurs="0" name="extTratamiento" type="xs:string"/>
+	<xs:element minOccurs="0" name="extCodigoDiagnostico" type="xs:string"/>
+	<xs:element name="extNivelConvenio" type="xs:int"/>
+	<xs:element minOccurs="0" name="extUrgencia" type="xs:string"/>
+	<xs:element name="extNumPrestaciones" type="xs:int"/>
+	<xs:element minOccurs="0" name="extPlan2" type="xs:string"/>
+        <xs:element minOccurs="0" name="lstPrest" type="tns:ArrayOfCopTran_ColInp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfCopTran_ColInp">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CopTran_ColInp" nillable="true" type="tns:CopTran_ColInp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CopTran_ColInp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="extCodigoHomologo" type="xs:string"/>
+      <xs:element minOccurs="0" name="extItem" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodigoAdicional" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRecargoFueraHora" type="xs:string"/>
+      <xs:element name="extCantidad" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>	
+  <xs:complexType name="coptranResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:coptranResp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="coptranResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extMensajeError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extPlan" type="xs:string"/>
+      <xs:element minOccurs="0" name="lstValores" type="tns:ArrayOfCopTran_ColOut"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfCopTran_ColOut">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CopTran_ColOut" nillable="true" type="tns:CopTran_ColOut"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CopTran_ColOut">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="extValorPrestacion" type="xs:string"/>
+      <xs:element minOccurs="0" name="extAporteFinanciador" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCopago" type="xs:string"/>
+      <xs:element minOccurs="0" name="extInternoIsa" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType> 
+</xs:schema>

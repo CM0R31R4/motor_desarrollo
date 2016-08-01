@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="valorvari" type="tns:valorvari"/>
+<xs:element name="valorvariResponse" type="tns:valorvariResponse"/>
+<xs:complexType name="valorvari">
+    <xs:sequence>
+      <xs:element name="extCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="extHomNumeroConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extHomLugarConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extSucVenta" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutTratante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extEspecialidad" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutSolicitante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutBeneficiario" type="xs:string"/>
+      <xs:element minOccurs="0" name="extTratamiento" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodigoDiagnostico" type="xs:string"/>
+      <xs:element name="extNivelConvenio" type="xs:int"/>
+      <xs:element minOccurs="0" name="extUrgencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="extLista1" type="xs:string"/>
+      <xs:element minOccurs="0" name="extLista2" type="xs:string"/>
+      <xs:element minOccurs="0" name="extLista3" type="xs:string"/>
+      <xs:element minOccurs="0" name="extLista4" type="xs:string"/>
+      <xs:element minOccurs="0" name="extLista5" type="xs:string"/>
+      <xs:element minOccurs="0" name="extLista6" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtLista7" type="xs:string"/>
+      <xs:element name="extNumPrestaciones" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="valorvariResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:valorvariResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="valorvariResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extMensajeError" type="xs:string"/>
+      <xs:element minOccurs="0" name="extPlan" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtGlosa1" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtGlosa2" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtGlosa3" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtGlosa4" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtGlosa5" type="xs:string"/>
+      <xs:element minOccurs="0" name="extValorPrestacion" type="xs:string"/>
+      <xs:element minOccurs="0" name="extAporteFinanciador" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCopago" type="xs:string"/>
+      <xs:element minOccurs="0" name="extInternoIsa" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtTipoBonif1" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtCopago1" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtTipoBonif2" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtCopago2" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtTipoBonif3" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtCopago3" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtTipoBonif4" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtCopago4" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtTipoBonif5" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtCopago5" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

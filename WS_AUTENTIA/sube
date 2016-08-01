@@ -1,0 +1,44 @@
+# Source function library.
+. /etc/init.d/functions
+
+MODULO=WsAutentia
+PATH1="/home/isys/WS_AUTENTIA"
+
+case "$1" in 
+  start)
+	if [ -x $PATH1/$MODULO ]; then
+		cd $PATH1
+		#./$MODULO proceso=AUTENTIA_WS log=1 patron_final1="</soapenv:Envelope>" patron_final2="</SOAP-ENV:Envelope>" portdb=8000 display=2 prefijo_log=177 patron_final3="?wsdl" patron_final4="?xsd=" timeoutleedata=5 >/dev/null&
+		
+		#./$MODULO proceso=AUTENTIA_WS log=1 patron_final1="</soapenv:Envelope>" patron_final2="</SOAP-ENV:Envelope>" portdb=8000 display=2 prefijo_log=177 timeoutleedata=5 >/dev/null&
+		
+		./$MODULO proceso=AUTENTIA_WS log=1 portdb=8000 display=2 prefijo_log=177 timeoutleedata=5 >/dev/null&
+		echo Inicializa $MODULO
+	fi
+	sleep 1
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo Detiene Proceso $MODULO
+	killproc $PATH1/$MODULO >/dev/null
+	;;
+  restart|reload)
+	cd $PATH1
+	$0 stop
+	$0 start
+	echo Proceso $MODULO Reiniciado
+	;;
+  borralog)
+        cd $PATH1
+        rm *.LOG
+        rm *XXX.LOG
+        rm *.ERR
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

@@ -1,0 +1,8 @@
+--Descarga un archivo
+wget -O IntegracionLGM.asmx  http://seguros.cruzblanca.qa/wsIntegracionLGM/IntegracionLGM.asmx
+
+--Parser Wsdl
+wsdl2h -o cbvida.h http://seguros.cruzblanca.qa/wsIntegracionLGM/IntegracionLGM.asmx?WSDL
+
+--Estructura de XML Request/Response
+soapcpp2 cbvida.h -I /home/isys/fuentes/gsoap-2.8/gsoap/import/

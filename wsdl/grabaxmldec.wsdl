@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="GRABAXMLDECService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsActoVentaDEC/services/GRABAXMLDECPort?xsd=grabaxmldec_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="grabaxmldec">
+    <wsdl:part element="tns:grabaxmldec" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="grabaxmldecResponse">
+    <wsdl:part element="tns:grabaxmldecResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="GRABAXMLDECSEI">
+    <wsdl:operation name="grabaxmldec">
+      <wsdl:input message="tns:grabaxmldec" name="grabaxmldec">
+    </wsdl:input>
+      <wsdl:output message="tns:grabaxmldecResponse" name="grabaxmldecResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GRABAXMLDECServiceSoapBinding" type="tns:GRABAXMLDECSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="grabaxmldec">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="grabaxmldec">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="grabaxmldecResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GRABAXMLDECService">
+    <wsdl:port binding="tns:GRABAXMLDECServiceSoapBinding" name="GRABAXMLDECPort">
+      <soap:address location="http://$$LOCATION$$/WsGrabaBonoDEC/services/GRABAXMLDECPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

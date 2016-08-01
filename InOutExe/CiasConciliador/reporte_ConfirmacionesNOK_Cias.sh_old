@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#Genera un archivo Rechazos Cias IQ
+#Saca avisos de folios duplicados por rut
+cd /home/motor/InOutExe/CiasConciliador
+MAIL_CC="jcossio@i-med.cl"
+#DATE=`/bin/date +'%F %T'`
+BASE="dmotor"
+#FECHA_IN=`/usr/bin/psql -At -F';' -c "SELECT to_char(CURRENT_TIMESTAMP- INTERVAL '1 days','YYYYMMDD')" $BASE`;
+#FECHA_FIN=`/usr/bin/psql -At -F';' -c "SELECT to_char(CURRENT_TIMESTAMP,'YYYYMMDD')" $BASE`;
+FECHA_IN='20150115'
+FECHA_FIN='20150116'
+
+REG=`/usr/bin/psql -At -F';' -c "SELECT codigo,nemo,mail_cia from cias_seguros WHERE tx not in ('Certificacion','Conciliacion') and mail_cia<>'' GROUP BY codigo,nemo,mail_cia ORDER BY codigo asc" $BASE`
+#echo REG=$REG
+#if [[ $REQ -eq 0 ]];
+#then
+#        echo "No hay Mail para informar"
+#        exit 1;
+#fi
+
+DATA=($REG)
+I=0;
+STR=${DATA[$I]}
+COD_CIA=$(echo $STR | cut -f 1 -d';')
+NEMO=$(echo $STR | cut -f 2 -d';')
+MAIL_CIA=$(echo $STR | cut -f 3 -d';')
+
+echo COD_CIA==$COD_CIA - NEMO==$NEMO - MAIL_CIA=$MAIL_CIA
+
+#COUNT=`/usr/bin/psql -At -F';' -c "SELECT count(*) from tx_cias where dia>='$FECHA_IN' and dia<'$FECHA_FIN' and tx in ('Certificacion','Confirmacion','ConfirmacionBono3','Anulacion','AnulacionBono3') and estado in ('CIA_RECHAZO','CIA_ERROR') and codigo_cia ='$COD_CIA' GROUP BY extfoliobono" $BASE`
+#echo COUNT=$COUNT
+#if [[ $COUNT -eq 0 ]];
+#then
+#        echo "No hay registros para generar archivo"
+#        exit 1;
+#fi
+
+while  [ ${#COD_CIA} -gt 0 ]
+do
+	#Primero Genera el archivo
+	FILE="/home/motor/InOutExe/CiasConciliador/"$FECHA_FIN"_"$NEMO"_Conf_NOK.txt"
+	
+	#Query Reporte
+	/usr/bin/psql -At -F';' -c "SELECT codigo_cia,tx,extfoliobono,num_operacion,dia,estado,split_part(split_part(msgoutput,'</extCodError>',1),'<extCodError>',2) as extCodError_Cia, split_part(split_part(msgoutput,'</extMensajeError>',1),'<extMensajeError>',2) as extMensajeError_Cia FROM tx_cias WHERE dia>='$FECHA_IN' AND dia<'$FECHA_FIN' AND estado in ('CIA_RECHAZO','CIA_ERROR') AND tx in ('Confirmacion','ConfirmacionBono3','Anulacion','AnulacionBono3') AND codigo_cia='$COD_CIA' GROUP BY codigo_cia,tx,extfoliobono,num_operacion,dia,estado,msgoutput ORDER BY extfoliobono ASC" >$FILE
+
+	#Verifica Consistencia Lineas del archivo tienen que ser igual al Total de registros
+	#WC=`wc -l $FILE`
+	#echo "Registros en archivo $WC"
+	#if [[ $WC+1 -ne $COUNT ]];
+	#then
+        #	echo "Registro Diferentes $COUNT $WC"
+	#        /usr/bin/mail -s "Cia: $NEMO Reporte Imed Error - Registros Distintos CuentaReg=$WC v/s TotalReg=$COUNT" -c $MAIL_CC
+        #	exit 1;
+	#fi
+	
+	#Envia el Mail
+	/usr/bin/mutt $MAIL_CIA  -s "Cia: $NEMO Reporte Imed Bonos Rechazos" -a $FILE -c $MAIL_CC < /dev/null 
+	#/usr/bin/mail -n -s "Auditoria IP=10.100.32.52 Automatica $FECHA" -a $DIRECTORIO/reporte_$FECHA.txt $MAIL < /dev/null
+
+	I=`expr $I + 1`
+	STR=${DATA[$I]}
+	COD_CIA=$(echo $STR | cut -f 1 -d';')
+	NEMO=$(echo $STR | cut -f 2 -d';')
+	MAIL_CIA=$(echo $STR | cut -f 3 -d';')
+done
+#exit 1;
+
+

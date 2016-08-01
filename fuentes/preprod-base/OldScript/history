@@ -1,0 +1,1000 @@
+    5  mkdir ProcesaXml
+    6  ll
+    7  cd ProcesaXml/
+    8  cp /home/isys/fuentes/IsysProcesaXml/* .
+    9  ll
+   10  make
+   11  cd ..
+   12  cd comun/
+   13  make
+   14  cd ..
+   15  cd ProcesaXml/
+   16  make
+   17  ll
+   18  cd ..
+   19  mkdir Listener
+   20  cd Listener/
+   21  ll
+   22  cp /home/isys/fuentes/IsysTx/* .
+   23  ll
+   24  male
+   25  make
+   26  ll
+   27  vi makefile 
+   28  make
+   29  ll
+   30  rm IsysTx
+   31  ll
+   32  cd ..
+   33  cd co
+   34  cd comun/
+   35  grep TIPO_LLAVE *
+   36  vi IsysTxComun.c
+   37  cd ..
+   38  cd Listener/
+   39  grep TIPO_LLAVE *
+   40  cd ..
+   41  cd comun/
+   42  vi IsysTxComun.c
+   43  ll
+   44  cd 
+   45  ll
+   46  rm -rf Version2
+   47  ll
+   48   
+   49  su -
+   50  cd fuentes/
+   51  ll
+   52  cp -r BaseDatos ApiTuxedo
+   53  cd ApiTuxedo/
+   54  ll
+   55  rm OleDatabase.c
+   56  rm BaseDatos.o BaseTest 
+   57  lll
+   58  ll
+   59  mv ll
+   60  ll
+   61  mv BaseDatos.c ApiTuxedo.c
+   62  mv isys_basedatos sube
+   63  ll
+   64  vi ApiTuxedo.c 
+   65  ping 172.16.3.17
+   66  ls
+   67  cd fuentes/
+   68  ls
+   69  cd BaseDatosMSSQL/
+   70  ls
+   71  make
+   72  vim BaseDatosMSSQL.c
+   73  ls
+   74  vim OleDatabase.c
+   75  make
+   76  vim /etc/freetds.conf 
+   77  ls
+   78  more execute.sh 
+   79  ./BaseDatosMSSQL sermed 2
+   80  bg
+   81  ls
+   82  vim 2013041716_XXX.LOG
+   83  fg
+   84  vim OleDatabase.c
+   85  make
+   86  ./BaseDatosMSSQL sermed 2
+   87  ./BaseDatosMSSQL ISAPRE 2
+   88  tsql -H 150.10.10.31 ISAPRE
+   89  tsql -H 150.10.10.31 -U IMED -P 20050331 ISAPRE
+   90  tsql -H 150.10.10.31 -U IMED -P 20050331 -p 1433 -D ISAPRE
+   91  tsql -H 150.10.10.31 -U IMED -P 20050331 -p 1433 -D MASTER
+   92  ./BaseDatosMSSQL MASTER 2
+   93  vim BaseDatosMSSQL.c
+   94  cd ..
+   95  cd comun
+   96  ls
+   97  vim IsysGlobal.c
+   98  cd ..
+   99  cd include
+  100  vim IsysSocket.h 
+  101  vim tipos.h 
+  102  cd..
+  103  cd ..
+  104   cd comun
+  105  vim makefile 
+  106  make clean
+  107  make
+  108  cd ..
+  109  cd BaseDatosMSSQL/
+  110  ls
+  111  make clean
+  112  make
+  113  vim OleDatabase.c
+  114  make
+  115  vim OleDatabase.c
+  116  make
+  117  vim execute.sh 
+  118  vim BaseDatosMSSQL.c
+  119  cd ..
+  120  cd comun
+  121  cd ..
+  122  cd BaseDatosMSSQL/
+  123  ls
+  124  vim BaseDatosMSSQL.c
+  125  make
+  126  vim BaseDatosMSSQL.c
+  127  make
+  128  vim BaseDatosMSSQL.c
+  129  make
+  130  vim execute.sh 
+  131  ./execute.sh 
+  132  tsql -H 150.10.10.31 -U IMED -P 20050331 -p 1433 -D MASTER
+  133  cd
+  134  cd ApiMSQL_MASVIDA/
+  135  ll
+  136  ls
+  137  cd ..
+  138  cd fuentes/BaseDatosMSSQL/
+  139  ls
+  140  more execute.sh 
+  141  psql dec
+  142  cd ..
+  143  ls
+  144  cd ..
+  145  ls
+  146  cd base
+  147  ls
+  148  vim 8081_traductor_ws.sql 
+  149  cd funciones/
+  150  psql -f parser_xml.sql dec
+  151  psql -f respuesta_xml.sql dec
+  152  ls
+  153  cd ..
+  154  ls
+  155  psql -f 8081_traductor_ws.sql dec
+  156  vim 8081_traductor_ws.sql 
+  157  ls
+  158  mkdir bono3
+  159  cd bono3
+  160  vim t_define_secuencia_ws.sql
+  161  psql -f t_define_secuencia_ws.sql dec
+  162  cd ..
+  163  ls
+  164  vim 8081_traductor_ws.sql 
+  165  cd ..
+  166  Ã±s
+  167  ls
+  168  cd base
+  169  ls
+  170  vim 8081_traductor_ws.sql 
+  171  ls
+  172  cd ..
+  173  ls
+  174  mv base base_old
+  175  ls
+  176  gunzip base.tar.gz 
+  177  tar -xvf base.tar 
+  178  cd base
+  179  ls
+  180  cp -r ../base_old/bono3 .
+  181  ls
+  182  psql -f 8081_traductor_ws.sql dec
+  183  vim 8081_traductor_ws.sql 
+  184  psql -f 8081_traductor_ws.sql dec
+  185  vim 8081_traductor_ws.sql 
+  186  psql -f 8081_traductor_ws.sql dec
+  187  cd ..
+  188  cd Pxml/
+  189  ./sube reload
+  190  tail -f 2013041718_XXX.LOG
+  191  cd ..
+  192  cd Listener/
+  193  ls
+  194  more 2013041718_177.LOG
+  195  tail -f 2013041718_177.LOG
+  196  ls
+  197  cd ..
+  198  cd fuentes/
+  199  cd comun
+  200  ls
+  201  cd ..
+  202  cd IsysTx
+  203  ls
+  204  vim IsysTx.c
+  205  man stristr
+  206  cd ..
+  207  ls
+  208  cd Listener/
+  209  ls
+  210  tail -f 2013041718_177.LOG
+  211  ls
+  212  cd ..
+  213  cd base
+  214  ls
+  215  cd bono3/
+  216  ls
+  217  cd ..
+  218  vim 8081_traductor_ws.sql 
+  219  cd bono3/
+  220  vim traductor_bencertif_MASVIDA.sql
+  221  tsql -H 150.10.10.31 -U IMED -P 20050331 -p 1433 -D MASTER
+  222  vim traductor_bencertif_MASVIDA.sql 
+  223  psql -f traductor_bencertif_MASVIDA.sql dec
+  224  cd ..
+  225  cd Pxml/
+  226  ./sube reload
+  227  ls
+  228  tail -f 2013041718_XXX.LOG
+  229  cd ..
+  230  cd base
+  231  cd bono3/
+  232  ls
+  233  vim t_define_secuencia_ws.sql 
+  234  ls
+  235  psql -f t_define_secuencia_ws.sql dec
+  236  vim traductor_bencertif_MASVIDA.sql 
+  237  psql -f traductor_bencertif_MASVIDA.sql  dec
+  238  cd ..
+  239  cd Pxml/
+  240  ls
+  241  tail -f 2013041718_XXX.LOG
+  242  tsql -H 150.10.10.31 -U IMED -P 20050331 -p 1433 -D MASTER[A
+  243  Ã§
+  244  la
+  245  ls
+  246  tail -f 2013041719_XXX.LOG
+  247  cd ..
+  248  cd ApiSYBASE_CRUZBLANCA/
+  249  ls
+  250  vim 2013041719_XXX.LOG
+  251  ls
+  252  cd ..
+  253  cd ApiSYBASE_CRUZBLANCA/
+  254  vim sube 
+  255  ./sube reload
+  256  telnet 127.0.0.1 8078
+  257  ls
+  258  vim sube 
+  259  ./sube reload
+  260  telnet 127.0.0.1 8078
+  261  vim dbo.sysusers
+  262  ls
+  263  vim 2013041719_XXX.LOG
+  264  cd ..
+  265  ls 
+  266  cd fuentes/
+  267  cd bas
+  268  cd BaseDatos
+  269  cd.. 
+  270  cd ..
+  271  cd BaseDatosMSSQL/
+  272  ls
+  273  vim OleDatabase.c
+  274  ps
+  275  pwd
+  276  ls
+  277  cd ..
+  278  ls
+  279  cd Pxml/
+  280  ls
+  281  tail -f 2013041719_XXX.LOG
+  282  ls
+  283  cd base/
+  284  ls
+  285  cd ..
+  286  ls
+  287  cd fuentes/BaseDatosMSSQL/
+  288  ls
+  289  vim BaseDatosMSSQL.c
+  290  telnet 127.0.0.1 8001
+  291  telnet 10.150.73.119 1433
+  292  telnet 10.40.100.2 1433
+  293  telnet 150.10.10.31 1433
+  294  telnet 127.0.0.1 8001
+  295  vim OleDatabase.c
+  296  make
+  297  telnet 127.0.0.1 8001
+  298  cd ..
+  299  cd comun
+  300  ls
+  301  grep GetInt *.c
+  302  vim IsysGlobal.c
+  303  telnet 127.0.0.1 8001
+  304  cd ..
+  305  cd..
+  306  cd ..
+  307  ls
+  308  mkdir ApiMSQL_MASVIDA
+  309  cd ApiMSQL_MASVIDA/
+  310  cp ../fuentes/BaseDatosMSSQL/BaseDatosMSSQL .
+  311  ls
+  312  mv BaseDatosMSSQL MasVida_MSQL
+  313  ls
+  314  cd ..
+  315  cd Pxml/
+  316  more sube 
+  317  cp sube ../ApiMSQL_MASVIDA/
+  318  cd ../ApiMSQL_MASVIDA/
+  319  ls
+  320  vim sube 
+  321  ./sube start
+  322  ls
+  323  tail -f 2013041717_XXX.LOG
+  324  cd ..
+  325  ls
+  326  cd ApiPG/
+  327  ls
+  328  cat sube 
+  329  id
+  330  psql
+  331  ls
+  332  psql dec
+  333  cd ..
+  334  cd base_old/
+  335  vim 8081_traductor_ws.sql 
+  336  cd ..
+  337  ls
+  338  cd fuentes/
+  339  ls
+  340  cd WsBono3/
+  341  ls
+  342  vim BENCERTIFServiceSoapBinding.bencertif.req.xml 
+  343  ls
+  344  grep extCodFinanciador *
+  345  ls
+  346  more VALORVARIServiceSoapBinding.valorvari.req.xml
+  347  ls
+  348  psql
+  349  cd ..
+  350  ls
+  351  cd WsBono3/
+  352  ls
+  353  more 2013041718_XXX.LOG
+  354  more BENCERTIFServiceSoapBinding.bencertif.req.xml
+  355  telnet 127.0.0.1 8081 
+  356  man strstr
+  357  man strspn
+  358  man upper
+  359  man ucase
+  360  man strupper
+  361  man strup
+  362  cd ..
+  363  cd comun
+  364  grep -i upper *
+  365  man strupr
+  366  man toupper
+  367  telnet 127.0.0.1 8081
+  368  cd fuentes_big/
+  369  telnet 127.0.0.1 8081
+  370  cd ..
+  371  cd base
+  372  cd bono3/
+  373  ls
+  374  vim t_define_secuencia_ws.sql 
+  375  psql -f t_define_secuencia_ws.sql dec
+  376  telnet 127.0.0.1 8081
+  377  cd ..
+  378  vim 8081_traductor_ws.sql 
+  379  psql -f 8081_traductor_ws.sql dec
+  380  telnet 127.0.0.1 8081
+  381  cd funciones/
+  382  ls
+  383  vim respuesta_xml.sql 
+  384  psql -f respuesta_xml.sql dec
+  385  cd ..
+  386  ls
+  387  vim 8081_traductor_ws.sql 
+  388  psql -f 8081_traductor_ws.sql dec
+  389  telnet 127.0.0.1 8081
+  390  vim 8081_traductor_ws.sql 
+  391  cd funciones
+  392  ls
+  393  vim respuesta_xml.sql 
+  394  psql -f respuesta_xml.sql dec
+  395  telnet 127.0.0.1 8081
+  396  pwd
+  397  cd ..
+  398  ls
+  399  cd ..
+  400  ls
+  401  cp -r ApiMSQL_MASVIDA ApiSYBASE_COLMENA
+  402  cd ApiSYBASE_COLMENA/
+  403  ls
+  404  mv MasVida_MSQL Colmena_SYBASE
+  405  vim sube 
+  406  tsql -H 4.0.11.22 -P 12700 -U orden -p orden$1$ 
+  407  tsql -H 4.0.11.22 -p 12700 -U orden -P orden$1$ 
+  408  tsql -H 4.0.11.22 -p 12700 -U orden -P orden$1$ -D 
+  409  tsql -H 4.0.11.22 -p 12700 -U orden -P orden$1$ 
+  410  telnet 4.0.11.22 12700
+  411  tsql -H 4.0.11.22 -p 12700 -U orden -P orden$1$ -D MASTER
+  412  tsql -H 4.0.11.22 -p 12700 -U orden -P orden$1$ 
+  413  telnet 172.31.16.49 10000
+  414  tsql -H 172.31.16.49 -p 10000 -U orden -P orden$1$ 
+  415  tsql -H 172.31.16.49 -p 10000 -U CSALUD00 -P CSALUD00 
+  416  tsql -H 172.31.16.49 -p 10000 -U orden -P "orden$1$" 
+  417  tsql -H 172.31.16.49 -p 10000 -U orden -P 'orden$1$' 
+  418  tsql -H 172.31.16.49 -p 10000 -U orden -P orden 
+  419  tsql -H 172.31.16.49 -p 10000 -U CSALUD00 -P CSALUD00 
+  420  ls
+  421  mv Colmena_SYBASE CruzBlanca_SYBASE
+  422  vim sube
+  423  ls
+  424  cd..
+  425  cd ..
+  426  mv ApiSYBASE_COLMENA ApiSYBASE_CRUZBLANCA
+  427  ls
+  428  cd ApiSYBASE_CRUZBLANCA/
+  429  ./sube start
+  430  ps
+  431  cd ..
+  432  cd base
+  433  ls
+  434  pg_dump -t base_datos --insert > t_base_datos.sql
+  435  vim t_base_datos.sql 
+  436  psql -f t_base_datos.sql 
+  437  vim 8081_traductor_ws.sql 
+  438  psql -f 8081_traductor_ws.sql dec
+  439  cd bono3/
+  440  ls
+  441  vim t_define_secuencia_ws.sql 
+  442  psql -f t_define_secuencia_ws.sql dec
+  443  cd ..
+  444  cd Pxml/
+  445  ./sube reload
+  446  cd ..
+  447  cd base
+  448  cd bono3/
+  449  ls
+  450  cp traductor_bencertif_MASVIDA.sql traductor_bencertif_CRUZBLANCA.sql
+  451  vim traductor_bencertif_CRUZBLANCA.sql 
+  452  tsql -H 172.31.16.49 -p 10000 -U CSALUD00 -P CSALUD00 
+  453  vim traductor_bencertif_CRUZBLANCA.sql 
+  454  psql -f traductor_bencertif_CRUZBLANCA.sql 
+  455  telnet 127.0.0.1 8081
+  456  tsql -H 172.31.16.49 -p 10000 -U CSALUD00 -P CSALUD00 
+  457  cd 
+  458  cd ApiSYBASE_CRUZBLANCA/
+  459  vim sube 
+  460  ./sube reload
+  461  telnet 127.0.0.1 8078
+  462  telnet 127.0.0.1 8081 
+  463  env
+  464  locate proc
+  465  proc
+  466  vi /usr/pgsql-9.2/include/server/storage/proc.h
+  467  proc
+  468  locate proc
+  469  cd /proc/
+  470  ll
+  471  ñcd
+  472  su -
+  473  cd
+  474  ll
+  475  rmp -i oracle-instantclient11.2-odbc-11.2.0.3.0-1.x86_64.rpm
+  476  rpm -i oracle-instantclient11.2-odbc-11.2.0.3.0-1.x86_64.rpm
+  477  ll
+  478  unzip instantclient-basic-linux.x64-11.2.0.3.0.zip
+  479  ls
+  480  cd instantclient_11_2/
+  481  ll
+  482  cd ..
+  483  ll
+  484  unzip instantclient-precomp-linux.x64-11.2.0.3.0.zip
+  485  ls
+  486  unzip instantclient-precomp-linux.x64-11.2.0.3.0.zip
+  487  unzip instantclient-sdk-linux.x64-11.2.0.3.0.zip
+  488  ls
+  489  unzip instantclient-sqlplus-linux.x64-11.2.0.3.0.zip
+  490  ls
+  491  cd instantclient_11_2
+  492  ll
+  493  cd precomp/admin/
+  494  ll
+  495  cd ..
+  496  ll
+  497  cd ..
+  498  ll
+  499  cd sdk/
+  500  ll
+  501  proc
+  502  ./proc
+  503  locate libclntsh.so.11.1
+  504  ./proc
+  505  locate  pcscfg.cfg
+  506  vi /home/isys/instantclient_11_2/precomp/admin/pcscfg.cfg
+  507  cd
+  508  vi .bash_profile 
+  509  bash
+  510  env
+  511  env
+  512  vi .bash_profile 
+  513  bash
+  514  vi .bash_profile 
+  515  ls
+  516  vi .basrch
+  517  vi .bashrc 
+  518  ls
+  519  cd Pxml/
+  520  ks
+  521  ls
+  522  pwd
+  523  cd ..
+  524  kls
+  525  ls
+  526  vi .bashrc 
+  527  ls
+  528  vi .bashrc 
+  529  vi .bash_profile 
+  530  ls
+  531  pwd
+  532  cd instantclient_11_2/
+  533  ls
+  534  cd ..
+  535  ls
+  536  tail -f 2013031811_XXX.LOG
+  537  ls
+  538  cd 
+  539  cd Oracle11/instantclient-
+  540  cd Oracle11/
+  541  ls
+  542  cd ..
+  543  ls
+  544  cd Pxml/
+  545  ls
+  546  cd ..
+  547  kls
+  548  ls
+  549  namei
+  550  nameis
+  551  u -name
+  552  ls
+  553  uname -a
+  554  cd Listener/
+  555  ls
+  556  vi sube 
+  557  ls
+  558  cd ..
+  559  ls
+  560  vi .bashrc 
+  561  ls
+  562  vi .bashrc 
+  563  ls
+  564  vi .bashrc 
+  565  cdp
+  566  ls
+  567  cdltr
+  568  ls
+  569  cd
+  570  vi .bashrc 
+  571  ls
+  572  cd base
+  573  kls
+  574  ls
+  575  cd bono3/
+  576  ks}
+  577  ls
+  578  vi traductor_bencertif_CRUZBLANCA.sql 
+  579  pwd
+  580  ls
+  581  pwd
+  582  cd ,,
+  583  cd ..
+  584  ks
+  585  ls
+  586  ll
+  587  ll -ls
+  588  ls
+  589  ll -lrth
+  590  s
+  591  ls
+  592  ll
+  593  ll -h
+  594  pwd
+  595  ls
+  596  cdfx
+  597  cd funciones/
+  598  lks
+  599  ls
+  600  pwd
+  601  cd ..
+  602  lks
+  603  ls
+  604  cd ..
+  605  ls
+  606  cd Listener
+  607  ls
+  608  pwd
+  609  ls
+  610  cd ..
+  611  ks
+  612  ls
+  613  cd base_old/
+  614  ls
+  615  cd ..
+  616  ls
+  617  cd fuentes/
+  618  ls
+  619  pwd
+  620  cd ..
+  621  ls
+  622  mkdir InOutExe
+  623  ls
+  624  cd InOutExe/
+  625  ls
+  626  pwd
+  627  cdp
+  628  lks
+  629  cdp
+  630  ls
+  631  dcp
+  632  cdp
+  633  lks
+  634  ls
+  635  ./sube reload
+  636  ls
+  637  tail -f 2013041916_XXX.LOG
+  638  ls
+  639  cd base
+  640  cd bono3/
+  641  ls
+  642  vim t_define_secuencia_ws.sql 
+  643  ls
+  644  vim traductor_bencertif_CRUZBLANCA.sql 
+  645  cd .
+  646  cd ..
+  647  ls
+  648  cd ..
+  649  cd fuentes/
+  650  ls
+  651  cd WsBono3/
+  652  ls
+  653  vim ANULABONOUServiceSoapBinding.anulabonou.req.xml 
+  654  ls
+  655  cd ..
+  656  ls
+  657  cd base
+  658  ls
+  659  cd bono3/
+  660  ls
+  661  vim t_define_secuencia_ws.sql 
+  662  ls
+  663  cdl
+  664  kls
+  665  cdb
+  666  cdf
+  667  cdb3
+  668  ls
+  669  ssh -i decdesa.pem root@ec2-54-224-86-174.compute-1.amazonaws.com
+  670  ls
+  671  cdp
+  672  ls
+  673  cd
+  674  cdb3
+  675  cdl
+  676  ls
+  677  env
+  678  proc
+  679  cd instantclient
+  680  ll
+  681  cd instantclient_11_2/
+  682  ll
+  683  cd precomp
+  684  ll
+  685  cd ..
+  686  cd sdk/
+  687  ll
+  688  ./proc
+  689  locate libclntsh.so.11.1
+  690  ll
+  691  cd demo/
+  692  ll
+  693  make -f demo_proc_ic.mk build PROCFLAGS="common_parser=yes" EXE=ejemplo OBJS="ejemplo.o"
+  694  env
+  695  proc
+  696  cd instantclient
+  697  cd instantclient_11_2/
+  698  cd sdk/
+  699  ./proc
+  700  cd
+  701  ll
+  702  mkdir Oracle11
+  703  mv instantclient-basic-linux.x64-11.2.0.3.0.zip instantclient-precomp-linux.x64-11.2.0.3.0.zip instantclient-sdk-linux.x64-11.2.0.3.0.zip instantclient-sqlplus-linux.x64-11.2.0.3.0.zip Oracle11
+  704  ll
+  705  rm oracle-instantclient11.2-odbc-11.2.0.3.0-1.x86_64.rpm
+  706  ll
+  707  df
+  708  cd fuentes/
+  709  ll
+  710  cp -r BaseDatosMSSQL/ BaseDatoOracle
+  711  cd BaseDatoOracle/
+  712  ll
+  713  rm BaseDatosMSSQL.c20100301BAK BaseDatosMSSQL.c20100304BAK BaseDatosMSSQL.c20100305BAK BaseDatosMSSQL.c.20130402 BaseDatosMSSQL.cBAK 
+  714  ll
+  715  rm OleDatabase.c~ OleDatabase.c20100301BAK OleDatabase.c20100304BAK OleDatabase.c20100305BAK OleDatabase.cBAK20100115
+  716  ñll
+  717  ll
+  718  rm 2013041716_XXX.LOG 2013041717_XXX.LOG 20130417_XXX.ERR BaseDatosMSSQL BaseDatosMSSQL.prod1 BaseDatosMSSQL.prod2 makefileBAK2 makefileBAKFelipe OleDatabase.bk_moo
+  719  ñll
+  720  ll
+  721  mv BaseDatosMSSQL.c BaseDatosORA.c
+  722  vi BaseDatosMSSQL_mensajes.c
+  723  ll
+  724  rm BaseDatosMSSQL_mensajes.c
+  725  rm BaseDatosMSSQL.o OleDatabase.o
+  726  ll
+  727  mv OleDatabase.c OleDatabaseORA.c
+  728  ll
+  729  vi makefile 
+  730  cd
+  731  cd instantclient_11_2/sdk/demo/
+  732  ll
+  733  $ make -f demo_proc_ic.mk build PROCFLAGS="common_parser=yes" EXE=ejemplo OBJS="ejemplo.o"
+  734   make -f demo_proc_ic.mk build PROCFLAGS="common_parser=yes" EXE=ejemplo OBJS="ejemplo.o"
+  735  make -f demo_proc_ic.mk
+  736  locate libio.h
+  737  su - 
+  738  ls
+  739  cd base
+  740  ls
+  741  cd..
+  742   cd ..
+  743  ls
+  744  cd Api
+  745  cd ApiPG/
+  746  ls
+  747  cd ..
+  748  ls
+  749  cd ApiMSQL_MASVIDA/
+  750  ls
+  751  more sube
+  752  cd ..
+  753  ls
+  754  cd ApiSYBASE_CRUZBLANCA/
+  755  more sube
+  756  psql dec
+  757  ls
+  758  cd ..
+  759  ls
+  760  cd base
+  761  ls
+  762  ls bono3/
+  763  cd bono3
+  764  ls
+  765  vim t_define_secuencia_ws.sql 
+  766  ls
+  767  vim traductor_bencertif_CRUZBLANCA.sql 
+  768  ls
+  769  vim t_define_secuencia_ws.sql 
+  770  ls
+  771  more traductor_bencertif_MASVIDA.sql 
+  772  CD ..
+  773  cd ..
+  774  ls
+  775  vim 8081_traductor_ws.sql 
+  776  ls
+  777  more t_servicios.sql 
+  778  ls
+  779  vim 8081_traductor_ws.sql 
+  780  ls
+  781  more t_servicios.sql 
+  782  vim 8081_traductor_ws.sql 
+  783  ls
+  784  more t_isys_querys_tx.sql
+  785  vim 8081_traductor_ws.sql 
+  786  ls
+  787  vim t_base_datos.sql 
+  788  ls
+  789  cd bono3
+  790  ls
+  791  vim t_define_secuencia_ws.sql 
+  792  ls
+  793  vim traductor_bencertif_CRUZBLANCA.sql 
+  794  ls
+  795  vim traductor_bencertif_MASVIDA.sql
+  796  ls
+  797  cd ..
+  798  ls
+  799  more t_formato.sql
+  800  more t_formatos.sql
+  801  psql dec
+  802  ls
+  803  pwd
+  804  vim 8081_traductor_ws.sql 
+  805  ls
+  806  psql -f 8081_traductor_ws.sql dec
+  807  ls
+  808  vim t_base_datos.sql 
+  809  psql -f t_base_datos.sql dec
+  810  ls
+  811  more dec-isys.sql 
+  812  ls
+  813  more t_servicios.sql 
+  814  ls
+  815  cd bono3/
+  816  ls
+  817  vim t_define_secuencia_ws.sql 
+  818  psql -f t_define_secuencia_ws.sql 
+  819  :q!
+  820  vim t_define_secuencia_ws.sql 
+  821  psql -f t_define_secuencia_ws.sql 
+  822  ls
+  823  cd ..
+  824  ls
+  825  vim t_base_datos.sql 
+  826  ls
+  827  cd ..
+  828  ls
+  829  cd ApiMSQL_MASVIDA/
+  830  ls
+  831  more sube 
+  832  cd ..
+  833  cp -r ApiMSQL_MASVIDA ApiMSQL_FERROSALUD
+  834  cd ApiMSQL_FERROSALUD/
+  835  ls
+  836  rm *.LOG
+  837  ls
+  838  rm 20130417_XXX.ERR 
+  839  ls
+  840  mv MasVida_MSQL FerroSalud_MSQL
+  841  vim sube
+  842  ls
+  843  cd ..
+  844  ls
+  845  cp -r ApiMSQL_FERROSALUD ApiMSQL_VIDACAMARA
+  846  cd ApiMSQL_VIDACAMARA/
+  847  ls
+  848  mv FerroSalud_MSQL VidaCamara_MSQL
+  849  vim sube 
+  850  cd ..
+  851  ls
+  852  cp -r ApiMSQL_FERROSALUD ApiMSQL_CCHC
+  853  cd ApiMSQL_CCHC/
+  854  ls
+  855  mv FerroSalud_MSQL CCHC_MSQL
+  856  vim sube 
+  857  cd ..
+  858  ls
+  859  cp -r ApiSYBASE_CRUZBLANCA ApiSYBASE_COLMENA
+  860  cd ApiSYBASE_COLMENA/
+  861  ls
+  862  rm *.LOG
+  863  ls
+  864  rm *.ERR
+  865  ls
+  866  mv CruzBlanca_SYBASE Colmena_SYBASE
+  867  ls
+  868  vim sube 
+  869  ls
+  870  cd ..
+  871  ls
+  872  ls -l
+  873  vi ApiMSQL_VIDACAMARA/sube 
+  874  ls
+  875  cd base
+  876  cd bono3/
+  877  ll
+  878  ls
+  879  ls -la
+  880  mroe t_define_secuencia_ws.sql 
+  881  more t_define_secuencia_ws.sql 
+  882  ls
+  883  vim t_define_secuencia_ws.sql 
+  884  psql -f t_define_secuencia_ws.sql dec
+  885  ls
+  886  exit
+  887  ls
+  888  cd base
+  889  ls
+  890  ls bono3
+  891  cd ..
+  892  ls
+  893  ls Pxml/
+  894  ls Listener/
+  895  ls fuentes/
+  896  cd fuentes/
+  897  cd WsBono3/
+  898  ls
+  899  more ANULABONOUServiceSoapBinding.anulabonou.req.xml 
+  900  grep "<ns1:" *.req.xml
+  901  ssh 10.151.224.21
+  902  ssh switch@10.151.224.21
+  903  ls
+  904  cdl
+  905  ls
+  906  vi sube 
+  907  kls
+  908  ls
+  909  cdb
+  910  ls
+  911  grep "LISTENER_WS" *.sql
+  912  vi t_isys_tx_formatos.sql:insert
+  913  vi t_isys_tx_formatos.sql 
+  914  ls
+  915  pwd
+  916  ls
+  917  vi t_procesos.sql
+  918  ls
+  919  rm }
+  920  vi t_procesos.sql
+  921  ls
+  922  vi t_formato.sql
+  923  vi t_procesos.sql
+  924  ls
+  925  cp t_procesos.sql tablas/
+  926  ls
+  927  mv t_procesos.sql tablas/.
+  928  ls
+  929  cd tablas/
+  930  ls
+  931  cd ..
+  932  kls
+  933  ls
+  934  vi t_isys_tx_formatos.sql 
+  935  vi t_servicios.sql 
+  936  vi t_isys_tx_formatos.sql 
+  937  ls
+  938  vi t_formato.sql 
+  939  vi t_isys_tx_formatos.sql 
+  940  vi t_servicios.sql 
+  941  ls
+  942  vi t_isys_querys_tx.sql 
+  943  ls
+  944  vi 8081_traductor_ws.sql 
+  945  ls
+  946  cat t_formato.sql
+  947  cat t_formatos.sql
+  948  vi t_formatos.sql 
+  949  ls
+  950  rm -rf t_formatos.sql 
+  951  ls
+  952  vi t_formato.sql 
+  953  ls
+  954  cd bono3/t
+  955  cd bono3/
+  956  ls
+  957  vi t_define_secuencia_ws.sql 
+  958  ks
+  959  ls
+  960  cd ..
+  961  ls
+  962  vi 8081_traductor_ws.sql 
+  963  ls
+  964  cd ..
+  965  lks
+  966  ls
+  967  vi ApiMSQL_CCHC/
+  968  cd ApiMSQL_CCHC/
+  969  ls
+  970  vi sube 
+  971  cd ..
+  972  ls
+  973  cat ApiMSQL_FERROSALUD/sube 
+  974  cat ApiMSQL_CCHC/sube 
+  975  ls
+  976  cd base
+  977  ls
+  978  vi 8081_traductor_ws.sql 
+  979  ls
+  980  grep -R "bono3.traductor_in_bencertif_cch" *
+  981  cd bono3/
+  982  ls
+  983  vi t_define_secuencia_ws.sql
+  984  ls
+  985  vi traductor_bencertif_CRUZBLANCA.sql
+  986  ls
+  987  vi t_define_secuencia_ws.sql t
+  988  vi t_define_secuencia_ws.sql
+  989  vi traductor_bencertif_CRUZBLANCA.sql
+  990  vi t_define_secuencia_ws.sql
+  991  cd ..
+  992  ls
+  993  vi 8081_traductor_ws.sql 
+  994  ls
+  995  vi 8081_traductor_ws.sql 
+  996  act 8081_traductor_ws.sql 
+  997  ls
+  998  cd
+  999  vi .bashrc 
+ 1000  ls
+ 1001  cd base
+ 1002  ls
+ 1003  cd 8081_traductor_ws.sql 
+ 1004  history > history

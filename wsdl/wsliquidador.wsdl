@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:WsLiquidador" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:WsLiquidador">
+<types>
+<xsd:schema targetNamespace="urn:WsLiquidador">
+<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+<xsd:complexType name="ListaDesc">
+<xsd:all>
+<xsd:element name="CodEntidad" type="xsd:string"/>
+<xsd:element name="NumPoliza" type="xsd:string"/>
+<xsd:element name="CodCobertura" type="xsd:string"/>
+<xsd:element name="DescCober" type="xsd:int"/>
+<xsd:element name="TipoDesc" type="xsd:string"/>
+<xsd:element name="MtoDesc" type="xsd:int"/>
+<xsd:element name="PorcDesc" type="xsd:int"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="ListaDescA">
+<xsd:all>
+<xsd:element name="CodEntidad" type="xsd:string"/>
+<xsd:element name="NumPoliza" type="xsd:string"/>
+<xsd:element name="CodCobertura" type="xsd:string"/>
+<xsd:element name="CodigoProducto" type="xsd:string"/>
+<xsd:element name="IndReceta" type="xsd:string"/>
+<xsd:element name="DescProducto" type="xsd:int"/>
+<xsd:element name="MontoTransaccion" type="xsd:int"/>
+<xsd:element name="MontoDescuento" type="xsd:int"/>
+</xsd:all>
+</xsd:complexType>
+</xsd:schema>
+</types>
+<message name="FarDescGenRequest">
+<part name="CodInstitucion" type="xsd:string"/>
+<part name="CodUsuario" type="xsd:string"/>
+<part name="CodClave" type="xsd:string"/>
+<part name="RutBeneficiario" type="xsd:string"/>
+<part name="IndReceta" type="xsd:string"/>
+<part name="Local" type="xsd:int"/>
+</message>
+<message name="FarDescGenResponse">
+<part name="CodError" type="xsd:int"/>
+<part name="GloError" type="xsd:string"/>
+<part name="FloAuditoria" type="xsd:int"/>
+<part name="TopePlan" type="xsd:int"/>
+<part name="ListaDesc" type="tns:ListaDesc"/>
+</message>
+<message name="FarConfDescRequest">
+<part name="CodInstitucion" type="xsd:string"/>
+<part name="CodUsuario" type="xsd:string"/>
+<part name="CodClave" type="xsd:string"/>
+<part name="RutBeneficiario" type="xsd:string"/>
+<part name="FolAuditoria" type="xsd:int"/>
+<part name="Local" type="xsd:int"/>
+<part name="Fecha" type="xsd:string"/>
+<part name="NroDocumento" type="xsd:int"/>
+<part name="ListaDescA" type="tns:ListaDescA"/>
+</message>
+<message name="FarConfDescResponse">
+<part name="CodError" type="xsd:int"/>
+<part name="GloError" type="xsd:string"/>
+<part name="CodigoConfirmacion" type="xsd:int"/>
+</message>
+<message name="FarAnulaDescRequest">
+<part name="CodInstitucion" type="xsd:string"/>
+<part name="CodUsuario" type="xsd:string"/>
+<part name="CodClave" type="xsd:string"/>
+<part name="RutBeneficiario" type="xsd:string"/>
+<part name="FolAuditoria" type="xsd:int"/>
+<part name="CodigoConfirmacion" type="xsd:int"/>
+</message>
+<message name="FarAnulaDescResponse">
+<part name="CodError" type="xsd:int"/>
+<part name="GloError" type="xsd:string"/>
+</message>
+<portType name="FarmaciaPortType">
+<operation name="FarDescGen">
+<documentation></documentation>
+<input message="tns:FarDescGenRequest"/>
+<output message="tns:FarDescGenResponse"/>
+</operation>
+<operation name="FarConfDesc">
+<documentation></documentation>
+<input message="tns:FarConfDescRequest"/>
+<output message="tns:FarConfDescResponse"/>
+</operation>
+<operation name="FarAnulaDesc">
+<documentation></documentation>
+<input message="tns:FarAnulaDescRequest"/>
+<output message="tns:FarAnulaDescResponse"/>
+</operation>
+</portType>
+<binding name="FarmaciaBinding" type="tns:FarmaciaPortType">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="FarDescGen">
+<soap:operation soapAction="urn:WsLiquidadorsdl#FarDescGen" style="rpc"/>
+<input>
+<soap:body use="encoded" namespace="urn:WsLiquidadorsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:WsLiquidadorsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="FarConfDesc">
+<soap:operation soapAction="urn:WsLiquidadorsdl#FarConfDesc" style="rpc"/>
+<input>
+<soap:body use="encoded" namespace="urn:WsLiquidadorsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:WsLiquidadorsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="FarAnulaDesc">
+<soap:operation soapAction="urn:WsLiquidadorsdl#FarConfDesc" style="rpc"/>
+<input>
+<soap:body use="encoded" namespace="urn:WsLiquidadorsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:WsLiquidadorsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+</binding>
+<service name="Farmacia">
+<port name="FarmaciaPort" binding="tns:FarmaciaBinding">
+<soap:address location="http://10.100.32.177/WsLiquidador"/> 
+</port>
+</service>
+</definitions>

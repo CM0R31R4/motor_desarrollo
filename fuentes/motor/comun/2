@@ -1,0 +1,211 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <xml.h>
+#include <tipos.h>
+#include <tiposocket.h>
+#include <IsysSocket.h>
+#include <time.h>
+#include <const.h>
+#include <asm/ioctls.h>
+#include <sys/socket.h>
+#include <sys/timeb.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+
+#define LISTA	1 //[
+#define	JSON 	2 //{
+#define	DATA	3 // <> de [ y {
+
+int get_tipo_json(char szJson[])
+{
+	int len,i;
+	len=strlen(szJson);
+	for (i=0;i<len;i++)
+	{
+		//Ignora espacios
+		if (szJson[i]!=' ')
+		{
+			//Verifico el primer caracter no espacio
+			if (szJson[i]=='[') return LISTA;
+			else if (szJson[i]=='{') return JSON;
+			else return DATA;
+		}
+	}
+	return DATA;
+}
+
+
+//Llena una estructura con datos de entrada que deben ser llenados
+//con las funciones para asignar los datos a las estructuras especificas
+//El input es del tipo json  { "CAMPO":"DATA","CAMPO2":"DATA2" }
+Tipo_XML *DeserializaJSON(Tipo_XML *xml,char szInput[])
+{
+        char *dta=szInput;
+        //char szAux[8192];
+        char *ini,*igual,*data,*aux1,*fin;
+        char szCampo[MAX_LEN_CAMPO];
+        int i=0;
+        char *achTmp;
+	char chr;
+
+	//dta={["CAMPO"="XXXX",[ 1,2,3,4 ],"CAMPO2"="YYYY"]}
+        do
+        {
+                if (dta==NULL)
+                {printf("DTA es NULO\n");
+                 break;}
+                //printf ("dta=%s\n\n\n$$$$$\n",dta);
+
+		//Busca el Inicio del Json
+		nState=0;
+		chr=dta[0];
+	 	switch (nState)
+		{
+			//Busca el inicio del Json
+			case 0:
+				if (chr=='{')
+				{
+					nState=1;
+				}
+				break;
+			//Busca si viene el inicio de un campo
+			case 1:
+				//Si empieza un nombre de campo
+				if (chr=='"')
+				{
+					nState=2;
+				}
+				
+		}
+		//Avanza el texto
+                dta=++;
+			
+
+                if (strlen(dta)<2)
+                { printf("Largo DTA menor 2 [%s]\n",dta); break;}
+                fin=(char *)strstr(dta,"###");
+                if (fin==NULL){ printf("Fin es NULO [%s]\n",dta); break;}
+
+                //Obtiene el nombre del campo
+                //memcpy(szAux,dta,fin-dta);
+                //szAux[fin-dta]=0;
+                //printf("dta=%s\n",dta);
+                //printf("fin=%s\n",fin);
+                //printf("len=%i\n",fin-dta);
+                //printf("szAux=%s\n",szAux);
+                //printf("szAux=%s\n",szAux);
+                //Busco donde termina el nombre del campo
+                aux1=strchr(dta,'[');
+                if (!aux1) {  printf("No encontre [ [%s]\n",dta); break;}
+
+                //Si largo de campo 0 pasamos al siguiente
+                if ((aux1-dta)==0)
+                {
+                        //Nos saltamos los gatos ###
+                        dta=fin+3;
+                        continue;
+                }
+                //Validamos el largo del nombre del campo
+                if ((aux1-dta)>MAX_LEN_CAMPO)
+                {
+                        WriteLog(0,"Nombre de Campo excede largo MAX_LEN_CAMPO");
+                        break;
+                }
+                memcpy(szCampo,dta,aux1-dta);
+                szCampo[aux1-dta]=0;
+                //WriteLog(0,szCampo);
+                //printf("Campo=%s\n",szCampo);
+
+
+                //Busco donde empieza la data
+                ini=strchr(dta,'=');
+                if (!ini)  {  printf("No encontre = [%s]\n",dta); break;}
+                ini++;
+                //printf("ini=%s\n",ini);
+                //printf("fin=%s\n",fin);
+                //printf("largo_data=%i\n",fin-ini);
+                achTmp=NULL;
+                //Si el campo es __XML__ me lo salto para evitar referencias cruzadas
+                //Se borra al final del llamado de esta funcion
+                if (memcmp(szCampo,"__XML__",7)!=0)
+                {
+                        //Solo si largo de szCampo es mayor que 0
+                        if (fin-ini==0)
+                        {
+                                ImprimeMemoria(0,"Antes de 0");
+                                //WriteLog(0,"Inserta Nada");
+                                xml=InsertaDataXML(xml,szCampo,"");
+                        }
+                        else
+                        {
+                                ImprimeMemoria(0,"Antes de 1");
+                                //WriteLog(0,"Inserta Data");
+                                xml=InsertaDataLenXML(xml,szCampo,ini,fin-ini);
+                                /*
+                                achTmp = (char *)malloc(fin-ini+1);
+                                if (achTmp)
+                                {
+                                        memcpy(achTmp,ini,fin-ini);
+                                        achTmp[fin-ini]=0;
+                                        xml=InsertaDataXML(xml,szCampo,achTmp);
+                                        free(achTmp);
+                                        achTmp=NULL;
+                                }
+                                */
+                        }
+                }
+                //Nos saltamos los gatos ###
+                dta=fin+3;
+        }while(1);
+   return xml;
+}
+
+
+Tipo_Data *SerializaJson(Tipo_XML *xml,Tipo_Data *pDataAux)
+{
+	Tipo_XML *xml2=NULL;
+        Tipo_XML *xml_aux=NULL;
+        char szTmp[200];
+	int nTipo;
+	int primero=1;
+
+        xml2=xml;
+	//Insertamos el inicio de un Json
+	pDataAux=InsertaDataLen("{",1,pDataAux);
+        while (xml2!=NULL)
+        {
+        	//Guarda el nivel siguiente para el proximo ciclo
+                xml_aux=xml2->pNextNivel;
+                while(xml2!=NULL)
+                {
+			if (!primero)
+			{
+                        	pDataAux=InsertaDataLen(",",1,pDataAux);
+			}
+			primero=0;
+			//Inserta a pDataAux el nombre del campo como json
+			pDataAux=InsertaDataLen("\"",1,pDataAux);
+             		pDataAux=InsertaDataLen(xml2->szCampo,xml2->nLenCampo,pDataAux);
+			pDataAux=InsertaDataLen("\":",2,pDataAux);
+                        //Si tiene '' hay que cambiarlas por <C>
+			nTipo=get_tipo_json(xml2->pData);
+			if (nTipo==DATA)
+			{
+                       	   	pDataAux=InsertaDataLen("\"",1,pDataAux);
+        	                pDataAux=InsertaDataLen(xml2->pData,xml2->nLenData,pDataAux);
+                               	pDataAux=InsertaDataLen("\"",1,pDataAux);
+			}
+			else 
+			{
+        	                pDataAux=InsertaDataLen(xml2->pData,xml2->nLenData,pDataAux);
+			}
+                        xml2=xml2->pNext;
+                 } //Fin while xl2=NULL
+                 xml2=xml_aux;
+          } //while (xml2!=NULL);
+        pDataAux=InsertaDataLen("}",1,pDataAux);
+	return pDataAux;
+}

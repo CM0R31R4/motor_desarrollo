@@ -1,0 +1,72 @@
+drop table cias_seguros;
+create table cias_seguros (
+	codigo	integer,
+	nombre varchar,
+	nemo	varchar(20), --Max largo del prefijo del motor
+	tx	varchar,
+	url varchar,
+	funcion_respuesta	varchar,
+	funcion_input	varchar
+);
+create index cias_seguros_01 on cias_seguros(codigo);
+create index cias_seguros_02 on cias_seguros(nemo);
+
+insert into cias_seguros values (11,'Servicios Medicos','camara','Confirmacion','http://10.150.73.12/I-med/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (44,'Vida Camara','camara','Confirmacion','http://10.150.73.12/I-med/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+
+--insert into cias_seguros values (12,'Metlife','metlife','Confirmacion','http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (12,'Metlife','metlife','Confirmacion','http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+
+insert into cias_seguros values (36,'CCAF','metlife','Confirmacion','http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (13,'BCI','bci','Confirmacion','http://146.83.244.27/I-med/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+
+insert into cias_seguros values (14,'Seguros ING','ing','Confirmacion','http://10.90.10.8/ws_ing_prod/','sp_respuesta_cia_generica','sp_input_cia_generica');
+
+insert into cias_seguros values (15,'Security','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (21,'Consorcio','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (22,'Cruz Sur','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (26,'Corp Vida','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (29,'BCI','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (30,'Chicon','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (32,'InterAmericana','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (48,'Magallanes','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (49,'BBVA','trasa','Confirmacion','http://192.169.50.11/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (16,'MetLife','trasa2','Confirmacion','http://192.10.1.100/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (20,'ING','trasa2','Confirmacion','http://192.10.1.100/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (31,'EuroAmerica','trasa2','Confirmacion','http://192.10.1.100/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (40,'Chubb','trasa2','Confirmacion','http://192.10.1.100/servicios/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (17,'EuroAmerica','euroamerica','Confirmacion','http://10.10.4.10/Imed/WsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (18,'Security','security','Confirmacion','http://200.75.5.171:8080/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (19,'Consorcio','consorcio','Confirmacion','http://10.90.10.8/ws_cns_prod/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (24,'Cruz Sur','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (25,'Chilena Consolidada','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (33,'CorpVida','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (34,'BCI','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (42,'ING','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (51,'BBVA','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (52,'Vida Sec','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (53,'Vida Camara','far2','Confirmacion','http://10.27.11.60/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (27,'BCI Mpro','mprobci','Confirmacion','http://10.90.10.8/ws_bci_prod/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (28,'Bice Vida','bice','Confirmacion','http://192.168.122.11:7777/IMED-WebServices/WsConfirmacionSoap','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (35,'Inter Americana','inter','Confirmacion','http://10.90.10.8/ws_int_prod/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (37,'Met Life Mpro','metlife_mpro','Confirmacion','http://10.90.10.8/ws_met_prod/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+--Certificacion Metlife
+insert into cias_seguros values (122,'Metlife','metlife_cert','Confirmacion','http://172.22.1.32:104/IFWIMEDws/WS/wsConfirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+--Chilena Consolidada
+insert into cias_seguros values (38,'Chilena Consolidada','chicon','Confirmacion','http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvConfirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+--Sermecoop
+insert into cias_seguros values (39,'Sermecoop','sermecoop','Confirmacion','http://10.0.0.114/~imed/nusoap/Sermecoop/wsConfirmacion.php','sp_respuesta_cia_generica','sp_input_cia_generica');
+--AndesMpro
+insert into cias_seguros values (41,'AndesMpro','mpro','Confirmacion','http://10.90.10.8/produccionmpro/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (43,'Chilena ConMpro','mpro','Confirmacion','http://10.90.10.8/produccionmpro/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (46,'mok assistMpro','mpro','Confirmacion','http://10.90.10.8/produccionmpro/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (47,'vida camara Mpro','mpro','Confirmacion','http://10.90.10.8/produccionmpro/confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (45,'Integrafar','integrafar','Confirmacion','http://10.27.11.61/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (91,'Consorcio','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (100,'liquimed','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (93,'Sura Asistencia','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (101,'Caja Andes','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (102,'Ben Salud','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (103,'Gea Chile','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+insert into cias_seguros values (104,'cbvida','imed','Confirmacion','http://10.100.32.148/Confirmacion/Confirmacion.asmx','sp_respuesta_cia_generica','sp_input_cia_generica');
+

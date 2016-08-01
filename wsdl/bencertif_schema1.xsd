@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="bencertif" type="tns:bencertif"/>
+<xs:element name="bencertifResponse" type="tns:bencertifResponse"/>
+<xs:complexType name="bencertif">
+    <xs:sequence>
+      <xs:element name="extCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="extRutBeneficiario" type="xs:string"/>
+      <xs:element minOccurs="0" name="extFechaActual" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="bencertifResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:bencertifResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="bencertifResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extApellidoPat" type="xs:string"/>
+      <xs:element minOccurs="0" name="extApellidoMat" type="xs:string"/>
+      <xs:element minOccurs="0" name="extNombres" type="xs:string"/>
+      <xs:element minOccurs="0" name="extSexo" type="xs:string"/>
+      <xs:element minOccurs="0" name="extFechaNacimi" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodEstBen" type="xs:string"/>
+      <xs:element minOccurs="0" name="extDescEstado" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extNomCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extDirPaciente" type="xs:string"/>
+      <xs:element minOccurs="0" name="extGlosaComuna" type="xs:string"/>
+      <xs:element minOccurs="0" name="extGlosaCiudad" type="xs:string"/>
+      <xs:element minOccurs="0" name="extPrevision" type="xs:string"/>
+      <xs:element minOccurs="0" name="extGlosa" type="xs:string"/>
+      <xs:element minOccurs="0" name="extPlan" type="xs:string"/>
+      <xs:element minOccurs="0" name="extDescuentoxPlanilla" type="xs:string"/>
+      <xs:element name="extMontoExcedente" type="xs:long"/>
+      <xs:element minOccurs="0" name="extRutAcompanante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extNombreAcompanante" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

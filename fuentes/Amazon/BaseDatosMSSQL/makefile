@@ -1,0 +1,17 @@
+DEP = BaseDatosMSSQL.o OleDatabase.o
+CC  = gcc -g -fpic -D_REENTRANT -D_LIBC_REENTRANT -m64 -fsched2-use-traces -funroll-loops -minline-all-stringops -D_THREAD_SAFE -D_POSIX_PTHREAD_SEMANTICS
+INCL = -I../include/ -I/usr/include/openssl/ -I/usr/pgsql-9.2/include/
+LIBS =  -L../comun/ -lIsys -lsybdb -lpthread -lcrypt -lssl rsaeuro_64.lib
+
+
+
+all:	$(DEP)	
+	$(CC) $(INCL) $(DEP) $(LIBS) -o BaseDatosMSSQL
+
+BaseDatosMSSQL.o:	BaseDatosMSSQL.c
+	$(CC) -c  BaseDatosMSSQL.c $(INCL) 
+
+OleDatabase.o:	OleDatabase.c
+	$(CC) -c  OleDatabase.c $(INCL) 
+clean:
+	rm -f *.o

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="WSSwitchImplService" targetNamespace="http://sw.ws.fep.acepta.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sw.ws.fep.acepta.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://sw.ws.fep.acepta.com/" version="1.0" xmlns:tns="http://sw.ws.fep.acepta.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="almacenaDoc" type="tns:almacenaDoc"/>
+<xs:element name="almacenaDocResponse" type="tns:almacenaDocResponse"/>
+<xs:element name="buscarDoc" type="tns:buscarDoc"/>
+<xs:element name="buscarDocResponse" type="tns:buscarDocResponse"/>
+<xs:complexType name="buscarDoc">
+<xs:sequence>
+<xs:element minOccurs="0" name="rucReceptor" type="xs:string"/>
+<xs:element minOccurs="0" name="rucEmisor" type="xs:string"/>
+<xs:element minOccurs="0" name="tipo" type="xs:string"/>
+<xs:element minOccurs="0" name="folio" type="xs:string"/>
+<xs:element minOccurs="0" name="fechaEmision" type="xs:string"/>
+<xs:element minOccurs="0" name="fechaHasta" type="xs:string"/>
+<xs:element minOccurs="0" name="inicio" type="xs:string"/>
+<xs:element minOccurs="0" name="filas" type="xs:string"/>
+<xs:element minOccurs="0" name="codigoRespuestaSunat" type="xs:string"/>
+<xs:element minOccurs="0" name="estadoSunat" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="buscarDocResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="almacenaDoc">
+<xs:sequence>
+<xs:element minOccurs="0" name="rucEmisor" type="xs:string"/>
+<xs:element minOccurs="0" name="tipo" type="xs:string"/>
+<xs:element minOccurs="0" name="folio" type="xs:string"/>
+<xs:element minOccurs="0" name="rucReceptor" type="xs:string"/>
+<xs:element minOccurs="0" name="montoTotal" type="xs:string"/>
+<xs:element minOccurs="0" name="fechaEmision" type="xs:string"/>
+<xs:element minOccurs="0" name="url" type="xs:string"/>
+<xs:element minOccurs="0" name="codigoRespuestaSunat" type="xs:string"/>
+<xs:element minOccurs="0" name="estadoSunat" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="almacenaDocResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="almacenaDocResponse">
+    <wsdl:part element="tns:almacenaDocResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="almacenaDoc">
+    <wsdl:part element="tns:almacenaDoc" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarDoc">
+    <wsdl:part element="tns:buscarDoc" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buscarDocResponse">
+    <wsdl:part element="tns:buscarDocResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WSSwitch">
+    <wsdl:operation name="buscarDoc">
+      <wsdl:input message="tns:buscarDoc" name="buscarDoc">
+    </wsdl:input>
+      <wsdl:output message="tns:buscarDocResponse" name="buscarDocResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="almacenaDoc">
+      <wsdl:input message="tns:almacenaDoc" name="almacenaDoc">
+    </wsdl:input>
+      <wsdl:output message="tns:almacenaDocResponse" name="almacenaDocResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSSwitchImplServiceSoapBinding" type="tns:WSSwitch">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="buscarDoc">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="buscarDoc">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="buscarDocResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="almacenaDoc">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="almacenaDoc">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="almacenaDocResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSSwitchImplService">
+    <wsdl:port binding="tns:WSSwitchImplServiceSoapBinding" name="WSSwitchImplPort">
+      <soap:address location="http://127.0.0.1:7081"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

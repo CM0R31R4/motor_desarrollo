@@ -1,0 +1,5 @@
+#../gsoap/bin/linux386/soapcpp2 ServiciosSodexo.h;
+#gcc -Wall -O2 -I/home/switch/fuentes/fuentes2/gsoap/ -I/home/switch/fuentes/fuentes2/include -L../comun/ -I/home/switch/fuentes/fuentes2/IsysSSL/openssl-0.9.8b/include/ -DDEBUG -o ServiciosSodexo ServiciosSodexo.c soapC.c soapServer.c /home/switch/fuentes/fuentes2/gsoap/stdsoap2.c -lm -lpthread -lIsys rsaeuro.lib rsaeuro_64.lib; 
+./executaServicios stop;
+./compila;
+./executaServicios restart; telnet 127.0.0.1 7024

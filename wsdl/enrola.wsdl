@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ENROLAService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WSIMedBono/services/ENROLAPort?xsd=enrola_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="enrolaResponse">
+    <wsdl:part element="tns:enrolaResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enrola">
+    <wsdl:part element="tns:enrola" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ENROLASEI">
+    <wsdl:operation name="enrola">
+      <wsdl:input message="tns:enrola" name="enrola">
+    </wsdl:input>
+      <wsdl:output message="tns:enrolaResponse" name="enrolaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ENROLAServiceSoapBinding" type="tns:ENROLASEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="enrola">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enrola">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="enrolaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ENROLAService">
+    <wsdl:port binding="tns:ENROLAServiceSoapBinding" name="ENROLAPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedBono/services/ENROLAPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

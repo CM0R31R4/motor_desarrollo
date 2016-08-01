@@ -1,0 +1,773 @@
+
+SQL*Plus: Release 11.2.0.3.0 Production on Mon Aug 3 16:47:38 2015
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Release 10.2.0.5.0 - 64bit Production
+
+SQL> SQL> 
+OBJECT_NAME		       OBJECT_TYPE	   OWNER
+------------------------------ ------------------- ------------------------------
+!tHis is a toaD test sEquence# SEQUENCE 	   ADMGESV3
+!tHis is a toaD test sEquence# SEQUENCE 	   ADMCONVENIOS
+!tHis is a toaD test sEquence# SEQUENCE 	   ACANET
+/1000e8d1_LinkedHashMapValueIt SYNONYM		   PUBLIC
+/1000e8d1_LinkedHashMapValueIt JAVA CLASS	   SYS
+/1005bd30_LnkdConstant	       JAVA CLASS	   SYS
+/1005bd30_LnkdConstant	       SYNONYM		   PUBLIC
+/10076b23_OraCustomDatumClosur SYNONYM		   PUBLIC
+/10076b23_OraCustomDatumClosur JAVA CLASS	   SYS
+/100c1606_StandardMidiFileRead SYNONYM		   PUBLIC
+/100c1606_StandardMidiFileRead JAVA CLASS	   SYS
+/1013c29d_PlanarImageServerPro JAVA CLASS	   ORDSYS
+/1013c29d_PlanarImageServerPro SYNONYM		   PUBLIC
+/1023e902_OraCharsetUTFE       SYNONYM		   PUBLIC
+/1023e902_OraCharsetUTFE       JAVA CLASS	   SYS
+/10240eba_GenPropertySequence  JAVA CLASS	   SYS
+/10240eba_GenPropertySequence  SYNONYM		   PUBLIC
+/1025308f_SunTileScheduler     JAVA CLASS	   ORDSYS
+/1025308f_SunTileScheduler     SYNONYM		   PUBLIC
+/10297c91_SAXAttrList	       JAVA CLASS	   SYS
+/10297c91_SAXAttrList	       SYNONYM		   PUBLIC
+/103a2e73_DefaultEditorKitEndP SYNONYM		   PUBLIC
+/103a2e73_DefaultEditorKitEndP JAVA CLASS	   SYS
+/104371db_JDWPThreadReferenceS SYNONYM		   PUBLIC
+/104371db_JDWPThreadReferenceS JAVA CLASS	   SYS
+/1048734f_DefaultFolder        SYNONYM		   PUBLIC
+/1048734f_DefaultFolder        JAVA CLASS	   SYS
+/1048fc95_WrapTokenWrapTokenIn SYNONYM		   PUBLIC
+/1048fc95_WrapTokenWrapTokenIn JAVA CLASS	   SYS
+/104a4549_FrameViewFrameEditor SYNONYM		   PUBLIC
+/104a4549_FrameViewFrameEditor JAVA CLASS	   SYS
+/104ea7da_Messages_ko	       JAVA CLASS	   SYS
+/104ea7da_Messages_ko	       SYNONYM		   PUBLIC
+/104f94f3_AiffFileWriter       JAVA CLASS	   SYS
+/104f94f3_AiffFileWriter       SYNONYM		   PUBLIC
+/10501902_BasicFileChooserUINe JAVA CLASS	   SYS
+/10501902_BasicFileChooserUINe SYNONYM		   PUBLIC
+/105072e7_HttpSessionBindingEv JAVA CLASS	   SYS
+/105072e7_HttpSessionBindingEv SYNONYM		   PUBLIC
+/1056cf94_DrawLineTraceDrawLin JAVA CLASS	   SYS
+/1056cf94_DrawLineTraceDrawLin SYNONYM		   PUBLIC
+/10588c59_BasicTabbedPaneUIScr JAVA CLASS	   SYS
+/10588c59_BasicTabbedPaneUIScr SYNONYM		   PUBLIC
+/1060223d_CDRInputStream_1_1   SYNONYM		   PUBLIC
+/1060223d_CDRInputStream_1_1   JAVA CLASS	   SYS
+/106ba0a5_ArrayEnumeration     JAVA CLASS	   SYS
+/106ba0a5_ArrayEnumeration     SYNONYM		   PUBLIC
+/106faabc_BasicTreeUIKeyHandle JAVA CLASS	   SYS
+/106faabc_BasicTreeUIKeyHandle SYNONYM		   PUBLIC
+/10744837_ObjectStreamClass2   JAVA CLASS	   SYS
+/10744837_ObjectStreamClass2   SYNONYM		   PUBLIC
+/1079c94d_NumberConstantData   SYNONYM		   PUBLIC
+/1079c94d_NumberConstantData   JAVA CLASS	   SYS
+/10804ae7_Constants	       JAVA CLASS	   SYS
+/10804ae7_Constants	       SYNONYM		   PUBLIC
+/1081ca83_MlibDilate3SquareOpI JAVA CLASS	   ORDSYS
+/1081ca83_MlibDilate3SquareOpI SYNONYM		   PUBLIC
+/108343f6_MultiColorChooserUI  JAVA CLASS	   SYS
+/108343f6_MultiColorChooserUI  SYNONYM		   PUBLIC
+/10845320_TypeMapImpl	       JAVA CLASS	   SYS
+/10845320_TypeMapImpl	       SYNONYM		   PUBLIC
+/10862847_Intersection	       SYNONYM		   PUBLIC
+/10862847_Intersection	       JAVA CLASS	   MDSYS
+/108c800b_BasicFormattedTextFi SYNONYM		   PUBLIC
+/108c800b_BasicFormattedTextFi JAVA CLASS	   SYS
+/10948dc3_PermissionImpl       SYNONYM		   PUBLIC
+/10948dc3_PermissionImpl       JAVA CLASS	   SYS
+/1095ce9b_MultiComboBoxUI      JAVA CLASS	   SYS
+/1095ce9b_MultiComboBoxUI      SYNONYM		   PUBLIC
+/109a284b_OracleXMLStaticQuery SYNONYM		   PUBLIC
+/109a284b_OracleXMLStaticQuery JAVA CLASS	   SYS
+/109a6960_CurDate	       JAVA CLASS	   SYS
+/109a6960_CurDate	       SYNONYM		   PUBLIC
+/109cbb8e_SpanShapeRendererSim JAVA CLASS	   SYS
+/109cbb8e_SpanShapeRendererSim SYNONYM		   PUBLIC
+/109dbb46_MetalLookAndFeelFont JAVA CLASS	   SYS
+/109dbb46_MetalLookAndFeelFont SYNONYM		   PUBLIC
+/10a45bfe_ProfilePrinterErrors SYNONYM		   PUBLIC
+/10a45bfe_ProfilePrinterErrors JAVA CLASS	   SYS
+/10ab4aa5_LocaleElements_lv_LV JAVA CLASS	   SYS
+/10ab4aa5_LocaleElements_lv_LV SYNONYM		   PUBLIC
+/10b74838_SecurityManagerImpl  SYNONYM		   PUBLIC
+/10b74838_SecurityManagerImpl  JAVA CLASS	   SYS
+/10c4e898_OXQueryItemFactory   JAVA CLASS	   SYS
+/10c4e898_OXQueryItemFactory   SYNONYM		   PUBLIC
+/10c4ec62_ImageTypeSpecifierGr SYNONYM		   PUBLIC
+/10c4ec62_ImageTypeSpecifierGr JAVA CLASS	   SYS
+/10c906a0_ProfilePrinterErrors JAVA CLASS	   SYS
+/10c906a0_ProfilePrinterErrors SYNONYM		   PUBLIC
+/10dbe49_AdapterInactiveHelper JAVA CLASS	   SYS
+/10dbe49_AdapterInactiveHelper SYNONYM		   PUBLIC
+/10dcd7b1_ProducerConsumerProd JAVA CLASS	   SYS
+/10dcd7b1_ProducerConsumerProd SYNONYM		   PUBLIC
+/10de22c6_ClassTypeImpl2       JAVA CLASS	   SYS
+/10de22c6_ClassTypeImpl2       SYNONYM		   PUBLIC
+/10e051af_TemplateList1        SYNONYM		   PUBLIC
+/10e051af_TemplateList1        JAVA CLASS	   SYS
+/10e16f89_OracleReturnResultSe SYNONYM		   PUBLIC
+/10e16f89_OracleReturnResultSe JAVA CLASS	   SYS
+/10e48aa3_StringExpressionCons SYNONYM		   PUBLIC
+/10e48aa3_StringExpressionCons JAVA CLASS	   SYS
+/10ee5208_LocaleElements_ar_YE JAVA CLASS	   SYS
+/10ee5208_LocaleElements_ar_YE SYNONYM		   PUBLIC
+/10f3e1ab_SizeLimitExceededExc JAVA CLASS	   SYS
+/10f3e1ab_SizeLimitExceededExc SYNONYM		   PUBLIC
+/11025bfb_DicomMetadataReader  SYNONYM		   PUBLIC
+/11025bfb_DicomMetadataReader  JAVA CLASS	   ORDSYS
+/11040ed1_PrimitiveEntry       SYNONYM		   PUBLIC
+/11040ed1_PrimitiveEntry       JAVA CLASS	   SYS
+/110432b6_ElemApplyTemplates   JAVA CLASS	   SYS
+/110432b6_ElemApplyTemplates   SYNONYM		   PUBLIC
+/1106a6c1_MultiplyOpImage      JAVA CLASS	   ORDSYS
+/1106a6c1_MultiplyOpImage      SYNONYM		   PUBLIC
+/110b84a_CharConvRepackage     SYNONYM		   PUBLIC
+/110b84a_CharConvRepackage     JAVA CLASS	   SYS
+/110c86bd_LocaleElements_es_DO SYNONYM		   PUBLIC
+/110c86bd_LocaleElements_es_DO JAVA CLASS	   SYS
+/110f99d1_SemanticErrorsText_k JAVA CLASS	   SYS
+/110f99d1_SemanticErrorsText_k SYNONYM		   PUBLIC
+/1111d1d9_DOMImplementationLis SYNONYM		   PUBLIC
+/1111d1d9_DOMImplementationLis JAVA CLASS	   SYS
+/1116be6_RoundRectangle2DFloat SYNONYM		   PUBLIC
+/1116be6_RoundRectangle2DFloat JAVA CLASS	   SYS
+/1117a35c_MutationEvent        SYNONYM		   PUBLIC
+/1117a35c_MutationEvent        JAVA CLASS	   SYS
+/11196bbe_JobImpressions       SYNONYM		   PUBLIC
+/11196bbe_JobImpressions       JAVA CLASS	   SYS
+/111b9d88_RenderableImageProdu SYNONYM		   PUBLIC
+/111b9d88_RenderableImageProdu JAVA CLASS	   SYS
+/11252d2c_Tree		       JAVA CLASS	   SYS
+/11252d2c_Tree		       SYNONYM		   PUBLIC
+/112785cc_FVDCodeBaseImpl      JAVA CLASS	   SYS
+/112785cc_FVDCodeBaseImpl      SYNONYM		   PUBLIC
+/1129774b_JPEGImageReadParam   SYNONYM		   PUBLIC
+/1129774b_JPEGImageReadParam   JAVA CLASS	   SYS
+/1138e59d_DBFReaderJGeomLogica SYNONYM		   PUBLIC
+/1138e59d_DBFReaderJGeomLogica JAVA CLASS	   MDSYS
+/113a521c_AppInputStream       JAVA CLASS	   SYS
+/113a521c_AppInputStream       SYNONYM		   PUBLIC
+/113c2e87_ObjectReferenceImplC SYNONYM		   PUBLIC
+/113c2e87_ObjectReferenceImplC JAVA CLASS	   SYS
+/113ef1a_ParamRegProfileParamR SYNONYM		   PUBLIC
+/113ef1a_ParamRegProfileParamR JAVA CLASS	   SYS
+/11444b1a_JavaPClassPrinterCod JAVA CLASS	   SYS
+/11444b1a_JavaPClassPrinterCod SYNONYM		   PUBLIC
+/1146b53d_BasicSliderUIScrollL JAVA CLASS	   SYS
+/1146b53d_BasicSliderUIScrollL SYNONYM		   PUBLIC
+/11631c0_DESedeParameters      SYNONYM		   PUBLIC
+/11631c0_DESedeParameters      JAVA CLASS	   SYS
+/11650694_InternationalFormatt SYNONYM		   PUBLIC
+/11650694_InternationalFormatt JAVA CLASS	   SYS
+/1169ca20_AdapterActivator     JAVA CLASS	   SYS
+/1169ca20_AdapterActivator     SYNONYM		   PUBLIC
+/116f06e2_HistogramOpImage     JAVA CLASS	   ORDSYS
+/116f06e2_HistogramOpImage     SYNONYM		   PUBLIC
+/11799933_SchemaProtectionDoma SYNONYM		   PUBLIC
+/11799933_SchemaProtectionDoma JAVA CLASS	   SYS
+/117b1329_VMDisconnectEvent    JAVA CLASS	   SYS
+/117b1329_VMDisconnectEvent    SYNONYM		   PUBLIC
+/117ebcef_Parser2Catalog       JAVA CLASS	   SYS
+/117ebcef_Parser2Catalog       SYNONYM		   PUBLIC
+/1186c016_SampleModelProxy     JAVA CLASS	   ORDSYS
+/1186c016_SampleModelProxy     SYNONYM		   PUBLIC
+/118a4e7f_XMLDOMImplementation JAVA CLASS	   SYS
+/118a4e7f_XMLDOMImplementation SYNONYM		   PUBLIC
+/118c67ee_BeanContextSupportBC SYNONYM		   PUBLIC
+/118c67ee_BeanContextSupportBC JAVA CLASS	   SYS
+/118e2799_PlsqlIbtBindInfo     SYNONYM		   PUBLIC
+/118e2799_PlsqlIbtBindInfo     JAVA CLASS	   SYS
+/119ace83_configproperties     JAVA RESOURCE	   SYS
+/119d9657_BasicPopupMenuUISele SYNONYM		   PUBLIC
+/119d9657_BasicPopupMenuUISele JAVA CLASS	   SYS
+/11a555f8_CodecFactoryImpl     JAVA CLASS	   SYS
+/11a555f8_CodecFactoryImpl     SYNONYM		   PUBLIC
+/11a95555_ConsNullIterator     SYNONYM		   PUBLIC
+/11a95555_ConsNullIterator     JAVA CLASS	   SYS
+/11ab116a_InputRecord	       JAVA CLASS	   SYS
+/11ab116a_InputRecord	       SYNONYM		   PUBLIC
+/11b3f75b_ModifierFilter       JAVA CLASS	   SYS
+/11b3f75b_ModifierFilter       SYNONYM		   PUBLIC
+/11ba27f1_CustomizerHarnessBea JAVA CLASS	   SYS
+/11ba27f1_CustomizerHarnessBea SYNONYM		   PUBLIC
+/11c825c5_FilterExprIteratorSi SYNONYM		   PUBLIC
+/11c825c5_FilterExprIteratorSi JAVA CLASS	   SYS
+/11d50912_DateFormatZoneData_z SYNONYM		   PUBLIC
+/11d50912_DateFormatZoneData_z JAVA CLASS	   SYS
+/11d5d89d_PartialOrderIterator SYNONYM		   PUBLIC
+/11d5d89d_PartialOrderIterator JAVA CLASS	   SYS
+/11dac602_NTSidGroupPrincipal  SYNONYM		   PUBLIC
+/11dac602_NTSidGroupPrincipal  JAVA CLASS	   SYS
+/11dee1d7_AQjmsXAResourceFacto SYNONYM		   PUBLIC
+/11dee1d7_AQjmsXAResourceFacto JAVA CLASS	   SYS
+/11eac1b7_DGCAckHandler1       SYNONYM		   PUBLIC
+/11eac1b7_DGCAckHandler1       JAVA CLASS	   SYS
+/11f08aab_BandSelectCRIF       SYNONYM		   PUBLIC
+/11f08aab_BandSelectCRIF       JAVA CLASS	   ORDSYS
+/11fa97f0_rmiregistrypropertie JAVA RESOURCE	   SYS
+/11fb3908_javaxsoundsampledspi JAVA RESOURCE	   SYS
+/11fb9de3_WrapNullDescriptor   JAVA CLASS	   ORDSYS
+/11fb9de3_WrapNullDescriptor   SYNONYM		   PUBLIC
+/12012e35_ClassDescription     JAVA CLASS	   SYS
+/12012e35_ClassDescription     SYNONYM		   PUBLIC
+/120504d5_CharacterValidationR JAVA CLASS	   SYS
+/120504d5_CharacterValidationR SYNONYM		   PUBLIC
+/12076cd_IdentifierExpressionC JAVA CLASS	   SYS
+/12076cd_IdentifierExpressionC SYNONYM		   PUBLIC
+/120abcac_X500Principal        JAVA CLASS	   SYS
+/120abcac_X500Principal        SYNONYM		   PUBLIC
+/120ee8c9_IdentityHashMapKeyIt JAVA CLASS	   SYS
+/120ee8c9_IdentityHashMapKeyIt SYNONYM		   PUBLIC
+/120f1ee1_XSDConstantValues    SYNONYM		   PUBLIC
+/120f1ee1_XSDConstantValues    JAVA CLASS	   SYS
+/120f4708_FullHTMLDocumentatio JAVA CLASS	   SYS
+/120f4708_FullHTMLDocumentatio SYNONYM		   PUBLIC
+/120fd76d_OracleDatabaseMetaDa SYNONYM		   PUBLIC
+/120fd76d_OracleDatabaseMetaDa JAVA CLASS	   SYS
+/12174023_Error 	       JAVA CLASS	   SYS
+/12174023_Error 	       SYNONYM		   PUBLIC
+/121bd8f2_SSLServerSocketFacto SYNONYM		   PUBLIC
+/121bd8f2_SSLServerSocketFacto JAVA CLASS	   SYS
+/121df355_SunGraphicsEnvironme SYNONYM		   PUBLIC
+/121df355_SunGraphicsEnvironme JAVA CLASS	   SYS
+/12249373_OracleXMLStaticQuery JAVA CLASS	   SYS
+/12249373_OracleXMLStaticQuery SYNONYM		   PUBLIC
+/1225525_PlainTextInputStream  JAVA CLASS	   SYS
+/1225525_PlainTextInputStream  SYNONYM		   PUBLIC
+/1229cca_MsgMgr 	       SYNONYM		   PUBLIC
+/1229cca_MsgMgr 	       JAVA CLASS	   SYS
+/122bb5b3_AQjmsExceptionListen JAVA CLASS	   SYS
+/122bb5b3_AQjmsExceptionListen SYNONYM		   PUBLIC
+/1236a7cd_SignatureFileBlock   SYNONYM		   PUBLIC
+/1236a7cd_SignatureFileBlock   JAVA CLASS	   SYS
+/12399f13_TypeMaker	       JAVA CLASS	   SYS
+/12399f13_TypeMaker	       SYNONYM		   PUBLIC
+/123b33d1_XTemplateClasses     SYNONYM		   PUBLIC
+/123b33d1_XTemplateClasses     JAVA CLASS	   SYS
+/1240abae_JdbcOperations       JAVA CLASS	   SYS
+/1240abae_JdbcOperations       SYNONYM		   PUBLIC
+/1240f5cf_LessExpression       JAVA CLASS	   SYS
+/1240f5cf_LessExpression       SYNONYM		   PUBLIC
+/1249279f_SQLOperationImpl     JAVA CLASS	   SYS
+/1249279f_SQLOperationImpl     SYNONYM		   PUBLIC
+/12551759_IDFTCRIF	       SYNONYM		   PUBLIC
+/12551759_IDFTCRIF	       JAVA CLASS	   ORDSYS
+/1261d15c_CompilerOptions      JAVA CLASS	   SYS
+/1261d15c_CompilerOptions      SYNONYM		   PUBLIC
+/1264ffc9_DefaultMetalTheme1   JAVA CLASS	   SYS
+/1264ffc9_DefaultMetalTheme1   SYNONYM		   PUBLIC
+/1267d256_ComponentContext1    JAVA CLASS	   SYS
+/1267d256_ComponentContext1    SYNONYM		   PUBLIC
+/126d70_BasicPopupMenuUI       SYNONYM		   PUBLIC
+/126d70_BasicPopupMenuUI       JAVA CLASS	   SYS
+/126e77d8_EnvironmentCheck     SYNONYM		   PUBLIC
+/126e77d8_EnvironmentCheck     JAVA CLASS	   SYS
+/1270e63f_BasicComboBoxUIEnter SYNONYM		   PUBLIC
+/1270e63f_BasicComboBoxUIEnter JAVA CLASS	   SYS
+/1270ed84_GenMissing	       SYNONYM		   PUBLIC
+/1270ed84_GenMissing	       JAVA CLASS	   SYS
+/127326af_MetalBordersDialogBo SYNONYM		   PUBLIC
+/127326af_MetalBordersDialogBo JAVA CLASS	   SYS
+/1275a866_ThreadInfo	       JAVA CLASS	   SYS
+/1275a866_ThreadInfo	       SYNONYM		   PUBLIC
+/127b5c5a_StyledDocument       JAVA CLASS	   SYS
+/127b5c5a_StyledDocument       SYNONYM		   PUBLIC
+/127c8f32_DoubleExpression     SYNONYM		   PUBLIC
+/127c8f32_DoubleExpression     JAVA CLASS	   SYS
+/1281e4ac_BorderExtenderReflec SYNONYM		   PUBLIC
+/1281e4ac_BorderExtenderReflec JAVA CLASS	   ORDSYS
+/12821c5a_OracleBlobOutputStre JAVA CLASS	   SYS
+/12821c5a_OracleBlobOutputStre SYNONYM		   PUBLIC
+/128fe27c_NameAndTypeConstantD SYNONYM		   PUBLIC
+/128fe27c_NameAndTypeConstantD JAVA CLASS	   SYS
+/12940625_MetalIconFactoryPale JAVA CLASS	   SYS
+/12940625_MetalIconFactoryPale SYNONYM		   PUBLIC
+/1296c748_BasicDirectoryModel  SYNONYM		   PUBLIC
+/1296c748_BasicDirectoryModel  JAVA CLASS	   SYS
+/12a0a9c7_AttributesExImpl     SYNONYM		   PUBLIC
+/12a0a9c7_AttributesExImpl     JAVA CLASS	   SYS
+/12a273e6_InternationalFormatt JAVA CLASS	   SYS
+/12a273e6_InternationalFormatt SYNONYM		   PUBLIC
+/12a88bc6_LittleEndianRowidBin SYNONYM		   PUBLIC
+/12a88bc6_LittleEndianRowidBin JAVA CLASS	   SYS
+/12be19b8_MedianFilterSquareOp SYNONYM		   PUBLIC
+/12be19b8_MedianFilterSquareOp JAVA CLASS	   ORDSYS
+/12c2dc84_basic_fr	       JAVA CLASS	   SYS
+/12c2dc84_basic_fr	       SYNONYM		   PUBLIC
+/12c5cf3e_MetalScrollBarUIScro SYNONYM		   PUBLIC
+/12c5cf3e_MetalScrollBarUIScro JAVA CLASS	   SYS
+/12cf320c_X509CertificatePair  JAVA CLASS	   SYS
+/12cf320c_X509CertificatePair  SYNONYM		   PUBLIC
+/12d11970_PolicyTable5	       SYNONYM		   PUBLIC
+/12d11970_PolicyTable5	       JAVA CLASS	   SYS
+/12d39aa3_MouseInputListener   JAVA CLASS	   SYS
+/12d39aa3_MouseInputListener   SYNONYM		   PUBLIC
+/12d3bb6f_PNGChunk	       SYNONYM		   PUBLIC
+/12d3bb6f_PNGChunk	       JAVA CLASS	   ORDSYS
+/12d8e893_PooledConnectionFact JAVA CLASS	   SYS
+/12d8e893_PooledConnectionFact SYNONYM		   PUBLIC
+/12e342f1_ExecutableMemberDoc  JAVA CLASS	   SYS
+/12e342f1_ExecutableMemberDoc  SYNONYM		   PUBLIC
+/12e3f18d_SecureRandom	       SYNONYM		   PUBLIC
+/12e3f18d_SecureRandom	       JAVA CLASS	   SYS
+/12e64efa_JobAttributesDialogT JAVA CLASS	   SYS
+/12e64efa_JobAttributesDialogT SYNONYM		   PUBLIC
+/12e8894c_CharacterSetAL16UTF1 SYNONYM		   PUBLIC
+/12e8894c_CharacterSetAL16UTF1 JAVA CLASS	   SYS
+/12e979f5_PredicateSet	       SYNONYM		   PUBLIC
+/12e979f5_PredicateSet	       JAVA CLASS	   SYS
+/12ef193e_DynEnumOperations    SYNONYM		   PUBLIC
+/12ef193e_DynEnumOperations    JAVA CLASS	   SYS
+/12f199fa_GDKMessage	       JAVA CLASS	   SYS
+/12f199fa_GDKMessage	       SYNONYM		   PUBLIC
+/12f385b1_DefaultCellEditor3   SYNONYM		   PUBLIC
+/12f385b1_DefaultCellEditor3   JAVA CLASS	   SYS
+/12fd44ad_XSLOtherElements     SYNONYM		   PUBLIC
+/12fd44ad_XSLOtherElements     JAVA CLASS	   SYS
+/130764b4_StreamMsgEntity      JAVA CLASS	   SYS
+/130764b4_StreamMsgEntity      SYNONYM		   PUBLIC
+/130ab4c7_CSSFontFamily        SYNONYM		   PUBLIC
+/130ab4c7_CSSFontFamily        JAVA CLASS	   SYS
+/130d52e2_JDK2Sorter	       SYNONYM		   PUBLIC
+/130d52e2_JDK2Sorter	       JAVA CLASS	   SYS
+/13120747_XSLJDWPConstants     JAVA CLASS	   SYS
+/13120747_XSLJDWPConstants     SYNONYM		   PUBLIC
+/1312acd2_AbstractButtonAccess SYNONYM		   PUBLIC
+/1312acd2_AbstractButtonAccess JAVA CLASS	   SYS
+/1313961c_Mp4AudioAnnxml       JAVA RESOURCE	   ORDSYS
+/13183780_BasicComboBoxUISpace JAVA CLASS	   SYS
+/13183780_BasicComboBoxUISpace SYNONYM		   PUBLIC
+/131bbd19_XTemplateClass       SYNONYM		   PUBLIC
+/131bbd19_XTemplateClass       JAVA CLASS	   SYS
+/131de077_ShellServer	       JAVA CLASS	   SYS
+/131de077_ShellServer	       SYNONYM		   PUBLIC
+/13257198_AccessibleHTMLProper SYNONYM		   PUBLIC
+/13257198_AccessibleHTMLProper JAVA CLASS	   SYS
+/1327266a_BasicTreeUITreeAddSe SYNONYM		   PUBLIC
+/1327266a_BasicTreeUITreeAddSe JAVA CLASS	   SYS
+/132c2c26_ClassLoaderChooser1  JAVA CLASS	   SYS
+/132c2c26_ClassLoaderChooser1  SYNONYM		   PUBLIC
+/132fb95e_T4C7Ocommoncall      SYNONYM		   PUBLIC
+/132fb95e_T4C7Ocommoncall      JAVA CLASS	   SYS
+/1336fb89_SunGraphicsEnvironme JAVA CLASS	   SYS
+/1336fb89_SunGraphicsEnvironme SYNONYM		   PUBLIC
+/133d86bb_ExtensionHandlerJava SYNONYM		   PUBLIC
+/133d86bb_ExtensionHandlerJava JAVA CLASS	   SYS
+/133f577c_XSUMessages_fiproper JAVA RESOURCE	   SYS
+/1343bb44_EventDispatchThreadE SYNONYM		   PUBLIC
+/1343bb44_EventDispatchThreadE JAVA CLASS	   SYS
+/134c4ace_DataTransferer3      SYNONYM		   PUBLIC
+/134c4ace_DataTransferer3      JAVA CLASS	   SYS
+/1352fb09_ConfirmRemovePolicyE SYNONYM		   PUBLIC
+/1352fb09_ConfirmRemovePolicyE JAVA CLASS	   SYS
+/13578568_JRaster	       JAVA CLASS	   MDSYS
+/13578568_JRaster	       SYNONYM		   PUBLIC
+/135a6a83_CacheCustomizerError JAVA CLASS	   SYS
+/135a6a83_CacheCustomizerError SYNONYM		   PUBLIC
+/135c2cc0_SSLServerSocketImpl  SYNONYM		   PUBLIC
+/135c2cc0_SSLServerSocketImpl  JAVA CLASS	   SYS
+/135d9e93_DataTransferer5      SYNONYM		   PUBLIC
+/135d9e93_DataTransferer5      JAVA CLASS	   SYS
+/13701868_Handler	       SYNONYM		   PUBLIC
+/13701868_Handler	       JAVA CLASS	   SYS
+/13712dac_DocletInvokerDocletI SYNONYM		   PUBLIC
+/13712dac_DocletInvokerDocletI JAVA CLASS	   SYS
+/1377e610_b		       SYNONYM		   PUBLIC
+/1377e610_b		       JAVA CLASS	   SYS
+/13782417_EnumControl	       JAVA CLASS	   SYS
+/13782417_EnumControl	       SYNONYM		   PUBLIC
+/137db7fd_DFTDescriptor        JAVA CLASS	   ORDSYS
+/137db7fd_DFTDescriptor        SYNONYM		   PUBLIC
+/13827da0_KeyboardManagerCompo JAVA CLASS	   SYS
+/13827da0_KeyboardManagerCompo SYNONYM		   PUBLIC
+/1385227f_MapRegionContainment JAVA CLASS	   SYS
+/1385227f_MapRegionContainment SYNONYM		   PUBLIC
+/13853c26_FFTmediaLib	       SYNONYM		   PUBLIC
+/13853c26_FFTmediaLib	       JAVA CLASS	   ORDSYS
+/13862faa_TranslatorErrorsText SYNONYM		   PUBLIC
+/13862faa_TranslatorErrorsText JAVA CLASS	   SYS
+/1386780a_QsmaReportRepeating  JAVA CLASS	   SYS
+/1386780a_QsmaReportRepeating  SYNONYM		   PUBLIC
+/138a1351_WrongAdapter	       SYNONYM		   PUBLIC
+/138a1351_WrongAdapter	       JAVA CLASS	   SYS
+/138c9a57_T4CStatement	       SYNONYM		   PUBLIC
+/138c9a57_T4CStatement	       JAVA CLASS	   SYS
+/1393a6b2_CertificateX509Key   JAVA CLASS	   SYS
+/1393a6b2_CertificateX509Key   SYNONYM		   PUBLIC
+/1396d887_CertPathBuilderSpi   SYNONYM		   PUBLIC
+/1396d887_CertPathBuilderSpi   JAVA CLASS	   SYS
+/13a65b94_CDRInputStream_1_02  SYNONYM		   PUBLIC
+/13a65b94_CDRInputStream_1_02  JAVA CLASS	   SYS
+/13a9ccaf_MessageIDTerm        SYNONYM		   PUBLIC
+/13a9ccaf_MessageIDTerm        JAVA CLASS	   SYS
+/13b25de9_BasicButtonListenerP SYNONYM		   PUBLIC
+/13b25de9_BasicButtonListenerP JAVA CLASS	   SYS
+/13b4be3a_ModifyPermissionExce JAVA CLASS	   SYS
+/13b4be3a_ModifyPermissionExce SYNONYM		   PUBLIC
+/13b65381_AccessibleState      SYNONYM		   PUBLIC
+/13b65381_AccessibleState      JAVA CLASS	   SYS
+/13b97a9_Messages_pl	       JAVA CLASS	   SYS
+/13b97a9_Messages_pl	       SYNONYM		   PUBLIC
+/13c76aa3_ByteToCharUnicodeLit SYNONYM		   PUBLIC
+/13c76aa3_ByteToCharUnicodeLit JAVA CLASS	   SYS
+/13c7dfcd_SeedGeneratorURLSeed SYNONYM		   PUBLIC
+/13c7dfcd_SeedGeneratorURLSeed JAVA CLASS	   SYS
+/13cbf620_BasicTabbedPaneUIMou JAVA CLASS	   SYS
+/13cbf620_BasicTabbedPaneUIMou SYNONYM		   PUBLIC
+/13d24069_SerializableState    JAVA CLASS	   ORDSYS
+/13d24069_SerializableState    SYNONYM		   PUBLIC
+/13d2f130_SubsampleAverageCRIF JAVA CLASS	   ORDSYS
+/13d2f130_SubsampleAverageCRIF SYNONYM		   PUBLIC
+/13e28683_TypeUnboundUser      JAVA CLASS	   SYS
+/13e28683_TypeUnboundUser      SYNONYM		   PUBLIC
+/13e3b7b2_RTFAttributesBoolean JAVA CLASS	   SYS
+/13e3b7b2_RTFAttributesBoolean SYNONYM		   PUBLIC
+/13f035b7_NewInstanceClassLoad SYNONYM		   PUBLIC
+/13f035b7_NewInstanceClassLoad JAVA CLASS	   SYS
+/13f905e9_MenuComponentAccessi JAVA CLASS	   SYS
+/13f905e9_MenuComponentAccessi SYNONYM		   PUBLIC
+/140cad2f_Min		       SYNONYM		   PUBLIC
+/140cad2f_Min		       JAVA CLASS	   SYS
+/14124320_charsetMetaglb       JAVA RESOURCE	   SYS
+/1412975_MetalInternalFrameTit JAVA CLASS	   SYS
+/1412975_MetalInternalFrameTit SYNONYM		   PUBLIC
+/1413a965_TIFFSimpleTag        SYNONYM		   PUBLIC
+/1413a965_TIFFSimpleTag        JAVA CLASS	   ORDSYS
+/1413fa33_DefaultMutableTreeNo JAVA CLASS	   SYS
+/1413fa33_DefaultMutableTreeNo SYNONYM		   PUBLIC
+/14168bb3_RTFAttributesGeneric JAVA CLASS	   SYS
+/14168bb3_RTFAttributesGeneric SYNONYM		   PUBLIC
+/141f74ec_RTStatementJDBCCalla JAVA CLASS	   SYS
+/141f74ec_RTStatementJDBCCalla SYNONYM		   PUBLIC
+/142338df_TreeWhileLoop        SYNONYM		   PUBLIC
+/142338df_TreeWhileLoop        JAVA CLASS	   SYS
+/1427bb78_Preprocessor	       JAVA CLASS	   SYS
+/1427bb78_Preprocessor	       SYNONYM		   PUBLIC
+/142ba21_WBMPCodec	       SYNONYM		   PUBLIC
+/142ba21_WBMPCodec	       JAVA CLASS	   ORDSYS
+/1434f84b_CustomizerHarnessErr JAVA CLASS	   SYS
+/1434f84b_CustomizerHarnessErr SYNONYM		   PUBLIC
+/14350f1b_HTMLDocumentHTMLRead JAVA CLASS	   SYS
+/14350f1b_HTMLDocumentHTMLRead SYNONYM		   PUBLIC
+/1437f03f_NetworkInterface1che JAVA CLASS	   SYS
+/1437f03f_NetworkInterface1che SYNONYM		   PUBLIC
+/1439cfc0_AuditorInstallerBean JAVA CLASS	   SYS
+/1439cfc0_AuditorInstallerBean SYNONYM		   PUBLIC
+/143af834_ObjectStreamClassFie SYNONYM		   PUBLIC
+/143af834_ObjectStreamClassFie JAVA CLASS	   SYS
+/143bd6b4_AttributeMode        JAVA CLASS	   SYS
+/143bd6b4_AttributeMode        SYNONYM		   PUBLIC
+/143cd212_IIOByteBuffer        JAVA CLASS	   SYS
+/143cd212_IIOByteBuffer        SYNONYM		   PUBLIC
+/143d3c91_T4CConnection        SYNONYM		   PUBLIC
+/143d3c91_T4CConnection        JAVA CLASS	   SYS
+/143fec69_PatternGroupCurly    JAVA CLASS	   SYS
+/143fec69_PatternGroupCurly    SYNONYM		   PUBLIC
+/14488184_PatternGroupRef      SYNONYM		   PUBLIC
+/14488184_PatternGroupRef      JAVA CLASS	   SYS
+/1457cb55_InternetHeaders      JAVA CLASS	   SYS
+/1457cb55_InternetHeaders      SYNONYM		   PUBLIC
+/1463948c_ListDataEvent        JAVA CLASS	   SYS
+/1463948c_ListDataEvent        SYNONYM		   PUBLIC
+/1465d708_GenMsgOptions        JAVA CLASS	   SYS
+/1465d708_GenMsgOptions        SYNONYM		   PUBLIC
+/14699413_SQLExpressException  SYNONYM		   PUBLIC
+/14699413_SQLExpressException  JAVA CLASS	   SYS
+/146e3196_FPXDecodeParam       JAVA CLASS	   ORDSYS
+/146e3196_FPXDecodeParam       SYNONYM		   PUBLIC
+/1470f51b_GetORBPropertiesFile JAVA CLASS	   SYS
+/1470f51b_GetORBPropertiesFile SYNONYM		   PUBLIC
+/14772cb3_DesktopProperty      JAVA CLASS	   SYS
+/14772cb3_DesktopProperty      SYNONYM		   PUBLIC
+/147904ad_ClassFile	       JAVA CLASS	   SYS
+/147904ad_ClassFile	       SYNONYM		   PUBLIC
+/147a37f3_HistogramDescriptor  JAVA CLASS	   ORDSYS
+/147a37f3_HistogramDescriptor  SYNONYM		   PUBLIC
+/14812e71_JMenuMenuChangeListe JAVA CLASS	   SYS
+/14812e71_JMenuMenuChangeListe SYNONYM		   PUBLIC
+/14847e87_BasicListUIPageDownA SYNONYM		   PUBLIC
+/14847e87_BasicListUIPageDownA JAVA CLASS	   SYS
+/148d97d7_BasicScrollPaneUIScr SYNONYM		   PUBLIC
+/148d97d7_BasicScrollPaneUIScr JAVA CLASS	   SYS
+/1493102e_TreeReturn	       JAVA CLASS	   SYS
+/1493102e_TreeReturn	       SYNONYM		   PUBLIC
+/1497a7f6_DynValueCommon       SYNONYM		   PUBLIC
+/1497a7f6_DynValueCommon       JAVA CLASS	   SYS
+/149f7d80_ClassPath	       SYNONYM		   PUBLIC
+/149f7d80_ClassPath	       JAVA CLASS	   SYS
+/14a54f10_OracleResultSetMetaD SYNONYM		   PUBLIC
+/14a54f10_OracleResultSetMetaD JAVA CLASS	   SYS
+/14a86c51_TreeMapSubMapEntryIt JAVA CLASS	   SYS
+/14a86c51_TreeMapSubMapEntryIt SYNONYM		   PUBLIC
+/14aae033_SearchFilter	       SYNONYM		   PUBLIC
+/14aae033_SearchFilter	       JAVA CLASS	   SYS
+/14ada6a9_JDK2Iterator	       SYNONYM		   PUBLIC
+/14ada6a9_JDK2Iterator	       JAVA CLASS	   SYS
+/14b79676_DefaultExprFactory   SYNONYM		   PUBLIC
+/14b79676_DefaultExprFactory   JAVA CLASS	   SYS
+/14c1f3f4_NavigationFilterFilt JAVA CLASS	   SYS
+/14c1f3f4_NavigationFilterFilt SYNONYM		   PUBLIC
+/14c5b240_AddressList	       JAVA CLASS	   SYS
+/14c5b240_AddressList	       SYNONYM		   PUBLIC
+/14c7031a_LocatorInterface     JAVA CLASS	   SYS
+/14c7031a_LocatorInterface     SYNONYM		   PUBLIC
+/14c7cf65_MsgAppletViewer_ja   JAVA CLASS	   SYS
+/14c7cf65_MsgAppletViewer_ja   SYNONYM		   PUBLIC
+/14e3c112_PNGEncodeParamPalett JAVA CLASS	   ORDSYS
+/14e3c112_PNGEncodeParamPalett SYNONYM		   PUBLIC
+/14e435c2_OracleErrorsText_zh_ JAVA CLASS	   SYS
+/14e435c2_OracleErrorsText_zh_ SYNONYM		   PUBLIC
+/14e44f86_multipart_mixed      JAVA CLASS	   SYS
+/14e44f86_multipart_mixed      SYNONYM		   PUBLIC
+/14f52ae2_MinFilterOpImage     SYNONYM		   PUBLIC
+/14f52ae2_MinFilterOpImage     JAVA CLASS	   ORDSYS
+/1501b16_MimeTypeFile	       JAVA CLASS	   SYS
+/1501b16_MimeTypeFile	       SYNONYM		   PUBLIC
+/1504643_WKBWKBInputStream     JAVA CLASS	   MDSYS
+/1504643_WKBWKBInputStream     SYNONYM		   PUBLIC
+/15093715_DocumentationGenerat SYNONYM		   PUBLIC
+/15093715_DocumentationGenerat JAVA CLASS	   SYS
+/150bc4f6_ObjectImpl	       JAVA CLASS	   SYS
+/150bc4f6_ObjectImpl	       SYNONYM		   PUBLIC
+/150c77e0_FileEntryRegular     SYNONYM		   PUBLIC
+/150c77e0_FileEntryRegular     JAVA CLASS	   SYS
+/15194697_DrawGlyphListAATrace JAVA CLASS	   SYS
+/15194697_DrawGlyphListAATrace SYNONYM		   PUBLIC
+/151b0fdf_SunJSSE_az	       JAVA CLASS	   SYS
+/151b0fdf_SunJSSE_az	       SYNONYM		   PUBLIC
+/151e3702_TypedExpressionParse SYNONYM		   PUBLIC
+/151e3702_TypedExpressionParse JAVA CLASS	   SYS
+/15222039_OraCustomizerErrorsT JAVA CLASS	   SYS
+/15222039_OraCustomizerErrorsT SYNONYM		   PUBLIC
+/152571a1_LocaleElements_ar_MA JAVA CLASS	   SYS
+/152571a1_LocaleElements_ar_MA SYNONYM		   PUBLIC
+/1544e07c_RequestMessage_1_2   SYNONYM		   PUBLIC
+/1544e07c_RequestMessage_1_2   JAVA CLASS	   SYS
+/1546f8d6_TypePrimitive        JAVA CLASS	   SYS
+/1546f8d6_TypePrimitive        SYNONYM		   PUBLIC
+/154bd02_BasicTextAreaUI       JAVA CLASS	   SYS
+/154bd02_BasicTextAreaUI       SYNONYM		   PUBLIC
+/154fd7fb_ReturnStatement      SYNONYM		   PUBLIC
+/154fd7fb_ReturnStatement      JAVA CLASS	   SYS
+/155479d7_ResponseInputStream  SYNONYM		   PUBLIC
+/155479d7_ResponseInputStream  JAVA CLASS	   SYS
+/1563ec28_DefaultParserxml     JAVA RESOURCE	   ORDSYS
+/156d455_EditableView	       JAVA CLASS	   SYS
+/156d455_EditableView	       SYNONYM		   PUBLIC
+/156dbfe1_StructMetaData       SYNONYM		   PUBLIC
+/156dbfe1_StructMetaData       JAVA CLASS	   SYS
+/15714cfb_ChainedExpression    SYNONYM		   PUBLIC
+/15714cfb_ChainedExpression    JAVA CLASS	   SYS
+/15780a2e_AuditorInstallerErro JAVA CLASS	   SYS
+/15780a2e_AuditorInstallerErro SYNONYM		   PUBLIC
+/1578e37c_ORB2		       JAVA CLASS	   SYS
+/1578e37c_ORB2		       SYNONYM		   PUBLIC
+/15795111_basic 	       SYNONYM		   PUBLIC
+/15795111_basic 	       JAVA CLASS	   SYS
+/157a0d70_SubsampleBinaryToGra JAVA CLASS	   ORDSYS
+/157a0d70_SubsampleBinaryToGra SYNONYM		   PUBLIC
+/157af5b1_PrincipalComparator  JAVA CLASS	   SYS
+/157af5b1_PrincipalComparator  SYNONYM		   PUBLIC
+/157d2a31_IdEncapsulation      JAVA CLASS	   SYS
+/157d2a31_IdEncapsulation      SYNONYM		   PUBLIC
+/158af209_CustomizerHarnessErr SYNONYM		   PUBLIC
+/158af209_CustomizerHarnessErr JAVA CLASS	   SYS
+/15997680_OraRTStatementOraBat JAVA CLASS	   SYS
+/15997680_OraRTStatementOraBat SYNONYM		   PUBLIC
+/15a7b0e6_LdapPoolManager2     SYNONYM		   PUBLIC
+/15a7b0e6_LdapPoolManager2     JAVA CLASS	   SYS
+/15a9f275_xmltrans32cgif       JAVA RESOURCE	   SYS
+/15ac1982_AttachingConnector   JAVA CLASS	   SYS
+/15ac1982_AttachingConnector   SYNONYM		   PUBLIC
+/15ae573b_MessageGetterSimple  JAVA CLASS	   SYS
+/15ae573b_MessageGetterSimple  SYNONYM		   PUBLIC
+/15b24f8f_ChangeListener       JAVA CLASS	   SYS
+/15b24f8f_ChangeListener       SYNONYM		   PUBLIC
+/15c1592c_ParserAdapter        SYNONYM		   PUBLIC
+/15c1592c_ParserAdapter        JAVA CLASS	   SYS
+/15ca4648_XorPixelWriterFloatD JAVA CLASS	   SYS
+/15ca4648_XorPixelWriterFloatD SYNONYM		   PUBLIC
+/15cd7529_OracleErrorsText_da  JAVA CLASS	   SYS
+/15cd7529_OracleErrorsText_da  SYNONYM		   PUBLIC
+/15ce4a9b_SerializerImpl       JAVA CLASS	   ORDSYS
+/15ce4a9b_SerializerImpl       SYNONYM		   PUBLIC
+/15d12533_JDWPClassTypeSetValu SYNONYM		   PUBLIC
+/15d12533_JDWPClassTypeSetValu JAVA CLASS	   SYS
+/15d96cf1_MethodExitRequest    SYNONYM		   PUBLIC
+/15d96cf1_MethodExitRequest    JAVA CLASS	   SYS
+/15e8b119_DTMDefaultBaseIterat SYNONYM		   PUBLIC
+/15e8b119_DTMDefaultBaseIterat JAVA CLASS	   SYS
+/15e9527d_FNFunctionLibrary    SYNONYM		   PUBLIC
+/15e9527d_FNFunctionLibrary    JAVA CLASS	   SYS
+/15eb646_RegionClipSpanIterato JAVA CLASS	   SYS
+/15eb646_RegionClipSpanIterato SYNONYM		   PUBLIC
+/15f0b352_LocaleElements_fr_FR JAVA CLASS	   SYS
+/15f0b352_LocaleElements_fr_FR SYNONYM		   PUBLIC
+/15f2b157_PrinterIsAcceptingJo SYNONYM		   PUBLIC
+/15f2b157_PrinterIsAcceptingJo JAVA CLASS	   SYS
+/15f570e5_XExceptionHandler    JAVA CLASS	   SYS
+/15f570e5_XExceptionHandler    SYNONYM		   PUBLIC
+/15f62f9b_AttributeSetUtilitie SYNONYM		   PUBLIC
+/15f62f9b_AttributeSetUtilitie JAVA CLASS	   SYS
+/15fd2cc0_StreamPrintServiceFa JAVA CLASS	   SYS
+/15fd2cc0_StreamPrintServiceFa SYNONYM		   PUBLIC
+/16076471_RenderedImageList    SYNONYM		   PUBLIC
+/16076471_RenderedImageList    JAVA CLASS	   ORDSYS
+/160c64c4_rmid_deproperties    JAVA RESOURCE	   SYS
+/1611cfd2_VideoSampDesc        JAVA CLASS	   ORDSYS
+/1611cfd2_VideoSampDesc        SYNONYM		   PUBLIC
+/1615c756_CoordinateImage      JAVA CLASS	   ORDSYS
+/1615c756_CoordinateImage      SYNONYM		   PUBLIC
+/161a200_DefaultFormatter1     JAVA CLASS	   SYS
+/161a200_DefaultFormatter1     SYNONYM		   PUBLIC
+/161af141_TaggedComponentFacto SYNONYM		   PUBLIC
+/161af141_TaggedComponentFacto JAVA CLASS	   SYS
+/161b682_ORBInitializer        SYNONYM		   PUBLIC
+/161b682_ORBInitializer        JAVA CLASS	   SYS
+/161faeb0_IIOPAddressImpl      JAVA CLASS	   SYS
+/161faeb0_IIOPAddressImpl      SYNONYM		   PUBLIC
+/16229720_ListInfo	       JAVA CLASS	   SYS
+/16229720_ListInfo	       SYNONYM		   PUBLIC
+/1628733c_ActivationGroupEntry JAVA CLASS	   SYS
+/1628733c_ActivationGroupEntry SYNONYM		   PUBLIC
+/162f144e_JSClassNullClass     JAVA CLASS	   SYS
+/162f144e_JSClassNullClass     SYNONYM		   PUBLIC
+/16368476_LoginContextModuleIn SYNONYM		   PUBLIC
+/16368476_LoginContextModuleIn JAVA CLASS	   SYS
+/1638ec50_MenuAccessibleAWTMen JAVA CLASS	   SYS
+/1638ec50_MenuAccessibleAWTMen SYNONYM		   PUBLIC
+/16402a67_IntegerExpression    JAVA CLASS	   SYS
+/16402a67_IntegerExpression    SYNONYM		   PUBLIC
+/16452957_Configuration1       JAVA CLASS	   SYS
+/16452957_Configuration1       SYNONYM		   PUBLIC
+/164c925e_MaskFormatterLowerCa JAVA CLASS	   SYS
+/164c925e_MaskFormatterLowerCa SYNONYM		   PUBLIC
+/1653b65_SerProfileToClassErro SYNONYM		   PUBLIC
+/1653b65_SerProfileToClassErro JAVA CLASS	   SYS
+/16570bcd_LessEqual	       JAVA CLASS	   SYS
+/16570bcd_LessEqual	       SYNONYM		   PUBLIC
+/16577721_TestNDM2NTriple      JAVA CLASS	   MDSYS
+/16577721_TestNDM2NTriple      SYNONYM		   PUBLIC
+/1667935d_BasicAttribute       SYNONYM		   PUBLIC
+/1667935d_BasicAttribute       JAVA CLASS	   SYS
+/166e2fb8_SSLSocketImpl1       SYNONYM		   PUBLIC
+/166e2fb8_SSLSocketImpl1       JAVA CLASS	   SYS
+/167106dd_CertPathBuilder      JAVA CLASS	   SYS
+/167106dd_CertPathBuilder      SYNONYM		   PUBLIC
+/16790c41_ProfilePrinterErrors JAVA CLASS	   SYS
+/16790c41_ProfilePrinterErrors SYNONYM		   PUBLIC
+/167dc4fe_ImageCanvas	       SYNONYM		   PUBLIC
+/167dc4fe_ImageCanvas	       JAVA CLASS	   ORDSYS
+/1681753f_POAIdArray	       JAVA CLASS	   SYS
+/1681753f_POAIdArray	       SYNONYM		   PUBLIC
+/168324fd_DTDConstants	       SYNONYM		   PUBLIC
+/168324fd_DTDConstants	       JAVA CLASS	   SYS
+/169239c2_ProfileTypeDescripto SYNONYM		   PUBLIC
+/169239c2_ProfileTypeDescripto JAVA CLASS	   SYS
+/169412da_SubjectComber        JAVA CLASS	   SYS
+/169412da_SubjectComber        SYNONYM		   PUBLIC
+/16a68658_NewInstanceExpressio SYNONYM		   PUBLIC
+/16a68658_NewInstanceExpressio JAVA CLASS	   SYS
+/16b24db_CacheCustomizerErrors SYNONYM		   PUBLIC
+/16b24db_CacheCustomizerErrors JAVA CLASS	   SYS
+/16bb6df9_CharCommonAccessor   JAVA CLASS	   SYS
+/16bb6df9_CharCommonAccessor   SYNONYM		   PUBLIC
+/16ce5ad0_OraBasicTypeCustomiz SYNONYM		   PUBLIC
+/16ce5ad0_OraBasicTypeCustomiz JAVA CLASS	   SYS
+/16d14d67_BlockList	       JAVA CLASS	   SYS
+/16d14d67_BlockList	       SYNONYM		   PUBLIC
+/16d23054_StatusOKButtonListen SYNONYM		   PUBLIC
+/16d23054_StatusOKButtonListen JAVA CLASS	   SYS
+/16d3b1e0_CharacterConverterMS SYNONYM		   PUBLIC
+/16d3b1e0_CharacterConverterMS JAVA CLASS	   SYS
+/16dee3a7_DTMDefaultBaseTraver JAVA CLASS	   SYS
+/16dee3a7_DTMDefaultBaseTraver SYNONYM		   PUBLIC
+/16e01cb8_SQLCheckerBuilder    SYNONYM		   PUBLIC
+/16e01cb8_SQLCheckerBuilder    JAVA CLASS	   SYS
+/16e49296_StandardMetadataForm JAVA CLASS	   SYS
+/16e49296_StandardMetadataForm SYNONYM		   PUBLIC
+/16e6a92f_nodeCostComparator   SYNONYM		   PUBLIC
+/16e6a92f_nodeCostComparator   JAVA CLASS	   MDSYS
+/16ecf2f0_NativeEntry	       SYNONYM		   PUBLIC
+/16ecf2f0_NativeEntry	       JAVA CLASS	   SYS
+/16f3208_SemanticOptionsText_e SYNONYM		   PUBLIC
+/16f3208_SemanticOptionsText_e JAVA CLASS	   SYS
+/16f5f2a4_MutableStruct        SYNONYM		   PUBLIC
+/16f5f2a4_MutableStruct        JAVA CLASS	   SYS
+/16fc78ef_JSClassMemberWrapper JAVA CLASS	   SYS
+/16fc78ef_JSClassMemberWrapper SYNONYM		   PUBLIC
+/16ffd750_FuncDocument	       SYNONYM		   PUBLIC
+/16ffd750_FuncDocument	       JAVA CLASS	   SYS
+/1702aa65_Handler	       SYNONYM		   PUBLIC
+/1702aa65_Handler	       JAVA CLASS	   SYS
+/1703f926_PrintJobAttributeLis JAVA CLASS	   SYS
+/1703f926_PrintJobAttributeLis SYNONYM		   PUBLIC
+/170b4523_AttributeSet	       JAVA CLASS	   SYS
+/170b4523_AttributeSet	       SYNONYM		   PUBLIC
+/170cb471_NonWritableChannelEx SYNONYM		   PUBLIC
+/170cb471_NonWritableChannelEx JAVA CLASS	   SYS
+/1716ee75_HierarchyLevelAssoci JAVA CLASS	   SYS
+/1716ee75_HierarchyLevelAssoci SYNONYM		   PUBLIC
+/171a8edf_MethodResolverConver SYNONYM		   PUBLIC
+/171a8edf_MethodResolverConver JAVA CLASS	   SYS
+/171ae08c_SocksSocketImplFacto JAVA CLASS	   SYS
+/171ae08c_SocksSocketImplFacto SYNONYM		   PUBLIC
+/171b70dd_OracleXAHeteroConnec SYNONYM		   PUBLIC
+/171b70dd_OracleXAHeteroConnec JAVA CLASS	   SYS
+/171c9687_ExcDescriptionSeqHel JAVA CLASS	   SYS
+/171c9687_ExcDescriptionSeqHel SYNONYM		   PUBLIC
+/172280a4_MetalBordersRollover JAVA CLASS	   SYS
+/172280a4_MetalBordersRollover SYNONYM		   PUBLIC
+/1723b689_DateFormatZoneData_n JAVA CLASS	   SYS
+/1723b689_DateFormatZoneData_n SYNONYM		   PUBLIC
+/172c845b_RemoteDescriptor     JAVA CLASS	   ORDSYS
+/172c845b_RemoteDescriptor     SYNONYM		   PUBLIC
+/172e7fa2_BasicComboBoxRendere JAVA CLASS	   SYS
+/172e7fa2_BasicComboBoxRendere SYNONYM		   PUBLIC
+/1733a34c_WritablePropertySour JAVA CLASS	   ORDSYS
+/1733a34c_WritablePropertySour SYNONYM		   PUBLIC
+/173437b0_URIMalformedURIExcep JAVA CLASS	   SYS
+/173437b0_URIMalformedURIExcep SYNONYM		   PUBLIC
+/17383c98_AttributeSetUtilitie JAVA CLASS	   SYS
+/17383c98_AttributeSetUtilitie SYNONYM		   PUBLIC
+/1740f582_MetalComboBoxButton1 JAVA CLASS	   SYS
+/1740f582_MetalComboBoxButton1 SYNONYM		   PUBLIC
+/1743d35_ArrayIndexOutOfBounds SYNONYM		   PUBLIC
+/1743d35_ArrayIndexOutOfBounds JAVA CLASS	   SYS
+/174e990b_GenConnectionStruct  JAVA CLASS	   SYS
+/174e990b_GenConnectionStruct  SYNONYM		   PUBLIC
+/17526a1_TransferHandlerProper SYNONYM		   PUBLIC
+/17526a1_TransferHandlerProper JAVA CLASS	   SYS
+/17538638_AccessibleTableModel JAVA CLASS	   SYS
+/17538638_AccessibleTableModel SYNONYM		   PUBLIC
+/1758ac59_BasicOptionPaneUILis JAVA CLASS	   SYS
+/1758ac59_BasicOptionPaneUILis SYNONYM		   PUBLIC
+/175e41ca_GZIPTileCodecDescrip JAVA CLASS	   ORDSYS
+/175e41ca_GZIPTileCodecDescrip SYNONYM		   PUBLIC
+/175f175c_TransientObjectManag JAVA CLASS	   SYS
+/175f175c_TransientObjectManag SYNONYM		   PUBLIC
+/175fdede_TransportConstants   SYNONYM		   PUBLIC
+/175fdede_TransportConstants   JAVA CLASS	   SYS
+/17604fc1_InetAddressImplFacto JAVA CLASS	   SYS
+/17604fc1_InetAddressImplFacto SYNONYM		   PUBLIC
+/17620e33_DynaHashStats        JAVA CLASS	   SYS
+/17620e33_DynaHashStats        SYNONYM		   PUBLIC
+/17659893_PageManagerPool      SYNONYM		   PUBLIC
+/17659893_PageManagerPool      JAVA CLASS	   SYS
+/176828a1_T4CIntervalymAccesso JAVA CLASS	   SYS
+/176828a1_T4CIntervalymAccesso SYNONYM		   PUBLIC
+/1773086e_CharacterConverterLC SYNONYM		   PUBLIC
+/1773086e_CharacterConverterLC JAVA CLASS	   SYS
+ERROR:
+ORA-03135: connection lost contact
+Process ID: 0
+Session ID: 91 Serial number: 9547
+
+
+
+750 rows selected.
+
+
+SQL> Disconnected from Oracle Database 10g Release 10.2.0.5.0 - 64bit Production

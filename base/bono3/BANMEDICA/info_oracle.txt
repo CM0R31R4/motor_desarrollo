@@ -1,0 +1,22 @@
+
+** Conección al SQLPLUS
+/home/motor/instantclient_11_2/sqlplus imed/rxb532@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.9)(PORT=1521))(CONNECT_DATA=(SID=DSUCU)))"
+
+** Query para ver los objetos
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('PACKAGE');
+
+** Descipción de estructura
+desc BANVALTRANS_PKG
+
+
+mcedit oracle_gateway.py
+
+less oracle_gateway.py
+
+python -> Para ejecutar modo consola
+
+./oracle_gateway.py
+netstat -tnlp
+
+./oracle_gateway.py localhost 8071 'imed/rxb532@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.9)(PORT=1521))(CONNECT_DATA=(SID=SUCU.BANMEDICA.CL)))'
+

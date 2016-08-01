@@ -1,0 +1,73 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_api reload BANMEDICA
+# $1 = comando          start | stop | reload
+# #2 = financiador      FONASA | MASVIDA | BANMEDICA | CONSALUD
+
+export LD_LIBRARY_PATH=/home/motor/instantclient_11_2
+
+A=`/usr/bin/psql dmotor -At -F';' -c "SELECT fin_modulo_api,fin_puerto_local_api,fin_hilos_api,fin_prefijo_api,fin_base_datos,fin_ip_conexion_bd,fin_usuario_bd,fin_clave_bd,fin_port_ora_conn,fin_reintentos_conn,fin_timeout_conn,lower(nom_fin),fin_secuencia_puertos_api from parametros_procesos where nom_fin='$2'"`
+DATA=($A)
+I=0;
+STR=${DATA[$I]}
+MODULO=$(echo $STR | cut -f 1 -d';')
+PORTDB=$(echo $STR | cut -f 2 -d';')
+HILOS=$(echo $STR | cut -f 3 -d';')
+PREFIJO_LOG=$(echo $STR | cut -f 4 -d';')
+BASEDATOS=$(echo $STR | cut -f 5 -d';')
+IP_CONEXION_BD=$(echo $STR | cut -f 6 -d';')
+USUARIO_BD=$(echo $STR | cut -f 7 -d';')
+CLAVE_BD=$(echo $STR | cut -f 8 -d';')
+PORT_ORA_CONN=$(echo $STR | cut -f 9 -d';')
+REINTENTOS_CONN=$(echo $STR | cut -f 10 -d';')
+TIMEOUT_BD=$(echo $STR | cut -f 11 -d';')
+NOM_FIN=$(echo $STR | cut -f 12 -d';')
+SEC_API=$(echo $STR | cut -f 13 -d';')
+PATH1="."
+#echo $1,$2,$MODULO,$PORTDB,$HILOS,$PREFIJO_LOG,$BASEDATOS,$IP_CONEXION_BD,$USUARIO_BD,$CLAVE_BD,$PORT_ORA_CONN,$REINTENTOS_CONN,$TIMEOUT_BD,$NOM_FIN
+#pwd
+
+case "$1" in 
+start)
+	if [ -x $PATH1/ORACLE.py ]; then
+	#Debo recorrer todos los puertos que hay que abrir
+	A=`/usr/bin/psql dmotor -At -F';' -c "SELECT min_value,max_value from $SEC_API"`
+	DATA=($A)
+	STR=${DATA[$I]}
+	PORT=$(echo $STR | cut -f 1 -d';')
+	MAX_PORT=$(echo $STR | cut -f 2 -d';')
+	while [ $PORT -lt $MAX_PORT ] || [ $PORT -eq $MAX_PORT ]
+	do
+		#Con 0.0.0.0 llego desde motor-QA
+		./ORACLE.py 0.0.0.0 $PORT $USUARIO_BD/$CLAVE_BD@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$IP_CONEXION_BD)(PORT=$PORT_ORA_CONN))(CONNECT_DATA=(SID=$BASEDATOS)))" $PATH1/$NOM_FIN $REINTENTOS_CONN $TIMEOUT_BD $MODULO 2>&1 &
+		echo "Api.Banmedica 0.0.0.0 $PORT $USUARIO_BD/$CLAVE_BD@\"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$IP_CONEXION_BD)(PORT=$PORT_ORA_CONN))(CONNECT_DATA=(SID=$BASEDATOS)))\" $PATH1/$NOM_FIN $REINTENTOS_CONN $TIMEOUT_BD $MODULO"
+		PORT=`expr $PORT + 1`
+		#./banmedica.py 127.0.0.1 8390 imed/nel5628@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=164.77.11.82)(PORT=1521))(CONNECT_DATA=(SID=QSUCU)))" $PATH1/banmedica 1 7 2>&1 &
+	done
+
+	echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo "Detiene Proceso $MODULO"
+	killproc $MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop $2
+	$0 start $2
+	echo "Proceso $MODULO Reiniciado"
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

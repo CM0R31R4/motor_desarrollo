@@ -1,0 +1,105 @@
+drop table procesos;
+create table procesos(
+        proceso         varchar(50),
+        ip              varchar(25),
+	cantidad        integer,
+        port            integer
+	);
+
+create unique index procesos_01 on procesos (proceso);
+
+--Seguros
+insert into procesos values ('PROCESADOR_SCGI','127.0.0.1',40,4000);
+insert into procesos values ('PROCESADOR_CERT_SCGI','127.0.0.1',150,4001);
+
+insert into procesos values ('PROCESA_XML','127.0.0.1',20,8980);
+insert into procesos values ('LISTENER_WS','127.0.0.1',20,8981);
+--Para Request desde Autentia 
+insert into procesos values ('AUTENTIA_WS','127.0.0.1',10,8961);
+
+--DESA.BONO3 FONASA
+insert into procesos values ('FONASA_LSTR_BNO','127.0.0.1',20,8001);
+insert into procesos values ('FONASA_PXML_BNO','127.0.0.1',10,8101);
+--insert into procesos values ('API_FONASA_BNO','127.0.0.1',10,8201);
+
+--DESA.BONO3 CCHC
+insert into procesos values ('CCHC_LSTR_BNO','127.0.0.1',20,8011);
+insert into procesos values ('CCHC_PXML_BNO','127.0.0.1',10,8111);
+--insert into procesos values ('API_CCHC_BNO','127.0.0.1',10,8211);
+
+--DESA.BONO3 VIDACAMARA
+insert into procesos values ('VIDACAMARA_LSTR_BNO','127.0.0.1',20,8044);
+insert into procesos values ('VIDACAMARA_PXML_BNO','127.0.0.1',10,8144);
+--insert into procesos values ('API_VIDACAMARA_BNO','127.0.0.1',10,8244);
+
+--DESA.BONO3 SANLORENZO
+insert into procesos values ('SANLORENZO_LSTR_BNO','127.0.0.1',20,8062);
+insert into procesos values ('SANLORENZO_PXML_BNO','127.0.0.1',10,8162);
+--insert into procesos values ('API_SANLORENZO_BNO','127.0.0.1',10,8262);
+
+--DESA.BONO3 FUSAT
+insert into procesos values ('FUSAT_LSTR_BNO','127.0.0.1',20,8063);
+insert into procesos values ('FUSAT_PXML_BNO','127.0.0.1',10,8163);
+--insert into procesos values ('API_FUSAT_BNO','127.0.0.1',10,8634);
+
+--DESA.BONO3 CHUQUICAMATA
+insert into procesos values ('CHUQUICAMATA_LSTR_BNO','127.0.0.1',20,8065);
+insert into procesos values ('CHUQUICAMATA_PXML_BNO','127.0.0.1',10,8165);
+--insert into procesos values ('API_CHUQUICAMATA_BNO','127.0.0.1',10,8265);
+
+--DESA.BONO3 COLMENA
+insert into procesos values ('COLMENA_LSTR_BNO','127.0.0.1',20,8067);
+insert into procesos values ('COLMENA_PXML_BNO','127.0.0.1',10,8167);
+--insert into procesos values ('API_COLMENA_BNO','127.0.0.1',10,8267);
+
+--DESA.BONO3 RIOBLANCO
+insert into procesos values ('RIOBLANCO_LSTR_BNO','127.0.0.1',20,8068);
+insert into procesos values ('RIOBLANCO_PXML_BNO','127.0.0.1',10,8168);
+--insert into procesos values ('API_RIOBLANCO_BNO','127.0.0.1',10,8268);
+
+--DESA.BONO3 CONSALUD
+insert into procesos values ('CONSALUD_LSTR_BNO','127.0.0.1',20,8071);
+insert into procesos values ('CONSALUD_PXML_BNO','127.0.0.1',10,8171);
+--insert into procesos values ('API_CONSALUD_BNO','127.0.0.1',10,8271);
+
+--DESA.BONO3 FUNDACION
+insert into procesos values ('FUNDACION_LSTR_BNO','127.0.0.1',20,8076);
+insert into procesos values ('FUNDACION_PXML_BNO','127.0.0.1',10,8176);
+--insert into procesos values ('API_FUNDACION_BNO','127.0.0.1',10,8276);
+
+--DESA.BONO3 CRUZBLANCA
+insert into procesos values ('CRUZBLANCA_LSTR_BNO','127.0.0.1',20,8078);
+insert into procesos values ('CRUZBLANCA_PXML_BNO','127.0.0.1',10,8178);
+--insert into procesos values ('API_CRUZBLANCA_BNO','127.0.0.1',10,8278);
+
+--DESA.BONO3 VIDATRES
+insert into procesos values ('VIDATRES_LSTR_BNO','127.0.0.1',20,8080);
+insert into procesos values ('VIDATRES_PXML_BNO','127.0.0.1',10,8180);
+--insert into procesos values ('API_VIDATRES_BNO','127.0.0.1',10,8280);
+
+--DESA.BONO3 FERROSALUD
+insert into procesos values ('FERROSALUD_LSTR_BNO','127.0.0.1',20,8081);
+insert into procesos values ('FERROSALUD_PXML_BNO','127.0.0.1',10,8181);
+--insert into procesos values ('API_FERROSALUD_BNO','127.0.0.1',10,8281);
+
+--DESA.BONO3 MASVIDA
+insert into procesos values ('MASVIDA_LSTR_BNO','127.0.0.1',20,8088);
+insert into procesos values ('MASVIDA_PXML_BNO','127.0.0.1',10,8188);
+--insert into procesos values ('API_MASVIDA_BNO','127.0.0.1',10,8288);
+
+--DESA.BONO3 CRUZDELNORTE
+insert into procesos values ('CRUZDELNORTE_LSTR_BNO','127.0.0.1',20,8094);
+insert into procesos values ('CRUZDELNORTE_PXML_BNO','127.0.0.1',10,8194);
+--insert into procesos values ('API_CRUZDELNORTE_BNO','127.0.0.1',10,8294);
+
+--DESA.BONO3 BANMEDICA
+insert into procesos values ('BANMEDICA_LSTR_BNO','127.0.0.1',20,8099);
+insert into procesos values ('BANMEDICA_PXML_BNO','127.0.0.1',10,8199);
+--insert into procesos values ('API_BANMEDICA_BNO','127.0.0.1',10,8299);
+---------------------------------------------------------------------------------
+--DESA.CME MASVIDA
+insert into procesos values ('MASVIDA_LSTR_CME','127.0.0.1',20,8588);
+insert into procesos values ('MASVIDA_PXML_CME','127.0.0.1',10,8688);
+--insert into procesos values ('API_MASVIDA_CME','127.0.0.1',10,8788);
+
+

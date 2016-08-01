@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="wmImed_SrvInfBonPago">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XML_INPUT" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmImed_SrvInfBonPagoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmImed_SrvInfBonPagoResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="wmImed_SrvInfBonPagoSoapIn">
+    <wsdl:part name="parameters" element="tns:wmImed_SrvInfBonPago" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvInfBonPagoSoapOut">
+    <wsdl:part name="parameters" element="tns:wmImed_SrvInfBonPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvInfBonPagoHttpGetIn">
+    <wsdl:part name="XML_INPUT" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvInfBonPagoHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvInfBonPagoHttpPostIn">
+    <wsdl:part name="XML_INPUT" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmImed_SrvInfBonPagoHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:portType name="wsInfBonPagoSoap">
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Servicio Confirma Pagos Bonos Externos</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvInfBonPagoSoapIn" />
+      <wsdl:output message="tns:wmImed_SrvInfBonPagoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsInfBonPagoHttpGet">
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Servicio Confirma Pagos Bonos Externos</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvInfBonPagoHttpGetIn" />
+      <wsdl:output message="tns:wmImed_SrvInfBonPagoHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsInfBonPagoHttpPost">
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CDMSA: Servicio Confirma Pagos Bonos Externos</wsdl:documentation>
+      <wsdl:input message="tns:wmImed_SrvInfBonPagoHttpPostIn" />
+      <wsdl:output message="tns:wmImed_SrvInfBonPagoHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsInfBonPagoSoap" type="tns:wsInfBonPagoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <soap:operation soapAction="http://tempuri.org/wmImed_SrvInfBonPago" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsInfBonPagoSoap12" type="tns:wsInfBonPagoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <soap12:operation soapAction="http://tempuri.org/wmImed_SrvInfBonPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsInfBonPagoHttpGet" type="tns:wsInfBonPagoHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <http:operation location="/wmImed_SrvInfBonPago" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsInfBonPagoHttpPost" type="tns:wsInfBonPagoHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="wmImed_SrvInfBonPago">
+      <http:operation location="/wmImed_SrvInfBonPago" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsInfBonPago">
+    <wsdl:port name="wsInfBonPagoSoap" binding="tns:wsInfBonPagoSoap">
+      <soap:address location="http://10.100.32.177/InfBonPago/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsInfBonPagoSoap12" binding="tns:wsInfBonPagoSoap12">
+      <soap12:address location="http://10.100.32.177/InfBonPago/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsInfBonPagoHttpGet" binding="tns:wsInfBonPagoHttpGet">
+      <http:address location="http://10.100.32.177/InfBonPago/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+    <wsdl:port name="wsInfBonPagoHttpPost" binding="tns:wsInfBonPagoHttpPost">
+      <http:address location="http://10.100.32.177/InfBonPago/cia_seg_$$LOCATION$$" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,59 @@
+
+** Conección al SQLPLUS
+/home/motor/instantclient_10_2/sqlplus isa_imed/isa_imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=160.70.51.25)(PORT=1521))(CONNECT_DATA=(SID=SQM)))"
+
+** Query para ver los objetos
+SELECT * FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('PACKAGE');
+
+** Descipción de estructura
+desc CDNVALTRANS_PKG
+
+mcedit oracle_gateway.py
+python -> Para ejecutar modo consola
+
+./oracle_gateway.py
+netstat -tnlp
+
+./oracle_gateway.py localhost 8380 'isa_imed/isa_imed@"(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=160.70.51.25)(PORT=1521))(CONNECT_DATA=(SID=SQM)))'
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+sys.path.append('/home/motor/cx_Oracle/cx_Oracle-5.1.3/build/lib.linux-x86_64-2.7-10g')
+
+[motor@bono3-motor-sonda ~]$ export LD_LIBRARY_PATH=/home/motor/instantclient_10_2
+[motor@bono3-motor-sonda ~]$ export ORACLE_HOME=/home/motor/instantclient_10_2
+[motor@bono3-motor-sonda ~]$ env
+SHELL=/bin/bash
+TERM=linux
+ENCODING=LATIN1
+USER=motor
+LD_LIBRARY_PATH=/home/motor/instantclient_10_2
+PGDATABASE=motor
+MAIL=/var/mail/motor
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+PWD=/home/motor
+LANG=en_US.UTF-8
+PGCLIENTENCODING=LATIN1
+SHLVL=1
+HOME=/home/motor
+LANGUAGE=en_US:en
+LOGNAME=motor
+VISUAL=vim
+ORACLE_HOME=/home/motor/instantclient_10_2
+_=/usr/bin/env
+
+[motor@bono3-motor-sonda ~]$ python
+Python 2.7.3 (default, Mar 13 2014, 11:03:55)
+[GCC 4.7.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> sys.path.append('/home/motor/cx_Oracle/cx_Oracle-5.1.3/build/lib.linux-x86_64-2.7-10g')
+>>> import cx_Oracle10g
+>>> con=cx_Oracle10g.connect('isa_imed/isa_imed@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=160.70.51.25)(PORT=1521))(CONNECT_DATA=(SID=SQM)))')
+>>> print con.version
+8.1.7.4.0
+>>> cur=con.cursor()
+>>> cur.execute("select sysdate from dual")
+<cx_Oracle.Cursor on <cx_Oracle.Connection to isa_imed@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=160.70.51.25)(PORT=1521))(CONNECT_DATA=(SID=SQM)))>>
+>>> row=cur.fetchone()
+>>> print row[0]
+2014-08-05 12:30:40
+>>>

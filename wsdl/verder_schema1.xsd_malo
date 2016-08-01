@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="Verder" type="tns:Verder"/>
+<xs:element name="VerderResponse" type="tns:VerderResponse"/>
+  <xs:complexType name="Verder">
+    <xs:sequence>
+      <xs:element name="PC_KEY" type="xs:string"/>
+      <xs:element name="COD_LUGAR" type="xs:string"/>
+      <xs:element name="RUT_TITULAR" type="xs:string"/>
+      <xs:element name="RUT_CAJERO" type="xs:string"/>
+      <xs:element name="CODIGO_AUDITORIA" type="xs:string"/>
+      <xs:element name="MONTO" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerderResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:VerderResp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerderResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CODIGO_RESPUESTA" type="xs:string"/>
+      <xs:element minOccurs="0" name="MENSAJE_RESPUESTA" type="xs:string"/>
+      <xs:element minOccurs="0" name="LISTA_EMISORES" type="xs:string"/>
+      <xs:element minOccurs="0" name="TOTAL_EMISORES" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

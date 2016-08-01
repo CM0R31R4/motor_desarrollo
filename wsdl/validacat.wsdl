@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="VALIDACATService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WSIMedBono/services/VALIDACATPort?xsd=validacat_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="validacatResponse">
+    <wsdl:part element="tns:validacatResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validacat">
+    <wsdl:part element="tns:validacat" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="VALIDACATSEI">
+    <wsdl:operation name="validacat">
+      <wsdl:input message="tns:validacat" name="validacat">
+    </wsdl:input>
+      <wsdl:output message="tns:validacatResponse" name="validacatResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VALIDACATServiceSoapBinding" type="tns:VALIDACATSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="validacat">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="validacat">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="validacatResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VALIDACATService">
+    <wsdl:port binding="tns:VALIDACATServiceSoapBinding" name="VALIDACATPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedBono/services/VALIDACATPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

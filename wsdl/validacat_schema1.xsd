@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?><xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.imed.bono3.motor.com/" version="1.0" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="validacat" type="tns:validacat"/>
+<xs:element name="validacatResponse" type="tns:validacatResponse"/>
+<xs:complexType name="validacat">
+    <xs:sequence>
+      <xs:element name="extCodFinanciador" type="xs:int"/>
+      <xs:element minOccurs="0" name="extRutConvenio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutTratante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutSolicitante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutBeneficiario" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRutCotizante" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodigoHomologo" type="xs:string"/>
+      <xs:element minOccurs="0" name="extItem" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodigoDiagnostico" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodModalidad" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodTipAtencion" type="xs:string"/>
+      <xs:element minOccurs="0" name="extFechaNacimiento" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodSexo" type="xs:string"/>
+      <xs:element minOccurs="0" name="extFechaInicio" type="xs:string"/>
+      <xs:element minOccurs="0" name="extFechaTermino" type="xs:string"/>
+      <xs:element name="extFrecPrestDia" type="xs:int"/>
+      <xs:element minOccurs="0" name="extListaPrestacA" type="xs:string"/>
+      <xs:element minOccurs="0" name="extListaPrestacB" type="xs:string"/>
+      <xs:element minOccurs="0" name="extListaPrestacC" type="xs:string"/>
+      <xs:element minOccurs="0" name="extListaPrestacD" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExtListaPrestacE" type="xs:string"/>
+      <xs:element minOccurs="0" name="extListaPrestacF" type="xs:string"/>
+      <xs:element minOccurs="0" name="extIndVideo" type="xs:string"/>
+      <xs:element minOccurs="0" name="extIndBilateral" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRecargoFueraHora" type="xs:string"/>
+      <xs:element minOccurs="0" name="extIndReembolso" type="xs:string"/>
+      <xs:element minOccurs="0" name="extIndPrograma" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodAplicacion" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodRegion" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodSucur" type="xs:string"/>
+      <xs:element minOccurs="0" name="extTipoPrestador" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodEspecialidades" type="xs:string"/>
+      <xs:element minOccurs="0" name="extCodProfesiones" type="xs:string"/>
+      <xs:element minOccurs="0" name="extAnosAntiguedad" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="validacatResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:validacatResp"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="validacatResp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCod" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+      <xs:element minOccurs="0" name="extRespuestaCAT" type="xs:string"/>
+      <xs:element minOccurs="0" name="extMensajeCAT" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

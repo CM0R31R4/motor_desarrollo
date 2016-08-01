@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ANULABONOUService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WSIMedBono/services/ANULABONOUPort?xsd=anulabonou_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="anulabonouResponse">
+    <wsdl:part element="tns:anulabonouResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="anulabonou">
+    <wsdl:part element="tns:anulabonou" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ANULABONOUSEI">
+    <wsdl:operation name="anulabonou">
+      <wsdl:input message="tns:anulabonou" name="anulabonou">
+    </wsdl:input>
+      <wsdl:output message="tns:anulabonouResponse" name="anulabonouResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ANULABONOUServiceSoapBinding" type="tns:ANULABONOUSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="anulabonou">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="anulabonou">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="anulabonouResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ANULABONOUService">
+    <wsdl:port binding="tns:ANULABONOUServiceSoapBinding" name="ANULABONOUPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedBono/services/ANULABONOUPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

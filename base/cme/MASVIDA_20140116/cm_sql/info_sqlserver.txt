@@ -1,0 +1,15 @@
+
+/**/
+tsql -H 150.10.11.42 -p 1433 -D ISAPRE -U CMELEC -P IMED01
+##tsql -H 4.0.11.22 -p 12700 -U orden -P orden$1$i
+
+--Examples: Para preguntar por el listado de SP en Sybase
+--xml2:=put_campo(xml2,'SQLINPUT','select top 1 * from dbo.sybsystemprocs');
+--xml2:=put_campo(xml2,'SQLINPUT','exec sp_help');
+--xml2:=put_campo(xml2,'SQLINPUT','select top 1 * from dbo.sysusers');
+--xml2:=put_campo(xml2,'SBSINPUT','select top 1 * from dbo.sysusers');
+
+--La base de datos sybsyntax contiene ayuda sobre la sintaxis de los comandos de
+Transact-SQL, los procedimientos del sistema de Sybase, las utilidades de SQL Ser
+ver y las rutinas de Open Client DB-Library(TM). Los usuarios pueden recuperar es
+a informacióediante el procedimiento del sistema sp_syntax . Por ejemplo, para arender la sintaxis del comando select de Transact-SQL, escriba:  sp_syntax "select"

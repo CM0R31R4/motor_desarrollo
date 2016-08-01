@@ -1,0 +1,684 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="CtaMedicaService" targetNamespace="http://ws.imed.cme.motor/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.cme.motor/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.cme.motor/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.cme.motor/" schemaLocation="http://$$LOCATION$$/WSIMedCtaMedica/services/CtaMedicaPort?xsd=ctamedica_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="cerGrpFam">
+    <wsdl:part element="tns:cerGrpFam" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvDetEquipoResponse">
+    <wsdl:part element="tns:cerEnvDetEquipoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDiagPosOpResponse">
+    <wsdl:part element="tns:cerDiagPosOpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvPaquete">
+    <wsdl:part element="tns:cerEnvPaquete" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEncEpi">
+    <wsdl:part element="tns:cerEncEpi" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDetAnamResponse">
+    <wsdl:part element="tns:cerDetAnamResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvDetHotele">
+    <wsdl:part element="tns:cerEnvDetHotele" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerGrpFamResponse">
+    <wsdl:part element="tns:cerGrpFamResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvInfPac">
+    <wsdl:part element="tns:cerEnvInfPac" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEncProtResponse">
+    <wsdl:part element="tns:cerEncProtResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvCtaResponse">
+    <wsdl:part element="tns:cerEnvCtaResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerAntHabResponse">
+    <wsdl:part element="tns:cerAntHabResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerObtFecPagResponse">
+    <wsdl:part element="tns:cerObtFecPagResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerAntQui">
+    <wsdl:part element="tns:cerAntQui" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEpiInd">
+    <wsdl:part element="tns:cerEpiInd" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDetProtResponse">
+    <wsdl:part element="tns:cerDetProtResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvPaqueteResponse">
+    <wsdl:part element="tns:cerEnvPaqueteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvCta">
+    <wsdl:part element="tns:cerEnvCta" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerOtrCirResponse">
+    <wsdl:part element="tns:cerOtrCirResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvDetInsumoResponse">
+    <wsdl:part element="tns:cerEnvDetInsumoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDetEvo">
+    <wsdl:part element="tns:cerDetEvo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inicioTxResponse">
+    <wsdl:part element="tns:inicioTxResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEpiIndResponse">
+    <wsdl:part element="tns:cerEpiIndResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerOtrCir">
+    <wsdl:part element="tns:cerOtrCir" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerAntMor">
+    <wsdl:part element="tns:cerAntMor" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerTraProResponse">
+    <wsdl:part element="tns:cerTraProResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvDetInsumo">
+    <wsdl:part element="tns:cerEnvDetInsumo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvDetEquipo">
+    <wsdl:part element="tns:cerEnvDetEquipo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDiagPosOp">
+    <wsdl:part element="tns:cerDiagPosOp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDetAnam">
+    <wsdl:part element="tns:cerDetAnam" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDiaEgrResponse">
+    <wsdl:part element="tns:cerDiaEgrResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDiagPreOp">
+    <wsdl:part element="tns:cerDiagPreOp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvTipAnt">
+    <wsdl:part element="tns:cerEnvTipAnt" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEncProt">
+    <wsdl:part element="tns:cerEncProt" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inicioTx">
+    <wsdl:part element="tns:inicioTx" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerAntQuiResponse">
+    <wsdl:part element="tns:cerAntQuiResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEncEpiResponse">
+    <wsdl:part element="tns:cerEncEpiResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerObtFecPag">
+    <wsdl:part element="tns:cerObtFecPag" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerTraPro">
+    <wsdl:part element="tns:cerTraPro" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="finTx">
+    <wsdl:part element="tns:finTx" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerRelHmqProtResponse">
+    <wsdl:part element="tns:cerRelHmqProtResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvDetHoteleResponse">
+    <wsdl:part element="tns:cerEnvDetHoteleResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEncAnamResponse">
+    <wsdl:part element="tns:cerEncAnamResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvTipAntResponse">
+    <wsdl:part element="tns:cerEnvTipAntResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEncAnam">
+    <wsdl:part element="tns:cerEncAnam" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDiaEgr">
+    <wsdl:part element="tns:cerDiaEgr" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDetProt">
+    <wsdl:part element="tns:cerDetProt" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDetEvoResponse">
+    <wsdl:part element="tns:cerDetEvoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerRelHmqProt">
+    <wsdl:part element="tns:cerRelHmqProt" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerExaFis">
+    <wsdl:part element="tns:cerExaFis" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerExaFisResponse">
+    <wsdl:part element="tns:cerExaFisResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerAntHab">
+    <wsdl:part element="tns:cerAntHab" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="finTxResponse">
+    <wsdl:part element="tns:finTxResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEquMedResponse">
+    <wsdl:part element="tns:cerEquMedResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEquMed">
+    <wsdl:part element="tns:cerEquMed" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerDiagPreOpResponse">
+    <wsdl:part element="tns:cerDiagPreOpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerAntMorResponse">
+    <wsdl:part element="tns:cerAntMorResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cerEnvInfPacResponse">
+    <wsdl:part element="tns:cerEnvInfPacResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CtaMedicaSEI">
+    <wsdl:operation name="cerEnvCta">
+      <wsdl:input message="tns:cerEnvCta" name="cerEnvCta">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvCtaResponse" name="cerEnvCtaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDiagPreOp">
+      <wsdl:input message="tns:cerDiagPreOp" name="cerDiagPreOp">
+    </wsdl:input>
+      <wsdl:output message="tns:cerDiagPreOpResponse" name="cerDiagPreOpResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerTraPro">
+      <wsdl:input message="tns:cerTraPro" name="cerTraPro">
+    </wsdl:input>
+      <wsdl:output message="tns:cerTraProResponse" name="cerTraProResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDiagPosOp">
+      <wsdl:input message="tns:cerDiagPosOp" name="cerDiagPosOp">
+    </wsdl:input>
+      <wsdl:output message="tns:cerDiagPosOpResponse" name="cerDiagPosOpResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEncEpi">
+      <wsdl:input message="tns:cerEncEpi" name="cerEncEpi">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEncEpiResponse" name="cerEncEpiResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerAntQui">
+      <wsdl:input message="tns:cerAntQui" name="cerAntQui">
+    </wsdl:input>
+      <wsdl:output message="tns:cerAntQuiResponse" name="cerAntQuiResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerAntHab">
+      <wsdl:input message="tns:cerAntHab" name="cerAntHab">
+    </wsdl:input>
+      <wsdl:output message="tns:cerAntHabResponse" name="cerAntHabResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerGrpFam">
+      <wsdl:input message="tns:cerGrpFam" name="cerGrpFam">
+    </wsdl:input>
+      <wsdl:output message="tns:cerGrpFamResponse" name="cerGrpFamResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvInfPac">
+      <wsdl:input message="tns:cerEnvInfPac" name="cerEnvInfPac">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvInfPacResponse" name="cerEnvInfPacResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDiaEgr">
+      <wsdl:input message="tns:cerDiaEgr" name="cerDiaEgr">
+    </wsdl:input>
+      <wsdl:output message="tns:cerDiaEgrResponse" name="cerDiaEgrResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerExaFis">
+      <wsdl:input message="tns:cerExaFis" name="cerExaFis">
+    </wsdl:input>
+      <wsdl:output message="tns:cerExaFisResponse" name="cerExaFisResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvTipAnt">
+      <wsdl:input message="tns:cerEnvTipAnt" name="cerEnvTipAnt">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvTipAntResponse" name="cerEnvTipAntResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvDetHotele">
+      <wsdl:input message="tns:cerEnvDetHotele" name="cerEnvDetHotele">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvDetHoteleResponse" name="cerEnvDetHoteleResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvDetInsumo">
+      <wsdl:input message="tns:cerEnvDetInsumo" name="cerEnvDetInsumo">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvDetInsumoResponse" name="cerEnvDetInsumoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDetProt">
+      <wsdl:input message="tns:cerDetProt" name="cerDetProt">
+    </wsdl:input>
+      <wsdl:output message="tns:cerDetProtResponse" name="cerDetProtResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="finTx">
+      <wsdl:input message="tns:finTx" name="finTx">
+    </wsdl:input>
+      <wsdl:output message="tns:finTxResponse" name="finTxResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEncAnam">
+      <wsdl:input message="tns:cerEncAnam" name="cerEncAnam">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEncAnamResponse" name="cerEncAnamResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDetAnam">
+      <wsdl:input message="tns:cerDetAnam" name="cerDetAnam">
+    </wsdl:input>
+      <wsdl:output message="tns:cerDetAnamResponse" name="cerDetAnamResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="inicioTx">
+      <wsdl:input message="tns:inicioTx" name="inicioTx">
+    </wsdl:input>
+      <wsdl:output message="tns:inicioTxResponse" name="inicioTxResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerOtrCir">
+      <wsdl:input message="tns:cerOtrCir" name="cerOtrCir">
+    </wsdl:input>
+      <wsdl:output message="tns:cerOtrCirResponse" name="cerOtrCirResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvDetEquipo">
+      <wsdl:input message="tns:cerEnvDetEquipo" name="cerEnvDetEquipo">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvDetEquipoResponse" name="cerEnvDetEquipoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEquMed">
+      <wsdl:input message="tns:cerEquMed" name="cerEquMed">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEquMedResponse" name="cerEquMedResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvPaquete">
+      <wsdl:input message="tns:cerEnvPaquete" name="cerEnvPaquete">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEnvPaqueteResponse" name="cerEnvPaqueteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDetEvo">
+      <wsdl:input message="tns:cerDetEvo" name="cerDetEvo">
+    </wsdl:input>
+      <wsdl:output message="tns:cerDetEvoResponse" name="cerDetEvoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerRelHmqProt">
+      <wsdl:input message="tns:cerRelHmqProt" name="cerRelHmqProt">
+    </wsdl:input>
+      <wsdl:output message="tns:cerRelHmqProtResponse" name="cerRelHmqProtResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEpiInd">
+      <wsdl:input message="tns:cerEpiInd" name="cerEpiInd">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEpiIndResponse" name="cerEpiIndResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerObtFecPag">
+      <wsdl:input message="tns:cerObtFecPag" name="cerObtFecPag">
+    </wsdl:input>
+      <wsdl:output message="tns:cerObtFecPagResponse" name="cerObtFecPagResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEncProt">
+      <wsdl:input message="tns:cerEncProt" name="cerEncProt">
+    </wsdl:input>
+      <wsdl:output message="tns:cerEncProtResponse" name="cerEncProtResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerAntMor">
+      <wsdl:input message="tns:cerAntMor" name="cerAntMor">
+    </wsdl:input>
+      <wsdl:output message="tns:cerAntMorResponse" name="cerAntMorResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CtaMedicaServiceSoapBinding" type="tns:CtaMedicaSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="cerEnvCta">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvCta">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvCtaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDiagPreOp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerDiagPreOp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerDiagPreOpResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerTraPro">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerTraPro">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerTraProResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDiagPosOp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerDiagPosOp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerDiagPosOpResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerAntHab">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerAntHab">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerAntHabResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerAntQui">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerAntQui">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerAntQuiResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEncEpi">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEncEpi">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEncEpiResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerGrpFam">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerGrpFam">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerGrpFamResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDiaEgr">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerDiaEgr">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerDiaEgrResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvInfPac">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvInfPac">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvInfPacResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvTipAnt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvTipAnt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvTipAntResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerExaFis">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerExaFis">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerExaFisResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvDetHotele">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvDetHotele">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvDetHoteleResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDetProt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerDetProt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerDetProtResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvDetInsumo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvDetInsumo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvDetInsumoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="finTx">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="finTx">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="finTxResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEncAnam">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEncAnam">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEncAnamResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDetAnam">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerDetAnam">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerDetAnamResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerOtrCir">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerOtrCir">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerOtrCirResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="inicioTx">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="inicioTx">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="inicioTxResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvDetEquipo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvDetEquipo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvDetEquipoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEquMed">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEquMed">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEquMedResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerDetEvo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerDetEvo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerDetEvoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEnvPaquete">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEnvPaquete">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEnvPaqueteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEpiInd">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEpiInd">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEpiIndResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerRelHmqProt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerRelHmqProt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerRelHmqProtResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerAntMor">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerAntMor">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerAntMorResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerEncProt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerEncProt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerEncProtResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cerObtFecPag">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cerObtFecPag">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cerObtFecPagResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CtaMedicaService">
+    <wsdl:port binding="tns:CtaMedicaServiceSoapBinding" name="CtaMedicaPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedCtaMedica/services/CtaMedicaPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

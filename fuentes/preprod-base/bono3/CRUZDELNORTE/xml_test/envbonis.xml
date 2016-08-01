@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope  
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  
+	xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"   
+	xmlns:ns1="http://ws.imed.embswitch.chileoffshore.com/">   
+<soapenv:Body>     
+    <ns1:envbonis>      
+	<extCodFinanciador>99</extCodFinanciador>
+	<extHomNumeroConvenio>1</extHomNumeroConvenio>
+	<extHomLugarConvenio>1</extHomLugarConvenio>
+	<extSucVenta>1</extSucVenta>
+	<extRutConvenio>0013915583-1</extRutConvenio>
+	<extRutAsociado>0013915583-1</extRutAsociado>
+	<extNomPrestador>Banmedica</extNomPrestador>
+	<extRutTratante>0013915583-1</extRutTratante>
+	<extEspecialidad>666</extEspecialidad>
+	<extRutBeneficiario>0013915583-1</extRutBeneficiario>
+	<extRutCotizante>0013915583-1</extRutCotizante>
+	<extRutAcompanante>0013915583-1</extRutAcompanante>
+	<extRutEmisor>0013915583-1</extRutEmisor>
+	<extRutCajero>13915583-1</extRutCajero>
+	<extCodigoDiagnostico>888</extCodigoDiagnostico>
+	<extDescuentoxPlanilla>N</extDescuentoxPlanilla>
+	<extMontoExcedente>33333</extMontoExcedente>
+	<extFechaEmision>14JUN13</extFechaEmision>
+	<extNivelConvenio>1</extNivelConvenio>
+	<extFolioFinanciador>333</extFolioFinanciador>
+	<extMontoValorTotal>9020</extMontoValorTotal>
+	<extMontoAporteTotal>4270</extMontoAporteTotal>
+	<extMontoCopagoTotal>4750</extMontoCopagoTotal>
+	<extNumOperacion>99</extNumOperacion>
+	<extCorrPrestacion>666</extCorrPrestacion>
+	<extTipoSolicitud>2</extTipoSolicitud>
+	<extFechaInicio>14JUN13</extFechaInicio>
+	<extUrgencia>S</extUrgencia>
+	<extPlan>ICS010606B</extPlan>
+	<extLista1>0</extLista1>
+	<extLista2>0</extLista2>
+	<ExtLista3>0</ExtLista3>	
+    </ns1:envbonis>     
+</soapenv:Body>  
+</soapenv:Envelope>

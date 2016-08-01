@@ -1,0 +1,49 @@
+#! /bin/bash
+# Source function library.
+. /etc/init.d/functions
+
+#Ejecucion Manual
+#./sube_api start MOTOR
+# $1 = comando          start | stop | reload
+# #2 = financiador      FONASA | MASVIDA | BANMEDICA | CONSALUD
+
+PATH1="/home/motor/ApiPercona"
+MODULO="Api_Percona"
+
+case "$1" in 
+start)
+	if [ -x $PATH1/Api_Percona ]; then
+	export PGCLIENTENCODING=LATIN1
+	export ENCODING=LATIN1
+	#Percona CAP 	
+	$PATH1/Api_Percona bono3 2 proceso=MYSQL_PERCONA basedatos=bono3 log=0 prefijo_log=PER  portdb=10001 port_postgres=3306 ip_conexion_bd=10.100.32.57 usuario_bd=bono3imed clave_bd=6Wv6GLJXAAZT >/dev/null &
+	
+	#Percona BH (Por HA) 172.16.9.170-72.16.9.171-72.16.9.172
+	#$PATH1/Api_Percona bono3 2 proceso=MYSQL_PERCONA basedatos=bono3 log=0 prefijo_log=PER  portdb=10001 port_postgres=3306 ip_conexion_bd=127.0.0.1 usuario_bd=bono3imed clave_bd=6Wv6GLJXAAZT >/dev/null &
+	echo "$PATH1/Api_Percona bono3 2 proceso=MYSQL_PERCONA basedatos=bono3 log=1 prefijo_log=PER  portdb=10001 port_postgres=3306 ip_conexion_bd=172.16.9.170 usuario_bd=bono3imed clave_bd=6Wv6GLJXAAZT"
+	#Percona PROD
+	#$PATH1/Api_Percona bono3 5 proceso=MYSQL_PERCONA basedatos=bono3 log=1 prefijo_log=PER  portdb=10001 port_postgres=3306 ip_conexion_bd=10.100.32.53 usuario_bd=bono3imed clave_bd=6Wv6GLJXAAZT >/dev/null &
+	
+	echo Inicializa $MODULO
+	fi
+	;;
+  stop)
+	PID=`ps -fea|grep $MODULO|awk {'print $2'}`
+	kill -USR1 $PID &>/dev/null
+	echo "Detiene Proceso $MODULO"
+	killproc $MODULO >/dev/null
+	;;
+  restart|reload)
+	$0 stop 
+	$0 start 
+	echo "Proceso $MODULO Reiniciado"
+	;;
+  borralog)
+        echo Borra Logs $MODULO
+        ;;
+	
+	
+  *) echo start | stop
+  
+esac
+

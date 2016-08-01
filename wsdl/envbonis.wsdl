@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ENVBONISService" targetNamespace="http://ws.imed.bono3.motor.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WSIMedBono/services/ENVBONISPort?xsd=envbonis_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="envbonisResponse">
+    <wsdl:part element="tns:envbonisResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="envbonis">
+    <wsdl:part element="tns:envbonis" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ENVBONISSEI">
+    <wsdl:operation name="envbonis">
+      <wsdl:input message="tns:envbonis" name="envbonis">
+    </wsdl:input>
+      <wsdl:output message="tns:envbonisResponse" name="envbonisResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ENVBONISServiceSoapBinding" type="tns:ENVBONISSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="envbonis">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="envbonis">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="envbonisResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ENVBONISService">
+    <wsdl:port binding="tns:ENVBONISServiceSoapBinding" name="ENVBONISPort">
+      <soap:address location="http://$$LOCATION$$/WSIMedBono/services/ENVBONISPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

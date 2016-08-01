@@ -1,0 +1,37 @@
+telnet 127.0.0.1 8588
+#tsql -H 150.10.11.42 -p 1433 -D ISAPRE -U CMELEC -P IMED01
+tsql -H 150.10.10.31 -p 1433 -D AGENCIA_PRUEBA -U CMELEC -P IMED01
+
+DECLARE @CtaCodError char(1)
+DECLARE @CtaMensajeError char(60) 
+
+EXECUTE dbo.cerenvcta 88,[142844],1,2, [1], [62162], 2, [11-04-2013 0:00:00.000], [06-04-2013 0:00:00.000], [10:33:00], [09-04-2013 0:00:00.000], [09-04-2013 0:00:00.000], [12:09:00], [01-01-1900 0:00:00.000], [0016951437-2], [TIARE VANESSA FUENTES QUEZADA], [0016951437-2], [FUENTES], [QUEZADA], [TIARE VANESSA], [0], [EMBARAZO CONFIRMADO], [0], [0], [0096530470-3], [0012426401-4], [HERNAN ROJAS VEGA], 1, 5, [N], [N], [N], [S], 1, 1, [S], 566019, 0, 0, 0, 0, 0, 0, 1, 566019, @CtaCodError OUTPUT, @CtaMensajeError OUTPUT 
+
+SELECT @CtaCodError as CtaCodError, @CtaMensajeError as CtaMensajeError 
+
+DECLARE @CtaCodError char(1)
+DECLARE @CtaMensajeError char(60) 
+EXECUTE dbo.CERENVPAQUETE 1,
+88,
+[0096530470-3],
+[200504],
+1,
+1,
+[20-04-006-00],
+[CESAREA C/S SALPINGOLIGADURA O SALPINGEC],
+[0],
+0,
+[92],
+[CESAREA MADRE UNIPERSONAL],
+[69-22-24-23],
+8,
+1,
+566019,
+0,
+566019,
+0,
+[0096530470-3],
+[CLINICA DAVILA],
+[S], @CtaCodError OUTPUT, @CtaMensajeError OUTPUT 
+SELECT @CtaCodError as CtaCodError, @CtaMensajeError as CtaMensajeError
+GO

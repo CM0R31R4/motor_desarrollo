@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#Genera un archivo Rechazos Cias IQ
+#Saca avisos de folios duplicados por rut
+cd /home/motor/InOutExe/CiasConciliador
+mv *.txt Enviados/
+
+MAIL_CC="jcossio@i-med.cl"
+BASE="dmotor"
+
+#FECHA_IN=`/usr/bin/psql -At -F';' -c "SELECT to_char(CURRENT_TIMESTAMP- INTERVAL '1 days','YYYYMMDD')" $BASE`;
+#FECHA_FIN=`/usr/bin/psql -At -F';' -c "SELECT to_char(CURRENT_TIMESTAMP,'YYYYMMDD')" $BASE`;
+FECHA_IN='20150115'
+FECHA_FIN='20150116'
+
+#FECHA_IN=`/usr/bin/psql -At -F';' -c "SELECT to_char(CURRENT_TIMESTAMP -INTERVAL '1 days','YYYYMMDD')" $BASE`;
+#FECHA_FIN=`/usr/bin/psql -At -F';' -c "SELECT to_char(CURRENT_TIMESTAMP,'YYYYMMDD')" $BASE`;
+
+REG=`/usr/bin/psql -At -F';' -c "SELECT codigo,replace(nombre,' ','_') as nombre ,mail_cia from cias_seguros WHERE tx not in ('Certificacion','Conciliacion') and mail_cia<>'' GROUP BY codigo,replace(nombre,' ','_'),mail_cia ORDER BY codigo asc" $BASE`
+
+DATA=($REG)
+I=0;
+STR=${DATA[$I]}
+COD_CIA=$(echo $STR | cut -f 1 -d';')
+NEMO=$(echo $STR | cut -f 2 -d';')
+MAIL_CIA=$(echo $STR | cut -f 3 -d';')
+
+while  [ ${#COD_CIA} -gt 0 ]
+do
+	#echo COD_CIA==$COD_CIA - NEMO==$NEMO - MAIL_CIA=$MAIL_CIA
+	#Primero Genera el archivo
+	FILE="/home/motor/InOutExe/CiasConciliador/"$FECHA_IN"_"$NEMO"_Conf_NOK.txt"
+
+	#Query Reporte
+	/usr/bin/psql -At -F';' -c "SELECT codigo_cia,tx,extfoliobono,num_operacion,dia,estado,split_part(split_part(msgoutput,'</extCodError>',1),'<extCodError>',2) as extCodError_Cia, split_part(split_part(msgoutput,'</extMensajeError>',1),'<extMensajeError>',2) as extMensajeError_Cia FROM tx_cias WHERE dia>='$FECHA_IN' AND dia<'$FECHA_FIN' AND estado in ('CIA_RECHAZO','CIA_ERROR') AND tx in ('Confirmacion','ConfirmacionBono3','Anulacion','AnulacionBono3') AND codigo_cia='$COD_CIA' GROUP BY codigo_cia,tx,extfoliobono,num_operacion,dia,estado,msgoutput ORDER BY extfoliobono ASC" >$FILE
+
+	#DIF=`wc -l $FILE`
+	DIF=`cat $FILE | wc -l`
+	#echo DIF=$DIF
+
+	#Si hay diferencias. Envia Mail
+	if [[ $DIF -gt 1 ]];
+	then
+		#Envia el Mail
+		/usr/bin/mutt $MAIL_CIA  -s "Cia_Dev $NEMO: Diferencias=$DIF - Dia=$FECHA_IN" -a $FILE -c $MAIL_CC < /dev/null 
+		echo ...Envia Correo a Cia $NEMO 
+	fi
+
+	I=`expr $I + 1`
+	STR=${DATA[$I]}
+	COD_CIA=$(echo $STR | cut -f 1 -d';')
+	NEMO=$(echo $STR | cut -f 2 -d';')
+	MAIL_CIA=$(echo $STR | cut -f 3 -d';')
+	#echo 2do COD_CIA==$COD_CIA - NEMO==$NEMO - MAIL_CIA=$MAIL_CIA
+done
+exit 1;

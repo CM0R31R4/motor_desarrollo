@@ -1,0 +1,395 @@
+DROP TABLE cias_seguros;
+CREATE TABLE cias_seguros (
+    codigo 	integer,
+    nombre	character varying,
+    nemo 	character varying(20),
+    tx 		character varying,
+    url 	character varying,
+    funcion_respuesta 	character varying,
+    funcion_input 	character varying
+    --mail_aviso	character varying default 'jcossio@i-med.cl'
+);
+
+CREATE INDEX cias_seguros_01 ON cias_seguros USING btree (codigo);
+CREATE INDEX cias_seguros_02 ON cias_seguros USING btree (nemo);
+
+
+INSERT INTO cias_seguros VALUES (11, 'Servicios Medicos', 'servmed', 'ConfirmacionBono3', 'http://10.150.73.12/I-med/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (11, 'Servicios Medicos', 'servmed', 'AnulacionBono3', 'http://10.150.73.12/I-med/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (11, 'Servicios Medicos', 'servmed', 'Certificacion', 'http://10.150.73.12/I-med/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (11, 'Servicios Medicos', 'servmed', 'Anulacion', 'http://10.150.73.12/I-med/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (11, 'Servicios Medicos', 'servmed', 'Conciliacion', 'http://10.150.73.12/I-med/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (11, 'Servicios Medicos', 'servmed', 'Confirmacion', 'http://10.150.73.12/I-med/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+/*INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'ConfirmacionBono3', 'http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Confirmacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'AnulacionBono3', 'http://172.22.1.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Certificacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Anulacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Conciliacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');*/
+
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'ConfirmacionBono3', 'http://10.171.111.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Confirmacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'AnulacionBono3', 'http://10.171.111.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Certificacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Anulacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (12, 'Metlife', 'metlife', 'Conciliacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (13, 'BCI', 'bci', 'Confirmacion', 'http://146.83.244.27/I-med/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (13, 'BCI', 'bci', 'ConfirmacionBono3', 'http://146.83.244.27/I-med/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (13, 'BCI', 'bci', 'AnulacionBono3', 'http://146.83.244.27/I-med/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (13, 'BCI', 'bci', 'Certificacion', 'http://146.83.244.27/I-med/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (13, 'BCI', 'bci', 'Anulacion', 'http://146.83.244.27/I-med/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (13, 'BCI', 'bci', 'Conciliacion', 'http://146.83.244.27/I-med/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (14, 'Seguros ING', 'ing', 'Confirmacion', 'http://10.90.10.8/ws_ing_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (14, 'Seguros ING', 'ing', 'ConfirmacionBono3', 'http://10.90.10.8/ws_ing_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (14, 'Seguros ING', 'ing', 'Certificacion', 'http://10.90.10.8/ws_ing_prod/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (14, 'Seguros ING', 'ing', 'AnulacionBono3', 'http://10.90.10.8/ws_ing_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (14, 'Seguros ING', 'ing', 'Anulacion', 'http://10.90.10.8/ws_ing_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (14, 'Seguros ING', 'ing', 'Conciliacion', 'http://10.90.10.8/ws_ing_prod/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (15, 'Security', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (15, 'Security', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (15, 'Security', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (15, 'Security', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (15, 'Security', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (15, 'Security', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (16, 'MetLife', 'trasa2', 'Confirmacion', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (16, 'MetLife', 'trasa2', 'ConfirmacionBono3', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (16, 'MetLife', 'trasa2', 'Certificacion', 'http://192.10.1.100/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (16, 'MetLife', 'trasa2', 'AnulacionBono3', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (16, 'MetLife', 'trasa2', 'Anulacion', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (16, 'MetLife', 'trasa2', 'Conciliacion', 'http://192.10.1.100/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (17, 'EuroAmerica', 'euroamerica', 'Confirmacion', 'http://10.10.4.10/Imed/WsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (17, 'EuroAmerica', 'euroamerica', 'ConfirmacionBono3', 'http://10.10.4.10/Imed/WsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (17, 'EuroAmerica', 'euroamerica', 'Certificacion', 'http://10.10.4.10/Imed/WsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (17, 'EuroAmerica', 'euroamerica', 'AnulacionBono3', 'http://10.10.4.10/Imed/WsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (17, 'EuroAmerica', 'euroamerica', 'Anulacion', 'http://10.10.4.10/Imed/WsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (17, 'EuroAmerica', 'euroamerica', 'Conciliacion', 'http://10.10.4.10/Imed/WsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (18, 'Security', 'security', 'Confirmacion', 'http://200.75.5.171:8080/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (18, 'Security', 'security', 'ConfirmacionBono3', 'http://200.75.5.171:8080/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (18, 'Security', 'security', 'Certificacion', 'http://200.75.5.171:8080/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (18, 'Security', 'security', 'AnulacionBono3', 'http://200.75.5.171:8080/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (18, 'Security', 'security', 'Conciliacion', 'http://200.75.5.171:8080/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (18, 'Security', 'security', 'Anulacion', 'http://200.75.5.171:8080/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (19, 'Consorcio', 'consorcio', 'Confirmacion', 'http://10.90.10.8/ws_cns_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (19, 'Consorcio', 'consorcio', 'ConfirmacionBono3', 'http://10.90.10.8/ws_cns_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (19, 'Consorcio', 'consorcio', 'Certificacion', 'http://10.90.10.8/ws_cns_prod/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (19, 'Consorcio', 'consorcio', 'AnulacionBono3', 'http://10.90.10.8/ws_cns_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (19, 'Consorcio', 'consorcio', 'Anulacion', 'http://10.90.10.8/ws_cns_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (19, 'Consorcio', 'consorcio', 'Conciliacion', 'http://10.90.10.8/ws_cns_prod/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (20, 'ING', 'trasa2', 'Confirmacion', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (20, 'ING', 'trasa2', 'ConfirmacionBono3', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (20, 'ING', 'trasa2', 'Certificacion', 'http://192.10.1.100/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (20, 'ING', 'trasa2', 'AnulacionBono3', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (20, 'ING', 'trasa2', 'Anulacion', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (20, 'ING', 'trasa2', 'Conciliacion', 'http://192.10.1.100/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (21, 'Consorcio', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (21, 'Consorcio', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (21, 'Consorcio', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (21, 'Consorcio', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (21, 'Consorcio', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (21, 'Consorcio', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (22, 'Cruz Sur', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (22, 'Cruz Sur', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (22, 'Cruz Sur', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (22, 'Cruz Sur', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (22, 'Cruz Sur', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (22, 'Cruz Sur', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (24, 'Cruz Sur', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (24, 'Cruz Sur', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (24, 'Cruz Sur', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (24, 'Cruz Sur', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (24, 'Cruz Sur', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (24, 'Cruz Sur', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (25, 'Chilena Consolidada', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (25, 'Chilena Consolidada', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (25, 'Chilena Consolidada', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (25, 'Chilena Consolidada', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (25, 'Chilena Consolidada', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (25, 'Chilena Consolidada', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (26, 'Corp Vida', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (26, 'Corp Vida', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (26, 'Corp Vida', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (26, 'Corp Vida', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (26, 'Corp Vida', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (26, 'Corp Vida', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (27, 'BCI Mpro', 'mprobci', 'Confirmacion', 'http://10.90.10.8/ws_bci_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (27, 'BCI Mpro', 'mprobci', 'ConfirmacionBono3', 'http://10.90.10.8/ws_bci_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (27, 'BCI Mpro', 'mprobci', 'AnulacionBono3', 'http://10.90.10.8/ws_bci_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (27, 'BCI Mpro', 'mprobci', 'Certificacion', 'http://10.90.10.8/ws_bci_prod/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (27, 'BCI Mpro', 'mprobci', 'Anulacion', 'http://10.90.10.8/ws_bci_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (27, 'BCI Mpro', 'mprobci', 'Conciliacion', 'http://10.90.10.8/ws_bci_prod/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (28, 'Bice Vida', 'bice', 'Confirmacion', 'http://192.168.122.11:7777/IMED-WebServices/WsConfirmacionSoap', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (28, 'Bice Vida', 'bice', 'ConfirmacionBono3', 'http://192.168.122.11:7777/IMED-WebServices/WsConfirmacionSoap', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (28, 'Bice Vida', 'bice', 'Certificacion', 'http://192.168.122.11:7777/IMED-WebServices/WsCertificacionSoap', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_cert');
+INSERT INTO cias_seguros VALUES (28, 'Bice Vida', 'bice', 'AnulacionBono3', 'http://192.168.122.11:7777/IMED-WebServices/WsAnulacionSoap', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_anulacion');
+INSERT INTO cias_seguros VALUES (28, 'Bice Vida', 'bice', 'Anulacion', 'http://192.168.122.11:7777/IMED-WebServices/WsAnulacionSoap', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_anulacion');
+INSERT INTO cias_seguros VALUES (28, 'Bice Vida', 'bice', 'Conciliacion', 'http://192.168.122.11:7777/IMED-WebServices/WsConciliacionSoap', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_cert');
+
+INSERT INTO cias_seguros VALUES (29, 'BCI', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (29, 'BCI', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (29, 'BCI', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (29, 'BCI', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (29, 'BCI', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (29, 'BCI', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (30, 'Chicon', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (30, 'Chicon', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (30, 'Chicon', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (30, 'Chicon', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (30, 'Chicon', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (30, 'Chicon', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (31, 'EuroAmerica', 'trasa2', 'Confirmacion', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (31, 'EuroAmerica', 'trasa2', 'ConfirmacionBono3', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (31, 'EuroAmerica', 'trasa2', 'Certificacion', 'http://192.10.1.100/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (31, 'EuroAmerica', 'trasa2', 'AnulacionBono3', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (31, 'EuroAmerica', 'trasa2', 'Anulacion', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (31, 'EuroAmerica', 'trasa2', 'Conciliacion', 'http://192.10.1.100/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (32, 'InterAmericana', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (32, 'InterAmericana', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (32, 'InterAmericana', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (32, 'InterAmericana', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (32, 'InterAmericana', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (32, 'InterAmericana', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (33, 'CorpVida', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (33, 'CorpVida', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (33, 'CorpVida', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (33, 'CorpVida', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (33, 'CorpVida', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (33, 'CorpVida', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (34, 'BCI', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (34, 'BCI', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (34, 'BCI', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (34, 'BCI', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (34, 'BCI', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (34, 'BCI', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (35, 'Inter Americana', 'inter', 'Confirmacion', 'http://10.90.10.8/ws_int_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (35, 'Inter Americana', 'inter', 'ConfirmacionBono3', 'http://10.90.10.8/ws_int_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (35, 'Inter Americana', 'inter', 'Certificacion', 'http://10.90.10.8/ws_int_prod/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (35, 'Inter Americana', 'inter', 'AnulacionBono3', 'http://10.90.10.8/ws_int_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (35, 'Inter Americana', 'inter', 'Anulacion', 'http://10.90.10.8/ws_int_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (35, 'Inter Americana', 'inter', 'Conciliacion', 'http://10.90.10.8/ws_int_prod/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+/*INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Confirmacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'ConfirmacionBono3', 'http://172.22.1.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Certificacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'AnulacionBono3', 'http://172.22.1.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Anulacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Conciliacion', 'http://172.22.1.30:204/IFWIMEDws/WS/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');*/
+
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Confirmacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'ConfirmacionBono3', 'http://10.171.111.30:204/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Certificacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'AnulacionBono3', 'http://10.171.111.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Anulacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (36, 'CCAF', 'metlife', 'Conciliacion', 'http://10.171.111.30:204/IFWIMEDws/WS/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (37, 'Met Life Mpro', 'metlife_mpro', 'Confirmacion', 'http://10.90.10.8/ws_met_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (37, 'Met Life Mpro', 'metlife_mpro', 'ConfirmacionBono3', 'http://10.90.10.8/ws_met_prod/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (37, 'Met Life Mpro', 'metlife_mpro', 'Certificacion', 'http://10.90.10.8/ws_met_prod/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (37, 'Met Life Mpro', 'metlife_mpro', 'AnulacionBono3', 'http://10.90.10.8/ws_met_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (37, 'Met Life Mpro', 'metlife_mpro', 'Anulacion', 'http://10.90.10.8/ws_met_prod/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (37, 'Met Life Mpro', 'metlife_mpro', 'Conciliacion', 'http://10.90.10.8/ws_met_prod/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (38, 'Chilena Consolidada', 'chicon', 'Confirmacion', 'http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvConfirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_conf');
+INSERT INTO cias_seguros VALUES (38, 'Chilena Consolidada', 'chicon', 'ConfirmacionBono3', 'http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvConfirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_conf');
+INSERT INTO cias_seguros VALUES (38, 'Chilena Consolidada', 'chicon', 'Certificacion', 'http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvCertificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_cert');
+INSERT INTO cias_seguros VALUES (38, 'Chilena Consolidada', 'chicon', 'AnulacionBono3', 'http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvAnulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_anulacion');
+INSERT INTO cias_seguros VALUES (38, 'Chilena Consolidada', 'chicon', 'Anulacion', 'http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvAnulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_anulacion');
+INSERT INTO cias_seguros VALUES (38, 'Chilena Consolidada', 'chicon', 'Conciliacion', 'http://192.168.140.91/VIDA/WebService/Colectivos/wmImed_SrvConciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_chicon_cert');
+
+INSERT INTO cias_seguros VALUES (39, 'Sermecoop', 'sermecoop', 'Confirmacion', 'http://10.0.0.114/~imed/nusoap/Sermecoop/wsConfirmacion.php', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (39, 'Sermecoop', 'sermecoop', 'ConfirmacionBono3', 'http://10.0.0.114/~imed/nusoap/Sermecoop/wsConfirmacion.php', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (39, 'Sermecoop', 'sermecoop', 'Certificacion', 'http://10.0.0.114/~imed/nusoap/Sermecoop/wsCertificacion.php', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (39, 'Sermecoop', 'sermecoop', 'AnulacionBono3', 'http://10.0.0.114/~imed/nusoap/Sermecoop/wsAnulacion.php', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (39, 'Sermecoop', 'sermecoop', 'Anulacion', 'http://10.0.0.114/~imed/nusoap/Sermecoop/wsAnulacion.php', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (39, 'Sermecoop', 'sermecoop', 'Conciliacion', 'http://10.0.0.114/~imed/nusoap/Sermecoop/wsConciliacion.php', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (40, 'Chubb', 'trasa2', 'Confirmacion', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (40, 'Chubb', 'trasa2', 'ConfirmacionBono3', 'http://192.10.1.100/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (40, 'Chubb', 'trasa2', 'Certificacion', 'http://192.10.1.100/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (40, 'Chubb', 'trasa2', 'AnulacionBono3', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (40, 'Chubb', 'trasa2', 'Anulacion', 'http://192.10.1.100/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (40, 'Chubb', 'trasa2', 'Conciliacion', 'http://192.10.1.100/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (41, 'AndesMpro', 'mpro2', 'Confirmacion', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (41, 'AndesMpro', 'mpro2', 'ConfirmacionBono3', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (41, 'AndesMpro', 'mpro2', 'Certificacion', 'http://10.90.10.8/produccionmpro/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (41, 'AndesMpro', 'mpro2', 'AnulacionBono3', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (41, 'AndesMpro', 'mpro2', 'Anulacion', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (41, 'AndesMpro', 'mpro2', 'Conciliacion', 'http://10.90.10.8/produccionmpro/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (42, 'ING', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (42, 'ING', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (42, 'ING', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (42, 'ING', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (42, 'ING', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (42, 'ING', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (43, 'Chilena ConMpro', 'mpro2', 'Confirmacion', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (43, 'Chilena ConMpro', 'mpro2', 'ConfirmacionBono3', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (43, 'Chilena ConMpro', 'mpro2', 'Certificacion', 'http://10.90.10.8/produccionmpro/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (43, 'Chilena ConMpro', 'mpro2', 'AnulacionBono3', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (43, 'Chilena ConMpro', 'mpro2', 'Anulacion', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (43, 'Chilena ConMpro', 'mpro2', 'Conciliacion', 'http://10.90.10.8/produccionmpro/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (44, 'Vida Camara', 'camara', 'Confirmacion', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (44, 'Vida Camara', 'camara', 'ConfirmacionBono3', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (44, 'Vida Camara', 'camara', 'Certificacion', 'http://10.90.10.8/produccionmpro/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (44, 'Vida Camara', 'camara', 'AnulacionBono3', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (44, 'Vida Camara', 'camara', 'Anulacion', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (44, 'Vida Camara', 'camara', 'Conciliacion', 'http://10.90.10.8/produccionmpro/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (46, 'mok assistMpro', 'mpro2', 'Confirmacion', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (46, 'mok assistMpro', 'mpro2', 'ConfirmacionBono3', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (46, 'mok assistMpro', 'mpro2', 'Certificacion', 'http://10.90.10.8/produccionmpro/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (46, 'mok assistMpro', 'mpro2', 'AnulacionBono3', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (46, 'mok assistMpro', 'mpro2', 'Anulacion', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (46, 'mok assistMpro', 'mpro2', 'Conciliacion', 'http://10.90.10.8/produccionmpro/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (45, 'Integrafar', 'integrafar', 'Confirmacion', 'http://10.27.11.61/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (45, 'Integrafar', 'integrafar', 'ConfirmacionBono3', 'http://10.27.11.61/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (45, 'Integrafar', 'integrafar', 'Certificacion', 'http://10.27.11.61/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (45, 'Integrafar', 'integrafar', 'AnulacionBono3', 'http://10.27.11.61/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (45, 'Integrafar', 'integrafar', 'Anulacion', 'http://10.27.11.61/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (45, 'Integrafar', 'integrafar', 'Conciliacion', 'http://10.27.11.61/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (47, 'vida camara Mpro', 'mpro2', 'AnulacionBono3', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (47, 'vida camara Mpro', 'mpro2', 'Confirmacion', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (47, 'vida camara Mpro', 'mpro2', 'ConfirmacionBono3', 'http://10.90.10.8/produccionmpro/confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro');
+INSERT INTO cias_seguros VALUES (47, 'vida camara Mpro', 'mpro2', 'Certificacion', 'http://10.90.10.8/produccionmpro/certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (47, 'vida camara Mpro', 'mpro2', 'Anulacion', 'http://10.90.10.8/produccionmpro/anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+INSERT INTO cias_seguros VALUES (47, 'vida camara Mpro', 'mpro2', 'Conciliacion', 'http://10.90.10.8/produccionmpro/conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_mpro_cert');
+
+INSERT INTO cias_seguros VALUES (48, 'Magallanes', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (48, 'Magallanes', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (48, 'Magallanes', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (48, 'Magallanes', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (48, 'Magallanes', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (48, 'Magallanes', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (49, 'BBVA', 'trasa', 'Confirmacion', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (49, 'BBVA', 'trasa', 'ConfirmacionBono3', 'http://192.169.50.11/servicios/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (49, 'BBVA', 'trasa', 'Certificacion', 'http://192.169.50.11/servicios/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (49, 'BBVA', 'trasa', 'AnulacionBono3', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (49, 'BBVA', 'trasa', 'Anulacion', 'http://192.169.50.11/servicios/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (49, 'BBVA', 'trasa', 'Conciliacion', 'http://192.169.50.11/servicios/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (51, 'BBVA', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (51, 'BBVA', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (51, 'BBVA', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (51, 'BBVA', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (51, 'BBVA', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (51, 'BBVA', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (52, 'Vida Sec', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (52, 'Vida Sec', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (52, 'Vida Sec', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (52, 'Vida Sec', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (52, 'Vida Sec', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (52, 'Vida Sec', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (53, 'Vida Camara', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (53, 'Vida Camara', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (53, 'Vida Camara', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (53, 'Vida Camara', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (53, 'Vida Camara', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (53, 'Vida Camara', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (56, 'Magallanes-FGR', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (56, 'Magallanes-FGR', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (56, 'Magallanes-FGR', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (56, 'Magallanes-FGR', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (56, 'Magallanes-FGR', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (56, 'Magallanes-FGR', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (57, 'Colmena-FGR', 'far2', 'Confirmacion', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (57, 'Colmena-FGR', 'far2', 'ConfirmacionBono3', 'http://10.27.11.60/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (57, 'Colmena-FGR', 'far2', 'Anulacion', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (57, 'Colmena-FGR', 'far2', 'AnulacionBono3', 'http://10.27.11.60/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (57, 'Colmena-FGR', 'far2', 'Certificacion', 'http://10.27.11.60/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (57, 'Colmena-FGR', 'far2', 'Conciliacion', 'http://10.27.11.60/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+
+INSERT INTO cias_seguros VALUES (91, 'Consorcio', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (91, 'Consorcio', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (91, 'Consorcio', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (91, 'Consorcio', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (91, 'Consorcio', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (91, 'Consorcio', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (93, 'Sura Asistencia', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (93, 'Sura Asistencia', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (93, 'Sura Asistencia', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (93, 'Sura Asistencia', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (93, 'Sura Asistencia', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (93, 'Sura Asistencia', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (100, 'liquimed', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (100, 'liquimed', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (100, 'liquimed', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (100, 'liquimed', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (100, 'liquimed', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (100, 'liquimed', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (101, 'Caja Andes', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (101, 'Caja Andes', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (101, 'Caja Andes', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (101, 'Caja Andes', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (101, 'Caja Andes', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (101, 'Caja Andes', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (102, 'Ben Salud', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (102, 'Ben Salud', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (102, 'Ben Salud', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (102, 'Ben Salud', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (102, 'Ben Salud', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (102, 'Ben Salud', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (103, 'Gea Chile', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (103, 'Gea Chile', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (103, 'Gea Chile', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (103, 'Gea Chile', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (104, 'cbvida', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (104, 'cbvida', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (104, 'cbvida', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (104, 'cbvida', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (104, 'cbvida', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (104, 'cbvida', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (105, 'Caja Andes', 'imed', 'ConfirmacionBono3', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (105, 'Caja Andes', 'imed', 'AnulacionBono3', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (105, 'Caja Andes', 'imed', 'Confirmacion', 'http://10.100.32.148/Confirmacion/Confirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (105, 'Caja Andes', 'imed', 'Certificacion', 'http://10.100.32.148/Certificacion/Certificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (105, 'Caja Andes', 'imed', 'Anulacion', 'http://10.100.32.148/Anulacion/Anulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (105, 'Caja Andes', 'imed', 'Conciliacion', 'http://10.100.32.148/Conciliacion/Conciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+INSERT INTO cias_seguros VALUES (122, 'Metlife', 'metlife_cert', 'Confirmacion', 'http://172.22.1.32:104/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (122, 'Metlife', 'metlife_cert', 'ConfirmacionBono3', 'http://172.22.1.32:104/IFWIMEDws/WS/wsConfirmacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica');
+INSERT INTO cias_seguros VALUES (122, 'Metlife', 'metlife_cert', 'Certificacion', 'http://172.22.1.32:104/IFWIMEDws/WS/wsCertificacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (122, 'Metlife', 'metlife_cert', 'AnulacionBono3', 'http://172.22.1.32:104/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (122, 'Metlife', 'metlife_cert', 'Anulacion', 'http://172.22.1.32:104/IFWIMEDws/WS/wsAnulacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+INSERT INTO cias_seguros VALUES (122, 'Metlife', 'metlife_cert', 'Conciliacion', 'http://172.22.1.32:104/IFWIMEDws/WS/wsConciliacion.asmx', 'sp_respuesta_cia_generica', 'sp_input_cia_generica_cert');
+
+
+

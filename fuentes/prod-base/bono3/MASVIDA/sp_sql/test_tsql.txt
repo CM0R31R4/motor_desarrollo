@@ -1,0 +1,30 @@
+[isys@10.100.32.177 ~]$ tsql -H 150.10.10.31 -p 1433 -U IMED -P 20050331
+locale is "es_ES.UTF-8"
+locale charset is "UTF-8"
+1> DECLARE @extCodFinanciador numeric (5);
+2> DECLARE @extNumFolios numeric(2);
+3> DECLARE @extCodError char(1);
+4> DECLARE @extMensajeError char(30);
+5> DECLARE @exFoliosDevueltos numeric(10);
+6>
+7> --EXECUTE dbo.MASSolicFolios 88,3, @extCodError OUTPUT, @extMensajeError OUTPUT, @exFoliosDevueltos OUTPUT;
+8> EXECUTE dbo.MASSolicFolios 88,3, @extCodError OUTPUT, @extMensajeError OUTPUT;
+9>
+10> --SELECT @extCodError as extCodError, @extMensajeError as extMensajeError, @exFoliosDevueltos as exFoliosDevueltos;
+11> SELECT @extCodError as extCodError, @extMensajeError as extMensajeError;
+12> go
+extfoliosdevueltos
+76778980
+76778981
+76778982
+(3 rows affected)
+(return status = 0)
+extCodError     extMensajeError
+S
+(1 row affected)
+1> ^C
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+
+

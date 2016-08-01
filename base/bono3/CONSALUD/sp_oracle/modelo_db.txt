@@ -1,0 +1,21 @@
+
+SQL*Plus: Release 11.2.0.3.0 Production on Mon Jun 1 18:05:15 2015
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> SQL> SELECT OBJECT_NAME,OBJECT_TYPE,OWNER FROM ALL_OBJECTS ORDER BY OBJECT_NAME asc
+                                    *
+ERROR at line 1:
+ORA-03113: end-of-file on communication channel
+Process ID: 12706
+Session ID: 241 Serial number: 3541
+
+
+
+SQL> Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options

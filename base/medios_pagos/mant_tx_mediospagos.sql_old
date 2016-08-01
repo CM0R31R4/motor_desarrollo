@@ -1,0 +1,102 @@
+-- drop table log_mtg;
+
+CREATE OR REPLACE FUNCTION mediospagos_registra_tx (varchar)
+returns varchar as
+$$
+declare
+	xml1  		alias for $1;
+	xml2 		varchar;
+	cod_motor1 	integer;
+Begin
+
+	xml2:=xml1;
+	cod_motor1:=get_campo('CODIGO_MOTOR',xml2);
+
+	insert into tx_mediospagos 
+	(tipo_tx,
+	 estado,
+ 	 fecha_in_tx,
+	 cod_motor,
+	 rut_titular,
+	 rut_benef,
+	 pc_key,
+	 xml_input,
+	 cod_lugar,
+	 nro_autentia,
+         num_solicitud,
+         rut_cajero,
+         rut_prest,
+         monto,
+         cuotas,
+         emisor,
+	 pin,
+	 track1,
+	 track2,
+	 fecha_oper,
+	 tipo_venta) 
+	values(get_campo('TX_API',xml2),
+		 get_campo('ESTADO_TX',xml2),
+		 get_campo('FECHA_IN_TX',xml2)::timestamp,
+		 cod_motor1,
+		 get_campo('RUT_TITULAR',xml2),
+		 get_campo('RUT_BENEFICIARIO',xml2),
+		 get_campo('PC_KEY',xml2),
+		 get_campo('INPUT',xml2),
+		 get_campo('COD_LUGAR',xml2),
+		 get_campo('NRO_AUDITORIA',xml2),
+		 get_campo('CODIGO_CLIENTE',xml2),
+		 get_campo('RUT_OPERADOR',xml2),
+		 get_campo('RUT_PRESTADOR',xml2),
+		 get_campo('MONTO',xml2),
+		 get_campo('CUOTAS',xml2),
+		 get_campo('EMISOR',xml2),
+		 get_campo('PIN',xml2),
+		 get_campo('TRACK1',xml2),
+		 get_campo('TRACK2',xml2),
+		 get_campo('FECHA_OPERACION',xml2),
+		 get_campo('TIPO_VENTA',xml2)
+               	 );
+	return xml2;
+
+End;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION mediospagos_update_tx (varchar)
+returns varchar as
+$$
+declare
+        xml1            alias for $1;
+        xml2            varchar;
+        cod_motor1      integer;
+	fecha_in1	timestamp;
+	fecha_out1	timestamp;
+	fecha_out_tx1	timestamp;
+
+Begin
+
+        xml2:=xml1;
+        cod_motor1 := get_campo('CODIGO_MOTOR',xml2);
+	fecha_in1  := nullif(get_campo('FECHA_IN_FIN',xml2),'');
+	fecha_out1 := nullif(get_campo('FECHA_OUT_FIN',xml2),'');
+	fecha_out_tx1 := nullif(get_campo('FECHA_OUT_FIN',xml2),'');
+
+
+        update tx_mediospagos
+	set estado = get_campo('ESTADO_TX',xml2),
+	    msje_resp = get_campo('RSP_MENSAJE_RESPUESTA',xml2),
+            voucher = get_campo('RSP_VOUCHER_HORIZONTAL',xml2),
+            cod_resp_isw = get_campo('RSP_CODIGO_RESPUESTA',xml2),
+            codigo_isw = get_campo('RSP_CODIGO_ISWITCH',xml2),
+            msj_resp_isw = get_campo('RSP_MENSAJE_RESPUESTA',xml2),
+            fecha_in_isw = fecha_in1,
+            fecha_out_isw = fecha_out1,
+            fecha_out_tx = fecha_out_tx1
+        where cod_motor=cod_motor1; 
+
+        return xml2;
+
+End;
+$$
+LANGUAGE plpgsql;
+

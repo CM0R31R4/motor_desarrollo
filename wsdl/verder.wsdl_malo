@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.imed.bono3.motor.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="VERDERService" targetNamespace="http://ws.imed.bono3.motor.com/">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://ws.imed.bono3.motor.com/" schemaLocation="http://$$LOCATION$$/WsMultiCajaVerder/services/VERDERPort?xsd=verder_schema1.xsd" />
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="Verder">
+      <wsdl:part element="tns:Verder" name="parameters" />
+   </wsdl:message>
+   <wsdl:message name="VerderResponse">
+      <wsdl:part element="tns:VerderResponse" name="parameters" />
+   </wsdl:message>
+   <wsdl:portType name="VERDERSEI">
+      <wsdl:operation name="Verder">
+         <wsdl:input message="tns:Verder" name="Verder" />
+         <wsdl:output message="tns:VerderResponse" name="VerderResponse" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="VERDERServiceSoapBinding" type="tns:VERDERSEI">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="Verder">
+         <soap:operation soapAction="" style="document" />
+         <wsdl:input name="Verder">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="VerderResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="WsMultiCajaVerder">
+      <wsdl:port binding="tns:VERDERServiceSoapBinding" name="VERDERPort">
+         <soap:address location="http://$$LOCATION$$/WsMultiCajaVerder/services/VERDERPort" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
